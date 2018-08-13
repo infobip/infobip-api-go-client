@@ -11,34 +11,34 @@ import (
 )
 
 var (
-	//reference importted packages just in case auto-generated code doesn't
+	//reference imported packages just in case auto-generated code doesn't
 	_ = http.StatusOK
 	_ = httptest.DefaultRemoteAddr
 	_ = testing.RunTests
 	_ = infobip.NewApiKeyCredentials
 )
 
-func TestSendMultipleTextualSmsAdvanced(t *testing.T) {
+func TestSendMultipleTextualSMSAdvanced(t *testing.T) {
 	ts := givenServer()
 	defer ts.Close()
 	c := givenClient(ts)
 
-	_, err := c.SendMultipleTextualSmsAdvanced(SMSAdvancedTextualRequest{})
+	_, err := c.SendMultipleTextualSMSAdvanced(SMSAdvancedTextualRequest{})
 
 	if err != nil {
-		t.Errorf("Expected to SendMultipleTextualSmsAdvanced, but was error %+v", err)
+		t.Errorf("Expected to SendMultipleTextualSMSAdvanced, but was error %+v", err)
 	}
 }
 
-func TestGetSentSmsDeliveryReports(t *testing.T) {
+func TestGetSentSMSDeliveryReports(t *testing.T) {
 	ts := givenServer()
 	defer ts.Close()
 	c := givenClient(ts)
 
-	_, err := c.GetSentSmsDeliveryReports(GetSentSmsDeliveryReportsQuery{})
+	_, err := c.GetSentSMSDeliveryReports(GetSentSMSDeliveryReportsQuery{})
 
 	if err != nil {
-		t.Errorf("Expected to GetSentSmsDeliveryReports, but was error %+v", err)
+		t.Errorf("Expected to GetSentSMSDeliveryReports, but was error %+v", err)
 	}
 }
 

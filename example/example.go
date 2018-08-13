@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"net/http"
 	"time"
@@ -10,26 +11,29 @@ import (
 )
 
 func main() {
-	username, password, phone := "username", "password", "phoneNumber"
+	username := flag.String("username", "username", "an Infobip username used to authenticate API requests")
+    password := flag.String("password", "password", "an Infobip password used to authenticate API requests")
+    phone := flag.String("phone", "", "a GSM formatted phone number used as a destination of SMS messages")
+    flag.Parse()
 
 	client := sms.Client{
 		BaseURL:    "https://api.infobip.com",
-		Authorizer: infobip.NewBasicCredentials(username, password),
+		Authorizer: infobip.NewBasicCredentials(*username, *password),
 		HTTPCLient: http.DefaultClient,
 	}
 
-	sendSms(client, newMultiMessage(phone))
-	sendSms(client, newMessageWithScheduling(phone))
-	sendSms(client, newMessageWithURLTracking(phone))
-	sendSms(client, newMessageWithNotifications(phone))
+	sendSms(client, newMultiMessage(*phone))
+	sendSms(client, newMessageWithScheduling(*phone))
+	sendSms(client, newMessageWithURLTracking(*phone))
+	sendSms(client, newMessageWithNotifications(*phone))
 
-	response := sendSms(client, newSimpleMessage(phone))
+	response := sendSms(client, newSimpleMessage(*phone))
 
 	time.Sleep(time.Minute * 5)
 
 	if response != nil {
 		messageID := response.Messages[0].MessageID
-		query := sms.GetSentSmsDeliveryReportsQuery{
+		query := sms.GetSentSMSDeliveryReportsQuery{
 			MessageID: messageID,
 			Limit:     15,
 		}
@@ -39,7 +43,7 @@ func main() {
 }
 
 func sendSms(client sms.Client, req sms.SMSAdvancedTextualRequest) *sms.SMSResponse {
-	res, err := client.SendMultipleTextualSmsAdvanced(req)
+	res, err := client.SendMultipleTextualSMSAdvanced(req)
 
 	if err != nil {
 		fmt.Println("SMS sending error:")
@@ -52,8 +56,8 @@ func sendSms(client sms.Client, req sms.SMSAdvancedTextualRequest) *sms.SMSRespo
 	return res
 }
 
-func retrieveStatus(client sms.Client, query sms.GetSentSmsDeliveryReportsQuery) *sms.SMSReportResponse {
-	res, err := client.GetSentSmsDeliveryReports(query)
+func retrieveStatus(client sms.Client, query sms.GetSentSMSDeliveryReportsQuery) *sms.SMSReportResponse {
+	res, err := client.GetSentSMSDeliveryReports(query)
 
 	if err != nil {
 		fmt.Println("Status retrieval error:")

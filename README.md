@@ -3,6 +3,7 @@
 ## Prerequisites
 
 [Go](https://golang.org/)
+Library has been tested with go versions 1.8.x, 1.9.x and 1.10.x.
 
 ## Installation
 
@@ -10,49 +11,11 @@
 
 ## Usage
 
-```go
-package main
-
-import (
-    "fmt"
-	"net/http"
-
-	"github.com/infobip/infobip-api-go-client/pkg"
-    "github.com/infobip/infobip-api-go-client/pkg/sms"
-)
-
-func main() {
-	client := sms.Client{
-		BaseURL:    "https://api.infobip.com",
-		Authorizer: infobip.NewBasicCredentials("username", "password"),
-		HTTPCLient: http.DefaultClient,
-	}
-
-	sendRes, err := client.SendMultipleTextualSmsAdvanced(sms.SMSAdvancedTextualRequest{
-		Messages: []sms.Message{
-			sms.Message{
-				Destinations: []sms.Destination{sms.Destination{To: "phoneNumber"}},
-				Text:         "SMS from Infobip API go client.",
-			},
-		},
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	time.Sleep(time.Minute * 5)
-
-	statusRes, err := client.GetSentSmsDeliveryReports(sms.GetSentSmsDeliveryReportsQuery{
-		MessageID: sendRes.Messages[0].MessageID,
-	})
-
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("Staus of the send SMS is %+v", statusRes.Results[0].Status)
-}
+You can run the examples by executing following commands from the root of this project:
+```bash
+cd ./examples
+go build
+./example -username=your-infobip-username -password=your-infobip-password -phone=destiantion-phone-number
 ```
 
-Find more examples in [`./example`](./example).
+Find out what that does in [`./example`](./example).

@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	//reference importted packages just in case auto-generated code doesn't
+	//reference imported packages just in case auto-generated code doesn't
 	_ = errors.New
 	_ = url.Parse
 	_ = strings.Replace
@@ -40,65 +40,6 @@ type SMSAdvancedTextualRequest struct {
 	Tracking *Tracking `json:"tracking,omitempty"`
 	Messages []Message `json:"messages,omitempty"`
 	BulkID string `json:"bulkId,omitempty"`
-}
-
-type DeliveryDay int
-
-const (
-	MONDAY DeliveryDay = iota
-	TUESDAY
-	WEDNESDAY
-	THURSDAY
-	FRIDAY
-	SATURDAY
-	SUNDAY
-)
-
-var DeliveryDayValues = []DeliveryDay{
-	MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY,
-}
-
-func (val DeliveryDay) String() string {
-	names := []string{
-		"MONDAY",
-		"TUESDAY",
-		"WEDNESDAY",
-		"THURSDAY",
-		"FRIDAY",
-		"SATURDAY",
-		"SUNDAY",
-	}
-	if val < MONDAY || val > SUNDAY {
-		return "Unknown"
-	}
-	return names[val]
-}
-
-func (val DeliveryDay) MarshalJSON() ([]byte, error) {
-	return []byte(`"` + val.String() + `"`), nil
-}
-
-func (val *DeliveryDay) UnmarshalJSON(data []byte) error {
-	s := strings.Trim(string(data), `"`)
-	switch s {
-	case "MONDAY":
-		*val = MONDAY
-	case "TUESDAY":
-		*val = TUESDAY
-	case "WEDNESDAY":
-		*val = WEDNESDAY
-	case "THURSDAY":
-		*val = THURSDAY
-	case "FRIDAY":
-		*val = FRIDAY
-	case "SATURDAY":
-		*val = SATURDAY
-	case "SUNDAY":
-		*val = SUNDAY
-	default:
-		return errors.New("Unknown DeliveryDay value " + s)
-	}
-	return nil
 }
 
 type DeliveryTimeWindow struct {
@@ -166,6 +107,65 @@ func (query GetSentSMSDeliveryReportsQuery) Query() url.Values {
 		q.Set("limit", fmt.Sprint(query.Limit))
 	}
 	return q
+}
+
+type DeliveryDay int
+
+const (
+	DD_MONDAY DeliveryDay = iota
+	DD_TUESDAY
+	DD_WEDNESDAY
+	DD_THURSDAY
+	DD_FRIDAY
+	DD_SATURDAY
+	DD_SUNDAY
+)
+
+var DeliveryDayValues = []DeliveryDay{
+	DD_MONDAY, DD_TUESDAY, DD_WEDNESDAY, DD_THURSDAY, DD_FRIDAY, DD_SATURDAY, DD_SUNDAY,
+}
+
+func (val DeliveryDay) String() string {
+	names := []string{
+		"MONDAY",
+		"TUESDAY",
+		"WEDNESDAY",
+		"THURSDAY",
+		"FRIDAY",
+		"SATURDAY",
+		"SUNDAY",
+	}
+	if val < DD_MONDAY || val > DD_SUNDAY {
+		return "Unknown"
+	}
+	return names[val]
+}
+
+func (val DeliveryDay) MarshalJSON() ([]byte, error) {
+	return []byte(`"` + val.String() + `"`), nil
+}
+
+func (val *DeliveryDay) UnmarshalJSON(data []byte) error {
+	s := strings.Trim(string(data), `"`)
+	switch s {
+	case "MONDAY":
+		*val = DD_MONDAY
+	case "TUESDAY":
+		*val = DD_TUESDAY
+	case "WEDNESDAY":
+		*val = DD_WEDNESDAY
+	case "THURSDAY":
+		*val = DD_THURSDAY
+	case "FRIDAY":
+		*val = DD_FRIDAY
+	case "SATURDAY":
+		*val = DD_SATURDAY
+	case "SUNDAY":
+		*val = DD_SUNDAY
+	default:
+		return errors.New("Unknown DeliveryDay value " + s)
+	}
+	return nil
 }
 
 type BinaryContent struct {

@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	//reference importted packages just in case auto-generated code doesn't
+	//reference imported packages just in case auto-generated code doesn't
 	_ = json.Compact
 	_ = testing.RunTests
 )

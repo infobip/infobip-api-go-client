@@ -12,14 +12,14 @@ import (
 
 func main() {
 	username := flag.String("username", "username", "an Infobip username used to authenticate API requests")
-    password := flag.String("password", "password", "an Infobip password used to authenticate API requests")
-    phone := flag.String("phone", "", "a GSM formatted phone number used as a destination of SMS messages")
-    flag.Parse()
+	password := flag.String("password", "password", "an Infobip password used to authenticate API requests")
+	phone := flag.String("phone", "", "a GSM formatted phone number used as a destination of SMS messages")
+	flag.Parse()
 
 	client := sms.Client{
-		BaseURL:    "https://api.infobip.com",
+		BaseURL:    "https://api.infobip.com", //optional parameter
 		Authorizer: infobip.NewBasicCredentials(*username, *password),
-		HTTPCLient: http.DefaultClient,
+		HTTPClient: http.DefaultClient, //optional
 	}
 
 	sendSms(client, newMultiMessage(*phone))
@@ -94,11 +94,11 @@ func newMessageWithScheduling(destination string) sms.SMSAdvancedTextualRequest 
 				ValidityPeriod: 10000,
 				DeliveryTimeWindow: &sms.DeliveryTimeWindow{
 					Days: []sms.DeliveryDay{
-						sms.MONDAY,
-						sms.TUESDAY,
-						sms.WEDNESDAY,
-						sms.THURSDAY,
-						sms.FRIDAY,
+						sms.DD_MONDAY,
+						sms.DD_TUESDAY,
+						sms.DD_WEDNESDAY,
+						sms.DD_THURSDAY,
+						sms.DD_FRIDAY,
 					},
 				},
 			},

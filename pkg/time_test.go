@@ -59,3 +59,18 @@ func TestUnmarshalingZoned(t *testing.T) {
 		t.Errorf("Expected unmarshaled json string `%s` to have Unix timestamp %d, but was %d", s, e, u)
 	}
 }
+
+func TestTimeUnit(t *testing.T) {
+	values := TimeUnitValues
+	for i := 0; i < len(values); i++ {
+		j, err := json.Marshal(values[i])
+		if err != nil {
+			t.Fatalf("Expected to be able to marshal %v, but was error %v", values[i], err)
+		}
+		var actual TimeUnit
+		json.Unmarshal(j, &actual)
+		if actual != values[i] {
+			t.Errorf("Expected %v to be equal to %v", actual, values[i])
+		}
+	}
+}

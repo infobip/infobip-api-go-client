@@ -23,14 +23,33 @@ func (q QuerierFunc) Query() url.Values {
 	return q()
 }
 
+var (
+	defaultHTTPClient = http.DefaultClient
+	defaultBaseURL    = "https://api.infobip.com"
+)
+
 type Client struct {
 	BaseURL    string
 	Authorizer infobip.Authorizer
-	HTTPCLient *http.Client
+	HTTPClient *http.Client
 }
 
-func CallAPI(client *Client, method string, path string, query Querier, reqBody interface{}, resBodyPtr interface{}) error {
-	url, err := composeURL(client.BaseURL, path, toQuery(query))
+func (c Client) getClient() *http.Client {
+	if c.HTTPClient != nil {
+		return c.HTTPClient
+	}
+	return defaultHTTPClient
+}
+
+func (c Client) getBaseURL() string {
+	if c.BaseURL != "" {
+		return c.BaseURL
+	}
+	return defaultBaseURL
+}
+
+func CallAPI(client *Client, method string, path string, pathParams map[string]string, query Querier, reqBody interface{}, resBodyPtr interface{}) error {
+	url, err := composeURL(client.getBaseURL(), toPath(path, pathParams), toQuery(query))
 	if err != nil {
 		return err
 	}
@@ -46,7 +65,7 @@ func CallAPI(client *Client, method string, path string, query Querier, reqBody 
 	}
 	fillHeaders(&httpReq.Header, client.Authorizer)
 
-	httpRes, err := client.HTTPCLient.Do(httpReq)
+	httpRes, err := client.getClient().Do(httpReq)
 	if err != nil {
 		return err
 	}
@@ -73,6 +92,19 @@ func composeURL(baseURL string, path string, query string) (*url.URL, error) {
 	}
 	full, err := base.Parse(path + query)
 	return full, err
+}
+
+func toPath(path string, pathParams map[string]string) string {
+	if pathParams != nil {
+		changes := make([]string, 0, len(pathParams)*2)
+		for key, val := range pathParams {
+			changes = append(changes, key)
+			changes = append(changes, val)
+		}
+		repl := strings.NewReplacer(changes...)
+		return repl.Replace(path)
+	}
+	return path
 }
 
 func toQuery(querier Querier) string {

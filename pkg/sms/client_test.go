@@ -18,18 +18,6 @@ var (
 	_ = infobip.NewApiKeyCredentials
 )
 
-func TestSendMultipleTextualSMSAdvanced(t *testing.T) {
-	ts := givenServer()
-	defer ts.Close()
-	c := givenClient(ts)
-
-	_, err := c.SendMultipleTextualSMSAdvanced(SMSAdvancedTextualRequest{})
-
-	if err != nil {
-		t.Errorf("Expected to SendMultipleTextualSMSAdvanced, but was error %+v", err)
-	}
-}
-
 func TestGetSentSMSDeliveryReports(t *testing.T) {
 	ts := givenServer()
 	defer ts.Close()
@@ -39,6 +27,18 @@ func TestGetSentSMSDeliveryReports(t *testing.T) {
 
 	if err != nil {
 		t.Errorf("Expected to GetSentSMSDeliveryReports, but was error %+v", err)
+	}
+}
+
+func TestSendMultipleTextualSMSAdvanced(t *testing.T) {
+	ts := givenServer()
+	defer ts.Close()
+	c := givenClient(ts)
+
+	_, err := c.SendMultipleTextualSMSAdvanced(SMSAdvancedTextualRequest{})
+
+	if err != nil {
+		t.Errorf("Expected to SendMultipleTextualSMSAdvanced, but was error %+v", err)
 	}
 }
 
@@ -54,6 +54,5 @@ func givenClient(ts *httptest.Server) Client {
 		Authorizer: infobip.AuthorizerFunc(func() string {
 			return "Auth"
 		}),
-		HTTPCLient: http.DefaultClient,
 	}
 }

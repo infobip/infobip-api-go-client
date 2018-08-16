@@ -28,6 +28,11 @@ func TestFormatingURL(t *testing.T) {
 	ts := givenOKServer(`""`, &reqCaptor)
 	defer ts.Close()
 	c := givenClient(ts)
+	p := map[string]string{
+		"{param2}": "2",
+		"{param1}": "1",
+		"{unused}": "unused",
+	}
 	q := QuerierFunc(func() url.Values {
 		v := make(url.Values)
 		v.Set("foo", "b a r")
@@ -36,12 +41,12 @@ func TestFormatingURL(t *testing.T) {
 	})
 	var actualRes string
 
-	err := CallAPI(&c, "GET", "/test/path", q, nil, &actualRes)
+	err := CallAPI(&c, "GET", "/test/{param1}/{param2}/{param1}", p, q, nil, &actualRes)
 
 	if err != nil {
 		t.Fatalf("Expected to make a GET request, but was error: %+v", err)
 	}
-	expected, _ := url.Parse("/test/path?foo=b+a+r&baz=42")
+	expected, _ := url.Parse("/test/1/2/1?foo=b+a+r&baz=42")
 	actual, _ := url.Parse(reqCaptor.Req.RequestURI)
 	if expected.Path != actual.Path || !reflect.DeepEqual(expected.Query(), actual.Query()) {
 		t.Errorf("Expected request to url `%s`, but was `%s`", expected, reqCaptor.Req.RequestURI)
@@ -55,7 +60,7 @@ func TestAddingHeaders(t *testing.T) {
 	c := givenClient(ts)
 	var actualRes string
 
-	err := CallAPI(&c, "GET", "/test", nil, nil, &actualRes)
+	err := CallAPI(&c, "GET", "/test", nil, nil, nil, &actualRes)
 
 	if err != nil {
 		t.Fatalf("Expected to make a GET request, but was error: %+v", err)
@@ -84,7 +89,7 @@ func TestMarshalingRequest(t *testing.T) {
 	}
 	var actualRes string
 
-	err := CallAPI(&c, "POST", "/test", nil, givenReq, &actualRes)
+	err := CallAPI(&c, "POST", "/test", nil, nil, givenReq, &actualRes)
 
 	if err != nil {
 		t.Fatalf("Expected to make a POST request, but was error: %+v", err)
@@ -103,7 +108,7 @@ func TestUnmarshalingResponse(t *testing.T) {
 	c := givenClient(ts)
 	var actualRes Model
 
-	err := CallAPI(&c, "GET", "/test", nil, nil, &actualRes)
+	err := CallAPI(&c, "GET", "/test", nil, nil, nil, &actualRes)
 
 	if err != nil {
 		t.Fatalf("Expected to make a GET request, but was error: %s", err.Error())
@@ -126,7 +131,7 @@ func TestUnmarshalingAPIError(t *testing.T) {
 	defer ts.Close()
 	c := givenClient(ts)
 
-	err := CallAPI(&c, "GET", "/test", nil, nil, nil)
+	err := CallAPI(&c, "GET", "/test", nil, nil, nil, nil)
 
 	if err == nil {
 		t.Error("Expected error but there was none")
@@ -166,6 +171,6 @@ func givenClient(ts *httptest.Server) Client {
 		Authorizer: infobip.AuthorizerFunc(func() string {
 			return "Auth"
 		}),
-		HTTPCLient: http.DefaultClient,
+		HTTPClient: http.DefaultClient,
 	}
 }

@@ -3,11 +3,14 @@ package sms
 //This is a generated file and is not intended for modification!
 
 import (
+	"fmt"
+
 	"github.com/infobip/infobip-api-go-client/internal"
 )
 
 var (
 	//reference imported packages just in case auto-generated code doesn't
+	_ = fmt.Sprint
 	_ = api.CallAPI
 )
 
@@ -18,7 +21,7 @@ func (client *Client) GetSentSMSDeliveryReports(query GetSentSMSDeliveryReportsQ
 	method := "GET"
 	var response SMSReportResponse
 
-	err := api.CallAPI(downcast(client), method, path, query, nil, &response)
+	err := api.CallAPI(downcast(client), method, path, nil, query, nil, &response)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +34,7 @@ func (client *Client) SendMultipleTextualSMSAdvanced(request SMSAdvancedTextualR
 	method := "POST"
 	var response SMSResponse
 
-	err := api.CallAPI(downcast(client), method, path, nil, request, &response)
+	err := api.CallAPI(downcast(client), method, path, nil, nil, request, &response)
 	if err != nil {
 		return nil, err
 	}

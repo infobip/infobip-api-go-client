@@ -26,6 +26,7 @@ func main() {
 	sendSms(client, newMessageWithScheduling(*phone))
 	sendSms(client, newMessageWithURLTracking(*phone))
 	sendSms(client, newMessageWithNotifications(*phone))
+	sendSms(client, newMessageWithIndiaDltParameters(*phone))
 
 	response := sendSms(client, newSimpleMessage(*phone))
 
@@ -156,6 +157,24 @@ func newMultiMessage(destination string) sms.SMSAdvancedTextualRequest {
 				},
 				From: "InfoSMS",
 				Text: "SMS bulk #2 text",
+			},
+		},
+	}
+}
+
+func newMessageWithIndiaDltParameters(destination string) sms.SMSAdvancedTextualRequest {
+	return sms.SMSAdvancedTextualRequest{
+		Messages: []sms.Message{
+			sms.Message{
+				Destinations: []sms.Destination{sms.Destination{To: destination}},
+				From:         "InfoSMS",
+				Text:         "SMS with India DLT parameters",
+				Regional: &sms.RegionalOptions {
+					IndiaDLT: &sms.IndiaDLTOptions {
+						ContentTemplateID: "content template id",
+						PrincipalEntityID: "principal entity id",
+					},
+				},
 			},
 		},
 	}

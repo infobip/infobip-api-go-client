@@ -72,12 +72,22 @@ type Message struct {
 	DeliveryTimeWindow *DeliveryTimeWindow `json:"deliveryTimeWindow,omitempty"`
 	CampaignID string `json:"campaignId,omitempty"`
 	OperatorClientID string `json:"operatorClientId,omitempty"`
+	Regional *RegionalOptions `json:"regional,omitempty"`
 }
 
 type Language struct {
 	SingleShift bool `json:"singleShift,omitempty"`
 	LockingShift bool `json:"lockingShift,omitempty"`
 	LanguageCode string `json:"languageCode,omitempty"`
+}
+
+type RegionalOptions struct {
+	IndiaDLT *IndiaDLTOptions `json:"indiaDlt,omitempty"`
+}
+
+type IndiaDLTOptions struct {
+	ContentTemplateID string `json:"contentTemplateId,omitempty"`
+	PrincipalEntityID string `json:"principalEntityId,omitempty"`
 }
 
 type Error struct {

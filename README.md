@@ -15,7 +15,7 @@ You can run the examples by executing following commands from the root of this p
 ```bash
 cd ./examples
 go build
-./example -username=your-infobip-username -password=your-infobip-password -phone=destiantion-phone-number
+./example -username=your-infobip-username -password=your-infobip-password -phone=destination-phone-number
 ```
 
 Find out what that does in [`./example`](./example).

@@ -134,7 +134,7 @@ You can get the HTTP status code from `httpResponse` property, and more details 
     //  apiResponse, _, _ := ...
 ```
 
-In order to be able to access our generated `Expecption` models, you will have to do a little bit of type casting.
+In order to be able to access our generated `Exception` models you will have to do a little bit of type casting.
 Methods provided within `ServiceException` object are `GetMessageId()` and `GetText()` referring to the nature of the exception. 
 Withing the `_nethttp.Response` response field (in example labeled as `httpResponse`) you can find pretty much everything that is referring to the HTTP status, e.g. `Status`, `StatusCode`, `Body`, `Header`, etc.
 

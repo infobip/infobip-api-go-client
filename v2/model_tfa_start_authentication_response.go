@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,9 +16,9 @@ import (
 
 // TfaStartAuthenticationResponse struct for TfaStartAuthenticationResponse
 type TfaStartAuthenticationResponse struct {
-	// Call status.
+	// Call status, e.g. `PENDING_ACCEPTED`.
 	CallStatus *string `json:"callStatus,omitempty"`
-	// Status of sent Number Lookup. Number Lookup status can have one of the following values: `NC_DESTINATION_UNKNOWN`, `NC_DESTINATION_REACHABLE`, `NC_DESTINATION_NOT_REACHABLE`, `NC_NOT_CONFIGURED`. If you get the `NC_NOT_CONFIGURED` status, you should contact your Account Manager. SMS will not be sent only if Number Lookup status is `NC_NOT_REACHABLE`.
+	// Status of sent [Number Lookup](https://www.infobip.com/docs/number-lookup). Number Lookup status can have one of the following values: `NC_DESTINATION_UNKNOWN`, `NC_DESTINATION_REACHABLE`, `NC_DESTINATION_NOT_REACHABLE`, `NC_NOT_CONFIGURED`. Contact your Account Manager, if you get the `NC_NOT_CONFIGURED` status. SMS will not be sent only if Number Lookup status is `NC_NOT_REACHABLE`.
 	NcStatus *string `json:"ncStatus,omitempty"`
 	// Sent PIN code ID.
 	PinId *string `json:"pinId,omitempty"`

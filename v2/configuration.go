@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -92,7 +91,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader: make(map[string]string),
-		UserAgent:     "infobip-api-client-go/2.0.0",
+		UserAgent:     "infobip-api-client-go/2.1.0",
 		Debug:         false,
 		Servers: ServerConfigurations{
 			{

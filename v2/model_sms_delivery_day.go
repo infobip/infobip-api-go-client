@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -16,7 +15,7 @@ import (
 	"fmt"
 )
 
-// SmsDeliveryDay the model 'SmsDeliveryDay'
+// SmsDeliveryDay Days of the week which are included in the delivery time window. At least one day must be provided. Separate multiple days with a comma.
 type SmsDeliveryDay string
 
 // List of SmsDeliveryDay

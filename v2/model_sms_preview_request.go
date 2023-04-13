@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,11 +16,11 @@ import (
 
 // SmsPreviewRequest struct for SmsPreviewRequest
 type SmsPreviewRequest struct {
-	// Code for language character set of a message text. Possible values: `TR` for Turkish, `ES` for Spanish, `PT` for Portuguese and `AUTODETECT` to let platform pick character set automatically based on the message text.
-	LanguageCode *string `json:"languageCode,omitempty"`
-	// Message text to preview.
+	// Content of the message being sent.
 	Text string `json:"text"`
-	// Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC` and `NON_UNICODE`.
+	// Language code for the correct character set. Possible values: `TR` for Turkish, `ES` for Spanish, `PT` for Portuguese, or `AUTODETECT` to let platform select the character set based on message content.
+	LanguageCode *string `json:"languageCode,omitempty"`
+	// The transliteration of your sent message from one script to another. Transliteration is used to replace characters which are not recognized as part of your defaulted alphabet. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC`, `PORTUGUESE`, `COLOMBIAN`, `NON_UNICDE`, `ALL` and `NONE`.
 	Transliteration *string `json:"transliteration,omitempty"`
 }
 
@@ -41,6 +40,30 @@ func NewSmsPreviewRequest(text string) *SmsPreviewRequest {
 func NewSmsPreviewRequestWithDefaults() *SmsPreviewRequest {
 	this := SmsPreviewRequest{}
 	return &this
+}
+
+// GetText returns the Text field value
+func (o *SmsPreviewRequest) GetText() string {
+	if o == nil {
+		var ret string
+		return ret
+	}
+
+	return o.Text
+}
+
+// GetTextOk returns a tuple with the Text field value
+// and a boolean to check if the value has been set.
+func (o *SmsPreviewRequest) GetTextOk() (*string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Text, true
+}
+
+// SetText sets field value
+func (o *SmsPreviewRequest) SetText(v string) {
+	o.Text = v
 }
 
 // GetLanguageCode returns the LanguageCode field value if set, zero value otherwise.
@@ -73,30 +96,6 @@ func (o *SmsPreviewRequest) HasLanguageCode() bool {
 // SetLanguageCode gets a reference to the given string and assigns it to the LanguageCode field.
 func (o *SmsPreviewRequest) SetLanguageCode(v string) {
 	o.LanguageCode = &v
-}
-
-// GetText returns the Text field value
-func (o *SmsPreviewRequest) GetText() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Text
-}
-
-// GetTextOk returns a tuple with the Text field value
-// and a boolean to check if the value has been set.
-func (o *SmsPreviewRequest) GetTextOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Text, true
-}
-
-// SetText sets field value
-func (o *SmsPreviewRequest) SetText(v string) {
-	o.Text = v
 }
 
 // GetTransliteration returns the Transliteration field value if set, zero value otherwise.
@@ -133,11 +132,11 @@ func (o *SmsPreviewRequest) SetTransliteration(v string) {
 
 func (o SmsPreviewRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.LanguageCode != nil {
-		toSerialize["languageCode"] = o.LanguageCode
-	}
 	if true {
 		toSerialize["text"] = o.Text
+	}
+	if o.LanguageCode != nil {
+		toSerialize["languageCode"] = o.LanguageCode
 	}
 	if o.Transliteration != nil {
 		toSerialize["transliteration"] = o.Transliteration

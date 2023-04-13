@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,11 +16,11 @@ import (
 
 // TfaStartAuthenticationRequest struct for TfaStartAuthenticationRequest
 type TfaStartAuthenticationRequest struct {
-	// 2FA application ID.
+	// The ID of the application that represents your service, e.g. 2FA for login, 2FA for changing the password, etc.
 	ApplicationId string `json:"applicationId"`
 	// Use this parameter if you wish to override the sender ID from the [created](#channels/sms/create-2fa-message-template) message template parameter `senderId`.
 	From *string `json:"from,omitempty"`
-	// Message template ID that will be sent to phone number.
+	// The ID of the message template (message body with the PIN placeholder) that is sent to the recipient.
 	MessageId string `json:"messageId"`
 	// Key value pairs that will be replaced during message sending. Placeholder keys should NOT contain curly brackets and should NOT contain a `pin` placeholder. Valid example: `\"placeholders\":{\"firstName\":\"John\"}`
 	Placeholders *map[string]string `json:"placeholders,omitempty"`

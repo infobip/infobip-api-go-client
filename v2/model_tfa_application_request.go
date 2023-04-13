@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,9 +16,8 @@ import (
 
 // TfaApplicationRequest struct for TfaApplicationRequest
 type TfaApplicationRequest struct {
-	// Created 2FA application configuration.
 	Configuration *TfaApplicationConfiguration `json:"configuration,omitempty"`
-	// Indicates if the created application is enabled.
+	// Indicates whether the created application is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 	// 2FA application name.
 	Name string `json:"name"`

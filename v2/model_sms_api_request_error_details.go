@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -21,6 +20,8 @@ type SmsApiRequestErrorDetails struct {
 	MessageId *string `json:"messageId,omitempty"`
 	// Detailed error description.
 	Text *string `json:"text,omitempty"`
+	// Validation errors.
+	ValidationErrors *map[string][]string `json:"validationErrors,omitempty"`
 }
 
 // NewSmsApiRequestErrorDetails instantiates a new SmsApiRequestErrorDetails object
@@ -104,6 +105,38 @@ func (o *SmsApiRequestErrorDetails) SetText(v string) {
 	o.Text = &v
 }
 
+// GetValidationErrors returns the ValidationErrors field value if set, zero value otherwise.
+func (o *SmsApiRequestErrorDetails) GetValidationErrors() map[string][]string {
+	if o == nil || o.ValidationErrors == nil {
+		var ret map[string][]string
+		return ret
+	}
+	return *o.ValidationErrors
+}
+
+// GetValidationErrorsOk returns a tuple with the ValidationErrors field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsApiRequestErrorDetails) GetValidationErrorsOk() (*map[string][]string, bool) {
+	if o == nil || o.ValidationErrors == nil {
+		return nil, false
+	}
+	return o.ValidationErrors, true
+}
+
+// HasValidationErrors returns a boolean if a field has been set.
+func (o *SmsApiRequestErrorDetails) HasValidationErrors() bool {
+	if o != nil && o.ValidationErrors != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetValidationErrors gets a reference to the given map[string][]string and assigns it to the ValidationErrors field.
+func (o *SmsApiRequestErrorDetails) SetValidationErrors(v map[string][]string) {
+	o.ValidationErrors = &v
+}
+
 func (o SmsApiRequestErrorDetails) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.MessageId != nil {
@@ -111,6 +144,9 @@ func (o SmsApiRequestErrorDetails) MarshalJSON() ([]byte, error) {
 	}
 	if o.Text != nil {
 		toSerialize["text"] = o.Text
+	}
+	if o.ValidationErrors != nil {
+		toSerialize["validationErrors"] = o.ValidationErrors
 	}
 	return json.Marshal(toSerialize)
 }

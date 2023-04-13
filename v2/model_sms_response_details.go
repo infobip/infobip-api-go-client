@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,14 +14,15 @@ import (
 	"encoding/json"
 )
 
-// SmsResponseDetails struct for SmsResponseDetails
+// SmsResponseDetails An array of message objects of a single message or multiple messages sent under one bulk ID.
 type SmsResponseDetails struct {
-	// The ID that uniquely identifies the message sent.
-	MessageId *string `json:"messageId,omitempty"`
-	// Indicates whether the message is successfully sent, not sent, delivered, not delivered, waiting for delivery or any other possible status.
-	Status *SmsStatus `json:"status,omitempty"`
-	// The message destination address.
+	// Unique message ID. If not passed, it will be automatically generated and returned in a response.
+	MessageId *string    `json:"messageId,omitempty"`
+	Status    *SmsStatus `json:"status,omitempty"`
+	// The destination address of the message.
 	To *string `json:"to,omitempty"`
+	// This is the total count of SMS submitted in the request. SMS messages have a character limit and messages longer than that limit will be split into multiple SMS and reflected in the total count of SMS submitted.
+	SmsCount *int32 `json:"smsCount,omitempty"`
 }
 
 // NewSmsResponseDetails instantiates a new SmsResponseDetails object
@@ -138,6 +138,38 @@ func (o *SmsResponseDetails) SetTo(v string) {
 	o.To = &v
 }
 
+// GetSmsCount returns the SmsCount field value if set, zero value otherwise.
+func (o *SmsResponseDetails) GetSmsCount() int32 {
+	if o == nil || o.SmsCount == nil {
+		var ret int32
+		return ret
+	}
+	return *o.SmsCount
+}
+
+// GetSmsCountOk returns a tuple with the SmsCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsResponseDetails) GetSmsCountOk() (*int32, bool) {
+	if o == nil || o.SmsCount == nil {
+		return nil, false
+	}
+	return o.SmsCount, true
+}
+
+// HasSmsCount returns a boolean if a field has been set.
+func (o *SmsResponseDetails) HasSmsCount() bool {
+	if o != nil && o.SmsCount != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSmsCount gets a reference to the given int32 and assigns it to the SmsCount field.
+func (o *SmsResponseDetails) SetSmsCount(v int32) {
+	o.SmsCount = &v
+}
+
 func (o SmsResponseDetails) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.MessageId != nil {
@@ -148,6 +180,9 @@ func (o SmsResponseDetails) MarshalJSON() ([]byte, error) {
 	}
 	if o.To != nil {
 		toSerialize["to"] = o.To
+	}
+	if o.SmsCount != nil {
+		toSerialize["smsCount"] = o.SmsCount
 	}
 	return json.Marshal(toSerialize)
 }

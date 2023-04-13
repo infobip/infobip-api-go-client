@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,12 +16,15 @@ import (
 
 // SmsAdvancedTextualRequest struct for SmsAdvancedTextualRequest
 type SmsAdvancedTextualRequest struct {
-	// The ID which uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address.
-	BulkId   *string              `json:"bulkId,omitempty"`
-	Messages *[]SmsTextualMessage `json:"messages,omitempty"`
-	// Limit the sending speed for message bulks. In some use cases, you might want to reduce message sending speed if your message call to action involves visiting a website, calling your contact center or similar recipient activity, in which you can handle a limited amount of load. This setting helps you to spread the delivery of the messages over a longer period, allowing your systems or agents to handle incoming traffic in real-time, resulting in better customer satisfaction.
+	// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. If not provided, it will be auto-generated and returned in the API response. Typically, used to fetch [delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) and [message logs](#channels/sms/get-outbound-sms-message-logs).
+	BulkId *string `json:"bulkId,omitempty"`
+	// An array of message objects of a single message or multiple messages sent under one bulk ID.
+	Messages          *[]SmsTextualMessage   `json:"messages"`
 	SendingSpeedLimit *SmsSendingSpeedLimit `json:"sendingSpeedLimit,omitempty"`
+	UrlOptions        *SmsUrlOptions        `json:"urlOptions,omitempty"`
 	Tracking          *SmsTracking          `json:"tracking,omitempty"`
+	// Set to true to return smsCount in the response.  Default is false. smsCount is the total count of SMS submitted in the request.  SMS messages have a character limit and messages longer than that limit will be split into multiple SMS and reflected in the total count of SMS submitted.
+	IncludeSmsCountInResponse *bool `json:"includeSmsCountInResponse,omitempty"`
 }
 
 // NewSmsAdvancedTextualRequest instantiates a new SmsAdvancedTextualRequest object
@@ -31,6 +33,8 @@ type SmsAdvancedTextualRequest struct {
 // will change when the set of required properties is changed
 func NewSmsAdvancedTextualRequest() *SmsAdvancedTextualRequest {
 	this := SmsAdvancedTextualRequest{}
+	var includeSmsCountInResponse bool = false
+	this.IncludeSmsCountInResponse = &includeSmsCountInResponse
 	return &this
 }
 
@@ -39,6 +43,8 @@ func NewSmsAdvancedTextualRequest() *SmsAdvancedTextualRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewSmsAdvancedTextualRequestWithDefaults() *SmsAdvancedTextualRequest {
 	this := SmsAdvancedTextualRequest{}
+	var includeSmsCountInResponse bool = false
+	this.IncludeSmsCountInResponse = &includeSmsCountInResponse
 	return &this
 }
 
@@ -101,7 +107,7 @@ func (o *SmsAdvancedTextualRequest) HasMessages() bool {
 	return false
 }
 
-// SetMessages gets a reference to the given []SmsTextualMessage and assigns it to the Messages field.
+// SetMessages sets field value
 func (o *SmsAdvancedTextualRequest) SetMessages(v []SmsTextualMessage) {
 	o.Messages = &v
 }
@@ -138,6 +144,38 @@ func (o *SmsAdvancedTextualRequest) SetSendingSpeedLimit(v SmsSendingSpeedLimit)
 	o.SendingSpeedLimit = &v
 }
 
+// GetUrlOptions returns the UrlOptions field value if set, zero value otherwise.
+func (o *SmsAdvancedTextualRequest) GetUrlOptions() SmsUrlOptions {
+	if o == nil || o.UrlOptions == nil {
+		var ret SmsUrlOptions
+		return ret
+	}
+	return *o.UrlOptions
+}
+
+// GetUrlOptionsOk returns a tuple with the UrlOptions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsAdvancedTextualRequest) GetUrlOptionsOk() (*SmsUrlOptions, bool) {
+	if o == nil || o.UrlOptions == nil {
+		return nil, false
+	}
+	return o.UrlOptions, true
+}
+
+// HasUrlOptions returns a boolean if a field has been set.
+func (o *SmsAdvancedTextualRequest) HasUrlOptions() bool {
+	if o != nil && o.UrlOptions != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetUrlOptions gets a reference to the given SmsUrlOptions and assigns it to the UrlOptions field.
+func (o *SmsAdvancedTextualRequest) SetUrlOptions(v SmsUrlOptions) {
+	o.UrlOptions = &v
+}
+
 // GetTracking returns the Tracking field value if set, zero value otherwise.
 func (o *SmsAdvancedTextualRequest) GetTracking() SmsTracking {
 	if o == nil || o.Tracking == nil {
@@ -170,6 +208,38 @@ func (o *SmsAdvancedTextualRequest) SetTracking(v SmsTracking) {
 	o.Tracking = &v
 }
 
+// GetIncludeSmsCountInResponse returns the IncludeSmsCountInResponse field value if set, zero value otherwise.
+func (o *SmsAdvancedTextualRequest) GetIncludeSmsCountInResponse() bool {
+	if o == nil || o.IncludeSmsCountInResponse == nil {
+		var ret bool
+		return ret
+	}
+	return *o.IncludeSmsCountInResponse
+}
+
+// GetIncludeSmsCountInResponseOk returns a tuple with the IncludeSmsCountInResponse field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsAdvancedTextualRequest) GetIncludeSmsCountInResponseOk() (*bool, bool) {
+	if o == nil || o.IncludeSmsCountInResponse == nil {
+		return nil, false
+	}
+	return o.IncludeSmsCountInResponse, true
+}
+
+// HasIncludeSmsCountInResponse returns a boolean if a field has been set.
+func (o *SmsAdvancedTextualRequest) HasIncludeSmsCountInResponse() bool {
+	if o != nil && o.IncludeSmsCountInResponse != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetIncludeSmsCountInResponse gets a reference to the given bool and assigns it to the IncludeSmsCountInResponse field.
+func (o *SmsAdvancedTextualRequest) SetIncludeSmsCountInResponse(v bool) {
+	o.IncludeSmsCountInResponse = &v
+}
+
 func (o SmsAdvancedTextualRequest) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.BulkId != nil {
@@ -181,8 +251,14 @@ func (o SmsAdvancedTextualRequest) MarshalJSON() ([]byte, error) {
 	if o.SendingSpeedLimit != nil {
 		toSerialize["sendingSpeedLimit"] = o.SendingSpeedLimit
 	}
+	if o.UrlOptions != nil {
+		toSerialize["urlOptions"] = o.UrlOptions
+	}
 	if o.Tracking != nil {
 		toSerialize["tracking"] = o.Tracking
+	}
+	if o.IncludeSmsCountInResponse != nil {
+		toSerialize["includeSmsCountInResponse"] = o.IncludeSmsCountInResponse
 	}
 	return json.Marshal(toSerialize)
 }

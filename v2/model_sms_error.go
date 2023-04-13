@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,10 +14,8 @@ import (
 	"encoding/json"
 )
 
-// SmsError struct for SmsError
+// SmsError Indicates whether an error occurred during the query execution.
 type SmsError struct {
-	// Human-readable description of the error..
-	Description *string `json:"description,omitempty"`
 	// Error group ID.
 	GroupId *int32 `json:"groupId,omitempty"`
 	// Error group name.
@@ -27,6 +24,8 @@ type SmsError struct {
 	Id *int32 `json:"id,omitempty"`
 	// Error name.
 	Name *string `json:"name,omitempty"`
+	// Human-readable description of the error..
+	Description *string `json:"description,omitempty"`
 	// Tells if the error is permanent.
 	Permanent *bool `json:"permanent,omitempty"`
 }
@@ -46,38 +45,6 @@ func NewSmsError() *SmsError {
 func NewSmsErrorWithDefaults() *SmsError {
 	this := SmsError{}
 	return &this
-}
-
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *SmsError) GetDescription() string {
-	if o == nil || o.Description == nil {
-		var ret string
-		return ret
-	}
-	return *o.Description
-}
-
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsError) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
-		return nil, false
-	}
-	return o.Description, true
-}
-
-// HasDescription returns a boolean if a field has been set.
-func (o *SmsError) HasDescription() bool {
-	if o != nil && o.Description != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *SmsError) SetDescription(v string) {
-	o.Description = &v
 }
 
 // GetGroupId returns the GroupId field value if set, zero value otherwise.
@@ -208,6 +175,38 @@ func (o *SmsError) SetName(v string) {
 	o.Name = &v
 }
 
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *SmsError) GetDescription() string {
+	if o == nil || o.Description == nil {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsError) GetDescriptionOk() (*string, bool) {
+	if o == nil || o.Description == nil {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *SmsError) HasDescription() bool {
+	if o != nil && o.Description != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *SmsError) SetDescription(v string) {
+	o.Description = &v
+}
+
 // GetPermanent returns the Permanent field value if set, zero value otherwise.
 func (o *SmsError) GetPermanent() bool {
 	if o == nil || o.Permanent == nil {
@@ -242,9 +241,6 @@ func (o *SmsError) SetPermanent(v bool) {
 
 func (o SmsError) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
 	if o.GroupId != nil {
 		toSerialize["groupId"] = o.GroupId
 	}
@@ -256,6 +252,9 @@ func (o SmsError) MarshalJSON() ([]byte, error) {
 	}
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
+	}
+	if o.Description != nil {
+		toSerialize["description"] = o.Description
 	}
 	if o.Permanent != nil {
 		toSerialize["permanent"] = o.Permanent

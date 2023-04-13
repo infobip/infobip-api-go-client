@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,8 +16,10 @@ import (
 
 // SmsBulkResponse struct for SmsBulkResponse
 type SmsBulkResponse struct {
+	// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 	BulkId *string `json:"bulkId,omitempty"`
-	SendAt *Time   `json:"sendAt,omitempty"`
+	// Date and time when the message is to be sent. Used for scheduled SMS (see [Scheduled SMS endpoints](#channels/sms/get-scheduled-sms-messages) for more details). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`, and can only be scheduled for no later than 180 days in advance.
+	SendAt *Time `json:"sendAt,omitempty"`
 }
 
 // NewSmsBulkResponse instantiates a new SmsBulkResponse object

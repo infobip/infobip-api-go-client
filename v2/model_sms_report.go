@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,30 +16,31 @@ import (
 
 // SmsReport struct for SmsReport
 type SmsReport struct {
-	// Bulk ID.
+	// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 	BulkId *string `json:"bulkId,omitempty"`
-	// Callback data sent through `callbackData` field in fully featured SMS message.
-	CallbackData *string `json:"callbackData,omitempty"`
-	// Tells when the SMS was finished processing by Infobip (i.e., delivered to the destination, delivered to the destination network, etc.). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
-	DoneAt *Time `json:"doneAt,omitempty"`
-	// Indicates whether the error occurred during the query execution.
-	Error *SmsError `json:"error,omitempty"`
-	// Sender ID that can be alphanumeric or numeric.
+	// Unique message ID.
+	MessageId *string `json:"messageId,omitempty"`
+	// Message destination address.
+	To *string `json:"to,omitempty"`
+	// The sender ID which can be alphanumeric or numeric (e.g., `CompanyName`).
 	From *string `json:"from,omitempty"`
+	// Date and time when the message was [scheduled](#channels/sms/get-scheduled-sms-messages) to be sent. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+	SentAt *Time `json:"sentAt,omitempty"`
+	// Date and time when the Infobip services finished processing the message (i.e., delivered to the destination, delivered to the destination network, etc.). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+	DoneAt *Time `json:"doneAt,omitempty"`
+	// The number of parts the message content was split into.
+	SmsCount *int32 `json:"smsCount,omitempty"`
 	// Mobile country and network codes.
 	MccMnc *string `json:"mccMnc,omitempty"`
-	// Message ID.
-	MessageId *string `json:"messageId,omitempty"`
-	// Sent SMS price.
-	Price *SmsPrice `json:"price,omitempty"`
-	// Tells when the SMS was sent. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
-	SentAt *Time `json:"sentAt,omitempty"`
-	// The number of parts the sent SMS was split into.
-	SmsCount *int32 `json:"smsCount,omitempty"`
-	// Indicates whether the message is successfully sent, not sent, delivered, not delivered, waiting for delivery or any other possible status.
-	Status *SmsStatus `json:"status,omitempty"`
-	// Destination address.
-	To *string `json:"to,omitempty"`
+	// Custom data sent over to the `notifyUrl`.
+	CallbackData *string    `json:"callbackData,omitempty"`
+	Price        *SmsPrice  `json:"price,omitempty"`
+	Status       *SmsStatus `json:"status,omitempty"`
+	Error        *SmsError  `json:"error,omitempty"`
+	// The entity used when sending the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	EntityId *string `json:"entityId,omitempty"`
+	// The application used when sending the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	ApplicationId *string `json:"applicationId,omitempty"`
 }
 
 // NewSmsReport instantiates a new SmsReport object
@@ -92,166 +92,6 @@ func (o *SmsReport) SetBulkId(v string) {
 	o.BulkId = &v
 }
 
-// GetCallbackData returns the CallbackData field value if set, zero value otherwise.
-func (o *SmsReport) GetCallbackData() string {
-	if o == nil || o.CallbackData == nil {
-		var ret string
-		return ret
-	}
-	return *o.CallbackData
-}
-
-// GetCallbackDataOk returns a tuple with the CallbackData field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetCallbackDataOk() (*string, bool) {
-	if o == nil || o.CallbackData == nil {
-		return nil, false
-	}
-	return o.CallbackData, true
-}
-
-// HasCallbackData returns a boolean if a field has been set.
-func (o *SmsReport) HasCallbackData() bool {
-	if o != nil && o.CallbackData != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCallbackData gets a reference to the given string and assigns it to the CallbackData field.
-func (o *SmsReport) SetCallbackData(v string) {
-	o.CallbackData = &v
-}
-
-// GetDoneAt returns the DoneAt field value if set, zero value otherwise.
-func (o *SmsReport) GetDoneAt() Time {
-	if o == nil || o.DoneAt == nil {
-		var ret Time
-		return ret
-	}
-	return *o.DoneAt
-}
-
-// GetDoneAtOk returns a tuple with the DoneAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetDoneAtOk() (*Time, bool) {
-	if o == nil || o.DoneAt == nil {
-		return nil, false
-	}
-	return o.DoneAt, true
-}
-
-// HasDoneAt returns a boolean if a field has been set.
-func (o *SmsReport) HasDoneAt() bool {
-	if o != nil && o.DoneAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDoneAt gets a reference to the given Time and assigns it to the DoneAt field.
-func (o *SmsReport) SetDoneAt(v Time) {
-	o.DoneAt = &v
-}
-
-// GetError returns the Error field value if set, zero value otherwise.
-func (o *SmsReport) GetError() SmsError {
-	if o == nil || o.Error == nil {
-		var ret SmsError
-		return ret
-	}
-	return *o.Error
-}
-
-// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetErrorOk() (*SmsError, bool) {
-	if o == nil || o.Error == nil {
-		return nil, false
-	}
-	return o.Error, true
-}
-
-// HasError returns a boolean if a field has been set.
-func (o *SmsReport) HasError() bool {
-	if o != nil && o.Error != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetError gets a reference to the given SmsError and assigns it to the Error field.
-func (o *SmsReport) SetError(v SmsError) {
-	o.Error = &v
-}
-
-// GetFrom returns the From field value if set, zero value otherwise.
-func (o *SmsReport) GetFrom() string {
-	if o == nil || o.From == nil {
-		var ret string
-		return ret
-	}
-	return *o.From
-}
-
-// GetFromOk returns a tuple with the From field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetFromOk() (*string, bool) {
-	if o == nil || o.From == nil {
-		return nil, false
-	}
-	return o.From, true
-}
-
-// HasFrom returns a boolean if a field has been set.
-func (o *SmsReport) HasFrom() bool {
-	if o != nil && o.From != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetFrom gets a reference to the given string and assigns it to the From field.
-func (o *SmsReport) SetFrom(v string) {
-	o.From = &v
-}
-
-// GetMccMnc returns the MccMnc field value if set, zero value otherwise.
-func (o *SmsReport) GetMccMnc() string {
-	if o == nil || o.MccMnc == nil {
-		var ret string
-		return ret
-	}
-	return *o.MccMnc
-}
-
-// GetMccMncOk returns a tuple with the MccMnc field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetMccMncOk() (*string, bool) {
-	if o == nil || o.MccMnc == nil {
-		return nil, false
-	}
-	return o.MccMnc, true
-}
-
-// HasMccMnc returns a boolean if a field has been set.
-func (o *SmsReport) HasMccMnc() bool {
-	if o != nil && o.MccMnc != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMccMnc gets a reference to the given string and assigns it to the MccMnc field.
-func (o *SmsReport) SetMccMnc(v string) {
-	o.MccMnc = &v
-}
-
 // GetMessageId returns the MessageId field value if set, zero value otherwise.
 func (o *SmsReport) GetMessageId() string {
 	if o == nil || o.MessageId == nil {
@@ -282,134 +122,6 @@ func (o *SmsReport) HasMessageId() bool {
 // SetMessageId gets a reference to the given string and assigns it to the MessageId field.
 func (o *SmsReport) SetMessageId(v string) {
 	o.MessageId = &v
-}
-
-// GetPrice returns the Price field value if set, zero value otherwise.
-func (o *SmsReport) GetPrice() SmsPrice {
-	if o == nil || o.Price == nil {
-		var ret SmsPrice
-		return ret
-	}
-	return *o.Price
-}
-
-// GetPriceOk returns a tuple with the Price field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetPriceOk() (*SmsPrice, bool) {
-	if o == nil || o.Price == nil {
-		return nil, false
-	}
-	return o.Price, true
-}
-
-// HasPrice returns a boolean if a field has been set.
-func (o *SmsReport) HasPrice() bool {
-	if o != nil && o.Price != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetPrice gets a reference to the given SmsPrice and assigns it to the Price field.
-func (o *SmsReport) SetPrice(v SmsPrice) {
-	o.Price = &v
-}
-
-// GetSentAt returns the SentAt field value if set, zero value otherwise.
-func (o *SmsReport) GetSentAt() Time {
-	if o == nil || o.SentAt == nil {
-		var ret Time
-		return ret
-	}
-	return *o.SentAt
-}
-
-// GetSentAtOk returns a tuple with the SentAt field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetSentAtOk() (*Time, bool) {
-	if o == nil || o.SentAt == nil {
-		return nil, false
-	}
-	return o.SentAt, true
-}
-
-// HasSentAt returns a boolean if a field has been set.
-func (o *SmsReport) HasSentAt() bool {
-	if o != nil && o.SentAt != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSentAt gets a reference to the given Time and assigns it to the SentAt field.
-func (o *SmsReport) SetSentAt(v Time) {
-	o.SentAt = &v
-}
-
-// GetSmsCount returns the SmsCount field value if set, zero value otherwise.
-func (o *SmsReport) GetSmsCount() int32 {
-	if o == nil || o.SmsCount == nil {
-		var ret int32
-		return ret
-	}
-	return *o.SmsCount
-}
-
-// GetSmsCountOk returns a tuple with the SmsCount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetSmsCountOk() (*int32, bool) {
-	if o == nil || o.SmsCount == nil {
-		return nil, false
-	}
-	return o.SmsCount, true
-}
-
-// HasSmsCount returns a boolean if a field has been set.
-func (o *SmsReport) HasSmsCount() bool {
-	if o != nil && o.SmsCount != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetSmsCount gets a reference to the given int32 and assigns it to the SmsCount field.
-func (o *SmsReport) SetSmsCount(v int32) {
-	o.SmsCount = &v
-}
-
-// GetStatus returns the Status field value if set, zero value otherwise.
-func (o *SmsReport) GetStatus() SmsStatus {
-	if o == nil || o.Status == nil {
-		var ret SmsStatus
-		return ret
-	}
-	return *o.Status
-}
-
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsReport) GetStatusOk() (*SmsStatus, bool) {
-	if o == nil || o.Status == nil {
-		return nil, false
-	}
-	return o.Status, true
-}
-
-// HasStatus returns a boolean if a field has been set.
-func (o *SmsReport) HasStatus() bool {
-	if o != nil && o.Status != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given SmsStatus and assigns it to the Status field.
-func (o *SmsReport) SetStatus(v SmsStatus) {
-	o.Status = &v
 }
 
 // GetTo returns the To field value if set, zero value otherwise.
@@ -444,43 +156,401 @@ func (o *SmsReport) SetTo(v string) {
 	o.To = &v
 }
 
+// GetFrom returns the From field value if set, zero value otherwise.
+func (o *SmsReport) GetFrom() string {
+	if o == nil || o.From == nil {
+		var ret string
+		return ret
+	}
+	return *o.From
+}
+
+// GetFromOk returns a tuple with the From field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetFromOk() (*string, bool) {
+	if o == nil || o.From == nil {
+		return nil, false
+	}
+	return o.From, true
+}
+
+// HasFrom returns a boolean if a field has been set.
+func (o *SmsReport) HasFrom() bool {
+	if o != nil && o.From != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetFrom gets a reference to the given string and assigns it to the From field.
+func (o *SmsReport) SetFrom(v string) {
+	o.From = &v
+}
+
+// GetSentAt returns the SentAt field value if set, zero value otherwise.
+func (o *SmsReport) GetSentAt() Time {
+	if o == nil || o.SentAt == nil {
+		var ret Time
+		return ret
+	}
+	return *o.SentAt
+}
+
+// GetSentAtOk returns a tuple with the SentAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetSentAtOk() (*Time, bool) {
+	if o == nil || o.SentAt == nil {
+		return nil, false
+	}
+	return o.SentAt, true
+}
+
+// HasSentAt returns a boolean if a field has been set.
+func (o *SmsReport) HasSentAt() bool {
+	if o != nil && o.SentAt != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSentAt gets a reference to the given Time and assigns it to the SentAt field.
+func (o *SmsReport) SetSentAt(v Time) {
+	o.SentAt = &v
+}
+
+// GetDoneAt returns the DoneAt field value if set, zero value otherwise.
+func (o *SmsReport) GetDoneAt() Time {
+	if o == nil || o.DoneAt == nil {
+		var ret Time
+		return ret
+	}
+	return *o.DoneAt
+}
+
+// GetDoneAtOk returns a tuple with the DoneAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetDoneAtOk() (*Time, bool) {
+	if o == nil || o.DoneAt == nil {
+		return nil, false
+	}
+	return o.DoneAt, true
+}
+
+// HasDoneAt returns a boolean if a field has been set.
+func (o *SmsReport) HasDoneAt() bool {
+	if o != nil && o.DoneAt != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDoneAt gets a reference to the given Time and assigns it to the DoneAt field.
+func (o *SmsReport) SetDoneAt(v Time) {
+	o.DoneAt = &v
+}
+
+// GetSmsCount returns the SmsCount field value if set, zero value otherwise.
+func (o *SmsReport) GetSmsCount() int32 {
+	if o == nil || o.SmsCount == nil {
+		var ret int32
+		return ret
+	}
+	return *o.SmsCount
+}
+
+// GetSmsCountOk returns a tuple with the SmsCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetSmsCountOk() (*int32, bool) {
+	if o == nil || o.SmsCount == nil {
+		return nil, false
+	}
+	return o.SmsCount, true
+}
+
+// HasSmsCount returns a boolean if a field has been set.
+func (o *SmsReport) HasSmsCount() bool {
+	if o != nil && o.SmsCount != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetSmsCount gets a reference to the given int32 and assigns it to the SmsCount field.
+func (o *SmsReport) SetSmsCount(v int32) {
+	o.SmsCount = &v
+}
+
+// GetMccMnc returns the MccMnc field value if set, zero value otherwise.
+func (o *SmsReport) GetMccMnc() string {
+	if o == nil || o.MccMnc == nil {
+		var ret string
+		return ret
+	}
+	return *o.MccMnc
+}
+
+// GetMccMncOk returns a tuple with the MccMnc field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetMccMncOk() (*string, bool) {
+	if o == nil || o.MccMnc == nil {
+		return nil, false
+	}
+	return o.MccMnc, true
+}
+
+// HasMccMnc returns a boolean if a field has been set.
+func (o *SmsReport) HasMccMnc() bool {
+	if o != nil && o.MccMnc != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMccMnc gets a reference to the given string and assigns it to the MccMnc field.
+func (o *SmsReport) SetMccMnc(v string) {
+	o.MccMnc = &v
+}
+
+// GetCallbackData returns the CallbackData field value if set, zero value otherwise.
+func (o *SmsReport) GetCallbackData() string {
+	if o == nil || o.CallbackData == nil {
+		var ret string
+		return ret
+	}
+	return *o.CallbackData
+}
+
+// GetCallbackDataOk returns a tuple with the CallbackData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetCallbackDataOk() (*string, bool) {
+	if o == nil || o.CallbackData == nil {
+		return nil, false
+	}
+	return o.CallbackData, true
+}
+
+// HasCallbackData returns a boolean if a field has been set.
+func (o *SmsReport) HasCallbackData() bool {
+	if o != nil && o.CallbackData != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCallbackData gets a reference to the given string and assigns it to the CallbackData field.
+func (o *SmsReport) SetCallbackData(v string) {
+	o.CallbackData = &v
+}
+
+// GetPrice returns the Price field value if set, zero value otherwise.
+func (o *SmsReport) GetPrice() SmsPrice {
+	if o == nil || o.Price == nil {
+		var ret SmsPrice
+		return ret
+	}
+	return *o.Price
+}
+
+// GetPriceOk returns a tuple with the Price field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetPriceOk() (*SmsPrice, bool) {
+	if o == nil || o.Price == nil {
+		return nil, false
+	}
+	return o.Price, true
+}
+
+// HasPrice returns a boolean if a field has been set.
+func (o *SmsReport) HasPrice() bool {
+	if o != nil && o.Price != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetPrice gets a reference to the given SmsPrice and assigns it to the Price field.
+func (o *SmsReport) SetPrice(v SmsPrice) {
+	o.Price = &v
+}
+
+// GetStatus returns the Status field value if set, zero value otherwise.
+func (o *SmsReport) GetStatus() SmsStatus {
+	if o == nil || o.Status == nil {
+		var ret SmsStatus
+		return ret
+	}
+	return *o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetStatusOk() (*SmsStatus, bool) {
+	if o == nil || o.Status == nil {
+		return nil, false
+	}
+	return o.Status, true
+}
+
+// HasStatus returns a boolean if a field has been set.
+func (o *SmsReport) HasStatus() bool {
+	if o != nil && o.Status != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetStatus gets a reference to the given SmsStatus and assigns it to the Status field.
+func (o *SmsReport) SetStatus(v SmsStatus) {
+	o.Status = &v
+}
+
+// GetError returns the Error field value if set, zero value otherwise.
+func (o *SmsReport) GetError() SmsError {
+	if o == nil || o.Error == nil {
+		var ret SmsError
+		return ret
+	}
+	return *o.Error
+}
+
+// GetErrorOk returns a tuple with the Error field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetErrorOk() (*SmsError, bool) {
+	if o == nil || o.Error == nil {
+		return nil, false
+	}
+	return o.Error, true
+}
+
+// HasError returns a boolean if a field has been set.
+func (o *SmsReport) HasError() bool {
+	if o != nil && o.Error != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetError gets a reference to the given SmsError and assigns it to the Error field.
+func (o *SmsReport) SetError(v SmsError) {
+	o.Error = &v
+}
+
+// GetEntityId returns the EntityId field value if set, zero value otherwise.
+func (o *SmsReport) GetEntityId() string {
+	if o == nil || o.EntityId == nil {
+		var ret string
+		return ret
+	}
+	return *o.EntityId
+}
+
+// GetEntityIdOk returns a tuple with the EntityId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetEntityIdOk() (*string, bool) {
+	if o == nil || o.EntityId == nil {
+		return nil, false
+	}
+	return o.EntityId, true
+}
+
+// HasEntityId returns a boolean if a field has been set.
+func (o *SmsReport) HasEntityId() bool {
+	if o != nil && o.EntityId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityId gets a reference to the given string and assigns it to the EntityId field.
+func (o *SmsReport) SetEntityId(v string) {
+	o.EntityId = &v
+}
+
+// GetApplicationId returns the ApplicationId field value if set, zero value otherwise.
+func (o *SmsReport) GetApplicationId() string {
+	if o == nil || o.ApplicationId == nil {
+		var ret string
+		return ret
+	}
+	return *o.ApplicationId
+}
+
+// GetApplicationIdOk returns a tuple with the ApplicationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsReport) GetApplicationIdOk() (*string, bool) {
+	if o == nil || o.ApplicationId == nil {
+		return nil, false
+	}
+	return o.ApplicationId, true
+}
+
+// HasApplicationId returns a boolean if a field has been set.
+func (o *SmsReport) HasApplicationId() bool {
+	if o != nil && o.ApplicationId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetApplicationId gets a reference to the given string and assigns it to the ApplicationId field.
+func (o *SmsReport) SetApplicationId(v string) {
+	o.ApplicationId = &v
+}
+
 func (o SmsReport) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.BulkId != nil {
 		toSerialize["bulkId"] = o.BulkId
 	}
-	if o.CallbackData != nil {
-		toSerialize["callbackData"] = o.CallbackData
+	if o.MessageId != nil {
+		toSerialize["messageId"] = o.MessageId
 	}
-	if o.DoneAt != nil {
-		toSerialize["doneAt"] = o.DoneAt
-	}
-	if o.Error != nil {
-		toSerialize["error"] = o.Error
+	if o.To != nil {
+		toSerialize["to"] = o.To
 	}
 	if o.From != nil {
 		toSerialize["from"] = o.From
 	}
-	if o.MccMnc != nil {
-		toSerialize["mccMnc"] = o.MccMnc
-	}
-	if o.MessageId != nil {
-		toSerialize["messageId"] = o.MessageId
-	}
-	if o.Price != nil {
-		toSerialize["price"] = o.Price
-	}
 	if o.SentAt != nil {
 		toSerialize["sentAt"] = o.SentAt
+	}
+	if o.DoneAt != nil {
+		toSerialize["doneAt"] = o.DoneAt
 	}
 	if o.SmsCount != nil {
 		toSerialize["smsCount"] = o.SmsCount
 	}
+	if o.MccMnc != nil {
+		toSerialize["mccMnc"] = o.MccMnc
+	}
+	if o.CallbackData != nil {
+		toSerialize["callbackData"] = o.CallbackData
+	}
+	if o.Price != nil {
+		toSerialize["price"] = o.Price
+	}
 	if o.Status != nil {
 		toSerialize["status"] = o.Status
 	}
-	if o.To != nil {
-		toSerialize["to"] = o.To
+	if o.Error != nil {
+		toSerialize["error"] = o.Error
+	}
+	if o.EntityId != nil {
+		toSerialize["entityId"] = o.EntityId
+	}
+	if o.ApplicationId != nil {
+		toSerialize["applicationId"] = o.ApplicationId
 	}
 	return json.Marshal(toSerialize)
 }

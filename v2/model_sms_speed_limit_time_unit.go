@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -16,7 +15,7 @@ import (
 	"fmt"
 )
 
-// SmsSpeedLimitTimeUnit the model 'SmsSpeedLimitTimeUnit'
+// SmsSpeedLimitTimeUnit The time unit to define when setting a messaging speed limit. Defaults to `MINUTE`.
 type SmsSpeedLimitTimeUnit string
 
 // List of SmsSpeedLimitTimeUnit

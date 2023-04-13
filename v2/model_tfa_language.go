@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -16,7 +15,7 @@ import (
 	"fmt"
 )
 
-// TfaLanguage the model 'TfaLanguage'
+// TfaLanguage The language code which message is written in used when sending text-to-speech messages. If not defined, it will default to English (`en`).
 type TfaLanguage string
 
 // List of TfaLanguage
@@ -36,6 +35,9 @@ const (
 	TFALANGUAGE_RU    TfaLanguage = "ru"
 	TFALANGUAGE_SV    TfaLanguage = "sv"
 	TFALANGUAGE_FI    TfaLanguage = "fi"
+	TFALANGUAGE_HR    TfaLanguage = "hr"
+	TFALANGUAGE_SL    TfaLanguage = "sl"
+	TFALANGUAGE_RO    TfaLanguage = "ro"
 	TFALANGUAGE_PT_PT TfaLanguage = "pt-pt"
 	TFALANGUAGE_PT_BR TfaLanguage = "pt-br"
 	TFALANGUAGE_ZH_CN TfaLanguage = "zh-cn"
@@ -49,7 +51,7 @@ func (v *TfaLanguage) UnmarshalJSON(src []byte) error {
 		return err
 	}
 	enumTypeValue := TfaLanguage(value)
-	for _, existing := range []TfaLanguage{"en", "es", "ca", "da", "nl", "fr", "de", "it", "ja", "ko", "no", "pl", "ru", "sv", "fi", "pt-pt", "pt-br", "zh-cn", "zh-tw"} {
+	for _, existing := range []TfaLanguage{"en", "es", "ca", "da", "nl", "fr", "de", "it", "ja", "ko", "no", "pl", "ru", "sv", "fi", "hr", "sl", "ro", "pt-pt", "pt-br", "zh-cn", "zh-tw"} {
 		if existing == enumTypeValue {
 			*v = enumTypeValue
 			return nil

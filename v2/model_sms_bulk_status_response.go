@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,6 +16,7 @@ import (
 
 // SmsBulkStatusResponse struct for SmsBulkStatusResponse
 type SmsBulkStatusResponse struct {
+	// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 	BulkId *string        `json:"bulkId,omitempty"`
 	Status *SmsBulkStatus `json:"status,omitempty"`
 }

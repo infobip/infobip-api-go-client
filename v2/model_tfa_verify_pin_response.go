@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -21,11 +20,11 @@ type TfaVerifyPinResponse struct {
 	AttemptsRemaining *int32 `json:"attemptsRemaining,omitempty"`
 	// Phone number (`MSISDN`) to which the 2FA message was sent.
 	Msisdn *string `json:"msisdn,omitempty"`
-	// Indicates if any error occurs during PIN verification.
+	// Indicates whether an error has occurred during PIN verification.
 	PinError *string `json:"pinError,omitempty"`
 	// Sent PIN code ID.
 	PinId *string `json:"pinId,omitempty"`
-	// Indicates if the phone number (`MSISDN`) was successfully verified.
+	// Indicates whether the phone number (`MSISDN`) was successfully verified.
 	Verified *bool `json:"verified,omitempty"`
 }
 

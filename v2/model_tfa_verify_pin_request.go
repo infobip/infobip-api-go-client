@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,7 +16,7 @@ import (
 
 // TfaVerifyPinRequest struct for TfaVerifyPinRequest
 type TfaVerifyPinRequest struct {
-	// PIN code to verify
+	// The PIN code to verify.
 	Pin string `json:"pin"`
 }
 

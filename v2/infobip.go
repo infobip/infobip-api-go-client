@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -11,4 +10,4 @@
 
 package infobip
 
-const Version = "2.0.0"
+const Version = "2.1.0"

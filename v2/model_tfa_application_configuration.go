@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,19 +14,19 @@ import (
 	"encoding/json"
 )
 
-// TfaApplicationConfiguration struct for TfaApplicationConfiguration
+// TfaApplicationConfiguration Created 2FA application configuration.
 type TfaApplicationConfiguration struct {
-	// Tells if multiple PIN verifications are allowed.
+	// Indicates whether multiple PIN verification is allowed.
 	AllowMultiplePinVerifications *bool `json:"allowMultiplePinVerifications,omitempty"`
 	// Number of possible PIN attempts.
 	PinAttempts *int32 `json:"pinAttempts,omitempty"`
-	// PIN time to live. Should be in format of `{timeLength}{timeUnit}`. Here `timeLength` is an optional positive integer with a default value of 1 and `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours and days respectively. Must not be larger that one year, although much lower values are recommended.
+	// Validity period of PIN in specified time unit. Required format: `{timeLength}{timeUnit}`. `timeLength` is optional with a default value of 1. `timeUnit` can be set to: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.
 	PinTimeToLive *string `json:"pinTimeToLive,omitempty"`
-	// Overall number of requests in time interval for generating a PIN and sending an SMS using single application. Should be in format of `{attempts}/{timeLength}{timeUnit}`. Here `attempts` is a mandatory positive integer and `timeLength` is an optional positive integer with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours and days respectively. Time component must not be larger that one year, although much lower values are recommended.
+	// Overall number of requests over a specififed time period for generating a PIN and sending an SMS using a single application. Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` is mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.
 	SendPinPerApplicationLimit *string `json:"sendPinPerApplicationLimit,omitempty"`
-	// Number of requests in time interval for generating a PIN and sending an SMS to one phone number (MSISDN). Should be in format of `{attempts}/{timeLength}{timeUnit}`. Here `attempts` is a mandatory positive integer and `timeLength` is an optional positive integer with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours and days respectively. Time component must not be larger that one year, although much lower values are recommended.
+	// Number of requests over a specififed time period for generating a PIN and sending an SMS to one phone number (MSISDN). Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` is mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one year, although much lower value is recommended.
 	SendPinPerPhoneNumberLimit *string `json:"sendPinPerPhoneNumberLimit,omitempty"`
-	// Number of PIN verification requests in time interval from one phone number (MSISDN). Should be in format of `{attempts}/{timeLength}{timeUnit}`. Here `attempts` is a mandatory positive integer and `timeLength` is an optional positive integer with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours and days respectively. Time component must not be larger that one day, although much lower values are recommended.
+	// The number of PIN verification requests over a specififed time period from one phone number (MSISDN). Required format: `{attempts}/{timeLength}{timeUnit}`. `attempts` is mandatory and `timeLength` is optional with a default value of 1. `timeUnit` is one of: `ms`, `s`, `m`, `h` or `d` representing milliseconds, seconds, minutes, hours, and days respectively. Must not exceed one day, although much lower value is recommended.
 	VerifyPinLimit *string `json:"verifyPinLimit,omitempty"`
 }
 

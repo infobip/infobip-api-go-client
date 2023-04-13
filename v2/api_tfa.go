@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -80,9 +79,12 @@ func (a *TfaApiService) CreateTfaApplicationExecute(r ApiCreateTfaApplicationReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaApplicationRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaApplicationRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -91,7 +93,7 @@ func (a *TfaApiService) CreateTfaApplicationExecute(r ApiCreateTfaApplicationReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -220,9 +222,12 @@ func (a *TfaApiService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTem
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaCreateMessageRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaCreateMessageRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -231,7 +236,7 @@ func (a *TfaApiService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTem
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -318,7 +323,7 @@ func (r ApiGetTfaApplicationRequest) Execute() (TfaApplicationResponse, *_nethtt
  * GetTfaApplication Get 2FA application
  * Get a single 2FA application to see its configuration details.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @param appId Requested application ID.
+ * @param appId ID of application for which configuration view was requested.
  * @return ApiGetTfaApplicationRequest
  */
 func (a *TfaApiService) GetTfaApplication(ctx _context.Context, appId string) ApiGetTfaApplicationRequest {
@@ -365,7 +370,7 @@ func (a *TfaApiService) GetTfaApplicationExecute(r ApiGetTfaApplicationRequest) 
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -493,7 +498,7 @@ func (a *TfaApiService) GetTfaApplicationsExecute(r ApiGetTfaApplicationsRequest
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -629,7 +634,7 @@ func (a *TfaApiService) GetTfaMessageTemplateExecute(r ApiGetTfaMessageTemplateR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -761,7 +766,7 @@ func (a *TfaApiService) GetTfaMessageTemplatesExecute(r ApiGetTfaMessageTemplate
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -919,7 +924,7 @@ func (a *TfaApiService) GetTfaVerificationStatusExecute(r ApiGetTfaVerificationS
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1046,9 +1051,12 @@ func (a *TfaApiService) ResendTfaPinCodeOverSmsExecute(r ApiResendTfaPinCodeOver
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaResendPinRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaResendPinRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1057,7 +1065,7 @@ func (a *TfaApiService) ResendTfaPinCodeOverSmsExecute(r ApiResendTfaPinCodeOver
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1186,9 +1194,12 @@ func (a *TfaApiService) ResendTfaPinCodeOverVoiceExecute(r ApiResendTfaPinCodeOv
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaResendPinRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaResendPinRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1197,7 +1208,7 @@ func (a *TfaApiService) ResendTfaPinCodeOverVoiceExecute(r ApiResendTfaPinCodeOv
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1273,16 +1284,16 @@ func (a *TfaApiService) ResendTfaPinCodeOverVoiceExecute(r ApiResendTfaPinCodeOv
 type ApiSendTfaPinCodeOverSmsRequest struct {
 	ctx                           _context.Context
 	ApiService                    *TfaApiService
-	ncNeeded                      *bool
 	tfaStartAuthenticationRequest *TfaStartAuthenticationRequest
+	ncNeeded                      *bool
 }
 
-func (r ApiSendTfaPinCodeOverSmsRequest) NcNeeded(ncNeeded bool) ApiSendTfaPinCodeOverSmsRequest {
-	r.ncNeeded = &ncNeeded
-	return r
-}
 func (r ApiSendTfaPinCodeOverSmsRequest) TfaStartAuthenticationRequest(tfaStartAuthenticationRequest TfaStartAuthenticationRequest) ApiSendTfaPinCodeOverSmsRequest {
 	r.tfaStartAuthenticationRequest = &tfaStartAuthenticationRequest
+	return r
+}
+func (r ApiSendTfaPinCodeOverSmsRequest) NcNeeded(ncNeeded bool) ApiSendTfaPinCodeOverSmsRequest {
+	r.ncNeeded = &ncNeeded
 	return r
 }
 
@@ -1327,12 +1338,15 @@ func (a *TfaApiService) SendTfaPinCodeOverSmsExecute(r ApiSendTfaPinCodeOverSmsR
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaStartAuthenticationRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaStartAuthenticationRequest is required and must be specified")
+	}
 
 	if r.ncNeeded != nil {
 		localVarQueryParams.Add("ncNeeded", parameterToString(*r.ncNeeded, ""))
 	}
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1341,7 +1355,7 @@ func (a *TfaApiService) SendTfaPinCodeOverSmsExecute(r ApiSendTfaPinCodeOverSmsR
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1466,9 +1480,12 @@ func (a *TfaApiService) SendTfaPinCodeOverVoiceExecute(r ApiSendTfaPinCodeOverVo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaStartAuthenticationRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaStartAuthenticationRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1477,7 +1494,7 @@ func (a *TfaApiService) SendTfaPinCodeOverVoiceExecute(r ApiSendTfaPinCodeOverVo
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1606,9 +1623,12 @@ func (a *TfaApiService) UpdateTfaApplicationExecute(r ApiUpdateTfaApplicationReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaApplicationRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaApplicationRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1617,7 +1637,7 @@ func (a *TfaApiService) UpdateTfaApplicationExecute(r ApiUpdateTfaApplicationReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1750,9 +1770,12 @@ func (a *TfaApiService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTem
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaUpdateMessageRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaUpdateMessageRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1761,7 +1784,7 @@ func (a *TfaApiService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTem
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -1890,9 +1913,12 @@ func (a *TfaApiService) VerifyTfaPhoneNumberExecute(r ApiVerifyTfaPhoneNumberReq
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.tfaVerifyPinRequest == nil {
+		return localVarReturnValue, nil, reportError("tfaVerifyPinRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -1901,7 +1927,7 @@ func (a *TfaApiService) VerifyTfaPhoneNumberExecute(r ApiVerifyTfaPhoneNumberReq
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

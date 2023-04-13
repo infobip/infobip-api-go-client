@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,14 +14,12 @@ import (
 	"encoding/json"
 )
 
-// SmsDeliveryTimeWindow struct for SmsDeliveryTimeWindow
+// SmsDeliveryTimeWindow Sets specific SMS delivery window outside of which messages won't be delivered. Often, used when there are restrictions on when messages can be sent.
 type SmsDeliveryTimeWindow struct {
-	// Days which are included in the delivery time window. Values are: `MONDAY`, `TUESDAY`, `WEDNESDAY`, `THURSDAY`, `FRIDAY`, `SATURDAY`, `SUNDAY`. At least one day must be stated.
+	// Days of the week which are included in the delivery time window. At least one day must be provided. Separate multiple days with a comma.
 	Days []SmsDeliveryDay `json:"days"`
-	// Exact time of day in which the sending can start. Consists of hour and minute properties, both mandatory. Time is expressed in the UTC time zone.
 	From *SmsDeliveryTime `json:"from,omitempty"`
-	// Exact time of day in which the sending will end. Consists of an hour and minute properties, both mandatory. Time is expressed in the UTC time zone.
-	To *SmsDeliveryTime `json:"to,omitempty"`
+	To   *SmsDeliveryTime `json:"to,omitempty"`
 }
 
 // NewSmsDeliveryTimeWindow instantiates a new SmsDeliveryTimeWindow object

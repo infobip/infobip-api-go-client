@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,11 +16,10 @@ import (
 
 // TfaApplicationResponse struct for TfaApplicationResponse
 type TfaApplicationResponse struct {
-	// 2FA application ID.
-	ApplicationId *string `json:"applicationId,omitempty"`
-	// Created 2FA application configuration.
+	// The ID of the application that represents your service, e.g. 2FA for login, 2FA for changing the password, etc.
+	ApplicationId *string                      `json:"applicationId,omitempty"`
 	Configuration *TfaApplicationConfiguration `json:"configuration,omitempty"`
-	// Indicates if the created application is enabled.
+	// Indicates whether the created application is enabled.
 	Enabled *bool `json:"enabled,omitempty"`
 	// 2FA application name.
 	Name *string `json:"name,omitempty"`

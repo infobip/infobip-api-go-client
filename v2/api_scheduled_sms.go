@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -44,7 +43,7 @@ func (r ApiGetScheduledSmsMessagesRequest) Execute() (SmsBulkResponse, *_nethttp
 
 /*
  * GetScheduledSmsMessages Get scheduled SMS messages
- * See the status and the scheduled time of your SMS messages.
+ * See all scheduled messages and their scheduled date and time. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetScheduledSmsMessagesRequest
  */
@@ -94,7 +93,7 @@ func (a *ScheduledSmsApiService) GetScheduledSmsMessagesExecute(r ApiGetSchedule
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -182,7 +181,7 @@ func (r ApiGetScheduledSmsMessagesStatusRequest) Execute() (SmsBulkStatusRespons
 
 /*
  * GetScheduledSmsMessagesStatus Get scheduled SMS messages status
- * See the status of scheduled messages.
+ * See the status of scheduled messages. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetScheduledSmsMessagesStatusRequest
  */
@@ -232,7 +231,7 @@ func (a *ScheduledSmsApiService) GetScheduledSmsMessagesStatusExecute(r ApiGetSc
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -261,7 +260,7 @@ func (a *ScheduledSmsApiService) GetScheduledSmsMessagesStatusExecute(r ApiGetSc
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode <= 499 {
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -271,7 +270,7 @@ func (a *ScheduledSmsApiService) GetScheduledSmsMessagesStatusExecute(r ApiGetSc
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 500 && localVarHTTPResponse.StatusCode <= 599 {
+		if localVarHTTPResponse.StatusCode == 404 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -281,13 +280,15 @@ func (a *ScheduledSmsApiService) GetScheduledSmsMessagesStatusExecute(r ApiGetSc
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsBulkStatusResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v SmsApiException
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.model = v
 		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -325,7 +326,7 @@ func (r ApiRescheduleSmsMessagesRequest) Execute() (SmsBulkResponse, *_nethttp.R
 
 /*
  * RescheduleSmsMessages Reschedule SMS messages
- * Change the date and time for sending scheduled messages.
+ * Change the date and time of already scheduled messages. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiRescheduleSmsMessagesRequest
  */
@@ -363,10 +364,13 @@ func (a *ScheduledSmsApiService) RescheduleSmsMessagesExecute(r ApiRescheduleSms
 	if r.bulkId == nil {
 		return localVarReturnValue, nil, reportError("bulkId is required and must be specified")
 	}
+	if r.smsBulkRequest == nil {
+		return localVarReturnValue, nil, reportError("smsBulkRequest is required and must be specified")
+	}
 
 	localVarQueryParams.Add("bulkId", parameterToString(*r.bulkId, ""))
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -375,7 +379,7 @@ func (a *ScheduledSmsApiService) RescheduleSmsMessagesExecute(r ApiRescheduleSms
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -470,7 +474,7 @@ func (r ApiUpdateScheduledSmsMessagesStatusRequest) Execute() (SmsBulkStatusResp
 
 /*
  * UpdateScheduledSmsMessagesStatus Update scheduled SMS messages status
- * Change status or completely cancel sending of scheduled messages.
+ * Change the status or completely cancel sending of scheduled messages. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiUpdateScheduledSmsMessagesStatusRequest
  */
@@ -508,10 +512,13 @@ func (a *ScheduledSmsApiService) UpdateScheduledSmsMessagesStatusExecute(r ApiUp
 	if r.bulkId == nil {
 		return localVarReturnValue, nil, reportError("bulkId is required and must be specified")
 	}
+	if r.smsUpdateStatusRequest == nil {
+		return localVarReturnValue, nil, reportError("smsUpdateStatusRequest is required and must be specified")
+	}
 
 	localVarQueryParams.Add("bulkId", parameterToString(*r.bulkId, ""))
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -520,7 +527,7 @@ func (a *ScheduledSmsApiService) UpdateScheduledSmsMessagesStatusExecute(r ApiUp
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)

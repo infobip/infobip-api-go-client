@@ -5,6 +5,22 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [[2.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/2.1.0)] - 2023-04-12
+
+### Added
+- Support for [Confirm Conversion API](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/log-end-tag)
+
+### Changed
+- SMS models:
+    - Additional fields related to [CPaaS X](https://www.infobip.com/docs/cpaas-x): `EntityId` and `ApplicationId`.
+    - `UrlOptions` and `IncludeSMSCountInResponse` fields in `SmsAdvancedTextualRequest` model.
+    - `ValidationErrors` field in `SmsApiRequestErrorDetails` model.
+    - New regional options for sending promotional SMS to phone numbers registered in Turkey.
+    - New model `UrlOptions` for setting up URL shortening and tracking feature.
+- TFA models:
+    - New languages support for sending text to speech messages: `hr`, `sl` and `ro`.
+
+
 ## [ [2.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/2.0.0) ] - 2021-06-30
 
 🎉 **NEW Major Version of `infobip`.**

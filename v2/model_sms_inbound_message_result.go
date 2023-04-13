@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,9 +16,12 @@ import (
 
 // SmsInboundMessageResult struct for SmsInboundMessageResult
 type SmsInboundMessageResult struct {
-	MessageCount        *int32               `json:"messageCount,omitempty"`
-	PendingMessageCount *int32               `json:"pendingMessageCount,omitempty"`
-	Results             *[]SmsInboundMessage `json:"results,omitempty"`
+	// The number of messages returned in the `results` array.
+	MessageCount *int32 `json:"messageCount,omitempty"`
+	// The number of messages that have not been pulled in.
+	PendingMessageCount *int32 `json:"pendingMessageCount,omitempty"`
+	// An array of result objects.
+	Results *[]SmsInboundMessage `json:"results,omitempty"`
 }
 
 // NewSmsInboundMessageResult instantiates a new SmsInboundMessageResult object

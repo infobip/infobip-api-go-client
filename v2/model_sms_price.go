@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,12 +14,12 @@ import (
 	"encoding/json"
 )
 
-// SmsPrice struct for SmsPrice
+// SmsPrice Sent SMS price.
 type SmsPrice struct {
-	// The currency in which the price is expressed.
-	Currency *string `json:"currency,omitempty"`
 	// Price per one SMS.
 	PricePerMessage *float64 `json:"pricePerMessage,omitempty"`
+	// The currency in which the price is expressed.
+	Currency *string `json:"currency,omitempty"`
 }
 
 // NewSmsPrice instantiates a new SmsPrice object
@@ -38,38 +37,6 @@ func NewSmsPrice() *SmsPrice {
 func NewSmsPriceWithDefaults() *SmsPrice {
 	this := SmsPrice{}
 	return &this
-}
-
-// GetCurrency returns the Currency field value if set, zero value otherwise.
-func (o *SmsPrice) GetCurrency() string {
-	if o == nil || o.Currency == nil {
-		var ret string
-		return ret
-	}
-	return *o.Currency
-}
-
-// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsPrice) GetCurrencyOk() (*string, bool) {
-	if o == nil || o.Currency == nil {
-		return nil, false
-	}
-	return o.Currency, true
-}
-
-// HasCurrency returns a boolean if a field has been set.
-func (o *SmsPrice) HasCurrency() bool {
-	if o != nil && o.Currency != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetCurrency gets a reference to the given string and assigns it to the Currency field.
-func (o *SmsPrice) SetCurrency(v string) {
-	o.Currency = &v
 }
 
 // GetPricePerMessage returns the PricePerMessage field value if set, zero value otherwise.
@@ -104,13 +71,45 @@ func (o *SmsPrice) SetPricePerMessage(v float64) {
 	o.PricePerMessage = &v
 }
 
+// GetCurrency returns the Currency field value if set, zero value otherwise.
+func (o *SmsPrice) GetCurrency() string {
+	if o == nil || o.Currency == nil {
+		var ret string
+		return ret
+	}
+	return *o.Currency
+}
+
+// GetCurrencyOk returns a tuple with the Currency field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsPrice) GetCurrencyOk() (*string, bool) {
+	if o == nil || o.Currency == nil {
+		return nil, false
+	}
+	return o.Currency, true
+}
+
+// HasCurrency returns a boolean if a field has been set.
+func (o *SmsPrice) HasCurrency() bool {
+	if o != nil && o.Currency != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetCurrency gets a reference to the given string and assigns it to the Currency field.
+func (o *SmsPrice) SetCurrency(v string) {
+	o.Currency = &v
+}
+
 func (o SmsPrice) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Currency != nil {
-		toSerialize["currency"] = o.Currency
-	}
 	if o.PricePerMessage != nil {
 		toSerialize["pricePerMessage"] = o.PricePerMessage
+	}
+	if o.Currency != nil {
+		toSerialize["currency"] = o.Currency
 	}
 	return json.Marshal(toSerialize)
 }

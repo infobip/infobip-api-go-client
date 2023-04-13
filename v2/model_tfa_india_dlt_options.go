@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// TfaIndiaDltOptions struct for TfaIndiaDltOptions
+// TfaIndiaDltOptions Distributed Ledger Technology (DLT) specific parameters required for sending SMS to phone numbers registered in India.
 type TfaIndiaDltOptions struct {
-	// Id of your registered DTL content template that matches this message's text.
+	// Registered DLT content template ID which matches message you are sending.
 	ContentTemplateId *string `json:"contentTemplateId,omitempty"`
-	// Your assigned DTL principal entity id.
+	// Your assigned DLT principal entity ID.
 	PrincipalEntityId string `json:"principalEntityId"`
 }
 

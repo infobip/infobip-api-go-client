@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,9 +16,9 @@ import (
 
 // SmsPreviewResponse struct for SmsPreviewResponse
 type SmsPreviewResponse struct {
-	// Text supplied in the request.
+	// Message content supplied in the request.
 	OriginalText *string `json:"originalText,omitempty"`
-	// Previews of applying different configurations to the original text.
+	// Allows for previewing the original message content once additional language configuration has been applied to it.
 	Previews *[]SmsPreview `json:"previews,omitempty"`
 }
 

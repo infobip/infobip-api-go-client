@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,10 +14,10 @@ import (
 	"encoding/json"
 )
 
-// SmsRegionalOptions struct for SmsRegionalOptions
+// SmsRegionalOptions Region-specific parameters, often imposed by local laws. Use this, if country or region that you are sending an SMS to requires additional information.
 type SmsRegionalOptions struct {
-	// Distributed Ledger Technology (DLT) specific parameters required for sending SMS to phone numbers registered in India.
-	IndiaDlt *SmsIndiaDltOptions `json:"indiaDlt,omitempty"`
+	IndiaDlt  *SmsIndiaDltOptions  `json:"indiaDlt,omitempty"`
+	TurkeyIys *SmsTurkeyIysOptions `json:"turkeyIys,omitempty"`
 }
 
 // NewSmsRegionalOptions instantiates a new SmsRegionalOptions object
@@ -70,10 +69,45 @@ func (o *SmsRegionalOptions) SetIndiaDlt(v SmsIndiaDltOptions) {
 	o.IndiaDlt = &v
 }
 
+// GetTurkeyIys returns the TurkeyIys field value if set, zero value otherwise.
+func (o *SmsRegionalOptions) GetTurkeyIys() SmsTurkeyIysOptions {
+	if o == nil || o.TurkeyIys == nil {
+		var ret SmsTurkeyIysOptions
+		return ret
+	}
+	return *o.TurkeyIys
+}
+
+// GetTurkeyIysOk returns a tuple with the TurkeyIys field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsRegionalOptions) GetTurkeyIysOk() (*SmsTurkeyIysOptions, bool) {
+	if o == nil || o.TurkeyIys == nil {
+		return nil, false
+	}
+	return o.TurkeyIys, true
+}
+
+// HasTurkeyIys returns a boolean if a field has been set.
+func (o *SmsRegionalOptions) HasTurkeyIys() bool {
+	if o != nil && o.TurkeyIys != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTurkeyIys gets a reference to the given SmsTurkeyIysOptions and assigns it to the TurkeyIys field.
+func (o *SmsRegionalOptions) SetTurkeyIys(v SmsTurkeyIysOptions) {
+	o.TurkeyIys = &v
+}
+
 func (o SmsRegionalOptions) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.IndiaDlt != nil {
 		toSerialize["indiaDlt"] = o.IndiaDlt
+	}
+	if o.TurkeyIys != nil {
+		toSerialize["turkeyIys"] = o.TurkeyIys
 	}
 	return json.Marshal(toSerialize)
 }

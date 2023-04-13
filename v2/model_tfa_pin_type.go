@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -16,7 +15,7 @@ import (
 	"fmt"
 )
 
-// TfaPinType the model 'TfaPinType'
+// TfaPinType Type of PIN code that will be generated and sent as part of 2FA message.
 type TfaPinType string
 
 // List of TfaPinType

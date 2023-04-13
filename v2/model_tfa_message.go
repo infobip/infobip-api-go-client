@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,22 +16,19 @@ import (
 
 // TfaMessage struct for TfaMessage
 type TfaMessage struct {
-	// 2FA application ID for which the requested message is created.
-	ApplicationId *string `json:"applicationId,omitempty"`
-	// Language code of language in which message text is written. It is used for reading the message when it is sent via voice. If no language is set, message will be read in `English`.
-	Language *TfaLanguage `json:"language,omitempty"`
-	// Message template ID.
+	// The ID of the application that represents your service (e.g. 2FA for login, 2FA for changing the password, etc.) for which the requested message has been created.
+	ApplicationId *string      `json:"applicationId,omitempty"`
+	Language      *TfaLanguage `json:"language,omitempty"`
+	// The ID of the message template (message body with the PIN placeholder) that is sent to the recipient.
 	MessageId *string `json:"messageId,omitempty"`
 	// Text of a message that will be sent. Message text must contain `pinPlaceholder`.
 	MessageText *string `json:"messageText,omitempty"`
 	// PIN code length.
 	PinLength *int32 `json:"pinLength,omitempty"`
-	// PIN code placeholder that will be replaced with generated PIN code.
-	PinPlaceholder *string `json:"pinPlaceholder,omitempty"`
-	// Type of PIN code that will be generated and sent as part of 2FA message. You can set PIN type to numeric, alpha, alphanumeric or hex.
-	PinType *TfaPinType `json:"pinType,omitempty"`
-	// Region specific parameters, often specified by local laws. Use this if country or region that you are sending SMS to requires some extra parameters.
-	Regional *TfaRegionalOptions `json:"regional,omitempty"`
+	// The PIN code placeholder that will be replaced with a generated PIN code.
+	PinPlaceholder *string             `json:"pinPlaceholder,omitempty"`
+	PinType        *TfaPinType         `json:"pinType,omitempty"`
+	Regional       *TfaRegionalOptions `json:"regional,omitempty"`
 	// In case PIN message is sent by Voice, DTMF code will enable replaying the message.
 	RepeatDTMF *string `json:"repeatDTMF,omitempty"`
 	// The name that will appear as the sender of the 2FA message (Example: CompanyName).

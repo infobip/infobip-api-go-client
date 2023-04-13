@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,9 +14,8 @@ import (
 	"encoding/json"
 )
 
-// TfaRegionalOptions struct for TfaRegionalOptions
+// TfaRegionalOptions Region-specific parameters, often imposed by local laws. Use this, if country or region that you are sending a message to requires additional information.
 type TfaRegionalOptions struct {
-	// Distributed Ledger Technology (DLT) specific parameters required for sending SMS to phone numbers registered in India.
 	IndiaDlt *TfaIndiaDltOptions `json:"indiaDlt,omitempty"`
 }
 

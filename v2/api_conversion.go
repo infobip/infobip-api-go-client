@@ -16,6 +16,7 @@ import (
 	_ioutil "io/ioutil"
 	_nethttp "net/http"
 	_neturl "net/url"
+	"strings"
 )
 
 // Linger please
@@ -23,65 +24,61 @@ var (
 	_ _context.Context
 )
 
-// ReceiveSmsApiService ReceiveSmsApi service
-type ReceiveSmsApiService service
+// ConversionApiService ConversionApi service
+type ConversionApiService service
 
-type ApiGetInboundSmsMessagesRequest struct {
+type ApiConfirmConversionRequest struct {
 	ctx        _context.Context
-	ApiService *ReceiveSmsApiService
-	limit      *int32
+	ApiService *ConversionApiService
+	messageId  string
 }
 
-func (r ApiGetInboundSmsMessagesRequest) Limit(limit int32) ApiGetInboundSmsMessagesRequest {
-	r.limit = &limit
-	return r
-}
-
-func (r ApiGetInboundSmsMessagesRequest) Execute() (SmsInboundMessageResult, *_nethttp.Response, error) {
-	return r.ApiService.GetInboundSmsMessagesExecute(r)
+func (r ApiConfirmConversionRequest) Execute() (ConversionResponse, *_nethttp.Response, error) {
+	return r.ApiService.ConfirmConversionExecute(r)
 }
 
 /*
- * GetInboundSmsMessages Get inbound SMS messages
- * If for some reason you are unable to receive incoming SMS to the endpoint of your choice in real time, you can use this API call to fetch messages. Each request will return a batch of received messages - only once. The API request will only return new messages that arrived since the last API request.
+ * ConfirmConversion Confirm conversion
+ * Use this endpoint to inform the Infobip platform about the successful conversion on your side. Infobip will use this information to monitor SMS performance and provide you with better service. To enable Conversion Tracking, set up the “tracking” object to “SMS” when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms) over HTTP API.
+For more information, see: [Tracking Conversion](https://www.infobip.com/docs/sms/api#track-conversion).
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
- * @return ApiGetInboundSmsMessagesRequest
- */
-func (a *ReceiveSmsApiService) GetInboundSmsMessages(ctx _context.Context) ApiGetInboundSmsMessagesRequest {
-	return ApiGetInboundSmsMessagesRequest{
+ * @param messageId ID of a converted message.
+ * @return ApiConfirmConversionRequest
+*/
+func (a *ConversionApiService) ConfirmConversion(ctx _context.Context, messageId string) ApiConfirmConversionRequest {
+	return ApiConfirmConversionRequest{
 		ApiService: a,
 		ctx:        ctx,
+		messageId:  messageId,
 	}
 }
 
 /*
  * Execute executes the request
- * @return SmsInboundMessageResult
+ * @return ConversionResponse
  */
-func (a *ReceiveSmsApiService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMessagesRequest) (SmsInboundMessageResult, *_nethttp.Response, error) {
+func (a *ConversionApiService) ConfirmConversionExecute(r ApiConfirmConversionRequest) (ConversionResponse, *_nethttp.Response, error) {
 	var (
-		localVarHTTPMethod   = _nethttp.MethodGet
+		localVarHTTPMethod   = _nethttp.MethodPost
 		localVarPostBody     interface{}
 		localVarFormFileName string
 		localVarFileName     string
 		localVarFileBytes    []byte
-		localVarReturnValue  SmsInboundMessageResult
+		localVarReturnValue  ConversionResponse
 	)
 
-	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ReceiveSmsApiService.GetInboundSmsMessages")
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "ConversionApiService.ConfirmConversion")
 	if err != nil {
 		return localVarReturnValue, nil, GenericOpenAPIError{error: err.Error()}
 	}
 
-	localVarPath := localBasePath + "/sms/1/inbox/reports"
+	localVarPath := localBasePath + "/ct/1/log/end/{messageId}"
+	localVarPath = strings.Replace(localVarPath, "{"+"messageId"+"}", _neturl.PathEscape(parameterToString(r.messageId, "")), -1)
 
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
 
-	if r.limit != nil {
-		localVarQueryParams.Add("limit", parameterToString(*r.limit, ""))
-	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -141,7 +138,7 @@ func (a *ReceiveSmsApiService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMe
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsInboundMessageResult
+		var v ConversionResponse
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()

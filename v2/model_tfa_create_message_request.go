@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,21 +16,18 @@ import (
 
 // TfaCreateMessageRequest struct for TfaCreateMessageRequest
 type TfaCreateMessageRequest struct {
-	// Language code of language in which message text is written. It is used for reading the message when it is sent via voice. If no language is set, message will be read in `English`.
 	Language *TfaLanguage `json:"language,omitempty"`
-	// Text of a message that will be sent. It can contain placeholders that will be replaced upon sending. Placeholder format is `{{placeholderName}}`. Message text must contain `{{pin}}` placeholder.
+	// Content of the message being sent which contains at minimum one placeholder for a PIN code (`{{pin}}`). Placeholder format is `{{placeholderName}}`.
 	MessageText string `json:"messageText"`
 	// PIN code length.
-	PinLength *int32 `json:"pinLength,omitempty"`
-	// Type of PIN code that will be generated and sent as part of 2FA message.
-	PinType TfaPinType `json:"pinType"`
-	// Region specific parameters, often specified by local laws. Use this if country or region that you are sending SMS to requires some extra parameters.
-	Regional *TfaRegionalOptions `json:"regional,omitempty"`
-	// In case PIN message is sent by Voice, DTMF code will enable replaying the message.
+	PinLength *int32              `json:"pinLength,omitempty"`
+	PinType   TfaPinType          `json:"pinType"`
+	Regional  *TfaRegionalOptions `json:"regional,omitempty"`
+	// If the PIN is sent as a voice message, the DTMF code allows the recipient to replay the message.
 	RepeatDTMF *string `json:"repeatDTMF,omitempty"`
 	// The name that will appear as the sender of the 2FA message (Example: CompanyName).
 	SenderId *string `json:"senderId,omitempty"`
-	// In case PIN message is sent by Voice, the speed of speech can be set for the message. Supported range is from `0.5` to `2`.
+	// The speed of narration for messages sent as voice. Supported range is from `0.5` to `2`.
 	SpeechRate *float64 `json:"speechRate,omitempty"`
 }
 

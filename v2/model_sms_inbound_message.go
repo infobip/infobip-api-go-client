@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,24 +16,24 @@ import (
 
 // SmsInboundMessage struct for SmsInboundMessage
 type SmsInboundMessage struct {
-	// Custom callback data can be inserted during the setup phase.
+	// Custom callback data sent over the notifyUrl.
 	CallbackData *string `json:"callbackData,omitempty"`
-	// Text of received message without a keyword (if a keyword was sent).
+	// Content of the message without a keyword (if a keyword was sent).
 	CleanText *string `json:"cleanText,omitempty"`
 	// Sender ID that can be alphanumeric or numeric.
 	From *string `json:"from,omitempty"`
-	// Keyword extracted from the message text.
+	// Keyword extracted from the message content.
 	Keyword *string `json:"keyword,omitempty"`
-	// The ID that uniquely identifies the received message.
+	// Unique message ID.
 	MessageId *string   `json:"messageId,omitempty"`
 	Price     *SmsPrice `json:"price,omitempty"`
-	// Tells when Infobip platform received the message. It has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+	// Indicates when the Infobip platform received the message. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
 	ReceivedAt *Time `json:"receivedAt,omitempty"`
-	// The number of sent message segments.
+	// The number of characters within a message
 	SmsCount *int32 `json:"smsCount,omitempty"`
-	// Full text of the received message.
+	// Full content of the message.
 	Text *string `json:"text,omitempty"`
-	// The message destination address.
+	// The destination address of the message.
 	To *string `json:"to,omitempty"`
 }
 

@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,10 +14,10 @@ import (
 	"encoding/json"
 )
 
-// SmsLanguageConfiguration struct for SmsLanguageConfiguration
+// SmsLanguageConfiguration Sets up additional configuration that changes the original message content you can preview with this call.
 type SmsLanguageConfiguration struct {
 	Language *SmsLanguage `json:"language,omitempty"`
-	// Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC` and `NON_UNICODE`.
+	// Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC` and `NON_UNICODE`.
 	Transliteration *string `json:"transliteration,omitempty"`
 }
 

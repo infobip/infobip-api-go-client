@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,16 +14,15 @@ import (
 	"encoding/json"
 )
 
-// SmsPreview struct for SmsPreview
+// SmsPreview Allows for previewing the original message content once additional language configuration has been applied to it.
 type SmsPreview struct {
-	// Number of remaining characters in the last SMS part.
-	CharactersRemaining *int32 `json:"charactersRemaining,omitempty"`
-	// Configuration that, when sent with the original text, results in this preview.
-	Configuration *SmsLanguageConfiguration `json:"configuration,omitempty"`
+	// Preview of the message content as it should appear on the recipient’s device.
+	TextPreview *string `json:"textPreview,omitempty"`
 	// Number of SMS message parts required to deliver the message.
 	MessageCount *int32 `json:"messageCount,omitempty"`
-	// Preview of the text as it should appear on the recipient’s device.
-	TextPreview *string `json:"textPreview,omitempty"`
+	// Number of remaining characters in the last part of the SMS.
+	CharactersRemaining *int32                    `json:"charactersRemaining,omitempty"`
+	Configuration       *SmsLanguageConfiguration `json:"configuration,omitempty"`
 }
 
 // NewSmsPreview instantiates a new SmsPreview object
@@ -42,6 +40,70 @@ func NewSmsPreview() *SmsPreview {
 func NewSmsPreviewWithDefaults() *SmsPreview {
 	this := SmsPreview{}
 	return &this
+}
+
+// GetTextPreview returns the TextPreview field value if set, zero value otherwise.
+func (o *SmsPreview) GetTextPreview() string {
+	if o == nil || o.TextPreview == nil {
+		var ret string
+		return ret
+	}
+	return *o.TextPreview
+}
+
+// GetTextPreviewOk returns a tuple with the TextPreview field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsPreview) GetTextPreviewOk() (*string, bool) {
+	if o == nil || o.TextPreview == nil {
+		return nil, false
+	}
+	return o.TextPreview, true
+}
+
+// HasTextPreview returns a boolean if a field has been set.
+func (o *SmsPreview) HasTextPreview() bool {
+	if o != nil && o.TextPreview != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetTextPreview gets a reference to the given string and assigns it to the TextPreview field.
+func (o *SmsPreview) SetTextPreview(v string) {
+	o.TextPreview = &v
+}
+
+// GetMessageCount returns the MessageCount field value if set, zero value otherwise.
+func (o *SmsPreview) GetMessageCount() int32 {
+	if o == nil || o.MessageCount == nil {
+		var ret int32
+		return ret
+	}
+	return *o.MessageCount
+}
+
+// GetMessageCountOk returns a tuple with the MessageCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsPreview) GetMessageCountOk() (*int32, bool) {
+	if o == nil || o.MessageCount == nil {
+		return nil, false
+	}
+	return o.MessageCount, true
+}
+
+// HasMessageCount returns a boolean if a field has been set.
+func (o *SmsPreview) HasMessageCount() bool {
+	if o != nil && o.MessageCount != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetMessageCount gets a reference to the given int32 and assigns it to the MessageCount field.
+func (o *SmsPreview) SetMessageCount(v int32) {
+	o.MessageCount = &v
 }
 
 // GetCharactersRemaining returns the CharactersRemaining field value if set, zero value otherwise.
@@ -108,83 +170,19 @@ func (o *SmsPreview) SetConfiguration(v SmsLanguageConfiguration) {
 	o.Configuration = &v
 }
 
-// GetMessageCount returns the MessageCount field value if set, zero value otherwise.
-func (o *SmsPreview) GetMessageCount() int32 {
-	if o == nil || o.MessageCount == nil {
-		var ret int32
-		return ret
-	}
-	return *o.MessageCount
-}
-
-// GetMessageCountOk returns a tuple with the MessageCount field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsPreview) GetMessageCountOk() (*int32, bool) {
-	if o == nil || o.MessageCount == nil {
-		return nil, false
-	}
-	return o.MessageCount, true
-}
-
-// HasMessageCount returns a boolean if a field has been set.
-func (o *SmsPreview) HasMessageCount() bool {
-	if o != nil && o.MessageCount != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetMessageCount gets a reference to the given int32 and assigns it to the MessageCount field.
-func (o *SmsPreview) SetMessageCount(v int32) {
-	o.MessageCount = &v
-}
-
-// GetTextPreview returns the TextPreview field value if set, zero value otherwise.
-func (o *SmsPreview) GetTextPreview() string {
-	if o == nil || o.TextPreview == nil {
-		var ret string
-		return ret
-	}
-	return *o.TextPreview
-}
-
-// GetTextPreviewOk returns a tuple with the TextPreview field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsPreview) GetTextPreviewOk() (*string, bool) {
-	if o == nil || o.TextPreview == nil {
-		return nil, false
-	}
-	return o.TextPreview, true
-}
-
-// HasTextPreview returns a boolean if a field has been set.
-func (o *SmsPreview) HasTextPreview() bool {
-	if o != nil && o.TextPreview != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetTextPreview gets a reference to the given string and assigns it to the TextPreview field.
-func (o *SmsPreview) SetTextPreview(v string) {
-	o.TextPreview = &v
-}
-
 func (o SmsPreview) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
+	if o.TextPreview != nil {
+		toSerialize["textPreview"] = o.TextPreview
+	}
+	if o.MessageCount != nil {
+		toSerialize["messageCount"] = o.MessageCount
+	}
 	if o.CharactersRemaining != nil {
 		toSerialize["charactersRemaining"] = o.CharactersRemaining
 	}
 	if o.Configuration != nil {
 		toSerialize["configuration"] = o.Configuration
-	}
-	if o.MessageCount != nil {
-		toSerialize["messageCount"] = o.MessageCount
-	}
-	if o.TextPreview != nil {
-		toSerialize["textPreview"] = o.TextPreview
 	}
 	return json.Marshal(toSerialize)
 }

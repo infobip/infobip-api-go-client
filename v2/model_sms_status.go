@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,20 +14,20 @@ import (
 	"encoding/json"
 )
 
-// SmsStatus struct for SmsStatus
+// SmsStatus Indicates the [status](https://www.infobip.com/docs/essentials/response-status-and-error-codes#api-status-codes) of the message and how to recover from an error should there be any.
 type SmsStatus struct {
-	// Action that should be taken to eliminate the error.
-	Action *string `json:"action,omitempty"`
-	// Human-readable description of the status.
-	Description *string `json:"description,omitempty"`
 	// Status group ID.
 	GroupId *int32 `json:"groupId,omitempty"`
-	// Status group name.
+	// Status group name that describes which category the status code belongs to, e.g. PENDING, UNDELIVERABLE, DELIVERED, EXPIRED, REJECTED.
 	GroupName *string `json:"groupName,omitempty"`
 	// Status ID.
 	Id *int32 `json:"id,omitempty"`
-	// Status name.
+	// [Status name](https://www.infobip.com/docs/essentials/response-status-and-error-codes).
 	Name *string `json:"name,omitempty"`
+	// Human-readable description of the status.
+	Description *string `json:"description,omitempty"`
+	// Action that should be taken to recover from the error.
+	Action *string `json:"action,omitempty"`
 }
 
 // NewSmsStatus instantiates a new SmsStatus object
@@ -46,70 +45,6 @@ func NewSmsStatus() *SmsStatus {
 func NewSmsStatusWithDefaults() *SmsStatus {
 	this := SmsStatus{}
 	return &this
-}
-
-// GetAction returns the Action field value if set, zero value otherwise.
-func (o *SmsStatus) GetAction() string {
-	if o == nil || o.Action == nil {
-		var ret string
-		return ret
-	}
-	return *o.Action
-}
-
-// GetActionOk returns a tuple with the Action field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsStatus) GetActionOk() (*string, bool) {
-	if o == nil || o.Action == nil {
-		return nil, false
-	}
-	return o.Action, true
-}
-
-// HasAction returns a boolean if a field has been set.
-func (o *SmsStatus) HasAction() bool {
-	if o != nil && o.Action != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetAction gets a reference to the given string and assigns it to the Action field.
-func (o *SmsStatus) SetAction(v string) {
-	o.Action = &v
-}
-
-// GetDescription returns the Description field value if set, zero value otherwise.
-func (o *SmsStatus) GetDescription() string {
-	if o == nil || o.Description == nil {
-		var ret string
-		return ret
-	}
-	return *o.Description
-}
-
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SmsStatus) GetDescriptionOk() (*string, bool) {
-	if o == nil || o.Description == nil {
-		return nil, false
-	}
-	return o.Description, true
-}
-
-// HasDescription returns a boolean if a field has been set.
-func (o *SmsStatus) HasDescription() bool {
-	if o != nil && o.Description != nil {
-		return true
-	}
-
-	return false
-}
-
-// SetDescription gets a reference to the given string and assigns it to the Description field.
-func (o *SmsStatus) SetDescription(v string) {
-	o.Description = &v
 }
 
 // GetGroupId returns the GroupId field value if set, zero value otherwise.
@@ -240,14 +175,72 @@ func (o *SmsStatus) SetName(v string) {
 	o.Name = &v
 }
 
+// GetDescription returns the Description field value if set, zero value otherwise.
+func (o *SmsStatus) GetDescription() string {
+	if o == nil || o.Description == nil {
+		var ret string
+		return ret
+	}
+	return *o.Description
+}
+
+// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsStatus) GetDescriptionOk() (*string, bool) {
+	if o == nil || o.Description == nil {
+		return nil, false
+	}
+	return o.Description, true
+}
+
+// HasDescription returns a boolean if a field has been set.
+func (o *SmsStatus) HasDescription() bool {
+	if o != nil && o.Description != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetDescription gets a reference to the given string and assigns it to the Description field.
+func (o *SmsStatus) SetDescription(v string) {
+	o.Description = &v
+}
+
+// GetAction returns the Action field value if set, zero value otherwise.
+func (o *SmsStatus) GetAction() string {
+	if o == nil || o.Action == nil {
+		var ret string
+		return ret
+	}
+	return *o.Action
+}
+
+// GetActionOk returns a tuple with the Action field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsStatus) GetActionOk() (*string, bool) {
+	if o == nil || o.Action == nil {
+		return nil, false
+	}
+	return o.Action, true
+}
+
+// HasAction returns a boolean if a field has been set.
+func (o *SmsStatus) HasAction() bool {
+	if o != nil && o.Action != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetAction gets a reference to the given string and assigns it to the Action field.
+func (o *SmsStatus) SetAction(v string) {
+	o.Action = &v
+}
+
 func (o SmsStatus) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
-	if o.Action != nil {
-		toSerialize["action"] = o.Action
-	}
-	if o.Description != nil {
-		toSerialize["description"] = o.Description
-	}
 	if o.GroupId != nil {
 		toSerialize["groupId"] = o.GroupId
 	}
@@ -259,6 +252,12 @@ func (o SmsStatus) MarshalJSON() ([]byte, error) {
 	}
 	if o.Name != nil {
 		toSerialize["name"] = o.Name
+	}
+	if o.Description != nil {
+		toSerialize["description"] = o.Description
+	}
+	if o.Action != nil {
+		toSerialize["action"] = o.Action
 	}
 	return json.Marshal(toSerialize)
 }

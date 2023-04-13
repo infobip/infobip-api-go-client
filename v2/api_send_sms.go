@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -55,7 +54,7 @@ func (r ApiGetOutboundSmsMessageDeliveryReportsRequest) Execute() (SmsDeliveryRe
 
 /*
  * GetOutboundSmsMessageDeliveryReports Get outbound SMS message delivery reports
- * If you are for any reason unable to receive real time delivery reports on your endpoint, you can use this API method to learn if and when the message has been delivered to the recipient. Each request will return a batch of delivery reports - only once. The following API request will return only new reports that arrived since the last API request.
+ * If you are for any reason unable to receive real-time delivery reports on your endpoint, you can use this API method to learn if and when the message has been delivered to the recipient. Each request will return a batch of delivery reports - only once. The following API request will return only new reports that arrived since the last API request in the last 48 hours.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetOutboundSmsMessageDeliveryReportsRequest
  */
@@ -110,7 +109,7 @@ func (a *SendSmsApiService) GetOutboundSmsMessageDeliveryReportsExecute(r ApiGet
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -139,7 +138,7 @@ func (a *SendSmsApiService) GetOutboundSmsMessageDeliveryReportsExecute(r ApiGet
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode <= 499 {
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -149,7 +148,7 @@ func (a *SendSmsApiService) GetOutboundSmsMessageDeliveryReportsExecute(r ApiGet
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 500 && localVarHTTPResponse.StatusCode <= 599 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -157,15 +156,7 @@ func (a *SendSmsApiService) GetOutboundSmsMessageDeliveryReportsExecute(r ApiGet
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsDeliveryResult
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -243,7 +234,7 @@ func (r ApiGetOutboundSmsMessageLogsRequest) Execute() (SmsLogsResponse, *_netht
 
 /*
  * GetOutboundSmsMessageLogs Get outbound SMS message logs
- * You should use this method for displaying logs in the user interface or for some other less frequent usage. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) if your use case is to verify message delivery.
+ * Use this method for displaying logs for example in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) if your use case is to verify message delivery.
  * @param ctx _context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  * @return ApiGetOutboundSmsMessageLogsRequest
  */
@@ -335,7 +326,7 @@ func (a *SendSmsApiService) GetOutboundSmsMessageLogsExecute(r ApiGetOutboundSms
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -458,9 +449,12 @@ func (a *SendSmsApiService) PreviewSmsMessageExecute(r ApiPreviewSmsMessageReque
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.smsPreviewRequest == nil {
+		return localVarReturnValue, nil, reportError("smsPreviewRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -469,7 +463,7 @@ func (a *SendSmsApiService) PreviewSmsMessageExecute(r ApiPreviewSmsMessageReque
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -500,7 +494,7 @@ func (a *SendSmsApiService) PreviewSmsMessageExecute(r ApiPreviewSmsMessageReque
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode <= 499 {
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -510,7 +504,7 @@ func (a *SendSmsApiService) PreviewSmsMessageExecute(r ApiPreviewSmsMessageReque
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 500 && localVarHTTPResponse.StatusCode <= 599 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -518,15 +512,7 @@ func (a *SendSmsApiService) PreviewSmsMessageExecute(r ApiPreviewSmsMessageReque
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsPreviewResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -594,9 +580,12 @@ func (a *SendSmsApiService) SendBinarySmsMessageExecute(r ApiSendBinarySmsMessag
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.smsAdvancedBinaryRequest == nil {
+		return localVarReturnValue, nil, reportError("smsAdvancedBinaryRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -605,7 +594,7 @@ func (a *SendSmsApiService) SendBinarySmsMessageExecute(r ApiSendBinarySmsMessag
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -636,7 +625,7 @@ func (a *SendSmsApiService) SendBinarySmsMessageExecute(r ApiSendBinarySmsMessag
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode <= 499 {
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -646,7 +635,7 @@ func (a *SendSmsApiService) SendBinarySmsMessageExecute(r ApiSendBinarySmsMessag
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 500 && localVarHTTPResponse.StatusCode <= 599 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -654,15 +643,7 @@ func (a *SendSmsApiService) SendBinarySmsMessageExecute(r ApiSendBinarySmsMessag
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -730,9 +711,12 @@ func (a *SendSmsApiService) SendSmsMessageExecute(r ApiSendSmsMessageRequest) (S
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := _neturl.Values{}
 	localVarFormParams := _neturl.Values{}
+	if r.smsAdvancedTextualRequest == nil {
+		return localVarReturnValue, nil, reportError("smsAdvancedTextualRequest is required and must be specified")
+	}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{"application/json", "application/xml"}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -741,7 +725,7 @@ func (a *SendSmsApiService) SendSmsMessageExecute(r ApiSendSmsMessageRequest) (S
 	}
 
 	// to determine the Accept header
-	localVarHTTPHeaderAccepts := []string{"application/json", "application/xml"}
+	localVarHTTPHeaderAccepts := []string{"application/json"}
 
 	// set Accept header
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
@@ -772,7 +756,7 @@ func (a *SendSmsApiService) SendSmsMessageExecute(r ApiSendSmsMessageRequest) (S
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode <= 499 {
+		if localVarHTTPResponse.StatusCode == 400 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -782,7 +766,7 @@ func (a *SendSmsApiService) SendSmsMessageExecute(r ApiSendSmsMessageRequest) (S
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 500 && localVarHTTPResponse.StatusCode <= 599 {
+		if localVarHTTPResponse.StatusCode == 500 {
 			var v SmsApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -790,15 +774,7 @@ func (a *SendSmsApiService) SendSmsMessageExecute(r ApiSendSmsMessageRequest) (S
 				return localVarReturnValue, localVarHTTPResponse, newErr
 			}
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,15 +14,15 @@ import (
 	"encoding/json"
 )
 
-// SmsTracking struct for SmsTracking
+// SmsTracking Sets up tracking parameters to track conversion metrics and type.
 type SmsTracking struct {
-	// Custom base url used for shortening links from SMS text in `URL` Conversion rate tracking use-case.
+	// Custom base URL for shortened links in messages when tracking URL conversions. Legacy - use `urlOptions` instead.
 	BaseUrl *string `json:"baseUrl,omitempty"`
-	// Key that uniquely identifies Conversion tracking process.
+	// The process key which uniquely identifies conversion tracking.
 	ProcessKey *string `json:"processKey,omitempty"`
-	// Indicates if the message has to be tracked for Conversion rates. Possible values: `SMS` and `URL`
+	// Indicates if a message has to be tracked for conversion rates. Values are: `SMS` and `URL`. `URL` is a legacy value. Use `urlOptions` instead. For more details on SMS Conversion, see: [Track Conversion](https://www.infobip.com/docs/sms/api#track-conversion).
 	Track *string `json:"track,omitempty"`
-	// User-defined type of the Conversion tracking process or flow type or message type, etc. Example: `ONE_TIME_PIN or SOCIAL_INVITES`.
+	// Sets a custom conversion type naming convention, e.g. `ONE_TIME_PIN` or `SOCIAL_INVITES`.
 	Type *string `json:"type,omitempty"`
 }
 

@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,11 +14,10 @@ import (
 	"encoding/json"
 )
 
-// SmsSendingSpeedLimit struct for SmsSendingSpeedLimit
+// SmsSendingSpeedLimit Limits the send speed when sending messages in bulk to deliver messages over a longer period of time. You may wish to use this to allow your systems or agents to handle large amounts of incoming traffic, e.g., if you are expecting recipients to follow through with a call-to-action option from a message you sent. Not setting a send speed limit can overwhelm your resources with incoming traffic.
 type SmsSendingSpeedLimit struct {
-	// The number of messages to send per time unit. By default, Infobip sends your messages as fast as the infrastructure allows. Use this parameter to reduce the traffic if you find the default sending speed too fast for your use case. Note that boosting this parameter will not result in faster sending speeds beyond infrastructure capabilities.
-	Amount int32 `json:"amount"`
-	// The time unit in which the defined message amount will be sent. The default value is `MINUTE`.
+	// The number of messages to be sent per timeUnit. By default, the system sends messages as fast as the infrastructure allows. Use this parameter to adapt sending capacity to your needs. The system is only able to work against its maximum capacity for ambitious message batches.
+	Amount   int32                  `json:"amount"`
 	TimeUnit *SmsSpeedLimitTimeUnit `json:"timeUnit,omitempty"`
 }
 
@@ -30,6 +28,8 @@ type SmsSendingSpeedLimit struct {
 func NewSmsSendingSpeedLimit(amount int32) *SmsSendingSpeedLimit {
 	this := SmsSendingSpeedLimit{}
 	this.Amount = amount
+	var timeUnit SmsSpeedLimitTimeUnit = SMSSPEEDLIMITTIMEUNIT_MINUTE
+	this.TimeUnit = &timeUnit
 	return &this
 }
 
@@ -38,6 +38,8 @@ func NewSmsSendingSpeedLimit(amount int32) *SmsSendingSpeedLimit {
 // but it doesn't guarantee that properties required by API are set
 func NewSmsSendingSpeedLimitWithDefaults() *SmsSendingSpeedLimit {
 	this := SmsSendingSpeedLimit{}
+	var timeUnit SmsSpeedLimitTimeUnit = SMSSPEEDLIMITTIMEUNIT_MINUTE
+	this.TimeUnit = &timeUnit
 	return &this
 }
 

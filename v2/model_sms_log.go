@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,26 +16,26 @@ import (
 
 // SmsLog struct for SmsLog
 type SmsLog struct {
-	// The ID that uniquely identifies the request.
+	// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 	BulkId *string `json:"bulkId,omitempty"`
-	// Tells when the SMS was finished processing by Infobip (i.e. delivered to the destination, delivered to the destination network, etc.). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+	// Date and time when the Infobip services finished processing the message (i.e. delivered to the destination, delivered to the destination network, etc.). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
 	DoneAt *Time     `json:"doneAt,omitempty"`
 	Error  *SmsError `json:"error,omitempty"`
 	// Sender ID that can be alphanumeric or numeric.
 	From *string `json:"from,omitempty"`
 	// Mobile country and network codes.
 	MccMnc *string `json:"mccMnc,omitempty"`
-	// The ID that uniquely identifies the message sent.
+	// Unique message ID.
 	MessageId *string   `json:"messageId,omitempty"`
 	Price     *SmsPrice `json:"price,omitempty"`
-	// Tells when the SMS was sent. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+	// Date and time when the message was [scheduled](https://www.infobip.com/docs/api#channels/sms/get-scheduled-sms-messages) to be sent. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
 	SentAt *Time `json:"sentAt,omitempty"`
-	// The number of sent message segments.
+	// The number of parts the message content was split into.
 	SmsCount *int32     `json:"smsCount,omitempty"`
 	Status   *SmsStatus `json:"status,omitempty"`
-	// Text of the message that was sent.
+	// Content of the message being sent.
 	Text *string `json:"text,omitempty"`
-	// The message destination address.
+	// The destination address of the message.
 	To *string `json:"to,omitempty"`
 }
 

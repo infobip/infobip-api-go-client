@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -17,10 +16,10 @@ import (
 
 // SmsAdvancedBinaryRequest struct for SmsAdvancedBinaryRequest
 type SmsAdvancedBinaryRequest struct {
-	// The ID which uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address.
-	BulkId   *string            `json:"bulkId,omitempty"`
-	Messages []SmsBinaryMessage `json:"messages"`
-	// Limit the sending speed for message bulks. In some use cases, you might want to reduce message sending speed if your message call to action involves visiting a website, calling your contact center or similar recipient activity, in which you can handle a limited amount of load. This setting helps you to spread the delivery of the messages over a longer period, allowing your systems or agents to handle incoming traffic in real-time, resulting in better customer satisfaction.
+	// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request. If not provided, it will be auto-generated and returned in the API response. Typically, used to fetch [delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports) and [message logs](#channels/sms/get-outbound-sms-message-logs).
+	BulkId *string `json:"bulkId,omitempty"`
+	// An array of message objects of a single message or multiple messages sent under one bulk ID.
+	Messages          []SmsBinaryMessage    `json:"messages"`
 	SendingSpeedLimit *SmsSendingSpeedLimit `json:"sendingSpeedLimit,omitempty"`
 }
 

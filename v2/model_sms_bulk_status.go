@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -16,7 +15,7 @@ import (
 	"fmt"
 )
 
-// SmsBulkStatus the model 'SmsBulkStatus'
+// SmsBulkStatus The status of the message(s).
 type SmsBulkStatus string
 
 // List of SmsBulkStatus

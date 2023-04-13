@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -39,13 +38,15 @@ var (
 	xmlCheck  = regexp.MustCompile(`(?i:(?:application|text)/xml)`)
 )
 
-// APIClient manages communication with the Infobip Client API Libraries OpenAPI Specification API v1.0.157
+// APIClient manages communication with the Infobip Client API Libraries OpenAPI Specification API v1.0.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
 	common service // Reuse a single struct instead of allocating one for each service on the heap.
 
 	// API Services
+
+	ConversionApi *ConversionApiService
 
 	ReceiveSmsApi *ReceiveSmsApiService
 
@@ -72,6 +73,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.ConversionApi = (*ConversionApiService)(&c.common)
 	c.ReceiveSmsApi = (*ReceiveSmsApiService)(&c.common)
 	c.ScheduledSmsApi = (*ScheduledSmsApiService)(&c.common)
 	c.SendSmsApi = (*SendSmsApiService)(&c.common)

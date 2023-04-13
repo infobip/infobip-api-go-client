@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,30 +14,33 @@ import (
 	"encoding/json"
 )
 
-// SmsBinaryMessage struct for SmsBinaryMessage
+// SmsBinaryMessage An array of message objects of a single message or multiple messages sent under one bulk ID.
 type SmsBinaryMessage struct {
 	Binary *SmsBinaryContent `json:"binary,omitempty"`
-	// Additional client's data that will be sent on the notifyUrl. The maximum value is 200 characters.
-	CallbackData *string `json:"callbackData,omitempty"`
-	// Scheduling object that allows setting up detailed time windows in which the message can be sent. Consists of `from`, `to` and `days` properties. `Days` property is mandatory. `From` and `to` properties should be either both included, to allow finer time window granulation or both omitted, to include whole days in the delivery time window.
+	// Additional client data that will be sent on the notifyUrl. The maximum value is 4000 characters.
+	CallbackData       *string                `json:"callbackData,omitempty"`
 	DeliveryTimeWindow *SmsDeliveryTimeWindow `json:"deliveryTimeWindow,omitempty"`
-	Destinations       *[]SmsDestination      `json:"destinations,omitempty"`
-	// Can be `true` or `false`. If the value is set to `true`, a flash SMS will be sent. Otherwise, a normal SMS will be sent. The default value is `false`.
+	// An array of destination objects for where messages are being sent. A valid destination is required.
+	Destinations *[]SmsDestination `json:"destinations"`
+	// Allows for sending a [flash SMS](https://www.infobip.com/docs/sms/message-types#flash-sms) to automatically appear on recipient devices without interaction. Set to `true` to enable flash SMS, or leave the default value, `false` to send a standard SMS.
 	Flash *bool `json:"flash,omitempty"`
-	// Represents a sender ID which can be alphanumeric or numeric. Alphanumeric sender ID length should be between 3 and 11 characters (Example: `CompanyName`). Numeric sender ID length should be between 3 and 14 characters.
+	// The sender ID which can be alphanumeric or numeric (e.g., `CompanyName`). Make sure you don't exceed [character limit](https://www.infobip.com/docs/sms/get-started#sender-names).
 	From *string `json:"from,omitempty"`
-	// The real-time Intermediate delivery report that will be sent on your callback server. Can be `true` or `false`.
+	// The [real-time intermediate delivery report](https://www.infobip.com/docs/api#channels/sms/receive-outbound-sms-message-report) containing GSM error codes, messages status, pricing, network and country codes, etc., which will be sent on your callback server. Defaults to `false`.
 	IntermediateReport *bool `json:"intermediateReport,omitempty"`
-	// Preferred Delivery report content type. Can be `application/json` or `application/xml`.
+	// Preferred delivery report content type, `application/json` or `application/xml`.
 	NotifyContentType *string `json:"notifyContentType,omitempty"`
 	// The URL on your call back server on which the Delivery report will be sent.
-	NotifyUrl *string `json:"notifyUrl,omitempty"`
-	// Region specific parameters, often specified by local laws. Use this if country or region that you are sending SMS to requires some extra parameters.
-	Regional *SmsRegionalOptions `json:"regional,omitempty"`
-	// Date and time when the message is to be sent. Used for scheduled SMS (SMS not sent immediately, but at the scheduled time). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
+	NotifyUrl *string             `json:"notifyUrl,omitempty"`
+	Regional  *SmsRegionalOptions `json:"regional,omitempty"`
+	// Date and time when the message is to be sent. Used for [scheduled SMS](https://www.infobip.com/docs/api#channels/sms/get-scheduled-sms-messages). Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`, and can only be scheduled for no later than 180 days in advance.
 	SendAt *Time `json:"sendAt,omitempty"`
 	// The message validity period in minutes. When the period expires, it will not be allowed for the message to be sent. Validity period longer than 48h is not supported (in this case, it will be automatically set to 48h).
 	ValidityPeriod *int64 `json:"validityPeriod,omitempty"`
+	// Required for entity use in a send request for outbound traffic. Returned in notification events. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	EntityId *string `json:"entityId,omitempty"`
+	// Required for application use in a send request for outbound traffic. Returned in notification events. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	ApplicationId *string `json:"applicationId,omitempty"`
 }
 
 // NewSmsBinaryMessage instantiates a new SmsBinaryMessage object
@@ -160,6 +162,7 @@ func (o *SmsBinaryMessage) GetDestinations() []SmsDestination {
 		var ret []SmsDestination
 		return ret
 	}
+
 	return *o.Destinations
 }
 
@@ -442,6 +445,70 @@ func (o *SmsBinaryMessage) SetValidityPeriod(v int64) {
 	o.ValidityPeriod = &v
 }
 
+// GetEntityId returns the EntityId field value if set, zero value otherwise.
+func (o *SmsBinaryMessage) GetEntityId() string {
+	if o == nil || o.EntityId == nil {
+		var ret string
+		return ret
+	}
+	return *o.EntityId
+}
+
+// GetEntityIdOk returns a tuple with the EntityId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsBinaryMessage) GetEntityIdOk() (*string, bool) {
+	if o == nil || o.EntityId == nil {
+		return nil, false
+	}
+	return o.EntityId, true
+}
+
+// HasEntityId returns a boolean if a field has been set.
+func (o *SmsBinaryMessage) HasEntityId() bool {
+	if o != nil && o.EntityId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityId gets a reference to the given string and assigns it to the EntityId field.
+func (o *SmsBinaryMessage) SetEntityId(v string) {
+	o.EntityId = &v
+}
+
+// GetApplicationId returns the ApplicationId field value if set, zero value otherwise.
+func (o *SmsBinaryMessage) GetApplicationId() string {
+	if o == nil || o.ApplicationId == nil {
+		var ret string
+		return ret
+	}
+	return *o.ApplicationId
+}
+
+// GetApplicationIdOk returns a tuple with the ApplicationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SmsBinaryMessage) GetApplicationIdOk() (*string, bool) {
+	if o == nil || o.ApplicationId == nil {
+		return nil, false
+	}
+	return o.ApplicationId, true
+}
+
+// HasApplicationId returns a boolean if a field has been set.
+func (o *SmsBinaryMessage) HasApplicationId() bool {
+	if o != nil && o.ApplicationId != nil {
+		return true
+	}
+
+	return false
+}
+
+// SetApplicationId gets a reference to the given string and assigns it to the ApplicationId field.
+func (o *SmsBinaryMessage) SetApplicationId(v string) {
+	o.ApplicationId = &v
+}
+
 func (o SmsBinaryMessage) MarshalJSON() ([]byte, error) {
 	toSerialize := map[string]interface{}{}
 	if o.Binary != nil {
@@ -479,6 +546,12 @@ func (o SmsBinaryMessage) MarshalJSON() ([]byte, error) {
 	}
 	if o.ValidityPeriod != nil {
 		toSerialize["validityPeriod"] = o.ValidityPeriod
+	}
+	if o.EntityId != nil {
+		toSerialize["entityId"] = o.EntityId
+	}
+	if o.ApplicationId != nil {
+		toSerialize["applicationId"] = o.ApplicationId
 	}
 	return json.Marshal(toSerialize)
 }

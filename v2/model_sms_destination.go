@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,7 +14,7 @@ import (
 	"encoding/json"
 )
 
-// SmsDestination struct for SmsDestination
+// SmsDestination An array of destination objects for where messages are being sent. A valid destination is required.
 type SmsDestination struct {
 	// The ID that uniquely identifies the message sent.
 	MessageId *string `json:"messageId,omitempty"`

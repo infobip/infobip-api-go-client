@@ -3,7 +3,6 @@
  *
  * OpenAPI specification containing public endpoints supported in client API libraries.
  *
- * API version: 1.0.157
  * Contact: support@infobip.com
  */
 
@@ -15,11 +14,11 @@ import (
 	"encoding/json"
 )
 
-// SmsDeliveryTime struct for SmsDeliveryTime
+// SmsDeliveryTime The exact time of day to end sending messages. Time is expressed in the UTC time zone. If set, use it together with the `from` property with minimum 1 hour difference.
 type SmsDeliveryTime struct {
-	// Hour when the time window opens when used in from property or closes when used into the property.
+	// Hour when the time window opens when used in the `from` property or closes when used in the `to` property.
 	Hour int32 `json:"hour"`
-	// Minute when the time window opens when used in from property or closes when used into the property.
+	// Minute when the time window opens when used in the `from` property or closes when used in the `to` property.
 	Minute int32 `json:"minute"`
 }
 

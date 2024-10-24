@@ -1,4 +1,4 @@
-# Change Log of `infobip`
+# Change Log of `infobip-api-go-client`
 
 All notable changes to the library will be documented in this file.
 
@@ -7,7 +7,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 
 ## [[3.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.0.0)] - 2024-10-24
 
-🎉 **NEW Major Version of `infobip`.**
+🎉 **NEW Major Version of `infobip-api-go-client`.**
 
 ⚠ IMPORTANT NOTE: This release contains breaking changes! From this point onward `Go` 1.13 is no longer supported. The minimum supported version is `Go` 1.18.
 
@@ -39,7 +39,7 @@ In this release, we updated and modernized the infobip library. It is auto-gener
 
 ## [ [2.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/2.0.0) ] - 2021-06-30
 
-🎉 **NEW Major Version of `infobip`.**
+🎉 **NEW Major Version of `infobip-api-go-client`.**
 
 ⚠ **IMPORTANT NOTE:** This release is the first major release of a given library.
 The changes listed below refer to the diff between the previous `pre-release` `0.x.x` based version.

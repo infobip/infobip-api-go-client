@@ -7,7 +7,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 
 ## [[3.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.0.0)] - 2024-10-24
 
-🎉 **NEW Major Version of `infobip`.**
+🎉 **NEW Major Version of `infobip-api-go-client`.**
 
 ⚠ IMPORTANT NOTE: This release contains breaking changes! From this point onward `Go` 1.13 is no longer supported. The minimum supported version is `Go` 1.18.
 

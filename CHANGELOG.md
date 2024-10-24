@@ -5,7 +5,7 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
-## [[3.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.0.0)] - 2024-10-XX
+## [[3.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.0.0)] - 2024-10-24
 
 🎉 **NEW Major Version of `infobip`.**
 

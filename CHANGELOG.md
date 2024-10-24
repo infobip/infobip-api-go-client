@@ -5,6 +5,22 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [[3.0.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.0.0)] - 2024-10-24
+
+🎉 **NEW Major Version of `infobip`.**
+
+⚠ IMPORTANT NOTE: This release contains breaking changes! From this point onward `Go` 1.13 is no longer supported. The minimum supported version is `Go` 1.18.
+
+In this release, we updated and modernized the infobip library. It is auto-generated and different from the previous version.
+
+### Added
+* Most recent [Infobip SMS API](https://www.infobip.com/docs/api/channels/sms) feature set.
+* Support for [Infobip Messages API](https://www.infobip.com/docs/api/platform/messages-api).
+* Added mock tests to verify the correctness of request payloads and response handling.
+
+### Changed
+* To improve maintainability and organization, we have separated the models for each Infobip product into their own directories. This means that each product —such as `SMS`, `Messages API`, or other services— will now have its own dedicated folder for models, making it easier to manage dependencies and clearly see which models are tied to each specific product. Users will now find a more structured, modular design, allowing easier integration and upgrades in the future.
+
 ## [[2.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/2.1.0)] - 2023-04-12
 
 ### Added
@@ -41,3 +57,4 @@ In this release, we updated and modernized the infobip library. It is auto-gener
 - `README.md` which contains necessary data and examples for quickstart as well as some other important pieces of information on versioning, licensing, etc.
 
 [readme]: README.mustache
+

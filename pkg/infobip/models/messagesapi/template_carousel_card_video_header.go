@@ -34,7 +34,7 @@ type _TemplateCarouselCardVideoHeader TemplateCarouselCardVideoHeader
 // will change when the set of required properties is changed
 func NewTemplateCarouselCardVideoHeader(url string) *TemplateCarouselCardVideoHeader {
 	this := TemplateCarouselCardVideoHeader{}
-	this.Type = TEMPLATECAROUSELCARDHEADERTYPE_VIDEO
+	this.Type = "VIDEO"
 	this.Url = url
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateCarouselCardVideoHeader(url string) *TemplateCarouselCardVideoHe
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateCarouselCardVideoHeaderWithDefaults() *TemplateCarouselCardVideoHeader {
 	this := TemplateCarouselCardVideoHeader{}
+	this.Type = "VIDEO"
 	return &this
 }
 

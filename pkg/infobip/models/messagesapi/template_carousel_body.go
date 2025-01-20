@@ -34,7 +34,7 @@ type _TemplateCarouselBody TemplateCarouselBody
 // will change when the set of required properties is changed
 func NewTemplateCarouselBody(cards []TemplateCarouselCard) *TemplateCarouselBody {
 	this := TemplateCarouselBody{}
-	this.Type = TEMPLATEBODYTYPE_CAROUSEL
+	this.Type = "CAROUSEL"
 	this.Cards = cards
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateCarouselBody(cards []TemplateCarouselCard) *TemplateCarouselBody
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateCarouselBodyWithDefaults() *TemplateCarouselBody {
 	this := TemplateCarouselBody{}
+	this.Type = "CAROUSEL"
 	return &this
 }
 

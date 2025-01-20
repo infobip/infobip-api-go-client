@@ -36,7 +36,7 @@ type _TemplateMultiProductButton TemplateMultiProductButton
 // will change when the set of required properties is changed
 func NewTemplateMultiProductButton(sections []TemplateMultiProductButtonSection) *TemplateMultiProductButton {
 	this := TemplateMultiProductButton{}
-	this.Type = TEMPLATEBUTTONTYPE_MULTI_PRODUCT
+	this.Type = "MULTI_PRODUCT"
 	this.Sections = sections
 	return &this
 }
@@ -46,6 +46,7 @@ func NewTemplateMultiProductButton(sections []TemplateMultiProductButtonSection)
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateMultiProductButtonWithDefaults() *TemplateMultiProductButton {
 	this := TemplateMultiProductButton{}
+	this.Type = "MULTI_PRODUCT"
 	return &this
 }
 

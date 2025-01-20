@@ -32,7 +32,7 @@ type _TemplatePhoneNumberButton TemplatePhoneNumberButton
 // will change when the set of required properties is changed
 func NewTemplatePhoneNumberButton() *TemplatePhoneNumberButton {
 	this := TemplatePhoneNumberButton{}
-	this.Type = TEMPLATEBUTTONTYPE_PHONE_NUMBER
+	this.Type = "PHONE_NUMBER"
 	return &this
 }
 
@@ -41,6 +41,7 @@ func NewTemplatePhoneNumberButton() *TemplatePhoneNumberButton {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplatePhoneNumberButtonWithDefaults() *TemplatePhoneNumberButton {
 	this := TemplatePhoneNumberButton{}
+	this.Type = "PHONE_NUMBER"
 	return &this
 }
 

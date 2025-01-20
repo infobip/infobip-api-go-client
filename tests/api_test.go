@@ -60,6 +60,49 @@ func SetUpSuccessRequest(requestType string, endpoint string, expectedResponse s
 	)
 }
 
+func SetUpGetRequestWithFileContent(endpoint string, expectedResponseContent []byte, statusCode int) {
+	httpmock.RegisterResponder("GET", "https://"+configuration.Host+endpoint,
+		func(req *http.Request) (*http.Response, error) {
+			resp := httpmock.NewBytesResponse(statusCode, expectedResponseContent)
+
+			resp.Header.Add("Content-Type", "audio/vnd.wave")
+			resp.Header.Add("server", givenRequestHeaders["server"])
+			resp.Header.Add("x-request-id", givenRequestHeaders["x-request-id"])
+			resp.Header.Add("User-Agent", configuration.UserAgent)
+
+			return resp, nil
+		},
+	)
+}
+
+func SetUpGetRequest(url string, givenResponse []byte, statusCode int) {
+	httpmock.RegisterResponder("GET", "https://"+configuration.Host+url,
+		func(req *http.Request) (*http.Response, error) {
+			resp := httpmock.NewBytesResponse(statusCode, givenResponse)
+			resp.Header.Set("Content-Type", "audio/vnd.wave")
+			resp.Header.Add("Server", givenRequestHeaders["server"])
+			resp.Header.Add("X-Request-Id", givenRequestHeaders["x-request-id"])
+			resp.Header.Add("User-Agent", configuration.UserAgent)
+
+			return resp, nil
+		},
+	)
+}
+
+func SetUpGetRequestOctet(url string, givenResponse []byte, statusCode int) {
+	httpmock.RegisterResponder("GET", "https://"+configuration.Host+url,
+		func(req *http.Request) (*http.Response, error) {
+			resp := httpmock.NewBytesResponse(statusCode, givenResponse)
+			resp.Header.Set("Content-Type", "application/octet-stream")
+			resp.Header.Add("Server", givenRequestHeaders["server"])
+			resp.Header.Add("X-Request-Id", givenRequestHeaders["x-request-id"])
+			resp.Header.Add("User-Agent", configuration.UserAgent)
+
+			return resp, nil
+		},
+	)
+}
+
 func ValidateExpectedRequestBodiesMatches(t *testing.T, expectedRequest string, actualRequest string) {
 	require.JSONEq(t, expectedRequest, actualRequest)
 }

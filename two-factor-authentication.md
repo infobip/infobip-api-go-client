@@ -8,7 +8,7 @@ The application represents your service. It’s a good practice to have separate
     request := sms.NewApplicationRequest("2FA application")
 
 	apiResponse, httpResponse, err := infobipClient.
-		TfaApi.
+        TfaAPI.
 		CreateTfaApplication(auth).
 		ApplicationRequest(*request).
 		Execute()
@@ -19,18 +19,17 @@ The application represents your service. It’s a good practice to have separate
 #### Message template setup
 
 Message template is the message body with the PIN placeholder that is sent to end users.
-// TODO
 ```go
 	pinLength := int32(4)
-
-	request := infobip.NewTfaCreateMessageRequest("Your pin is {{pin}}", infobip.TFAPINTYPE_ALPHANUMERIC)
-	request.PinLength = &pinLength
-
-	apiResponse, httpResponse, err := infobipClient.
-		TfaApi.
-		CreateTfaMessageTemplate(auth, appId).
-		TfaCreateMessageRequest(*request).
-		Execute()
+	
+    request := sms.NewCreateMessageRequest("Your pin is {{pin}}", sms.PINTYPE_ALPHANUMERIC)
+    request.PinLength = &pinLength
+    
+    apiResponse, httpResponse, err := infobipClient.
+        TfaAPI.
+        CreateTfaMessageTemplate(auth, appId).
+        CreateMessageRequest(*request).
+        Execute()
 	
 	msgId := apiResponse.MessageId
 ```
@@ -47,7 +46,7 @@ After setting up the application and message template, you can start generating 
     request.From = &from
 
 	apiResponse, httpResponse, err := infobipClient.
-		TfaApi.
+        TfaAPI.
 		SendTfaPinCodeOverSms(auth).
 		StartAuthenticationRequest(*request).
 		Execute()
@@ -63,7 +62,7 @@ Verify a phone number to confirm successful 2FA authentication.
 	request := sms.NewVerifyPinRequest("1598")
 
 	apiResponse, httpResponse, err := infobipClient.
-		TfaApi.
+        TfaAPI.
 		VerifyTfaPhoneNumber(auth, *pinId).
 		VerifyPinRequest(*request).
 		Execute()

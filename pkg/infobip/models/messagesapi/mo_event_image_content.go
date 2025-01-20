@@ -36,7 +36,7 @@ type _MoEventImageContent MoEventImageContent
 // will change when the set of required properties is changed
 func NewMoEventImageContent(url string) *MoEventImageContent {
 	this := MoEventImageContent{}
-	this.Type = MOEVENTCONTENTTYPE_IMAGE
+	this.Type = "IMAGE"
 	this.Url = url
 	return &this
 }
@@ -46,6 +46,7 @@ func NewMoEventImageContent(url string) *MoEventImageContent {
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventImageContentWithDefaults() *MoEventImageContent {
 	this := MoEventImageContent{}
+	this.Type = "IMAGE"
 	return &this
 }
 

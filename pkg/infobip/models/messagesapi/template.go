@@ -35,6 +35,7 @@ type _Template Template
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewTemplate(templateName string) *Template {
 	this := Template{}
 	this.TemplateName = templateName
@@ -46,6 +47,7 @@ func NewTemplate(templateName string) *Template {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateWithDefaults() *Template {
 	this := Template{}
+
 	return &this
 }
 

@@ -28,7 +28,7 @@ func TestSendSMS(t *testing.T) {
 		{To: "<DESTINATION>"},
 	}
 
-	content := sms.LogContent{
+	content := sms.MessageContent{
 		TextMessageContent: sms.NewTextMessageContent("Congratulations on sending your first message with GO library."),
 	}
 

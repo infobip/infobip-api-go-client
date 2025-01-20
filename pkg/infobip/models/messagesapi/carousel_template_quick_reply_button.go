@@ -34,7 +34,7 @@ type _CarouselTemplateQuickReplyButton CarouselTemplateQuickReplyButton
 // will change when the set of required properties is changed
 func NewCarouselTemplateQuickReplyButton(postbackData string) *CarouselTemplateQuickReplyButton {
 	this := CarouselTemplateQuickReplyButton{}
-	this.Type = CAROUSELTEMPLATEBUTTONTYPE_QUICK_REPLY
+	this.Type = "QUICK_REPLY"
 	this.PostbackData = postbackData
 	return &this
 }
@@ -44,6 +44,7 @@ func NewCarouselTemplateQuickReplyButton(postbackData string) *CarouselTemplateQ
 // but it doesn't guarantee that properties required by API are set
 func NewCarouselTemplateQuickReplyButtonWithDefaults() *CarouselTemplateQuickReplyButton {
 	this := CarouselTemplateQuickReplyButton{}
+	this.Type = "QUICK_REPLY"
 	return &this
 }
 

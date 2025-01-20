@@ -34,7 +34,7 @@ type _MessageTextHeader MessageTextHeader
 // will change when the set of required properties is changed
 func NewMessageTextHeader(text string) *MessageTextHeader {
 	this := MessageTextHeader{}
-	this.Type = MESSAGEHEADERTYPE_TEXT
+	this.Type = "TEXT"
 	this.Text = text
 	return &this
 }
@@ -44,6 +44,7 @@ func NewMessageTextHeader(text string) *MessageTextHeader {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageTextHeaderWithDefaults() *MessageTextHeader {
 	this := MessageTextHeader{}
+	this.Type = "TEXT"
 	return &this
 }
 

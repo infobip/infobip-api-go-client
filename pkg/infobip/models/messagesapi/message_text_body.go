@@ -34,7 +34,7 @@ type _MessageTextBody MessageTextBody
 // will change when the set of required properties is changed
 func NewMessageTextBody(text string) *MessageTextBody {
 	this := MessageTextBody{}
-	this.Type = MESSAGEBODYTYPE_TEXT
+	this.Type = "TEXT"
 	this.Text = text
 	return &this
 }
@@ -44,6 +44,7 @@ func NewMessageTextBody(text string) *MessageTextBody {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageTextBodyWithDefaults() *MessageTextBody {
 	this := MessageTextBody{}
+	this.Type = "TEXT"
 	return &this
 }
 

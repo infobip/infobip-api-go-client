@@ -34,7 +34,7 @@ type _TemplateImageHeader TemplateImageHeader
 // will change when the set of required properties is changed
 func NewTemplateImageHeader(url string) *TemplateImageHeader {
 	this := TemplateImageHeader{}
-	this.Type = TEMPLATEHEADERTYPE_IMAGE
+	this.Type = "IMAGE"
 	this.Url = url
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateImageHeader(url string) *TemplateImageHeader {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateImageHeaderWithDefaults() *TemplateImageHeader {
 	this := TemplateImageHeader{}
+	this.Type = "IMAGE"
 	return &this
 }
 

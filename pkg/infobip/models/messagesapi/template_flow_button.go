@@ -36,7 +36,7 @@ type _TemplateFlowButton TemplateFlowButton
 // will change when the set of required properties is changed
 func NewTemplateFlowButton() *TemplateFlowButton {
 	this := TemplateFlowButton{}
-	this.Type = TEMPLATEBUTTONTYPE_FLOW
+	this.Type = "FLOW"
 	return &this
 }
 
@@ -45,6 +45,7 @@ func NewTemplateFlowButton() *TemplateFlowButton {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateFlowButtonWithDefaults() *TemplateFlowButton {
 	this := TemplateFlowButton{}
+	this.Type = "FLOW"
 	return &this
 }
 

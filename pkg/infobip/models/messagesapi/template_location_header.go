@@ -36,7 +36,7 @@ type _TemplateLocationHeader TemplateLocationHeader
 // will change when the set of required properties is changed
 func NewTemplateLocationHeader(latitude float64, longitude float64) *TemplateLocationHeader {
 	this := TemplateLocationHeader{}
-	this.Type = TEMPLATEHEADERTYPE_LOCATION
+	this.Type = "LOCATION"
 	this.Latitude = latitude
 	this.Longitude = longitude
 	return &this
@@ -47,6 +47,7 @@ func NewTemplateLocationHeader(latitude float64, longitude float64) *TemplateLoc
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateLocationHeaderWithDefaults() *TemplateLocationHeader {
 	this := TemplateLocationHeader{}
+	this.Type = "LOCATION"
 	return &this
 }
 

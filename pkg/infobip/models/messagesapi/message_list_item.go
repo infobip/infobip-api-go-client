@@ -21,6 +21,8 @@ var _ MappedNullable = &MessageListItem{}
 
 // MessageListItem List Items.
 type MessageListItem struct {
+	// Item ID (supported only by WhatsApp), has to be unique for each item.
+	Id *string
 	// Item Text.
 	Text string
 	// Item Description.
@@ -35,6 +37,7 @@ type _MessageListItem MessageListItem
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewMessageListItem(text string) *MessageListItem {
 	this := MessageListItem{}
 	this.Text = text
@@ -46,7 +49,40 @@ func NewMessageListItem(text string) *MessageListItem {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageListItemWithDefaults() *MessageListItem {
 	this := MessageListItem{}
+
 	return &this
+}
+
+// GetId returns the Id field value if set, zero value otherwise.
+func (o *MessageListItem) GetId() string {
+	if o == nil || IsNil(o.Id) {
+		var ret string
+		return ret
+	}
+	return *o.Id
+}
+
+// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageListItem) GetIdOk() (*string, bool) {
+	if o == nil || IsNil(o.Id) {
+		return nil, false
+	}
+	return o.Id, true
+}
+
+// HasId returns a boolean if a field has been set.
+func (o *MessageListItem) HasId() bool {
+	if o != nil && !IsNil(o.Id) {
+		return true
+	}
+
+	return false
+}
+
+// SetId gets a reference to the given string and assigns it to the Id field.
+func (o *MessageListItem) SetId(v string) {
+	o.Id = &v
 }
 
 // GetText returns the Text field value
@@ -147,6 +183,9 @@ func (o MessageListItem) MarshalJSON() ([]byte, error) {
 
 func (o MessageListItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Id) {
+		toSerialize["id"] = o.Id
+	}
 	toSerialize["text"] = o.Text
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description

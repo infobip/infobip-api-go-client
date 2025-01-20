@@ -21,7 +21,7 @@ var _ MappedNullable = &MoEvent{}
 
 // MoEvent struct for MoEvent
 type MoEvent struct {
-	Event InboundEventType
+	Event   InboundEventType
 	Channel InboundMoEventChannel
 	// Identifier (usually number) of the party which sent the message.
 	Sender string
@@ -50,7 +50,7 @@ type _MoEvent MoEvent
 // will change when the set of required properties is changed
 func NewMoEvent(channel InboundMoEventChannel, sender string, destination string, content []MoEventContent, receivedAt Time, messageId string) *MoEvent {
 	this := MoEvent{}
-	this.Event = INBOUNDEVENTTYPE_MO
+	this.Event = "MO"
 	this.Channel = channel
 	this.Sender = sender
 	this.Destination = destination
@@ -65,6 +65,7 @@ func NewMoEvent(channel InboundMoEventChannel, sender string, destination string
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventWithDefaults() *MoEvent {
 	this := MoEvent{}
+	this.Event = "MO"
 	return &this
 }
 

@@ -38,7 +38,7 @@ type _OutboundTypingStoppedEvent OutboundTypingStoppedEvent
 // will change when the set of required properties is changed
 func NewOutboundTypingStoppedEvent(channel OutboundEventChannel, sender string, destinations []ToDestination) *OutboundTypingStoppedEvent {
 	this := OutboundTypingStoppedEvent{}
-	this.Event = OUTBOUNDEVENTTYPE_STOPPED
+	this.Event = "TYPING_STOPPED"
 	this.Channel = channel
 	this.Sender = sender
 	this.Destinations = destinations
@@ -50,6 +50,7 @@ func NewOutboundTypingStoppedEvent(channel OutboundEventChannel, sender string, 
 // but it doesn't guarantee that properties required by API are set
 func NewOutboundTypingStoppedEventWithDefaults() *OutboundTypingStoppedEvent {
 	this := OutboundTypingStoppedEvent{}
+	this.Event = "TYPING_STOPPED"
 	return &this
 }
 

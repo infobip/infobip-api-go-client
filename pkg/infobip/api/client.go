@@ -52,9 +52,25 @@ type APIClient struct {
 
 	MessagesAPI *MessagesAPIService
 
+	CallRoutingAPI *CallRoutingAPIService
+
 	SmsAPI *SmsAPIService
 
+	EmailAPI *EmailAPIService
+
+	CallsAPI *CallsAPIService
+
+	FormsAPI *FormsAPIService
+
 	TfaAPI *TfaAPIService
+
+	ClickToCallAPI *ClickToCallAPIService
+
+	NumberMaskingAPI *NumberMaskingAPIService
+
+	FlowAPI *FlowAPIService
+
+	VoiceAPI *VoiceAPIService
 }
 
 type service struct {
@@ -74,8 +90,16 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.MessagesAPI = (*MessagesAPIService)(&c.common)
+	c.CallRoutingAPI = (*CallRoutingAPIService)(&c.common)
 	c.SmsAPI = (*SmsAPIService)(&c.common)
+	c.EmailAPI = (*EmailAPIService)(&c.common)
+	c.CallsAPI = (*CallsAPIService)(&c.common)
+	c.FormsAPI = (*FormsAPIService)(&c.common)
 	c.TfaAPI = (*TfaAPIService)(&c.common)
+	c.ClickToCallAPI = (*ClickToCallAPIService)(&c.common)
+	c.NumberMaskingAPI = (*NumberMaskingAPIService)(&c.common)
+	c.FlowAPI = (*FlowAPIService)(&c.common)
+	c.VoiceAPI = (*VoiceAPIService)(&c.common)
 
 	return c
 }

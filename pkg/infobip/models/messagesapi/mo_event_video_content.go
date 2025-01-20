@@ -36,7 +36,7 @@ type _MoEventVideoContent MoEventVideoContent
 // will change when the set of required properties is changed
 func NewMoEventVideoContent(url string) *MoEventVideoContent {
 	this := MoEventVideoContent{}
-	this.Type = MOEVENTCONTENTTYPE_VIDEO
+	this.Type = "VIDEO"
 	this.Url = url
 	return &this
 }
@@ -46,6 +46,7 @@ func NewMoEventVideoContent(url string) *MoEventVideoContent {
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventVideoContentWithDefaults() *MoEventVideoContent {
 	this := MoEventVideoContent{}
+	this.Type = "VIDEO"
 	return &this
 }
 

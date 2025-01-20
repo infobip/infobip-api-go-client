@@ -25,6 +25,8 @@ type IndiaDltOptions struct {
 	ContentTemplateId *string
 	// Your assigned DLT principal entity ID.
 	PrincipalEntityId string
+	// Your assigned Telemarketer ID. (required for Aggregators)
+	TelemarketerId *string
 }
 
 type _IndiaDltOptions IndiaDltOptions
@@ -33,6 +35,7 @@ type _IndiaDltOptions IndiaDltOptions
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewIndiaDltOptions(principalEntityId string) *IndiaDltOptions {
 	this := IndiaDltOptions{}
 	this.PrincipalEntityId = principalEntityId
@@ -44,6 +47,7 @@ func NewIndiaDltOptions(principalEntityId string) *IndiaDltOptions {
 // but it doesn't guarantee that properties required by API are set
 func NewIndiaDltOptionsWithDefaults() *IndiaDltOptions {
 	this := IndiaDltOptions{}
+
 	return &this
 }
 
@@ -103,6 +107,38 @@ func (o *IndiaDltOptions) SetPrincipalEntityId(v string) {
 	o.PrincipalEntityId = v
 }
 
+// GetTelemarketerId returns the TelemarketerId field value if set, zero value otherwise.
+func (o *IndiaDltOptions) GetTelemarketerId() string {
+	if o == nil || IsNil(o.TelemarketerId) {
+		var ret string
+		return ret
+	}
+	return *o.TelemarketerId
+}
+
+// GetTelemarketerIdOk returns a tuple with the TelemarketerId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *IndiaDltOptions) GetTelemarketerIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TelemarketerId) {
+		return nil, false
+	}
+	return o.TelemarketerId, true
+}
+
+// HasTelemarketerId returns a boolean if a field has been set.
+func (o *IndiaDltOptions) HasTelemarketerId() bool {
+	if o != nil && !IsNil(o.TelemarketerId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTelemarketerId gets a reference to the given string and assigns it to the TelemarketerId field.
+func (o *IndiaDltOptions) SetTelemarketerId(v string) {
+	o.TelemarketerId = &v
+}
+
 func (o IndiaDltOptions) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -117,6 +153,9 @@ func (o IndiaDltOptions) ToMap() (map[string]interface{}, error) {
 		toSerialize["contentTemplateId"] = o.ContentTemplateId
 	}
 	toSerialize["principalEntityId"] = o.PrincipalEntityId
+	if !IsNil(o.TelemarketerId) {
+		toSerialize["telemarketerId"] = o.TelemarketerId
+	}
 	return toSerialize, nil
 }
 

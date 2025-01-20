@@ -29,6 +29,7 @@ type VerificationResponse struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewVerificationResponse() *VerificationResponse {
 	this := VerificationResponse{}
 	return &this
@@ -39,6 +40,7 @@ func NewVerificationResponse() *VerificationResponse {
 // but it doesn't guarantee that properties required by API are set
 func NewVerificationResponseWithDefaults() *VerificationResponse {
 	this := VerificationResponse{}
+
 	return &this
 }
 

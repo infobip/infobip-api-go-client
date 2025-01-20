@@ -466,18 +466,18 @@ func (a *TfaAPIService) CreateTfaEmailMessageTemplateExecute(r ApiCreateTfaEmail
 }
 
 type ApiCreateTfaMessageTemplateRequest struct {
-	ctx                            context.Context
-	ApiService                     *TfaAPIService
-	appId                          string
-	createSmsOrVoiceMessageRequest *CreateSmsOrVoiceMessageRequest
+	ctx                  context.Context
+	ApiService           *TfaAPIService
+	appId                string
+	createMessageRequest *CreateMessageRequest
 }
 
-func (r ApiCreateTfaMessageTemplateRequest) CreateSmsOrVoiceMessageRequest(createSmsOrVoiceMessageRequest CreateSmsOrVoiceMessageRequest) ApiCreateTfaMessageTemplateRequest {
-	r.createSmsOrVoiceMessageRequest = &createSmsOrVoiceMessageRequest
+func (r ApiCreateTfaMessageTemplateRequest) CreateMessageRequest(createMessageRequest CreateMessageRequest) ApiCreateTfaMessageTemplateRequest {
+	r.createMessageRequest = &createMessageRequest
 	return r
 }
 
-func (r ApiCreateTfaMessageTemplateRequest) Execute() (*SmsOrVoiceMessage, *http.Response, error) {
+func (r ApiCreateTfaMessageTemplateRequest) Execute() (*TemplateMessage, *http.Response, error) {
 	return r.ApiService.CreateTfaMessageTemplateExecute(r)
 }
 
@@ -500,13 +500,13 @@ func (a *TfaAPIService) CreateTfaMessageTemplate(ctx context.Context, appId stri
 
 // Execute executes the request
 //
-//	@return SmsOrVoiceMessage
-func (a *TfaAPIService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTemplateRequest) (*SmsOrVoiceMessage, *http.Response, error) {
+//	@return TemplateMessage
+func (a *TfaAPIService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTemplateRequest) (*TemplateMessage, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *SmsOrVoiceMessage
+		localVarReturnValue *TemplateMessage
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TfaAPIService.CreateTfaMessageTemplate")
@@ -520,8 +520,8 @@ func (a *TfaAPIService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTem
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.createSmsOrVoiceMessageRequest == nil {
-		return localVarReturnValue, nil, reportError("createSmsOrVoiceMessageRequest is required and must be specified")
+	if r.createMessageRequest == nil {
+		return localVarReturnValue, nil, reportError("createMessageRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -542,7 +542,7 @@ func (a *TfaAPIService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTem
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.createSmsOrVoiceMessageRequest
+	localVarPostBody = r.createMessageRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -656,7 +656,7 @@ func (a *TfaAPIService) CreateTfaMessageTemplateExecute(r ApiCreateTfaMessageTem
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsOrVoiceMessage
+		var v TemplateMessage
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()
@@ -3385,19 +3385,19 @@ func (a *TfaAPIService) UpdateTfaEmailMessageTemplateExecute(r ApiUpdateTfaEmail
 }
 
 type ApiUpdateTfaMessageTemplateRequest struct {
-	ctx                            context.Context
-	ApiService                     *TfaAPIService
-	appId                          string
-	msgId                          string
-	updateSmsOrVoiceMessageRequest *UpdateSmsOrVoiceMessageRequest
+	ctx                  context.Context
+	ApiService           *TfaAPIService
+	appId                string
+	msgId                string
+	updateMessageRequest *UpdateMessageRequest
 }
 
-func (r ApiUpdateTfaMessageTemplateRequest) UpdateSmsOrVoiceMessageRequest(updateSmsOrVoiceMessageRequest UpdateSmsOrVoiceMessageRequest) ApiUpdateTfaMessageTemplateRequest {
-	r.updateSmsOrVoiceMessageRequest = &updateSmsOrVoiceMessageRequest
+func (r ApiUpdateTfaMessageTemplateRequest) UpdateMessageRequest(updateMessageRequest UpdateMessageRequest) ApiUpdateTfaMessageTemplateRequest {
+	r.updateMessageRequest = &updateMessageRequest
 	return r
 }
 
-func (r ApiUpdateTfaMessageTemplateRequest) Execute() (*SmsOrVoiceMessage, *http.Response, error) {
+func (r ApiUpdateTfaMessageTemplateRequest) Execute() (*TemplateMessage, *http.Response, error) {
 	return r.ApiService.UpdateTfaMessageTemplateExecute(r)
 }
 
@@ -3422,13 +3422,13 @@ func (a *TfaAPIService) UpdateTfaMessageTemplate(ctx context.Context, appId stri
 
 // Execute executes the request
 //
-//	@return SmsOrVoiceMessage
-func (a *TfaAPIService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTemplateRequest) (*SmsOrVoiceMessage, *http.Response, error) {
+//	@return TemplateMessage
+func (a *TfaAPIService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTemplateRequest) (*TemplateMessage, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPut
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *SmsOrVoiceMessage
+		localVarReturnValue *TemplateMessage
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "TfaAPIService.UpdateTfaMessageTemplate")
@@ -3443,8 +3443,8 @@ func (a *TfaAPIService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTem
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.updateSmsOrVoiceMessageRequest == nil {
-		return localVarReturnValue, nil, reportError("updateSmsOrVoiceMessageRequest is required and must be specified")
+	if r.updateMessageRequest == nil {
+		return localVarReturnValue, nil, reportError("updateMessageRequest is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -3465,7 +3465,7 @@ func (a *TfaAPIService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTem
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
 	// body params
-	localVarPostBody = r.updateSmsOrVoiceMessageRequest
+	localVarPostBody = r.updateMessageRequest
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
@@ -3579,7 +3579,7 @@ func (a *TfaAPIService) UpdateTfaMessageTemplateExecute(r ApiUpdateTfaMessageTem
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		var v SmsOrVoiceMessage
+		var v TemplateMessage
 		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 		if err != nil {
 			newErr.error = err.Error()

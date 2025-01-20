@@ -22,7 +22,6 @@ var _ MappedNullable = &TemplateTextHeader{}
 // TemplateTextHeader Key value pairs that will be replaced during message sending in a header. Valid example `{\"1\": \"John\", \"2\": \"Smith\", \"type\": \"TEXT\"}`
 type TemplateTextHeader struct {
 	Type TemplateHeaderType
-	AdditionalProperties map[string]interface{}
 }
 
 type _TemplateTextHeader TemplateTextHeader
@@ -33,7 +32,7 @@ type _TemplateTextHeader TemplateTextHeader
 // will change when the set of required properties is changed
 func NewTemplateTextHeader() *TemplateTextHeader {
 	this := TemplateTextHeader{}
-	this.Type = TEMPLATEHEADERTYPE_TEXT
+	this.Type = "TEXT"
 	return &this
 }
 
@@ -42,6 +41,7 @@ func NewTemplateTextHeader() *TemplateTextHeader {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateTextHeaderWithDefaults() *TemplateTextHeader {
 	this := TemplateTextHeader{}
+	this.Type = "TEXT"
 	return &this
 }
 
@@ -56,11 +56,6 @@ func (o TemplateTextHeader) MarshalJSON() ([]byte, error) {
 func (o TemplateTextHeader) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
-
-	for key, value := range o.AdditionalProperties {
-		toSerialize[key] = value
-	}
-
 	return toSerialize, nil
 }
 

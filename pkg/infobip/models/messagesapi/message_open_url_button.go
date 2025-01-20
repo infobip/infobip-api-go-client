@@ -36,7 +36,7 @@ type _MessageOpenUrlButton MessageOpenUrlButton
 // will change when the set of required properties is changed
 func NewMessageOpenUrlButton(text string, url string) *MessageOpenUrlButton {
 	this := MessageOpenUrlButton{}
-	this.Type = MESSAGEBUTTONTYPE_OPEN_URL
+	this.Type = "OPEN_URL"
 	this.Text = text
 	this.Url = url
 	return &this
@@ -47,6 +47,7 @@ func NewMessageOpenUrlButton(text string, url string) *MessageOpenUrlButton {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageOpenUrlButtonWithDefaults() *MessageOpenUrlButton {
 	this := MessageOpenUrlButton{}
+	this.Type = "OPEN_URL"
 	return &this
 }
 

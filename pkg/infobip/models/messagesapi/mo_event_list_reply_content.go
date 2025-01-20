@@ -36,7 +36,7 @@ type _MoEventListReplyContent MoEventListReplyContent
 // will change when the set of required properties is changed
 func NewMoEventListReplyContent(text string, id string) *MoEventListReplyContent {
 	this := MoEventListReplyContent{}
-	this.Type = MOEVENTCONTENTTYPE_LIST_REPLY
+	this.Type = "LIST_REPLY"
 	this.Text = text
 	this.Id = id
 	return &this
@@ -47,6 +47,7 @@ func NewMoEventListReplyContent(text string, id string) *MoEventListReplyContent
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventListReplyContentWithDefaults() *MoEventListReplyContent {
 	this := MoEventListReplyContent{}
+	this.Type = "LIST_REPLY"
 	return &this
 }
 

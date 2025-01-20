@@ -49,6 +49,7 @@ type _SeenResult SeenResult
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewSeenResult(event string, channel InboundSeenChannel, sender string, destination string, sentAt string, seenAt string, bulkId string, messageId string) *SeenResult {
 	this := SeenResult{}
 	this.Event = event
@@ -67,6 +68,7 @@ func NewSeenResult(event string, channel InboundSeenChannel, sender string, dest
 // but it doesn't guarantee that properties required by API are set
 func NewSeenResultWithDefaults() *SeenResult {
 	this := SeenResult{}
+
 	var event string = "SEEN"
 	this.Event = event
 	return &this

@@ -38,7 +38,7 @@ type _MessageDocumentBody MessageDocumentBody
 // will change when the set of required properties is changed
 func NewMessageDocumentBody(url string) *MessageDocumentBody {
 	this := MessageDocumentBody{}
-	this.Type = MESSAGEBODYTYPE_DOCUMENT
+	this.Type = "DOCUMENT"
 	this.Url = url
 	return &this
 }
@@ -48,6 +48,7 @@ func NewMessageDocumentBody(url string) *MessageDocumentBody {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageDocumentBodyWithDefaults() *MessageDocumentBody {
 	this := MessageDocumentBody{}
+	this.Type = "DOCUMENT"
 	return &this
 }
 

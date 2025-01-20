@@ -14,8 +14,9 @@ import (
 	"encoding/json"
 	"fmt"
 
-	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 	"gopkg.in/validator.v2"
+
+	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 )
 
 // RequestMessagesInner - struct for RequestMessagesInner

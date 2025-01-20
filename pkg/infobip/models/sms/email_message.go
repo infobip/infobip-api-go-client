@@ -38,6 +38,7 @@ type EmailMessage struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewEmailMessage() *EmailMessage {
 	this := EmailMessage{}
 	return &this
@@ -48,6 +49,7 @@ func NewEmailMessage() *EmailMessage {
 // but it doesn't guarantee that properties required by API are set
 func NewEmailMessageWithDefaults() *EmailMessage {
 	this := EmailMessage{}
+
 	return &this
 }
 

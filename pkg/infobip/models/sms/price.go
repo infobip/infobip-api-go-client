@@ -19,18 +19,19 @@ import (
 // checks if the Price type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Price{}
 
-// Price Sent SMS price.
+// Price A price object showing currency and a price per each message.
 type Price struct {
-	// Price per one SMS.
-	PricePerMessage *float64
 	// The currency in which the price is expressed.
 	Currency *string
+	// Price per one SMS.
+	PricePerMessage *float64
 }
 
 // NewPrice instantiates a new Price object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewPrice() *Price {
 	this := Price{}
 	return &this
@@ -41,39 +42,8 @@ func NewPrice() *Price {
 // but it doesn't guarantee that properties required by API are set
 func NewPriceWithDefaults() *Price {
 	this := Price{}
+
 	return &this
-}
-
-// GetPricePerMessage returns the PricePerMessage field value if set, zero value otherwise.
-func (o *Price) GetPricePerMessage() float64 {
-	if o == nil || IsNil(o.PricePerMessage) {
-		var ret float64
-		return ret
-	}
-	return *o.PricePerMessage
-}
-
-// GetPricePerMessageOk returns a tuple with the PricePerMessage field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *Price) GetPricePerMessageOk() (*float64, bool) {
-	if o == nil || IsNil(o.PricePerMessage) {
-		return nil, false
-	}
-	return o.PricePerMessage, true
-}
-
-// HasPricePerMessage returns a boolean if a field has been set.
-func (o *Price) HasPricePerMessage() bool {
-	if o != nil && !IsNil(o.PricePerMessage) {
-		return true
-	}
-
-	return false
-}
-
-// SetPricePerMessage gets a reference to the given float64 and assigns it to the PricePerMessage field.
-func (o *Price) SetPricePerMessage(v float64) {
-	o.PricePerMessage = &v
 }
 
 // GetCurrency returns the Currency field value if set, zero value otherwise.
@@ -108,6 +78,38 @@ func (o *Price) SetCurrency(v string) {
 	o.Currency = &v
 }
 
+// GetPricePerMessage returns the PricePerMessage field value if set, zero value otherwise.
+func (o *Price) GetPricePerMessage() float64 {
+	if o == nil || IsNil(o.PricePerMessage) {
+		var ret float64
+		return ret
+	}
+	return *o.PricePerMessage
+}
+
+// GetPricePerMessageOk returns a tuple with the PricePerMessage field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Price) GetPricePerMessageOk() (*float64, bool) {
+	if o == nil || IsNil(o.PricePerMessage) {
+		return nil, false
+	}
+	return o.PricePerMessage, true
+}
+
+// HasPricePerMessage returns a boolean if a field has been set.
+func (o *Price) HasPricePerMessage() bool {
+	if o != nil && !IsNil(o.PricePerMessage) {
+		return true
+	}
+
+	return false
+}
+
+// SetPricePerMessage gets a reference to the given float64 and assigns it to the PricePerMessage field.
+func (o *Price) SetPricePerMessage(v float64) {
+	o.PricePerMessage = &v
+}
+
 func (o Price) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -118,11 +120,11 @@ func (o Price) MarshalJSON() ([]byte, error) {
 
 func (o Price) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.PricePerMessage) {
-		toSerialize["pricePerMessage"] = o.PricePerMessage
-	}
 	if !IsNil(o.Currency) {
 		toSerialize["currency"] = o.Currency
+	}
+	if !IsNil(o.PricePerMessage) {
+		toSerialize["pricePerMessage"] = o.PricePerMessage
 	}
 	return toSerialize, nil
 }

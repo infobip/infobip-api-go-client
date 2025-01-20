@@ -35,6 +35,7 @@ type _BinaryContent BinaryContent
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewBinaryContent(hex string) *BinaryContent {
 	this := BinaryContent{}
 	var dataCoding int32 = 0
@@ -50,6 +51,7 @@ func NewBinaryContent(hex string) *BinaryContent {
 // but it doesn't guarantee that properties required by API are set
 func NewBinaryContentWithDefaults() *BinaryContent {
 	this := BinaryContent{}
+
 	var dataCoding int32 = 0
 	this.DataCoding = &dataCoding
 	var esmClass int32 = 0

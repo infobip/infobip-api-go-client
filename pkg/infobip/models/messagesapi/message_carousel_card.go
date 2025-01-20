@@ -32,6 +32,7 @@ type _MessageCarouselCard MessageCarouselCard
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewMessageCarouselCard(body MessageCarouselCardBody) *MessageCarouselCard {
 	this := MessageCarouselCard{}
 	this.Body = body
@@ -43,6 +44,7 @@ func NewMessageCarouselCard(body MessageCarouselCardBody) *MessageCarouselCard {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageCarouselCardWithDefaults() *MessageCarouselCard {
 	this := MessageCarouselCard{}
+
 	return &this
 }
 

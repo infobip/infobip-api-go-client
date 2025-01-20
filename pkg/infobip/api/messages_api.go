@@ -40,7 +40,7 @@ func (r ApiSendMessagesApiEventsRequest) EventRequest(eventRequest EventRequest)
 	return r
 }
 
-func (r ApiSendMessagesApiEventsRequest) Execute() (*ResponseEnvelopeMessageResponseMessageResponseDetails, *http.Response, error) {
+func (r ApiSendMessagesApiEventsRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.SendMessagesApiEventsExecute(r)
 }
 
@@ -61,13 +61,13 @@ func (a *MessagesAPIService) SendMessagesApiEvents(ctx context.Context) ApiSendM
 
 // Execute executes the request
 //
-//	@return ResponseEnvelopeMessageResponseMessageResponseDetails
-func (a *MessagesAPIService) SendMessagesApiEventsExecute(r ApiSendMessagesApiEventsRequest) (*ResponseEnvelopeMessageResponseMessageResponseDetails, *http.Response, error) {
+//	@return MessageResponse
+func (a *MessagesAPIService) SendMessagesApiEventsExecute(r ApiSendMessagesApiEventsRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ResponseEnvelopeMessageResponseMessageResponseDetails
+		localVarReturnValue *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MessagesAPIService.SendMessagesApiEvents")
@@ -208,7 +208,7 @@ func (r ApiSendMessagesApiMessageRequest) Request(request Request) ApiSendMessag
 	return r
 }
 
-func (r ApiSendMessagesApiMessageRequest) Execute() (*ResponseEnvelopeMessageResponseMessageResponseDetails, *http.Response, error) {
+func (r ApiSendMessagesApiMessageRequest) Execute() (*MessageResponse, *http.Response, error) {
 	return r.ApiService.SendMessagesApiMessageExecute(r)
 }
 
@@ -229,13 +229,13 @@ func (a *MessagesAPIService) SendMessagesApiMessage(ctx context.Context) ApiSend
 
 // Execute executes the request
 //
-//	@return ResponseEnvelopeMessageResponseMessageResponseDetails
-func (a *MessagesAPIService) SendMessagesApiMessageExecute(r ApiSendMessagesApiMessageRequest) (*ResponseEnvelopeMessageResponseMessageResponseDetails, *http.Response, error) {
+//	@return MessageResponse
+func (a *MessagesAPIService) SendMessagesApiMessageExecute(r ApiSendMessagesApiMessageRequest) (*MessageResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodPost
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *ResponseEnvelopeMessageResponseMessageResponseDetails
+		localVarReturnValue *MessageResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MessagesAPIService.SendMessagesApiMessage")
@@ -330,6 +330,185 @@ func (a *MessagesAPIService) SendMessagesApiMessageExecute(r ApiSendMessagesApiM
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 403 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiValidateMessagesApiMessageRequest struct {
+	ctx        context.Context
+	ApiService *MessagesAPIService
+	request    *Request
+}
+
+func (r ApiValidateMessagesApiMessageRequest) Request(request Request) ApiValidateMessagesApiMessageRequest {
+	r.request = &request
+	return r
+}
+
+func (r ApiValidateMessagesApiMessageRequest) Execute() (*ValidationOkResponse, *http.Response, error) {
+	return r.ApiService.ValidateMessagesApiMessageExecute(r)
+}
+
+/*
+ValidateMessagesApiMessage Validate a Messages API message
+
+Perform a detailed validation of Messages API messages. This endpoint executes more specific checks than the `/messages` endpoint such as: possible channel-specific validations, verification of each failover step and unknown fields. Returns `200 OK` when the request would be accepted by the platform or `400 BAD_REQUEST` when it may fail at any point. Use this endpoint to validate messages before sending them to catch potential issues early.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiValidateMessagesApiMessageRequest
+*/
+func (a *MessagesAPIService) ValidateMessagesApiMessage(ctx context.Context) ApiValidateMessagesApiMessageRequest {
+	return ApiValidateMessagesApiMessageRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return ValidationOkResponse
+func (a *MessagesAPIService) ValidateMessagesApiMessageExecute(r ApiValidateMessagesApiMessageRequest) (*ValidationOkResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodPost
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *ValidationOkResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MessagesAPIService.ValidateMessagesApiMessage")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/messages-api/1/messages/validate"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.request == nil {
+		return localVarReturnValue, nil, reportError("request is required and must be specified")
+	}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.request
+	if r.ctx != nil {
+		// API Key Authentication
+		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["APIKeyHeader"]; ok {
+				var key string
+				if apiKey.Prefix != "" {
+					key = apiKey.Prefix + " " + apiKey.Key
+				} else {
+					key = apiKey.Key
+				}
+				localVarHeaderParams["Authorization"] = key
+			}
+		}
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ValidationBadResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 429 {
 			var v ApiError
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

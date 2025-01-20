@@ -34,7 +34,7 @@ type _TemplateCopyCodeButton TemplateCopyCodeButton
 // will change when the set of required properties is changed
 func NewTemplateCopyCodeButton(code string) *TemplateCopyCodeButton {
 	this := TemplateCopyCodeButton{}
-	this.Type = TEMPLATEBUTTONTYPE_COPY_CODE
+	this.Type = "COPY_CODE"
 	this.Code = code
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateCopyCodeButton(code string) *TemplateCopyCodeButton {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateCopyCodeButtonWithDefaults() *TemplateCopyCodeButton {
 	this := TemplateCopyCodeButton{}
+	this.Type = "COPY_CODE"
 	return &this
 }
 

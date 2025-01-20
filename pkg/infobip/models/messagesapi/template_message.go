@@ -40,6 +40,7 @@ type _TemplateMessage TemplateMessage
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewTemplateMessage(channel OutboundTemplateChannel, sender string, destinations []MessageDestination, template Template) *TemplateMessage {
 	this := TemplateMessage{}
 	this.Channel = channel
@@ -54,6 +55,7 @@ func NewTemplateMessage(channel OutboundTemplateChannel, sender string, destinat
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateMessageWithDefaults() *TemplateMessage {
 	this := TemplateMessage{}
+
 	return &this
 }
 

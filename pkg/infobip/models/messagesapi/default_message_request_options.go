@@ -29,6 +29,7 @@ type DefaultMessageRequestOptions struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewDefaultMessageRequestOptions() *DefaultMessageRequestOptions {
 	this := DefaultMessageRequestOptions{}
 	return &this
@@ -39,6 +40,7 @@ func NewDefaultMessageRequestOptions() *DefaultMessageRequestOptions {
 // but it doesn't guarantee that properties required by API are set
 func NewDefaultMessageRequestOptionsWithDefaults() *DefaultMessageRequestOptions {
 	this := DefaultMessageRequestOptions{}
+
 	return &this
 }
 

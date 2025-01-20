@@ -34,7 +34,7 @@ type _TemplateQuickReplyButton TemplateQuickReplyButton
 // will change when the set of required properties is changed
 func NewTemplateQuickReplyButton(postbackData string) *TemplateQuickReplyButton {
 	this := TemplateQuickReplyButton{}
-	this.Type = TEMPLATEBUTTONTYPE_QUICK_REPLY
+	this.Type = "QUICK_REPLY"
 	this.PostbackData = postbackData
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateQuickReplyButton(postbackData string) *TemplateQuickReplyButton 
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateQuickReplyButtonWithDefaults() *TemplateQuickReplyButton {
 	this := TemplateQuickReplyButton{}
+	this.Type = "QUICK_REPLY"
 	return &this
 }
 

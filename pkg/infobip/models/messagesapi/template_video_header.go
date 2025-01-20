@@ -34,7 +34,7 @@ type _TemplateVideoHeader TemplateVideoHeader
 // will change when the set of required properties is changed
 func NewTemplateVideoHeader(url string) *TemplateVideoHeader {
 	this := TemplateVideoHeader{}
-	this.Type = TEMPLATEHEADERTYPE_VIDEO
+	this.Type = "VIDEO"
 	this.Url = url
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateVideoHeader(url string) *TemplateVideoHeader {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateVideoHeaderWithDefaults() *TemplateVideoHeader {
 	this := TemplateVideoHeader{}
+	this.Type = "VIDEO"
 	return &this
 }
 

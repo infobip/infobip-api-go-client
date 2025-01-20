@@ -35,6 +35,7 @@ type _Destination Destination
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewDestination(to string) *Destination {
 	this := Destination{}
 	this.To = to
@@ -46,6 +47,7 @@ func NewDestination(to string) *Destination {
 // but it doesn't guarantee that properties required by API are set
 func NewDestinationWithDefaults() *Destination {
 	this := Destination{}
+
 	return &this
 }
 

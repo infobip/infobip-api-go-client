@@ -115,7 +115,7 @@ func TestSendSms(t *testing.T) {
 		{To: givenDestination},
 	}
 
-	content := sms.LogContent{
+	content := sms.MessageContent{
 		TextMessageContent: sms.NewTextMessageContent(givenText),
 	}
 
@@ -234,7 +234,7 @@ func TestShouldSendFlashSms(t *testing.T) {
 		{To: givenDestination},
 	}
 
-	content := sms.LogContent{
+	content := sms.MessageContent{
 		TextMessageContent: sms.NewTextMessageContent(givenText),
 	}
 
@@ -308,7 +308,7 @@ func TestSendFullyFeaturedSmsMessage(t *testing.T) {
 	givenFrom := "Info"
 	givenIntermediateReport := true
 	givenLanguageCode := sms.LANGUAGECODE_AUTODETECT
-	smsLanguageCode := sms.LanguageV3{
+	smsLanguageCode := sms.Language{
 		LanguageCode: &givenLanguageCode,
 	}
 	givenTransliterationCode := sms.TRANSLITERATIONCODE_CENTRAL_EUROPEAN
@@ -500,11 +500,11 @@ func TestSendFullyFeaturedSmsMessage(t *testing.T) {
 		CallbackData: &givenCallbackData,
 	}
 
-	firstContentLog := sms.LogContent{
+	firstContentLog := sms.MessageContent{
 		TextMessageContent: &firstContent,
 	}
 
-	secondContentLog := sms.LogContent{
+	secondContentLog := sms.MessageContent{
 		TextMessageContent: &secondContent,
 	}
 
@@ -683,7 +683,7 @@ func TestSendBinarySmsMessage(t *testing.T) {
 		EsmClass:   &givenEsmClass,
 	}
 
-	contentLog := sms.LogContent{
+	contentLog := sms.MessageContent{
 		BinaryContent: &content,
 	}
 
@@ -842,7 +842,7 @@ func TestSendFlashBinarySms(t *testing.T) {
 	message := sms.Message{
 		Destinations: destinations,
 		Sender:       &givenFrom,
-		Content: sms.LogContent{
+		Content: sms.MessageContent{
 			BinaryContent: &content,
 		},
 		Options: &options,
@@ -1131,6 +1131,10 @@ func TestShouldGetSmsLogs(t *testing.T) {
 	// Given values
 	givenBulkId := "BULK-ID-123-xyz"
 	givenSentSinceString := "2015-02-22T17:42:05.390+0100"
+	givenSentSince, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenSentSinceString)
+	ibTimeGivenSentAt := infobip.Time{
+		T: givenSentSince,
+	}
 
 	givenMessageIdMessage1 := "MESSAGE-ID-123-xyz"
 	givenToMessage1 := "41793026727"
@@ -1230,7 +1234,7 @@ func TestShouldGetSmsLogs(t *testing.T) {
 	smsAPI := infobipClient.SmsAPI
 	smsLogsResponse, _, err := smsAPI.GetOutboundSmsMessageLogs(context.Background()).
 		BulkId([]string{givenBulkId}).
-		SentSince(givenSentSinceString).
+		SentSince(ibTimeGivenSentAt).
 		Execute()
 
 	if err != nil {

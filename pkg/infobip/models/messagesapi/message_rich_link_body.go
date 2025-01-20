@@ -33,7 +33,8 @@ type MessageRichLinkBody struct {
 	// URL of the thumbnail image. If you add this, then we use as thumbnail image for video you provided in `url`. Applicable only when `isVideo=true`.
 	ThumbnailUrl *string
 	// Button label text.
-	ButtonText *string
+	ButtonText  *string
+	CardOptions *MessageCardOptions
 }
 
 type _MessageRichLinkBody MessageRichLinkBody
@@ -44,7 +45,7 @@ type _MessageRichLinkBody MessageRichLinkBody
 // will change when the set of required properties is changed
 func NewMessageRichLinkBody(redirectUrl string, text string, url string) *MessageRichLinkBody {
 	this := MessageRichLinkBody{}
-	this.Type = MESSAGEBODYTYPE_RICH_LINK
+	this.Type = "RICH_LINK"
 	this.RedirectUrl = redirectUrl
 	this.Text = text
 	this.Url = url
@@ -58,6 +59,7 @@ func NewMessageRichLinkBody(redirectUrl string, text string, url string) *Messag
 // but it doesn't guarantee that properties required by API are set
 func NewMessageRichLinkBodyWithDefaults() *MessageRichLinkBody {
 	this := MessageRichLinkBody{}
+	this.Type = "RICH_LINK"
 	var isVideo bool = false
 	this.IsVideo = &isVideo
 	return &this
@@ -231,6 +233,38 @@ func (o *MessageRichLinkBody) SetButtonText(v string) {
 	o.ButtonText = &v
 }
 
+// GetCardOptions returns the CardOptions field value if set, zero value otherwise.
+func (o *MessageRichLinkBody) GetCardOptions() MessageCardOptions {
+	if o == nil || IsNil(o.CardOptions) {
+		var ret MessageCardOptions
+		return ret
+	}
+	return *o.CardOptions
+}
+
+// GetCardOptionsOk returns a tuple with the CardOptions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageRichLinkBody) GetCardOptionsOk() (*MessageCardOptions, bool) {
+	if o == nil || IsNil(o.CardOptions) {
+		return nil, false
+	}
+	return o.CardOptions, true
+}
+
+// HasCardOptions returns a boolean if a field has been set.
+func (o *MessageRichLinkBody) HasCardOptions() bool {
+	if o != nil && !IsNil(o.CardOptions) {
+		return true
+	}
+
+	return false
+}
+
+// SetCardOptions gets a reference to the given MessageCardOptions and assigns it to the CardOptions field.
+func (o *MessageRichLinkBody) SetCardOptions(v MessageCardOptions) {
+	o.CardOptions = &v
+}
+
 func (o MessageRichLinkBody) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -253,6 +287,9 @@ func (o MessageRichLinkBody) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ButtonText) {
 		toSerialize["buttonText"] = o.ButtonText
+	}
+	if !IsNil(o.CardOptions) {
+		toSerialize["cardOptions"] = o.CardOptions
 	}
 	return toSerialize, nil
 }

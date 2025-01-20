@@ -36,7 +36,7 @@ type _MoEventDocumentContent MoEventDocumentContent
 // will change when the set of required properties is changed
 func NewMoEventDocumentContent(url string) *MoEventDocumentContent {
 	this := MoEventDocumentContent{}
-	this.Type = MOEVENTCONTENTTYPE_DOCUMENT
+	this.Type = "DOCUMENT"
 	this.Url = url
 	return &this
 }
@@ -46,6 +46,7 @@ func NewMoEventDocumentContent(url string) *MoEventDocumentContent {
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventDocumentContentWithDefaults() *MoEventDocumentContent {
 	this := MoEventDocumentContent{}
+	this.Type = "DOCUMENT"
 	return &this
 }
 

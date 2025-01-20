@@ -35,6 +35,7 @@ type _MessageListSection MessageListSection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewMessageListSection(sectionTitle string, items []MessageListItem) *MessageListSection {
 	this := MessageListSection{}
 	this.SectionTitle = sectionTitle
@@ -47,6 +48,7 @@ func NewMessageListSection(sectionTitle string, items []MessageListItem) *Messag
 // but it doesn't guarantee that properties required by API are set
 func NewMessageListSectionWithDefaults() *MessageListSection {
 	this := MessageListSection{}
+
 	return &this
 }
 

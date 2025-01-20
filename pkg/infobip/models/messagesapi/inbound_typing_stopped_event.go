@@ -21,7 +21,7 @@ var _ MappedNullable = &InboundTypingStoppedEvent{}
 
 // InboundTypingStoppedEvent struct for InboundTypingStoppedEvent
 type InboundTypingStoppedEvent struct {
-	Event InboundEventType
+	Event   InboundEventType
 	Channel InboundTypingIndicatorChannel
 	// Identifier (usually number) of the party which sent the message.
 	Sender string
@@ -46,7 +46,7 @@ type _InboundTypingStoppedEvent InboundTypingStoppedEvent
 // will change when the set of required properties is changed
 func NewInboundTypingStoppedEvent(channel InboundTypingIndicatorChannel, sender string, destination string, receivedAt Time, messageId string) *InboundTypingStoppedEvent {
 	this := InboundTypingStoppedEvent{}
-	this.Event = INBOUNDEVENTTYPE_TYPING_STOPPED
+	this.Event = "TYPING_STOPPED"
 	this.Channel = channel
 	this.Sender = sender
 	this.Destination = destination
@@ -60,6 +60,7 @@ func NewInboundTypingStoppedEvent(channel InboundTypingIndicatorChannel, sender 
 // but it doesn't guarantee that properties required by API are set
 func NewInboundTypingStoppedEventWithDefaults() *InboundTypingStoppedEvent {
 	this := InboundTypingStoppedEvent{}
+	this.Event = "TYPING_STOPPED"
 	return &this
 }
 

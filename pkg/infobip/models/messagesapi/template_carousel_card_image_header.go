@@ -34,7 +34,7 @@ type _TemplateCarouselCardImageHeader TemplateCarouselCardImageHeader
 // will change when the set of required properties is changed
 func NewTemplateCarouselCardImageHeader(url string) *TemplateCarouselCardImageHeader {
 	this := TemplateCarouselCardImageHeader{}
-	this.Type = TEMPLATECAROUSELCARDHEADERTYPE_IMAGE
+	this.Type = "IMAGE"
 	this.Url = url
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateCarouselCardImageHeader(url string) *TemplateCarouselCardImageHe
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateCarouselCardImageHeaderWithDefaults() *TemplateCarouselCardImageHeader {
 	this := TemplateCarouselCardImageHeader{}
+	this.Type = "IMAGE"
 	return &this
 }
 

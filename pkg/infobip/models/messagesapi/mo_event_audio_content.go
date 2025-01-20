@@ -36,7 +36,7 @@ type _MoEventAudioContent MoEventAudioContent
 // will change when the set of required properties is changed
 func NewMoEventAudioContent(url string) *MoEventAudioContent {
 	this := MoEventAudioContent{}
-	this.Type = MOEVENTCONTENTTYPE_AUDIO
+	this.Type = "AUDIO"
 	this.Url = url
 	return &this
 }
@@ -46,6 +46,7 @@ func NewMoEventAudioContent(url string) *MoEventAudioContent {
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventAudioContentWithDefaults() *MoEventAudioContent {
 	this := MoEventAudioContent{}
+	this.Type = "AUDIO"
 	return &this
 }
 

@@ -31,6 +31,7 @@ type MessageCarouselCardBody struct {
 	IsVideo *bool
 	// URL of the thumbnail image. If you add this, then we use as thumbnail image for video you provided in `url`. Applicable only when `isVideo=true`.
 	ThumbnailUrl *string
+	CardOptions  *MessageCardOptions
 }
 
 type _MessageCarouselCardBody MessageCarouselCardBody
@@ -39,6 +40,7 @@ type _MessageCarouselCardBody MessageCarouselCardBody
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewMessageCarouselCardBody(text string, url string) *MessageCarouselCardBody {
 	this := MessageCarouselCardBody{}
 	this.Text = text
@@ -53,6 +55,7 @@ func NewMessageCarouselCardBody(text string, url string) *MessageCarouselCardBod
 // but it doesn't guarantee that properties required by API are set
 func NewMessageCarouselCardBodyWithDefaults() *MessageCarouselCardBody {
 	this := MessageCarouselCardBody{}
+
 	var isVideo bool = false
 	this.IsVideo = &isVideo
 	return &this
@@ -202,6 +205,38 @@ func (o *MessageCarouselCardBody) SetThumbnailUrl(v string) {
 	o.ThumbnailUrl = &v
 }
 
+// GetCardOptions returns the CardOptions field value if set, zero value otherwise.
+func (o *MessageCarouselCardBody) GetCardOptions() MessageCardOptions {
+	if o == nil || IsNil(o.CardOptions) {
+		var ret MessageCardOptions
+		return ret
+	}
+	return *o.CardOptions
+}
+
+// GetCardOptionsOk returns a tuple with the CardOptions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageCarouselCardBody) GetCardOptionsOk() (*MessageCardOptions, bool) {
+	if o == nil || IsNil(o.CardOptions) {
+		return nil, false
+	}
+	return o.CardOptions, true
+}
+
+// HasCardOptions returns a boolean if a field has been set.
+func (o *MessageCarouselCardBody) HasCardOptions() bool {
+	if o != nil && !IsNil(o.CardOptions) {
+		return true
+	}
+
+	return false
+}
+
+// SetCardOptions gets a reference to the given MessageCardOptions and assigns it to the CardOptions field.
+func (o *MessageCarouselCardBody) SetCardOptions(v MessageCardOptions) {
+	o.CardOptions = &v
+}
+
 func (o MessageCarouselCardBody) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -222,6 +257,9 @@ func (o MessageCarouselCardBody) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ThumbnailUrl) {
 		toSerialize["thumbnailUrl"] = o.ThumbnailUrl
+	}
+	if !IsNil(o.CardOptions) {
+		toSerialize["cardOptions"] = o.CardOptions
 	}
 	return toSerialize, nil
 }

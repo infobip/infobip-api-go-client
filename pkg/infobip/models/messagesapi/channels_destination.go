@@ -31,6 +31,7 @@ type _ChannelsDestination ChannelsDestination
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewChannelsDestination(byChannel []ChannelDestination) *ChannelsDestination {
 	this := ChannelsDestination{}
 	this.ByChannel = byChannel
@@ -42,6 +43,7 @@ func NewChannelsDestination(byChannel []ChannelDestination) *ChannelsDestination
 // but it doesn't guarantee that properties required by API are set
 func NewChannelsDestinationWithDefaults() *ChannelsDestination {
 	this := ChannelsDestination{}
+
 	return &this
 }
 

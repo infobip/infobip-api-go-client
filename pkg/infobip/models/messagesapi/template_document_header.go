@@ -36,7 +36,7 @@ type _TemplateDocumentHeader TemplateDocumentHeader
 // will change when the set of required properties is changed
 func NewTemplateDocumentHeader(url string, filename string) *TemplateDocumentHeader {
 	this := TemplateDocumentHeader{}
-	this.Type = TEMPLATEHEADERTYPE_DOCUMENT
+	this.Type = "DOCUMENT"
 	this.Url = url
 	this.Filename = filename
 	return &this
@@ -47,6 +47,7 @@ func NewTemplateDocumentHeader(url string, filename string) *TemplateDocumentHea
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateDocumentHeaderWithDefaults() *TemplateDocumentHeader {
 	this := TemplateDocumentHeader{}
+	this.Type = "DOCUMENT"
 	return &this
 }
 

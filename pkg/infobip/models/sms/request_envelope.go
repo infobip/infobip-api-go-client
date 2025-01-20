@@ -32,6 +32,7 @@ type _RequestEnvelope RequestEnvelope
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewRequestEnvelope(messages []Message) *RequestEnvelope {
 	this := RequestEnvelope{}
 	this.Messages = messages
@@ -43,6 +44,7 @@ func NewRequestEnvelope(messages []Message) *RequestEnvelope {
 // but it doesn't guarantee that properties required by API are set
 func NewRequestEnvelopeWithDefaults() *RequestEnvelope {
 	this := RequestEnvelope{}
+
 	return &this
 }
 

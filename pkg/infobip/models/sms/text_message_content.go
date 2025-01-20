@@ -24,7 +24,7 @@ type TextMessageContent struct {
 	// Content of the message being sent.
 	Text            string
 	Transliteration *TransliterationCode
-	Language        *LanguageV3
+	Language        *Language
 }
 
 type _TextMessageContent TextMessageContent
@@ -33,6 +33,7 @@ type _TextMessageContent TextMessageContent
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewTextMessageContent(text string) *TextMessageContent {
 	this := TextMessageContent{}
 	this.Text = text
@@ -44,6 +45,7 @@ func NewTextMessageContent(text string) *TextMessageContent {
 // but it doesn't guarantee that properties required by API are set
 func NewTextMessageContentWithDefaults() *TextMessageContent {
 	this := TextMessageContent{}
+
 	return &this
 }
 
@@ -104,9 +106,9 @@ func (o *TextMessageContent) SetTransliteration(v TransliterationCode) {
 }
 
 // GetLanguage returns the Language field value if set, zero value otherwise.
-func (o *TextMessageContent) GetLanguage() LanguageV3 {
+func (o *TextMessageContent) GetLanguage() Language {
 	if o == nil || IsNil(o.Language) {
-		var ret LanguageV3
+		var ret Language
 		return ret
 	}
 	return *o.Language
@@ -114,7 +116,7 @@ func (o *TextMessageContent) GetLanguage() LanguageV3 {
 
 // GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TextMessageContent) GetLanguageOk() (*LanguageV3, bool) {
+func (o *TextMessageContent) GetLanguageOk() (*Language, bool) {
 	if o == nil || IsNil(o.Language) {
 		return nil, false
 	}
@@ -130,8 +132,8 @@ func (o *TextMessageContent) HasLanguage() bool {
 	return false
 }
 
-// SetLanguage gets a reference to the given LanguageV3 and assigns it to the Language field.
-func (o *TextMessageContent) SetLanguage(v LanguageV3) {
+// SetLanguage gets a reference to the given Language and assigns it to the Language field.
+func (o *TextMessageContent) SetLanguage(v Language) {
 	o.Language = &v
 }
 

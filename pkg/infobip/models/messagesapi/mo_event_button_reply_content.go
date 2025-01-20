@@ -38,7 +38,7 @@ type _MoEventButtonReplyContent MoEventButtonReplyContent
 // will change when the set of required properties is changed
 func NewMoEventButtonReplyContent(text string) *MoEventButtonReplyContent {
 	this := MoEventButtonReplyContent{}
-	this.Type = MOEVENTCONTENTTYPE_BUTTON_REPLY
+	this.Type = "BUTTON_REPLY"
 	this.Text = text
 	return &this
 }
@@ -48,6 +48,7 @@ func NewMoEventButtonReplyContent(text string) *MoEventButtonReplyContent {
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventButtonReplyContentWithDefaults() *MoEventButtonReplyContent {
 	this := MoEventButtonReplyContent{}
+	this.Type = "BUTTON_REPLY"
 	return &this
 }
 

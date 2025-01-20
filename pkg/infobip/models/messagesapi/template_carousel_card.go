@@ -34,6 +34,7 @@ type _TemplateCarouselCard TemplateCarouselCard
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewTemplateCarouselCard(header TemplateCarouselCardHeader) *TemplateCarouselCard {
 	this := TemplateCarouselCard{}
 	this.Header = header
@@ -45,6 +46,7 @@ func NewTemplateCarouselCard(header TemplateCarouselCardHeader) *TemplateCarouse
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateCarouselCardWithDefaults() *TemplateCarouselCard {
 	this := TemplateCarouselCard{}
+
 	return &this
 }
 

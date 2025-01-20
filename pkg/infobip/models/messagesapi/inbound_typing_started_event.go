@@ -21,7 +21,7 @@ var _ MappedNullable = &InboundTypingStartedEvent{}
 
 // InboundTypingStartedEvent struct for InboundTypingStartedEvent
 type InboundTypingStartedEvent struct {
-	Event InboundEventType
+	Event   InboundEventType
 	Channel InboundTypingIndicatorChannel
 	// Identifier (usually number) of the party which sent the message.
 	Sender string
@@ -46,7 +46,7 @@ type _InboundTypingStartedEvent InboundTypingStartedEvent
 // will change when the set of required properties is changed
 func NewInboundTypingStartedEvent(channel InboundTypingIndicatorChannel, sender string, destination string, receivedAt Time, messageId string) *InboundTypingStartedEvent {
 	this := InboundTypingStartedEvent{}
-	this.Event = INBOUNDEVENTTYPE_TYPING_STARTED
+	this.Event = "TYPING_STARTED"
 	this.Channel = channel
 	this.Sender = sender
 	this.Destination = destination
@@ -60,6 +60,7 @@ func NewInboundTypingStartedEvent(channel InboundTypingIndicatorChannel, sender 
 // but it doesn't guarantee that properties required by API are set
 func NewInboundTypingStartedEventWithDefaults() *InboundTypingStartedEvent {
 	this := InboundTypingStartedEvent{}
+	this.Event = "TYPING_STARTED"
 	return &this
 }
 

@@ -19,10 +19,13 @@ import (
 type MessageBody struct {
 	MessageAuthenticationRequestBody *MessageAuthenticationRequestBody
 	MessageCarouselBody              *MessageCarouselBody
+	MessageContactBody               *MessageContactBody
 	MessageDocumentBody              *MessageDocumentBody
 	MessageImageBody                 *MessageImageBody
 	MessageListBody                  *MessageListBody
+	MessageLocationBody              *MessageLocationBody
 	MessageRichLinkBody              *MessageRichLinkBody
+	MessageStickerBody               *MessageStickerBody
 	MessageTextBody                  *MessageTextBody
 	MessageVideoBody                 *MessageVideoBody
 }
@@ -38,6 +41,13 @@ func MessageAuthenticationRequestBodyAsMessageBody(v *MessageAuthenticationReque
 func MessageCarouselBodyAsMessageBody(v *MessageCarouselBody) MessageBody {
 	return MessageBody{
 		MessageCarouselBody: v,
+	}
+}
+
+// MessageContactBodyAsMessageBody is a convenience function that returns MessageContactBody wrapped in MessageBody
+func MessageContactBodyAsMessageBody(v *MessageContactBody) MessageBody {
+	return MessageBody{
+		MessageContactBody: v,
 	}
 }
 
@@ -62,10 +72,24 @@ func MessageListBodyAsMessageBody(v *MessageListBody) MessageBody {
 	}
 }
 
+// MessageLocationBodyAsMessageBody is a convenience function that returns MessageLocationBody wrapped in MessageBody
+func MessageLocationBodyAsMessageBody(v *MessageLocationBody) MessageBody {
+	return MessageBody{
+		MessageLocationBody: v,
+	}
+}
+
 // MessageRichLinkBodyAsMessageBody is a convenience function that returns MessageRichLinkBody wrapped in MessageBody
 func MessageRichLinkBodyAsMessageBody(v *MessageRichLinkBody) MessageBody {
 	return MessageBody{
 		MessageRichLinkBody: v,
+	}
+}
+
+// MessageStickerBodyAsMessageBody is a convenience function that returns MessageStickerBody wrapped in MessageBody
+func MessageStickerBodyAsMessageBody(v *MessageStickerBody) MessageBody {
+	return MessageBody{
+		MessageStickerBody: v,
 	}
 }
 
@@ -122,6 +146,21 @@ func (dst *MessageBody) UnmarshalJSON(data []byte) error {
 			dst.MessageCarouselBody = nil
 		}
 	}
+	// check if the discriminator value is 'CONTACT'
+	if jsonDict["type"] == "CONTACT" {
+		// try to unmarshal JSON data into MessageContactBody
+		err = json.Unmarshal(data, &dst.MessageContactBody)
+		if err == nil {
+			jsonMessageContactBody, _ := json.Marshal(dst.MessageContactBody)
+			if string(jsonMessageContactBody) == "{}" { // empty struct
+				dst.MessageContactBody = nil
+			} else {
+				return nil // data stored in dst.MessageContactBody, return on the first match
+			}
+		} else {
+			dst.MessageContactBody = nil
+		}
+	}
 	// check if the discriminator value is 'DOCUMENT'
 	if jsonDict["type"] == "DOCUMENT" {
 		// try to unmarshal JSON data into MessageDocumentBody
@@ -167,6 +206,21 @@ func (dst *MessageBody) UnmarshalJSON(data []byte) error {
 			dst.MessageListBody = nil
 		}
 	}
+	// check if the discriminator value is 'LOCATION'
+	if jsonDict["type"] == "LOCATION" {
+		// try to unmarshal JSON data into MessageLocationBody
+		err = json.Unmarshal(data, &dst.MessageLocationBody)
+		if err == nil {
+			jsonMessageLocationBody, _ := json.Marshal(dst.MessageLocationBody)
+			if string(jsonMessageLocationBody) == "{}" { // empty struct
+				dst.MessageLocationBody = nil
+			} else {
+				return nil // data stored in dst.MessageLocationBody, return on the first match
+			}
+		} else {
+			dst.MessageLocationBody = nil
+		}
+	}
 	// check if the discriminator value is 'RICH_LINK'
 	if jsonDict["type"] == "RICH_LINK" {
 		// try to unmarshal JSON data into MessageRichLinkBody
@@ -180,6 +234,21 @@ func (dst *MessageBody) UnmarshalJSON(data []byte) error {
 			}
 		} else {
 			dst.MessageRichLinkBody = nil
+		}
+	}
+	// check if the discriminator value is 'STICKER'
+	if jsonDict["type"] == "STICKER" {
+		// try to unmarshal JSON data into MessageStickerBody
+		err = json.Unmarshal(data, &dst.MessageStickerBody)
+		if err == nil {
+			jsonMessageStickerBody, _ := json.Marshal(dst.MessageStickerBody)
+			if string(jsonMessageStickerBody) == "{}" { // empty struct
+				dst.MessageStickerBody = nil
+			} else {
+				return nil // data stored in dst.MessageStickerBody, return on the first match
+			}
+		} else {
+			dst.MessageStickerBody = nil
 		}
 	}
 	// check if the discriminator value is 'TEXT'
@@ -223,6 +292,9 @@ func (src MessageBody) MarshalJSON() ([]byte, error) {
 	if src.MessageCarouselBody != nil {
 		return json.Marshal(&src.MessageCarouselBody)
 	}
+	if src.MessageContactBody != nil {
+		return json.Marshal(&src.MessageContactBody)
+	}
 	if src.MessageDocumentBody != nil {
 		return json.Marshal(&src.MessageDocumentBody)
 	}
@@ -232,8 +304,14 @@ func (src MessageBody) MarshalJSON() ([]byte, error) {
 	if src.MessageListBody != nil {
 		return json.Marshal(&src.MessageListBody)
 	}
+	if src.MessageLocationBody != nil {
+		return json.Marshal(&src.MessageLocationBody)
+	}
 	if src.MessageRichLinkBody != nil {
 		return json.Marshal(&src.MessageRichLinkBody)
+	}
+	if src.MessageStickerBody != nil {
+		return json.Marshal(&src.MessageStickerBody)
 	}
 	if src.MessageTextBody != nil {
 		return json.Marshal(&src.MessageTextBody)
@@ -255,6 +333,9 @@ func (obj *MessageBody) GetActualInstance() interface{} {
 	if obj.MessageCarouselBody != nil {
 		return obj.MessageCarouselBody
 	}
+	if obj.MessageContactBody != nil {
+		return obj.MessageContactBody
+	}
 	if obj.MessageDocumentBody != nil {
 		return obj.MessageDocumentBody
 	}
@@ -264,8 +345,14 @@ func (obj *MessageBody) GetActualInstance() interface{} {
 	if obj.MessageListBody != nil {
 		return obj.MessageListBody
 	}
+	if obj.MessageLocationBody != nil {
+		return obj.MessageLocationBody
+	}
 	if obj.MessageRichLinkBody != nil {
 		return obj.MessageRichLinkBody
+	}
+	if obj.MessageStickerBody != nil {
+		return obj.MessageStickerBody
 	}
 	if obj.MessageTextBody != nil {
 		return obj.MessageTextBody

@@ -23,6 +23,9 @@ Detailed documentation about Infobip API can be found [here][apidocs].
 The current version of this library includes this subset of Infobip products:
 * [SMS](https://www.infobip.com/docs/api/channels/sms)
 * [Messages API](https://www.infobip.com/docs/api/platform/messages-api)
+* [Email](https://www.infobip.com/docs/api/channels/email)
+* [Voice](https://www.infobip.com/docs/api/channels/voice)
+* [Moments](https://www.infobip.com/docs/api/customer-engagement/moments)
 
 ## General Info
 For `infobip-api-go-client` versioning we use [Semantic Versioning][semver] scheme.
@@ -107,7 +110,7 @@ Here's a basic example of sending the SMS message.
 		{To: "421907372599"},
 	}
 
-	content := sms.LogContent{
+	content := sms.MessageContent{
 		TextMessageContent: sms.NewTextMessageContent("Congratulations on sending your first message with GO library."),
 	}
 
@@ -125,9 +128,9 @@ Here's a basic example of sending the SMS message.
 		RequestEnvelope(*request).
 		Execute()
 ```
-
-// If, for any reason, you don't want to use some of the response fields, feel free to replace them with an underscore wildcard, eg.
-//  apiResponse, _, _ := ...
+```
+    // If, for any reason, you don't want to use some of the response fields, feel free to replace them with an underscore wildcard, eg.
+    // apiResponse, _, _ := ...
 ```
 
 In order to be able to access our generated `Exception` models, you will have to do a little bit of type casting.
@@ -203,9 +206,9 @@ text := "Let's see how many characters will remain unused in this message."
 request := sms.NewPreviewRequest(text)
 
 apiResponse, httpResponse, err := infobipClient.
-    SendSmsApi.
+    SmsAPI.
     PreviewSmsMessage(auth).
-    SmsPreviewRequest(*request).
+    PreviewRequest(*request).
     Execute()
 ```
 
@@ -243,6 +246,12 @@ For 2FA quick start guide please check [these examples](two-factor-authenticatio
 
 #### Messages API
 For Messages API quick start guide, view [these examples](messages-api.md).
+
+#### Email
+For Email quick start guide, view [these examples](email.md).
+
+#### Moments
+For Moments quick start guide, view [these examples](moments.md).
 
 ## Ask for help
 

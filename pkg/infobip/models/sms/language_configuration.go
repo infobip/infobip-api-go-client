@@ -21,7 +21,7 @@ var _ MappedNullable = &LanguageConfiguration{}
 
 // LanguageConfiguration Sets up additional configuration that changes the original message content you can preview with this call.
 type LanguageConfiguration struct {
-	Language *LanguageV1
+	Language *PreviewLanguage
 	// Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC` and `NON_UNICODE`.
 	Transliteration *string
 }
@@ -30,6 +30,7 @@ type LanguageConfiguration struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewLanguageConfiguration() *LanguageConfiguration {
 	this := LanguageConfiguration{}
 	return &this
@@ -40,13 +41,14 @@ func NewLanguageConfiguration() *LanguageConfiguration {
 // but it doesn't guarantee that properties required by API are set
 func NewLanguageConfigurationWithDefaults() *LanguageConfiguration {
 	this := LanguageConfiguration{}
+
 	return &this
 }
 
 // GetLanguage returns the Language field value if set, zero value otherwise.
-func (o *LanguageConfiguration) GetLanguage() LanguageV1 {
+func (o *LanguageConfiguration) GetLanguage() PreviewLanguage {
 	if o == nil || IsNil(o.Language) {
-		var ret LanguageV1
+		var ret PreviewLanguage
 		return ret
 	}
 	return *o.Language
@@ -54,7 +56,7 @@ func (o *LanguageConfiguration) GetLanguage() LanguageV1 {
 
 // GetLanguageOk returns a tuple with the Language field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *LanguageConfiguration) GetLanguageOk() (*LanguageV1, bool) {
+func (o *LanguageConfiguration) GetLanguageOk() (*PreviewLanguage, bool) {
 	if o == nil || IsNil(o.Language) {
 		return nil, false
 	}
@@ -70,8 +72,8 @@ func (o *LanguageConfiguration) HasLanguage() bool {
 	return false
 }
 
-// SetLanguage gets a reference to the given LanguageV1 and assigns it to the Language field.
-func (o *LanguageConfiguration) SetLanguage(v LanguageV1) {
+// SetLanguage gets a reference to the given PreviewLanguage and assigns it to the Language field.
+func (o *LanguageConfiguration) SetLanguage(v PreviewLanguage) {
 	o.Language = &v
 }
 

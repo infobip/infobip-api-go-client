@@ -31,6 +31,7 @@ type MessageCount struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewMessageCount() *MessageCount {
 	this := MessageCount{}
 	return &this
@@ -41,6 +42,7 @@ func NewMessageCount() *MessageCount {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageCountWithDefaults() *MessageCount {
 	this := MessageCount{}
+
 	return &this
 }
 

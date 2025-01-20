@@ -466,8 +466,8 @@ type ApiGetOutboundSmsMessageLogsRequest struct {
 	bulkId              *[]string
 	messageId           *[]string
 	generalStatus       *MessageGeneralStatus
-	sentSince           *string
-	sentUntil           *string
+	sentSince           *Time
+	sentUntil           *Time
 	limit               *int32
 	entityId            *string
 	applicationId       *string
@@ -516,13 +516,13 @@ func (r ApiGetOutboundSmsMessageLogsRequest) GeneralStatus(generalStatus Message
 }
 
 // The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSSZ.
-func (r ApiGetOutboundSmsMessageLogsRequest) SentSince(sentSince string) ApiGetOutboundSmsMessageLogsRequest {
+func (r ApiGetOutboundSmsMessageLogsRequest) SentSince(sentSince Time) ApiGetOutboundSmsMessageLogsRequest {
 	r.sentSince = &sentSince
 	return r
 }
 
 // The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSSZ.
-func (r ApiGetOutboundSmsMessageLogsRequest) SentUntil(sentUntil string) ApiGetOutboundSmsMessageLogsRequest {
+func (r ApiGetOutboundSmsMessageLogsRequest) SentUntil(sentUntil Time) ApiGetOutboundSmsMessageLogsRequest {
 	r.sentUntil = &sentUntil
 	return r
 }

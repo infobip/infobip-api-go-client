@@ -21,6 +21,8 @@ var _ MappedNullable = &SouthKoreaOptions{}
 
 // SouthKoreaOptions Use case dependent parameters for sending SMS to phone numbers registered in South Korea.
 type SouthKoreaOptions struct {
+	// Title of the message.
+	Title *string
 	// Reseller identification code: 9-digit registration number in the business registration certificate for South Korea. Resellers should submit this when sending.
 	ResellerCode *int32
 }
@@ -29,6 +31,7 @@ type SouthKoreaOptions struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewSouthKoreaOptions() *SouthKoreaOptions {
 	this := SouthKoreaOptions{}
 	return &this
@@ -39,7 +42,40 @@ func NewSouthKoreaOptions() *SouthKoreaOptions {
 // but it doesn't guarantee that properties required by API are set
 func NewSouthKoreaOptionsWithDefaults() *SouthKoreaOptions {
 	this := SouthKoreaOptions{}
+
 	return &this
+}
+
+// GetTitle returns the Title field value if set, zero value otherwise.
+func (o *SouthKoreaOptions) GetTitle() string {
+	if o == nil || IsNil(o.Title) {
+		var ret string
+		return ret
+	}
+	return *o.Title
+}
+
+// GetTitleOk returns a tuple with the Title field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SouthKoreaOptions) GetTitleOk() (*string, bool) {
+	if o == nil || IsNil(o.Title) {
+		return nil, false
+	}
+	return o.Title, true
+}
+
+// HasTitle returns a boolean if a field has been set.
+func (o *SouthKoreaOptions) HasTitle() bool {
+	if o != nil && !IsNil(o.Title) {
+		return true
+	}
+
+	return false
+}
+
+// SetTitle gets a reference to the given string and assigns it to the Title field.
+func (o *SouthKoreaOptions) SetTitle(v string) {
+	o.Title = &v
 }
 
 // GetResellerCode returns the ResellerCode field value if set, zero value otherwise.
@@ -84,6 +120,9 @@ func (o SouthKoreaOptions) MarshalJSON() ([]byte, error) {
 
 func (o SouthKoreaOptions) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Title) {
+		toSerialize["title"] = o.Title
+	}
 	if !IsNil(o.ResellerCode) {
 		toSerialize["resellerCode"] = o.ResellerCode
 	}

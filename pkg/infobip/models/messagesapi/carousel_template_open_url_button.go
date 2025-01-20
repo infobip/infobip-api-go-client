@@ -34,7 +34,7 @@ type _CarouselTemplateOpenUrlButton CarouselTemplateOpenUrlButton
 // will change when the set of required properties is changed
 func NewCarouselTemplateOpenUrlButton(suffix string) *CarouselTemplateOpenUrlButton {
 	this := CarouselTemplateOpenUrlButton{}
-	this.Type = CAROUSELTEMPLATEBUTTONTYPE_OPEN_URL
+	this.Type = "OPEN_URL"
 	this.Suffix = suffix
 	return &this
 }
@@ -44,6 +44,7 @@ func NewCarouselTemplateOpenUrlButton(suffix string) *CarouselTemplateOpenUrlBut
 // but it doesn't guarantee that properties required by API are set
 func NewCarouselTemplateOpenUrlButtonWithDefaults() *CarouselTemplateOpenUrlButton {
 	this := CarouselTemplateOpenUrlButton{}
+	this.Type = "OPEN_URL"
 	return &this
 }
 

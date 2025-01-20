@@ -32,6 +32,7 @@ type _SendingSpeedLimit SendingSpeedLimit
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewSendingSpeedLimit(amount int32) *SendingSpeedLimit {
 	this := SendingSpeedLimit{}
 	this.Amount = amount
@@ -45,6 +46,7 @@ func NewSendingSpeedLimit(amount int32) *SendingSpeedLimit {
 // but it doesn't guarantee that properties required by API are set
 func NewSendingSpeedLimitWithDefaults() *SendingSpeedLimit {
 	this := SendingSpeedLimit{}
+
 	var timeUnit SpeedLimitTimeUnit = SPEEDLIMITTIMEUNIT_MINUTE
 	this.TimeUnit = &timeUnit
 	return &this

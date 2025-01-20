@@ -36,7 +36,7 @@ type _MessageReplyButton MessageReplyButton
 // will change when the set of required properties is changed
 func NewMessageReplyButton(text string, postbackData string) *MessageReplyButton {
 	this := MessageReplyButton{}
-	this.Type = MESSAGEBUTTONTYPE_REPLY
+	this.Type = "REPLY"
 	this.Text = text
 	this.PostbackData = postbackData
 	return &this
@@ -47,6 +47,7 @@ func NewMessageReplyButton(text string, postbackData string) *MessageReplyButton
 // but it doesn't guarantee that properties required by API are set
 func NewMessageReplyButtonWithDefaults() *MessageReplyButton {
 	this := MessageReplyButton{}
+	this.Type = "REPLY"
 	return &this
 }
 

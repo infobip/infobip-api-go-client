@@ -33,6 +33,7 @@ type _Response Response
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewResponse(messages []ResponseDetails) *Response {
 	this := Response{}
 	this.Messages = messages
@@ -44,6 +45,7 @@ func NewResponse(messages []ResponseDetails) *Response {
 // but it doesn't guarantee that properties required by API are set
 func NewResponseWithDefaults() *Response {
 	this := Response{}
+
 	return &this
 }
 

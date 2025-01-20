@@ -35,6 +35,7 @@ type _TemplateFailover TemplateFailover
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewTemplateFailover(channel OutboundTemplateChannel, sender string, template Template) *TemplateFailover {
 	this := TemplateFailover{}
 	this.Channel = channel
@@ -48,6 +49,7 @@ func NewTemplateFailover(channel OutboundTemplateChannel, sender string, templat
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateFailoverWithDefaults() *TemplateFailover {
 	this := TemplateFailover{}
+
 	return &this
 }
 

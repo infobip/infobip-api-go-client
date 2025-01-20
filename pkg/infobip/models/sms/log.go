@@ -39,7 +39,7 @@ type Log struct {
 	Status       *MessageStatus
 	Error        *MessageError
 	Platform     *Platform
-	Content      *LogContent
+	Content      *MessageContent
 	// ID of a campaign that was sent in the message.
 	CampaignReferenceId *string
 	// Mobile country and network codes.
@@ -50,6 +50,7 @@ type Log struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewLog() *Log {
 	this := Log{}
 	return &this
@@ -60,6 +61,7 @@ func NewLog() *Log {
 // but it doesn't guarantee that properties required by API are set
 func NewLogWithDefaults() *Log {
 	this := Log{}
+
 	return &this
 }
 
@@ -416,9 +418,9 @@ func (o *Log) SetPlatform(v Platform) {
 }
 
 // GetContent returns the Content field value if set, zero value otherwise.
-func (o *Log) GetContent() LogContent {
+func (o *Log) GetContent() MessageContent {
 	if o == nil || IsNil(o.Content) {
-		var ret LogContent
+		var ret MessageContent
 		return ret
 	}
 	return *o.Content
@@ -426,7 +428,7 @@ func (o *Log) GetContent() LogContent {
 
 // GetContentOk returns a tuple with the Content field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Log) GetContentOk() (*LogContent, bool) {
+func (o *Log) GetContentOk() (*MessageContent, bool) {
 	if o == nil || IsNil(o.Content) {
 		return nil, false
 	}
@@ -442,8 +444,8 @@ func (o *Log) HasContent() bool {
 	return false
 }
 
-// SetContent gets a reference to the given LogContent and assigns it to the Content field.
-func (o *Log) SetContent(v LogContent) {
+// SetContent gets a reference to the given MessageContent and assigns it to the Content field.
+func (o *Log) SetContent(v MessageContent) {
 	o.Content = &v
 }
 

@@ -34,7 +34,7 @@ type _MessageCarouselBody MessageCarouselBody
 // will change when the set of required properties is changed
 func NewMessageCarouselBody(cards []MessageCarouselCard) *MessageCarouselBody {
 	this := MessageCarouselBody{}
-	this.Type = MESSAGEBODYTYPE_CAROUSEL
+	this.Type = "CAROUSEL"
 	this.Cards = cards
 	return &this
 }
@@ -44,6 +44,7 @@ func NewMessageCarouselBody(cards []MessageCarouselCard) *MessageCarouselBody {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageCarouselBodyWithDefaults() *MessageCarouselBody {
 	this := MessageCarouselBody{}
+	this.Type = "CAROUSEL"
 	return &this
 }
 

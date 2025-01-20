@@ -34,7 +34,7 @@ type _TemplateOpenUrlButton TemplateOpenUrlButton
 // will change when the set of required properties is changed
 func NewTemplateOpenUrlButton(suffix string) *TemplateOpenUrlButton {
 	this := TemplateOpenUrlButton{}
-	this.Type = TEMPLATEBUTTONTYPE_OPEN_URL
+	this.Type = "OPEN_URL"
 	this.Suffix = suffix
 	return &this
 }
@@ -44,6 +44,7 @@ func NewTemplateOpenUrlButton(suffix string) *TemplateOpenUrlButton {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateOpenUrlButtonWithDefaults() *TemplateOpenUrlButton {
 	this := TemplateOpenUrlButton{}
+	this.Type = "OPEN_URL"
 	return &this
 }
 

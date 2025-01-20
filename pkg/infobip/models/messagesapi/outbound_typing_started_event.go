@@ -38,7 +38,7 @@ type _OutboundTypingStartedEvent OutboundTypingStartedEvent
 // will change when the set of required properties is changed
 func NewOutboundTypingStartedEvent(channel OutboundEventChannel, sender string, destinations []ToDestination) *OutboundTypingStartedEvent {
 	this := OutboundTypingStartedEvent{}
-	this.Event = OUTBOUNDEVENTTYPE_STARTED
+	this.Event = "TYPING_STARTED"
 	this.Channel = channel
 	this.Sender = sender
 	this.Destinations = destinations
@@ -50,6 +50,7 @@ func NewOutboundTypingStartedEvent(channel OutboundEventChannel, sender string, 
 // but it doesn't guarantee that properties required by API are set
 func NewOutboundTypingStartedEventWithDefaults() *OutboundTypingStartedEvent {
 	this := OutboundTypingStartedEvent{}
+	this.Event = "TYPING_STARTED"
 	return &this
 }
 

@@ -39,6 +39,7 @@ type _StartAuthenticationRequest StartAuthenticationRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewStartAuthenticationRequest(applicationId string, messageId string, to string) *StartAuthenticationRequest {
 	this := StartAuthenticationRequest{}
 	this.ApplicationId = applicationId
@@ -52,6 +53,7 @@ func NewStartAuthenticationRequest(applicationId string, messageId string, to st
 // but it doesn't guarantee that properties required by API are set
 func NewStartAuthenticationRequestWithDefaults() *StartAuthenticationRequest {
 	this := StartAuthenticationRequest{}
+
 	return &this
 }
 

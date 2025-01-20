@@ -37,6 +37,7 @@ type UrlOptions struct {
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewUrlOptions() *UrlOptions {
 	this := UrlOptions{}
 	var shortenUrl bool = true
@@ -53,6 +54,7 @@ func NewUrlOptions() *UrlOptions {
 // but it doesn't guarantee that properties required by API are set
 func NewUrlOptionsWithDefaults() *UrlOptions {
 	this := UrlOptions{}
+
 	var shortenUrl bool = true
 	this.ShortenUrl = &shortenUrl
 	var trackClicks bool = true

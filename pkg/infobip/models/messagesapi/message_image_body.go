@@ -36,7 +36,7 @@ type _MessageImageBody MessageImageBody
 // will change when the set of required properties is changed
 func NewMessageImageBody(url string) *MessageImageBody {
 	this := MessageImageBody{}
-	this.Type = MESSAGEBODYTYPE_IMAGE
+	this.Type = "IMAGE"
 	this.Url = url
 	return &this
 }
@@ -46,6 +46,7 @@ func NewMessageImageBody(url string) *MessageImageBody {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageImageBodyWithDefaults() *MessageImageBody {
 	this := MessageImageBody{}
+	this.Type = "IMAGE"
 	return &this
 }
 

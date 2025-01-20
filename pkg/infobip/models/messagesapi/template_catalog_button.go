@@ -34,7 +34,7 @@ type _TemplateCatalogButton TemplateCatalogButton
 // will change when the set of required properties is changed
 func NewTemplateCatalogButton() *TemplateCatalogButton {
 	this := TemplateCatalogButton{}
-	this.Type = TEMPLATEBUTTONTYPE_CATALOG
+	this.Type = "CATALOG"
 	return &this
 }
 
@@ -43,6 +43,7 @@ func NewTemplateCatalogButton() *TemplateCatalogButton {
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateCatalogButtonWithDefaults() *TemplateCatalogButton {
 	this := TemplateCatalogButton{}
+	this.Type = "CATALOG"
 	return &this
 }
 

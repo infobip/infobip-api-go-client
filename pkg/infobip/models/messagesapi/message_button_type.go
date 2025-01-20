@@ -20,14 +20,18 @@ type MessageButtonType string
 
 // List of MessageButtonType
 const (
-	MESSAGEBUTTONTYPE_REPLY    MessageButtonType = "REPLY"
-	MESSAGEBUTTONTYPE_OPEN_URL MessageButtonType = "OPEN_URL"
+	MESSAGEBUTTONTYPE_REPLY              MessageButtonType = "REPLY"
+	MESSAGEBUTTONTYPE_OPEN_URL           MessageButtonType = "OPEN_URL"
+	MESSAGEBUTTONTYPE_REQUEST_LOCATION   MessageButtonType = "REQUEST_LOCATION"
+	MESSAGEBUTTONTYPE_ADD_CALENDAR_EVENT MessageButtonType = "ADD_CALENDAR_EVENT"
 )
 
 // All allowed values of MessageButtonType enum
 var AllowedMessageButtonTypeEnumValues = []MessageButtonType{
 	"REPLY",
 	"OPEN_URL",
+	"REQUEST_LOCATION",
+	"ADD_CALENDAR_EVENT",
 }
 
 func (v *MessageButtonType) UnmarshalJSON(src []byte) error {

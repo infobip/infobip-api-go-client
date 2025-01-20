@@ -38,7 +38,7 @@ type _MessageVideoBody MessageVideoBody
 // will change when the set of required properties is changed
 func NewMessageVideoBody(url string) *MessageVideoBody {
 	this := MessageVideoBody{}
-	this.Type = MESSAGEBODYTYPE_VIDEO
+	this.Type = "VIDEO"
 	this.Url = url
 	return &this
 }
@@ -48,6 +48,7 @@ func NewMessageVideoBody(url string) *MessageVideoBody {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageVideoBodyWithDefaults() *MessageVideoBody {
 	this := MessageVideoBody{}
+	this.Type = "VIDEO"
 	return &this
 }
 

@@ -36,6 +36,7 @@ type _CreateEmailMessageRequest CreateEmailMessageRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewCreateEmailMessageRequest(emailTemplateId int64) *CreateEmailMessageRequest {
 	this := CreateEmailMessageRequest{}
 	this.EmailTemplateId = emailTemplateId
@@ -49,6 +50,7 @@ func NewCreateEmailMessageRequest(emailTemplateId int64) *CreateEmailMessageRequ
 // but it doesn't guarantee that properties required by API are set
 func NewCreateEmailMessageRequestWithDefaults() *CreateEmailMessageRequest {
 	this := CreateEmailMessageRequest{}
+
 	var pinLength int32 = 4
 	this.PinLength = &pinLength
 	return &this

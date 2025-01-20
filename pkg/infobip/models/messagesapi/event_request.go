@@ -31,6 +31,7 @@ type _EventRequest EventRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewEventRequest(events []OutboundEvent) *EventRequest {
 	this := EventRequest{}
 	this.Events = events
@@ -42,6 +43,7 @@ func NewEventRequest(events []OutboundEvent) *EventRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewEventRequestWithDefaults() *EventRequest {
 	this := EventRequest{}
+
 	return &this
 }
 

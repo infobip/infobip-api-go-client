@@ -36,7 +36,7 @@ type _MoEventAuthenticationResponseContent MoEventAuthenticationResponseContent
 // will change when the set of required properties is changed
 func NewMoEventAuthenticationResponseContent() *MoEventAuthenticationResponseContent {
 	this := MoEventAuthenticationResponseContent{}
-	this.Type = MOEVENTCONTENTTYPE_AUTHENTICATION_RESPONSE
+	this.Type = "AUTHENTICATION_RESPONSE"
 	return &this
 }
 
@@ -45,6 +45,7 @@ func NewMoEventAuthenticationResponseContent() *MoEventAuthenticationResponseCon
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventAuthenticationResponseContentWithDefaults() *MoEventAuthenticationResponseContent {
 	this := MoEventAuthenticationResponseContent{}
+	this.Type = "AUTHENTICATION_RESPONSE"
 	return &this
 }
 

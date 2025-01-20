@@ -25,7 +25,7 @@ type Message struct {
 	Sender *string
 	// An array of destination objects for where messages are being sent. A valid destination is required.
 	Destinations []Destination
-	Content      LogContent
+	Content      MessageContent
 	Options      *MessageOptions
 	Webhooks     *Webhooks
 }
@@ -36,7 +36,8 @@ type _Message Message
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMessage(destinations []Destination, content LogContent) *Message {
+
+func NewMessage(destinations []Destination, content MessageContent) *Message {
 	this := Message{}
 	this.Destinations = destinations
 	this.Content = content
@@ -48,6 +49,7 @@ func NewMessage(destinations []Destination, content LogContent) *Message {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageWithDefaults() *Message {
 	this := Message{}
+
 	return &this
 }
 
@@ -108,9 +110,9 @@ func (o *Message) SetDestinations(v []Destination) {
 }
 
 // GetContent returns the Content field value
-func (o *Message) GetContent() LogContent {
+func (o *Message) GetContent() MessageContent {
 	if o == nil {
-		var ret LogContent
+		var ret MessageContent
 		return ret
 	}
 
@@ -119,7 +121,7 @@ func (o *Message) GetContent() LogContent {
 
 // GetContentOk returns a tuple with the Content field value
 // and a boolean to check if the value has been set.
-func (o *Message) GetContentOk() (*LogContent, bool) {
+func (o *Message) GetContentOk() (*MessageContent, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -127,7 +129,7 @@ func (o *Message) GetContentOk() (*LogContent, bool) {
 }
 
 // SetContent sets field value
-func (o *Message) SetContent(v LogContent) {
+func (o *Message) SetContent(v MessageContent) {
 	o.Content = v
 }
 

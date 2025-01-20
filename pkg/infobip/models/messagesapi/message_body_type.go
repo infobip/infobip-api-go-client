@@ -28,6 +28,9 @@ const (
 	MESSAGEBODYTYPE_AUTHENTICATION_REQUEST MessageBodyType = "AUTHENTICATION_REQUEST"
 	MESSAGEBODYTYPE_LIST                   MessageBodyType = "LIST"
 	MESSAGEBODYTYPE_CAROUSEL               MessageBodyType = "CAROUSEL"
+	MESSAGEBODYTYPE_LOCATION               MessageBodyType = "LOCATION"
+	MESSAGEBODYTYPE_CONTACT                MessageBodyType = "CONTACT"
+	MESSAGEBODYTYPE_STICKER                MessageBodyType = "STICKER"
 )
 
 // All allowed values of MessageBodyType enum
@@ -40,6 +43,9 @@ var AllowedMessageBodyTypeEnumValues = []MessageBodyType{
 	"AUTHENTICATION_REQUEST",
 	"LIST",
 	"CAROUSEL",
+	"LOCATION",
+	"CONTACT",
+	"STICKER",
 }
 
 func (v *MessageBodyType) UnmarshalJSON(src []byte) error {

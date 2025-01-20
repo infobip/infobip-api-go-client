@@ -38,7 +38,7 @@ type _MessageAuthenticationRequestBody MessageAuthenticationRequestBody
 // will change when the set of required properties is changed
 func NewMessageAuthenticationRequestBody(text string) *MessageAuthenticationRequestBody {
 	this := MessageAuthenticationRequestBody{}
-	this.Type = MESSAGEBODYTYPE_AUTHENTICATION_REQUEST
+	this.Type = "AUTHENTICATION_REQUEST"
 	this.Text = text
 	return &this
 }
@@ -48,6 +48,7 @@ func NewMessageAuthenticationRequestBody(text string) *MessageAuthenticationRequ
 // but it doesn't guarantee that properties required by API are set
 func NewMessageAuthenticationRequestBodyWithDefaults() *MessageAuthenticationRequestBody {
 	this := MessageAuthenticationRequestBody{}
+	this.Type = "AUTHENTICATION_REQUEST"
 	return &this
 }
 

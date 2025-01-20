@@ -59,6 +59,7 @@ type _DeliveryResult DeliveryResult
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewDeliveryResult(event string, channel InboundDlrChannel, sender string, destination string, sentAt string, doneAt string, bulkId string, messageId string, messageCount int32, status DeliveryStatus, error_ DeliveryError) *DeliveryResult {
 	this := DeliveryResult{}
 	this.Event = event
@@ -80,6 +81,7 @@ func NewDeliveryResult(event string, channel InboundDlrChannel, sender string, d
 // but it doesn't guarantee that properties required by API are set
 func NewDeliveryResultWithDefaults() *DeliveryResult {
 	this := DeliveryResult{}
+
 	var event string = "DELIVERY"
 	this.Event = event
 	return &this

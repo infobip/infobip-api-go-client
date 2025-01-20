@@ -23,9 +23,10 @@ var _ MappedNullable = &MessageContent{}
 type MessageContent struct {
 	Header *MessageHeader
 	Body   MessageBody
-	// List of buttons for the message.
+	// List of buttons of the message.
 	Buttons          []MessageButton
 	ConfirmationBody *MessageConfirmationBody
+	Footer           *MessageFooter
 }
 
 type _MessageContent MessageContent
@@ -34,6 +35,7 @@ type _MessageContent MessageContent
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewMessageContent(body MessageBody) *MessageContent {
 	this := MessageContent{}
 	this.Body = body
@@ -45,6 +47,7 @@ func NewMessageContent(body MessageBody) *MessageContent {
 // but it doesn't guarantee that properties required by API are set
 func NewMessageContentWithDefaults() *MessageContent {
 	this := MessageContent{}
+
 	return &this
 }
 
@@ -168,6 +171,38 @@ func (o *MessageContent) SetConfirmationBody(v MessageConfirmationBody) {
 	o.ConfirmationBody = &v
 }
 
+// GetFooter returns the Footer field value if set, zero value otherwise.
+func (o *MessageContent) GetFooter() MessageFooter {
+	if o == nil || IsNil(o.Footer) {
+		var ret MessageFooter
+		return ret
+	}
+	return *o.Footer
+}
+
+// GetFooterOk returns a tuple with the Footer field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageContent) GetFooterOk() (*MessageFooter, bool) {
+	if o == nil || IsNil(o.Footer) {
+		return nil, false
+	}
+	return o.Footer, true
+}
+
+// HasFooter returns a boolean if a field has been set.
+func (o *MessageContent) HasFooter() bool {
+	if o != nil && !IsNil(o.Footer) {
+		return true
+	}
+
+	return false
+}
+
+// SetFooter gets a reference to the given MessageFooter and assigns it to the Footer field.
+func (o *MessageContent) SetFooter(v MessageFooter) {
+	o.Footer = &v
+}
+
 func (o MessageContent) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -187,6 +222,9 @@ func (o MessageContent) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConfirmationBody) {
 		toSerialize["confirmationBody"] = o.ConfirmationBody
+	}
+	if !IsNil(o.Footer) {
+		toSerialize["footer"] = o.Footer
 	}
 	return toSerialize, nil
 }

@@ -39,6 +39,7 @@ type _DeliveryStatus DeliveryStatus
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewDeliveryStatus(groupId int32, groupName string, id int32, name string, description string) *DeliveryStatus {
 	this := DeliveryStatus{}
 	this.GroupId = groupId
@@ -54,6 +55,7 @@ func NewDeliveryStatus(groupId int32, groupName string, id int32, name string, d
 // but it doesn't guarantee that properties required by API are set
 func NewDeliveryStatusWithDefaults() *DeliveryStatus {
 	this := DeliveryStatus{}
+
 	return &this
 }
 

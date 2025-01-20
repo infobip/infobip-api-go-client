@@ -32,7 +32,7 @@ type _CarouselTemplatePhoneNumberButton CarouselTemplatePhoneNumberButton
 // will change when the set of required properties is changed
 func NewCarouselTemplatePhoneNumberButton() *CarouselTemplatePhoneNumberButton {
 	this := CarouselTemplatePhoneNumberButton{}
-	this.Type = CAROUSELTEMPLATEBUTTONTYPE_PHONE_NUMBER
+	this.Type = "PHONE_NUMBER"
 	return &this
 }
 
@@ -41,6 +41,7 @@ func NewCarouselTemplatePhoneNumberButton() *CarouselTemplatePhoneNumberButton {
 // but it doesn't guarantee that properties required by API are set
 func NewCarouselTemplatePhoneNumberButtonWithDefaults() *CarouselTemplatePhoneNumberButton {
 	this := CarouselTemplatePhoneNumberButton{}
+	this.Type = "PHONE_NUMBER"
 	return &this
 }
 

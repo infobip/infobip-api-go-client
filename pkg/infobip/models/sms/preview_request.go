@@ -35,6 +35,7 @@ type _PreviewRequest PreviewRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewPreviewRequest(text string) *PreviewRequest {
 	this := PreviewRequest{}
 	this.Text = text
@@ -46,6 +47,7 @@ func NewPreviewRequest(text string) *PreviewRequest {
 // but it doesn't guarantee that properties required by API are set
 func NewPreviewRequestWithDefaults() *PreviewRequest {
 	this := PreviewRequest{}
+
 	return &this
 }
 

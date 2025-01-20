@@ -38,7 +38,7 @@ type _MoEventSubjectContent MoEventSubjectContent
 // will change when the set of required properties is changed
 func NewMoEventSubjectContent(text string, cleanText string) *MoEventSubjectContent {
 	this := MoEventSubjectContent{}
-	this.Type = MOEVENTCONTENTTYPE_SUBJECT
+	this.Type = "SUBJECT"
 	this.Text = text
 	this.CleanText = cleanText
 	return &this
@@ -49,6 +49,7 @@ func NewMoEventSubjectContent(text string, cleanText string) *MoEventSubjectCont
 // but it doesn't guarantee that properties required by API are set
 func NewMoEventSubjectContentWithDefaults() *MoEventSubjectContent {
 	this := MoEventSubjectContent{}
+	this.Type = "SUBJECT"
 	return &this
 }
 

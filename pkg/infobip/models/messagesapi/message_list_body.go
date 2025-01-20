@@ -40,7 +40,7 @@ type _MessageListBody MessageListBody
 // will change when the set of required properties is changed
 func NewMessageListBody(text string, sections []MessageListSection) *MessageListBody {
 	this := MessageListBody{}
-	this.Type = MESSAGEBODYTYPE_LIST
+	this.Type = "LIST"
 	this.Text = text
 	this.Sections = sections
 	return &this
@@ -51,6 +51,7 @@ func NewMessageListBody(text string, sections []MessageListSection) *MessageList
 // but it doesn't guarantee that properties required by API are set
 func NewMessageListBodyWithDefaults() *MessageListBody {
 	this := MessageListBody{}
+	this.Type = "LIST"
 	return &this
 }
 

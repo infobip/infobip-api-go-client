@@ -32,6 +32,7 @@ type _ValidityPeriod ValidityPeriod
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewValidityPeriod(amount int32) *ValidityPeriod {
 	this := ValidityPeriod{}
 	this.Amount = amount
@@ -45,6 +46,7 @@ func NewValidityPeriod(amount int32) *ValidityPeriod {
 // but it doesn't guarantee that properties required by API are set
 func NewValidityPeriodWithDefaults() *ValidityPeriod {
 	this := ValidityPeriod{}
+
 	var timeUnit ValidityPeriodTimeUnit = VALIDITYPERIODTIMEUNIT_MINUTES
 	this.TimeUnit = &timeUnit
 	return &this

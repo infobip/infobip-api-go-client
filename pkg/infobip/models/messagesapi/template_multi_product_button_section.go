@@ -33,6 +33,7 @@ type _TemplateMultiProductButtonSection TemplateMultiProductButtonSection
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
+
 func NewTemplateMultiProductButtonSection(title string, productIds []string) *TemplateMultiProductButtonSection {
 	this := TemplateMultiProductButtonSection{}
 	this.Title = title
@@ -45,6 +46,7 @@ func NewTemplateMultiProductButtonSection(title string, productIds []string) *Te
 // but it doesn't guarantee that properties required by API are set
 func NewTemplateMultiProductButtonSectionWithDefaults() *TemplateMultiProductButtonSection {
 	this := TemplateMultiProductButtonSection{}
+
 	return &this
 }
 

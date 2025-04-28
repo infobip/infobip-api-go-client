@@ -217,16 +217,16 @@ func TestShouldSubmitFormData(t *testing.T) {
 	givenStatus := "OK"
 
 	givenResponse := fmt.Sprintf(`{
-        "status": "%s"
-    }`, givenStatus)
+       "status": "%s"
+   }`, givenStatus)
 
 	givenNumber := 26
 	givenBoolean := true
 
 	requestBody := fmt.Sprintf(`{
-        "number": %d,
-        "boolean": %t
-    }`, givenNumber, givenBoolean)
+       "number": %d,
+       "boolean": %t
+   }`, givenNumber, givenBoolean)
 
 	formDataRequest := map[string]interface{}{
 		"number":  givenNumber,
@@ -243,7 +243,7 @@ func TestShouldSubmitFormData(t *testing.T) {
 	response, _, err := infobipClient.
 		FormsAPI.
 		SubmitFormData(context.Background(), formId).
-		Body(formDataRequest).
+		RequestBody(formDataRequest).
 		Execute()
 
 	assert.Nil(t, err)

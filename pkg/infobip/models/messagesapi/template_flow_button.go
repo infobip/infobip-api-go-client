@@ -25,7 +25,7 @@ type TemplateFlowButton struct {
 	// Flow token.
 	Token *string
 	// Message action payload data. JSON object with the data payload for the first screen
-	Data map[string]map[string]interface{}
+	Data map[string]interface{}
 }
 
 type _TemplateFlowButton TemplateFlowButton
@@ -82,9 +82,9 @@ func (o *TemplateFlowButton) SetToken(v string) {
 }
 
 // GetData returns the Data field value if set, zero value otherwise.
-func (o *TemplateFlowButton) GetData() map[string]map[string]interface{} {
+func (o *TemplateFlowButton) GetData() map[string]interface{} {
 	if o == nil || IsNil(o.Data) {
-		var ret map[string]map[string]interface{}
+		var ret map[string]interface{}
 		return ret
 	}
 	return o.Data
@@ -92,9 +92,9 @@ func (o *TemplateFlowButton) GetData() map[string]map[string]interface{} {
 
 // GetDataOk returns a tuple with the Data field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TemplateFlowButton) GetDataOk() (map[string]map[string]interface{}, bool) {
+func (o *TemplateFlowButton) GetDataOk() (map[string]interface{}, bool) {
 	if o == nil || IsNil(o.Data) {
-		return map[string]map[string]interface{}{}, false
+		return map[string]interface{}{}, false
 	}
 	return o.Data, true
 }
@@ -108,8 +108,8 @@ func (o *TemplateFlowButton) HasData() bool {
 	return false
 }
 
-// SetData gets a reference to the given map[string]map[string]interface{} and assigns it to the Data field.
-func (o *TemplateFlowButton) SetData(v map[string]map[string]interface{}) {
+// SetData gets a reference to the given map[string]interface{} and assigns it to the Data field.
+func (o *TemplateFlowButton) SetData(v map[string]interface{}) {
 	o.Data = v
 }
 

@@ -5,6 +5,16 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [ [3.1.1](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.1)] - 2025-04-28
+
+## Added
+* `AdditionalProperties map[string]interface{}` to the `TemplateTextBody` struct to align with the current state of the API.
+* `AdditionalProperties map[string]interface{}` to the `TemplateTextHeader` struct to align with the current state of the API.
+
+## Changed
+*  **Renamed Field**: `body` ➜ `requestBody` in `ApiSubmitFormDataRequest` (`FormsApi`) struct to improve clarity and naming consistency.
+*  **Fixed Incorrect Field Type**: Updated `Data` field type from `map[string]map[string]interface{}` to `map[string]interface{}` to align with the current state of the API.
+
 ## [ [3.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.0)] - 2025-01-20
 
 ⚠️ IMPORTANT NOTE: This release contains compile time breaking changes.

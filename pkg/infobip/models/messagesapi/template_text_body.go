@@ -21,7 +21,8 @@ var _ MappedNullable = &TemplateTextBody{}
 
 // TemplateTextBody Key value pairs that will be replaced during message sending. Valid example `{\"1\": \"John\", \"2\": \"Smith\", \"type\": \"TEXT\"}`.
 type TemplateTextBody struct {
-	Type TemplateBodyType
+	Type                 TemplateBodyType
+	AdditionalProperties map[string]interface{}
 }
 
 type _TemplateTextBody TemplateTextBody
@@ -33,6 +34,7 @@ type _TemplateTextBody TemplateTextBody
 func NewTemplateTextBody() *TemplateTextBody {
 	this := TemplateTextBody{}
 	this.Type = "TEXT"
+	this.AdditionalProperties = make(map[string]interface{})
 	return &this
 }
 
@@ -42,6 +44,7 @@ func NewTemplateTextBody() *TemplateTextBody {
 func NewTemplateTextBodyWithDefaults() *TemplateTextBody {
 	this := TemplateTextBody{}
 	this.Type = "TEXT"
+	this.AdditionalProperties = make(map[string]interface{})
 	return &this
 }
 
@@ -56,6 +59,11 @@ func (o TemplateTextBody) MarshalJSON() ([]byte, error) {
 func (o TemplateTextBody) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
+
+	for key, value := range o.AdditionalProperties {
+		toSerialize[key] = value
+	}
+
 	return toSerialize, nil
 }
 

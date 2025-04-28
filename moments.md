@@ -127,6 +127,6 @@ To submit data to a specific form, you can use the following code:
     response, _, err := infobipClient.
         FormsAPI.
         SubmitFormData(context.Background(), formId).
-        Body(formDataRequest).
+        RequestBody(formDataRequest).
         Execute()
 ````

@@ -82,7 +82,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader: make(map[string]string),
-		UserAgent:     "infobip-api-client-go/3.1.0",
+		UserAgent:     "infobip-api-client-go/3.1.1",
 		Debug:         false,
 		Scheme:        "https",
 		Servers: ServerConfigurations{

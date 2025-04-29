@@ -559,14 +559,14 @@ type ApiSubmitFormDataRequest struct {
 	ctx                      context.Context
 	ApiService               *FormsAPIService
 	id                       string
-	body                     *map[string]interface{}
+	requestBody              *map[string]interface{}
 	ibSubmissionSource       *string
 	ibSubmissionFormCampaign *string
 }
 
 // Form Data
-func (r ApiSubmitFormDataRequest) Body(body map[string]interface{}) ApiSubmitFormDataRequest {
-	r.body = &body
+func (r ApiSubmitFormDataRequest) RequestBody(requestBody map[string]interface{}) ApiSubmitFormDataRequest {
+	r.requestBody = &requestBody
 	return r
 }
 
@@ -625,8 +625,8 @@ func (a *FormsAPIService) SubmitFormDataExecute(r ApiSubmitFormDataRequest) (*Fo
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
-	if r.body == nil {
-		return localVarReturnValue, nil, reportError("body is required and must be specified")
+	if r.requestBody == nil {
+		return localVarReturnValue, nil, reportError("requestBody is required and must be specified")
 	}
 
 	// to determine the Content-Type header
@@ -653,7 +653,7 @@ func (a *FormsAPIService) SubmitFormDataExecute(r ApiSubmitFormDataRequest) (*Fo
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "ib-submission-form-campaign", r.ibSubmissionFormCampaign, "simple", "")
 	}
 	// body params
-	localVarPostBody = r.body
+	localVarPostBody = r.requestBody
 	if r.ctx != nil {
 		// API Key Authentication
 		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {

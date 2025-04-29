@@ -532,3 +532,159 @@ func TestReceiveIncomingMessagesWebhook(t *testing.T) {
 	assert.Equal(t, expectedEntityId, platform.GetEntityId())
 	assert.Equal(t, expectedApplicationId, platform.GetApplicationId())
 }
+
+func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
+	givenBulkId := "1688025180464000013"
+	givenMessageId := "1688025180464000014"
+	givenDestination := "11111111"
+
+	givenResponse := fmt.Sprintf(`
+		{
+			"bulkId": "%s",
+			"messages": [
+			  {
+				"messageId": "%s",
+				"status": {
+				  "groupId": %d,
+				  "groupName": "%s",
+				  "id": %d,
+				  "name": "%s",
+				  "description": "%s"
+				},
+				"destination": "%s"
+			  }
+			]
+		}`,
+		givenBulkId,
+		givenMessageId,
+		PendingStatusGroupId,
+		PendingStatusGroupName,
+		PendingStatusId,
+		PendingStatusName,
+		PendingStatusDescription,
+		givenDestination,
+	)
+
+	givenChannel := "WHATSAPP"
+	givenSender := "447860099299"
+	givenTo := "11111111"
+	givenTemplateName := "episodeV"
+	givenLanguage := "en_GB"
+
+	givenRequest := fmt.Sprintf(`
+		{
+			"messages": [
+			  {
+				"channel": "%s",
+				"sender": "%s",
+				"destinations": [
+				  {
+					"to": "%s"
+				  }
+				],
+				"template": {
+				  "templateName": "%s",
+				  "language": "%s"
+				},
+				"content": {
+				  "body": {
+					"1": "Luke",
+					"2": "Skywalker",
+					"type": "TEXT"
+				  },
+				  "buttons": [
+					{
+					  "postbackData": "I am the father",
+					  "type": "QUICK_REPLY"
+					},
+					{
+					  "postbackData": "I am not the father",
+					  "type": "QUICK_REPLY"
+					}
+				  ]
+				}
+			  }
+			]
+		}`,
+		givenChannel,
+		givenSender,
+		givenTo,
+		givenTemplateName,
+		givenLanguage,
+	)
+
+	templateTextBody := messagesapi.NewTemplateTextBody()
+	templateTextBody.AdditionalProperties["1"] = "Luke"
+	templateTextBody.AdditionalProperties["2"] = "Skywalker"
+
+	body := messagesapi.TemplateBody{
+		TemplateTextBody: templateTextBody,
+	}
+
+	destination := messagesapi.MessageDestination{
+		ToDestination: messagesapi.NewToDestination(givenTo),
+	}
+
+	givenButtonPostbackData1 := "I am the father"
+	givenButtonPostbackData2 := "I am not the father"
+
+	givenButton1 := messagesapi.NewTemplateQuickReplyButton(givenButtonPostbackData1)
+	givenTemplateButton1 := messagesapi.TemplateButton{TemplateQuickReplyButton: givenButton1}
+	givenButton2 := messagesapi.NewTemplateQuickReplyButton(givenButtonPostbackData2)
+	givenTemplateButton2 := messagesapi.TemplateButton{TemplateQuickReplyButton: givenButton2}
+
+	givenTemplate := messagesapi.NewTemplate(givenTemplateName)
+	givenTemplate.Language = &givenLanguage
+
+	givenTemplateMessage := messagesapi.NewTemplateMessage(
+		messagesapi.OUTBOUNDTEMPLATECHANNEL_WHATSAPP,
+		givenSender,
+		[]messagesapi.MessageDestination{destination},
+		*givenTemplate,
+	)
+
+	givenMessageContent := messagesapi.TemplateMessageContent{
+		Body:    &body,
+		Buttons: []messagesapi.TemplateButton{givenTemplateButton1, givenTemplateButton2},
+	}
+
+	givenTemplateMessage.Content = &givenMessageContent
+
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
+		{TemplateMessage: givenTemplateMessage},
+	})
+
+	actualRequest, _ := json.Marshal(request)
+	ValidateExpectedRequestBodiesMatches(t, givenRequest, string(actualRequest))
+
+	// Mock HTTP
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("POST", SendMessagesApiMessages, givenResponse, 200)
+
+	responseBody, r, _ := infobipClient.
+		MessagesAPI.
+		SendMessagesApiMessage(context.Background()).
+		Request(*request).Execute()
+
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	responseHeaders := *r
+	ValidateExpectedRequestHeadersMatches(t, responseHeaders.Header)
+
+	assert.Equal(t, givenBulkId, responseBody.GetBulkId())
+	assert.Len(t, responseBody.GetMessages(), 1)
+
+	msg := responseBody.GetMessages()[0]
+	assert.Equal(t, givenMessageId, msg.GetMessageId())
+	assert.Equal(t, givenDestination, msg.GetDestination())
+
+	messageStatus := msg.GetStatus()
+	assert.Equal(t, int32(PendingStatusGroupId), messageStatus.GetGroupId())
+	assert.Equal(t, messagesapi.MESSAGEGENERALSTATUS_PENDING, messageStatus.GetGroupName())
+	assert.Equal(t, int32(PendingStatusId), messageStatus.GetId())
+	assert.Equal(t, PendingStatusName, messageStatus.GetName())
+	assert.Equal(t, PendingStatusDescription, messageStatus.GetDescription())
+}

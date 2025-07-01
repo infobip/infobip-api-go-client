@@ -513,7 +513,6 @@ func TestReceiveIncomingMessagesWebhook(t *testing.T) {
 
 	err := json.Unmarshal([]byte(expectedRequest), &responseBody)
 
-	// Ensure there is no error and responseBody is not nil before dereferencing
 	assert.Nil(t, err, "Expected nil response")
 	assert.NotNil(t, responseBody, "Expected non-nil response body")
 

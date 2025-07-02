@@ -10,4 +10,4 @@ Contact: support@infobip.com
 
 package infobip
 
-const Version = "3.1.1"
+const Version = "3.1.2"

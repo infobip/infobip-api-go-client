@@ -5,6 +5,11 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [ [3.1.2](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.2)] - 2025-07-01
+
+## Fixed
+* Added custom `UnmarshalJSON` function to the [MoEvent](pkg/infobip/models/messagesapi/mo_event.go) struct to properly handle the `callbackData` field when it contains either a string or a JSON object, ensuring correct deserialization in both cases.
+
 ## [ [3.1.1](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.1)] - 2025-04-28
 
 ## Added

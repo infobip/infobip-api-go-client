@@ -513,6 +513,82 @@ func TestReceiveIncomingMessagesWebhook(t *testing.T) {
 
 	err := json.Unmarshal([]byte(expectedRequest), &responseBody)
 
+	assert.Nil(t, err, "Expected nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	assert.NotNil(t, responseBody.Results, "Expected non-nil results")
+	assert.True(t, len(responseBody.GetResults()) == 1)
+
+	result := responseBody.GetResults()[0]
+	assert.Equal(t, expectedChannel, result.MoEvent.GetChannel())
+	assert.Equal(t, expectedSender, result.MoEvent.GetSender())
+	assert.Equal(t, expectedDestination, result.MoEvent.GetDestination())
+
+	assert.Equal(t, expectedReceivedAt, result.MoEvent.GetReceivedAt().String())
+	assert.Equal(t, expectedMessageId, result.MoEvent.GetMessageId())
+
+	platform := result.MoEvent.GetPlatform()
+	assert.Equal(t, expectedEntityId, platform.GetEntityId())
+	assert.Equal(t, expectedApplicationId, platform.GetApplicationId())
+}
+
+func TestReceiveIncomingMessagesWebhookWithCallBackDataAsString(t *testing.T) {
+	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
+	expectedSender := "48123234567"
+	expectedDestination := "41793026727"
+	expectedText := "Text message 123"
+	expectedCleanText := "Text message"
+	expectedType := "TEXT"
+	expectedReceivedAt := "2024-02-06T14:18:29.797+0000"
+	expectedMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	expectedEntityId := "my-entity-id"
+	expectedApplicationId := "my-application-id"
+	expectedEvent := messagesapi.InboundEventType("MO")
+	expectedCallBackData := "callbackData"
+
+	expectedRequest := fmt.Sprintf(`
+		{
+			"results": [
+			  {
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+				  {
+					"text": "%s",
+					"cleanText": "%s",
+					"type": "%s"
+				  }
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"callbackData": "%s",
+				"platform": {
+				  "entityId": "%s",
+				  "applicationId": "%s"
+				},
+				"event": "%s"
+			  }
+			]
+		}`,
+		expectedChannel,
+		expectedSender,
+		expectedDestination,
+		expectedText,
+		expectedCleanText,
+		expectedType,
+		expectedReceivedAt,
+		expectedMessageId,
+		expectedCallBackData,
+		expectedEntityId,
+		expectedApplicationId,
+		expectedEvent,
+	)
+
+	var responseBody messagesapi.IncomingMessage
+
+	err := json.Unmarshal([]byte(expectedRequest), &responseBody)
+
 	// Ensure there is no error and responseBody is not nil before dereferencing
 	assert.Nil(t, err, "Expected nil response")
 	assert.NotNil(t, responseBody, "Expected non-nil response body")
@@ -527,6 +603,162 @@ func TestReceiveIncomingMessagesWebhook(t *testing.T) {
 
 	assert.Equal(t, expectedReceivedAt, result.MoEvent.GetReceivedAt().String())
 	assert.Equal(t, expectedMessageId, result.MoEvent.GetMessageId())
+	assert.Equal(t, expectedCallBackData, result.MoEvent.GetCallbackData())
+
+	platform := result.MoEvent.GetPlatform()
+	assert.Equal(t, expectedEntityId, platform.GetEntityId())
+	assert.Equal(t, expectedApplicationId, platform.GetApplicationId())
+}
+
+func TestReceiveIncomingMessagesWebhookWithCallBackDataAsObject(t *testing.T) {
+	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
+	expectedSender := "48123234567"
+	expectedDestination := "41793026727"
+	expectedText := "Text message 123"
+	expectedCleanText := "Text message"
+	expectedType := "TEXT"
+	expectedReceivedAt := "2024-02-06T14:18:29.797+0000"
+	expectedMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	expectedEntityId := "my-entity-id"
+	expectedApplicationId := "my-application-id"
+	expectedEvent := messagesapi.InboundEventType("MO")
+	expectedCallBackData := "{\"key1\":\"value1\",\"key2\":\"value2\"}"
+
+	expectedRequest := fmt.Sprintf(`
+		{
+			"results": [
+			  {
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+				  {
+					"text": "%s",
+					"cleanText": "%s",
+					"type": "%s"
+				  }
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"callbackData": {
+					"key1": "value1", 
+					"key2": "value2"
+				},
+				"platform": {
+				  "entityId": "%s",
+				  "applicationId": "%s"
+				},
+				"event": "%s"
+			  }
+			]
+		}`,
+		expectedChannel,
+		expectedSender,
+		expectedDestination,
+		expectedText,
+		expectedCleanText,
+		expectedType,
+		expectedReceivedAt,
+		expectedMessageId,
+		expectedEntityId,
+		expectedApplicationId,
+		expectedEvent,
+	)
+
+	var responseBody messagesapi.IncomingMessage
+
+	err := json.Unmarshal([]byte(expectedRequest), &responseBody)
+
+	assert.Nil(t, err, "Expected nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	assert.NotNil(t, responseBody.Results, "Expected non-nil results")
+	assert.True(t, len(responseBody.GetResults()) == 1)
+
+	result := responseBody.GetResults()[0]
+	assert.Equal(t, expectedChannel, result.MoEvent.GetChannel())
+	assert.Equal(t, expectedSender, result.MoEvent.GetSender())
+	assert.Equal(t, expectedDestination, result.MoEvent.GetDestination())
+
+	assert.Equal(t, expectedReceivedAt, result.MoEvent.GetReceivedAt().String())
+	assert.Equal(t, expectedMessageId, result.MoEvent.GetMessageId())
+	assert.Equal(t, expectedCallBackData, result.MoEvent.GetCallbackData())
+
+	platform := result.MoEvent.GetPlatform()
+	assert.Equal(t, expectedEntityId, platform.GetEntityId())
+	assert.Equal(t, expectedApplicationId, platform.GetApplicationId())
+}
+
+func TestReceiveIncomingMessagesWebhookWithCallBackDataAsEmptyObject(t *testing.T) {
+	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
+	expectedSender := "48123234567"
+	expectedDestination := "41793026727"
+	expectedText := "Text message 123"
+	expectedCleanText := "Text message"
+	expectedType := "TEXT"
+	expectedReceivedAt := "2024-02-06T14:18:29.797+0000"
+	expectedMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	expectedEntityId := "my-entity-id"
+	expectedApplicationId := "my-application-id"
+	expectedEvent := messagesapi.InboundEventType("MO")
+	expectedCallBackData := "{}"
+
+	expectedRequest := fmt.Sprintf(`
+		{
+			"results": [
+			  {
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+				  {
+					"text": "%s",
+					"cleanText": "%s",
+					"type": "%s"
+				  }
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"callbackData": {},
+				"platform": {
+				  "entityId": "%s",
+				  "applicationId": "%s"
+				},
+				"event": "%s"
+			  }
+			]
+		}`,
+		expectedChannel,
+		expectedSender,
+		expectedDestination,
+		expectedText,
+		expectedCleanText,
+		expectedType,
+		expectedReceivedAt,
+		expectedMessageId,
+		expectedEntityId,
+		expectedApplicationId,
+		expectedEvent,
+	)
+
+	var responseBody messagesapi.IncomingMessage
+
+	err := json.Unmarshal([]byte(expectedRequest), &responseBody)
+
+	assert.Nil(t, err, "Expected nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	assert.NotNil(t, responseBody.Results, "Expected non-nil results")
+	assert.True(t, len(responseBody.GetResults()) == 1)
+
+	result := responseBody.GetResults()[0]
+	assert.Equal(t, expectedChannel, result.MoEvent.GetChannel())
+	assert.Equal(t, expectedSender, result.MoEvent.GetSender())
+	assert.Equal(t, expectedDestination, result.MoEvent.GetDestination())
+
+	assert.Equal(t, expectedReceivedAt, result.MoEvent.GetReceivedAt().String())
+	assert.Equal(t, expectedMessageId, result.MoEvent.GetMessageId())
+	assert.Equal(t, expectedCallBackData, result.MoEvent.GetCallbackData())
 
 	platform := result.MoEvent.GetPlatform()
 	assert.Equal(t, expectedEntityId, platform.GetEntityId())

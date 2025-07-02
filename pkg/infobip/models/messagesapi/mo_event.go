@@ -12,7 +12,6 @@ package messagesapi
 
 import (
 	"encoding/json"
-
 	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 )
 
@@ -371,6 +370,37 @@ func (o MoEvent) ToMap() (map[string]interface{}, error) {
 		toSerialize["campaignReferenceId"] = o.CampaignReferenceId
 	}
 	return toSerialize, nil
+}
+
+func (o *MoEvent) UnmarshalJSON(data []byte) error {
+	type alias MoEvent
+
+	temp := struct {
+		*alias
+		CallbackData json.RawMessage
+	}{
+		alias: (*alias)(o),
+	}
+
+	if err := json.Unmarshal(data, &temp); err != nil {
+		return err
+	}
+
+	if len(temp.CallbackData) != 0 {
+		var asString string
+		if err := json.Unmarshal(temp.CallbackData, &asString); err == nil {
+			o.CallbackData = &asString
+		} else {
+			cleanedJSON, err := json.Marshal(json.RawMessage(temp.CallbackData))
+			if err != nil {
+				return err
+			}
+			asString := string(cleanedJSON)
+			o.CallbackData = &asString
+		}
+	}
+
+	return nil
 }
 
 type NullableMoEvent struct {

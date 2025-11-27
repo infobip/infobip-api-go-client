@@ -242,25 +242,31 @@ func main() {
 ```
 
 #### Two-Factor Authentication (2FA)
-For 2FA quick start guide please check [these examples](two-factor-authentication.md).
+For the 2FA quick start guide please check [these examples](two-factor-authentication.md).
 
 #### Messages API
-For Messages API quick start guide, view [these examples](messages-api.md).
+For the Messages API quick start guide, view [these examples](messages-api.md).
 
 #### Email
-For Email quick start guide, view [these examples](email.md).
+For the Email quick start guide, view [these examples](email.md).
 
 #### Moments
-For Moments quick start guide, view [these examples](moments.md).
+For the Moments quick start guide, view [these examples](moments.md).
+
+## Versioning
+
+This project follows a pragmatic Semantic Versioning approach.  
+For full details on how versions are managed, please see our [Versioning guide][versioning].
 
 ## Ask for help
 
-Feel free to open issues on the repository for any issue or feature request. As per pull requests, for details check the `CONTRIBUTING` [file][contributing] related to it - in short, we will not merge any pull requests, this code is auto-generated.
+Feel free to open an issue on the repository if you see any problem or want to request a feature. As per pull requests, for details check the `CONTRIBUTING` [file][contributing] related to it - in short, we will not merge any pull requests, this code is auto generated.
 
-If it is, however, something that requires our imminent attention feel free to contact us @ [support@infobip.com](mailto:support@infobip.com).
+If it is, however, something that requires our immediate attention, feel free to contact us @ [support@infobip.com](mailto:support@infobip.com).
 
 [apidocs]: https://www.infobip.com/docs/api
 [signup]: https://www.infobip.com/signup
 [semver]: https://semver.org
 [license]: LICENSE
 [contributing]: CONTRIBUTING.md
+[versioning]: VERSIONING.md

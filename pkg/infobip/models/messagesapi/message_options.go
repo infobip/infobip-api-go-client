@@ -28,6 +28,14 @@ type MessageOptions struct {
 	Regional       *RegionalOptions
 	// ID that allows you to track, analyze, and show an aggregated overview and the performance of individual campaigns per sending channel.
 	CampaignReferenceId *string
+	Transliteration     *TransliterationCode
+	// Correlation data included in the outbound message. If provided, it will be returned in the inbound message. Auto-generated if not set explicitly.
+	CorrelationData *string
+	TrafficType     *TrafficType
+	// Defines if the message should be charged using session rate. Supported by Viber for content with text/image/document only (without buttons, extra text etc.) body type. For text/image only body types `sessionRate` won't be applied if parameter `primaryDevice` is set to true.
+	SessionRate *bool
+	// Defines if the message should be sent only to the end user's primary device (phone or tablet). Supported by Viber for message with content with text/image/document only (without buttons, extra text etc.) body type or template message.
+	PrimaryDevice *bool
 }
 
 // NewMessageOptions instantiates a new MessageOptions object
@@ -213,6 +221,166 @@ func (o *MessageOptions) SetCampaignReferenceId(v string) {
 	o.CampaignReferenceId = &v
 }
 
+// GetTransliteration returns the Transliteration field value if set, zero value otherwise.
+func (o *MessageOptions) GetTransliteration() TransliterationCode {
+	if o == nil || IsNil(o.Transliteration) {
+		var ret TransliterationCode
+		return ret
+	}
+	return *o.Transliteration
+}
+
+// GetTransliterationOk returns a tuple with the Transliteration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOptions) GetTransliterationOk() (*TransliterationCode, bool) {
+	if o == nil || IsNil(o.Transliteration) {
+		return nil, false
+	}
+	return o.Transliteration, true
+}
+
+// HasTransliteration returns a boolean if a field has been set.
+func (o *MessageOptions) HasTransliteration() bool {
+	if o != nil && !IsNil(o.Transliteration) {
+		return true
+	}
+
+	return false
+}
+
+// SetTransliteration gets a reference to the given TransliterationCode and assigns it to the Transliteration field.
+func (o *MessageOptions) SetTransliteration(v TransliterationCode) {
+	o.Transliteration = &v
+}
+
+// GetCorrelationData returns the CorrelationData field value if set, zero value otherwise.
+func (o *MessageOptions) GetCorrelationData() string {
+	if o == nil || IsNil(o.CorrelationData) {
+		var ret string
+		return ret
+	}
+	return *o.CorrelationData
+}
+
+// GetCorrelationDataOk returns a tuple with the CorrelationData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOptions) GetCorrelationDataOk() (*string, bool) {
+	if o == nil || IsNil(o.CorrelationData) {
+		return nil, false
+	}
+	return o.CorrelationData, true
+}
+
+// HasCorrelationData returns a boolean if a field has been set.
+func (o *MessageOptions) HasCorrelationData() bool {
+	if o != nil && !IsNil(o.CorrelationData) {
+		return true
+	}
+
+	return false
+}
+
+// SetCorrelationData gets a reference to the given string and assigns it to the CorrelationData field.
+func (o *MessageOptions) SetCorrelationData(v string) {
+	o.CorrelationData = &v
+}
+
+// GetTrafficType returns the TrafficType field value if set, zero value otherwise.
+func (o *MessageOptions) GetTrafficType() TrafficType {
+	if o == nil || IsNil(o.TrafficType) {
+		var ret TrafficType
+		return ret
+	}
+	return *o.TrafficType
+}
+
+// GetTrafficTypeOk returns a tuple with the TrafficType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOptions) GetTrafficTypeOk() (*TrafficType, bool) {
+	if o == nil || IsNil(o.TrafficType) {
+		return nil, false
+	}
+	return o.TrafficType, true
+}
+
+// HasTrafficType returns a boolean if a field has been set.
+func (o *MessageOptions) HasTrafficType() bool {
+	if o != nil && !IsNil(o.TrafficType) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrafficType gets a reference to the given TrafficType and assigns it to the TrafficType field.
+func (o *MessageOptions) SetTrafficType(v TrafficType) {
+	o.TrafficType = &v
+}
+
+// GetSessionRate returns the SessionRate field value if set, zero value otherwise.
+func (o *MessageOptions) GetSessionRate() bool {
+	if o == nil || IsNil(o.SessionRate) {
+		var ret bool
+		return ret
+	}
+	return *o.SessionRate
+}
+
+// GetSessionRateOk returns a tuple with the SessionRate field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOptions) GetSessionRateOk() (*bool, bool) {
+	if o == nil || IsNil(o.SessionRate) {
+		return nil, false
+	}
+	return o.SessionRate, true
+}
+
+// HasSessionRate returns a boolean if a field has been set.
+func (o *MessageOptions) HasSessionRate() bool {
+	if o != nil && !IsNil(o.SessionRate) {
+		return true
+	}
+
+	return false
+}
+
+// SetSessionRate gets a reference to the given bool and assigns it to the SessionRate field.
+func (o *MessageOptions) SetSessionRate(v bool) {
+	o.SessionRate = &v
+}
+
+// GetPrimaryDevice returns the PrimaryDevice field value if set, zero value otherwise.
+func (o *MessageOptions) GetPrimaryDevice() bool {
+	if o == nil || IsNil(o.PrimaryDevice) {
+		var ret bool
+		return ret
+	}
+	return *o.PrimaryDevice
+}
+
+// GetPrimaryDeviceOk returns a tuple with the PrimaryDevice field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOptions) GetPrimaryDeviceOk() (*bool, bool) {
+	if o == nil || IsNil(o.PrimaryDevice) {
+		return nil, false
+	}
+	return o.PrimaryDevice, true
+}
+
+// HasPrimaryDevice returns a boolean if a field has been set.
+func (o *MessageOptions) HasPrimaryDevice() bool {
+	if o != nil && !IsNil(o.PrimaryDevice) {
+		return true
+	}
+
+	return false
+}
+
+// SetPrimaryDevice gets a reference to the given bool and assigns it to the PrimaryDevice field.
+func (o *MessageOptions) SetPrimaryDevice(v bool) {
+	o.PrimaryDevice = &v
+}
+
 func (o MessageOptions) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -237,6 +405,21 @@ func (o MessageOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CampaignReferenceId) {
 		toSerialize["campaignReferenceId"] = o.CampaignReferenceId
+	}
+	if !IsNil(o.Transliteration) {
+		toSerialize["transliteration"] = o.Transliteration
+	}
+	if !IsNil(o.CorrelationData) {
+		toSerialize["correlationData"] = o.CorrelationData
+	}
+	if !IsNil(o.TrafficType) {
+		toSerialize["trafficType"] = o.TrafficType
+	}
+	if !IsNil(o.SessionRate) {
+		toSerialize["sessionRate"] = o.SessionRate
+	}
+	if !IsNil(o.PrimaryDevice) {
+		toSerialize["primaryDevice"] = o.PrimaryDevice
 	}
 	return toSerialize, nil
 }

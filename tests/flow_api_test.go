@@ -11,6 +11,12 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	CommunicationFlowParticipantsEndpoint = "/communication/1/flows/%d/participants"
+	MomentsFlowParticipantsEndpoint       = "/moments/1/flows/%d/participants"
+	MomentsFlowParticipantsReportEndpoint = "/moments/1/flows/%d/participants/report"
+)
+
 func TestShouldAddParticipantsToFlow(t *testing.T) {
 	campaignId := int64(200000000000001)
 	notifyUrl := "https://example.com"
@@ -109,7 +115,7 @@ func TestShouldAddParticipantsToFlow(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/moments/1/flows/%d/participants", campaignId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(MomentsFlowParticipantsEndpoint, campaignId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		FlowAPI.
@@ -158,7 +164,7 @@ func TestShouldGetParticipantsReport(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/moments/1/flows/%d/participants/report", campaignId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(MomentsFlowParticipantsReportEndpoint, campaignId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		FlowAPI.
@@ -194,7 +200,7 @@ func TestShouldRemoveParticipantFromFlow(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/communication/1/flows/%d/participants", campaignId), expectedResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(CommunicationFlowParticipantsEndpoint, campaignId), expectedResponse, 200)
 
 	_, err := infobipClient.
 		FlowAPI.

@@ -42,7 +42,7 @@ var (
 	queryDescape    = strings.NewReplacer("%5B", "[", "%5D", "]")
 )
 
-// APIClient manages communication with the Infobip Client API Libraries OpenAPI Specification API v1.0.0
+// APIClient manages communication with the Infobip Client API Libraries OpenAPI Specification API v1.0.33
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration
@@ -67,6 +67,8 @@ type APIClient struct {
 	ClickToCallAPI *ClickToCallAPIService
 
 	NumberMaskingAPI *NumberMaskingAPIService
+
+	RcsAPI *RcsAPIService
 
 	FlowAPI *FlowAPIService
 
@@ -98,6 +100,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.TfaAPI = (*TfaAPIService)(&c.common)
 	c.ClickToCallAPI = (*ClickToCallAPIService)(&c.common)
 	c.NumberMaskingAPI = (*NumberMaskingAPIService)(&c.common)
+	c.RcsAPI = (*RcsAPIService)(&c.common)
 	c.FlowAPI = (*FlowAPIService)(&c.common)
 	c.VoiceAPI = (*VoiceAPIService)(&c.common)
 
@@ -392,16 +395,6 @@ func (c *APIClient) prepareRequest(
 		return nil, err
 	}
 
-	// Override request host, if applicable
-	if c.cfg.Host != "" {
-		url.Host = c.cfg.Host
-	}
-
-	// Override request scheme, if applicable
-	if c.cfg.Scheme != "" {
-		url.Scheme = c.cfg.Scheme
-	}
-
 	// Adding Query Param
 	query := url.Query()
 	for k, v := range queryParams {
@@ -443,8 +436,21 @@ func (c *APIClient) prepareRequest(
 		// add context to the request
 		localVarRequest = localVarRequest.WithContext(ctx)
 
-		// Walk through any authentication.
-
+		// Walk through API key authentication
+		if auth, ok := ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
+			if apiKey, ok := auth["APIKeyHeader"]; ok {
+				prefix := "App"
+				if apiKey.Prefix != "" {
+					log.Printf("Warning: apiKey.Prefix is deprecated; the SDK automatically prepends 'App ' to the API key. Remove Prefix to silence this warning.")
+					prefix = apiKey.Prefix
+				}
+				key := prefix + " " + apiKey.Key
+				localVarRequest.Header.Add("Authorization", key)
+			}
+		} else if rawKey, ok := ctx.Value(ContextAPIKeys).(string); ok && strings.TrimSpace(rawKey) != "" {
+			key := "App " + strings.TrimSpace(rawKey)
+			localVarRequest.Header.Add("Authorization", key)
+		}
 	}
 
 	for header, value := range c.cfg.DefaultHeader {

@@ -20,10 +20,12 @@ type CallRoutingEndpointType string
 
 // List of CallRoutingEndpointType
 const (
-	CALLROUTINGENDPOINTTYPE_PHONE  CallRoutingEndpointType = "PHONE"
-	CALLROUTINGENDPOINTTYPE_SIP    CallRoutingEndpointType = "SIP"
-	CALLROUTINGENDPOINTTYPE_WEBRTC CallRoutingEndpointType = "WEBRTC"
-	CALLROUTINGENDPOINTTYPE_VIBER  CallRoutingEndpointType = "VIBER"
+	CALLROUTINGENDPOINTTYPE_PHONE     CallRoutingEndpointType = "PHONE"
+	CALLROUTINGENDPOINTTYPE_SIP       CallRoutingEndpointType = "SIP"
+	CALLROUTINGENDPOINTTYPE_WEBRTC    CallRoutingEndpointType = "WEBRTC"
+	CALLROUTINGENDPOINTTYPE_VIBER     CallRoutingEndpointType = "VIBER"
+	CALLROUTINGENDPOINTTYPE_WEBSOCKET CallRoutingEndpointType = "WEBSOCKET"
+	CALLROUTINGENDPOINTTYPE_WHATSAPP  CallRoutingEndpointType = "WHATSAPP"
 )
 
 // All allowed values of CallRoutingEndpointType enum
@@ -32,6 +34,8 @@ var AllowedCallRoutingEndpointTypeEnumValues = []CallRoutingEndpointType{
 	"SIP",
 	"WEBRTC",
 	"VIBER",
+	"WEBSOCKET",
+	"WHATSAPP",
 }
 
 func (v *CallRoutingEndpointType) UnmarshalJSON(src []byte) error {

@@ -19,27 +19,33 @@ import (
 // checks if the MoReport type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &MoReport{}
 
-// MoReport struct for MoReport
+// MoReport An array of result objects.
 type MoReport struct {
-	// Unique SMS ID.
+	// Application id linked to the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	ApplicationId *string
+	// Unique message ID.
 	MessageId *string
 	// Sender ID that can be alphanumeric or numeric.
 	From *string
-	// The recipient number.
+	// The destination address of the message.
 	To *string
-	// Received message content.
+	// Full content of the message.
 	Text *string
-	// Text of received message without a keyword (if a keyword was sent).
+	// Content of the message without a keyword (if a keyword was sent).
 	CleanText *string
-	// Keyword extracted from the message text.
+	// Keyword extracted from the message content.
 	Keyword *string
-	// Date and time when Infobip received the message.
+	// Indicates when the Infobip platform received the message. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
 	ReceivedAt *Time
-	// Long SMS messages have a character limit on how much can be sent over one message.  Longer messages will be split up into multiple messages and sent separately.  This is the total count of messages one SMS was sent over.
+	// The number of parts the message content was split into.
 	SmsCount *int32
 	Price    *Price
-	// The callback data sent through the callbackData field in your fully featured SMS message.
+	// Custom callback data sent over the notifyUrl.
 	CallbackData *string
+	// Entity id linked to the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	EntityId *string
+	// ID that allows you to track, analyze, and show an aggregated overview and the performance of individual campaigns per sending channel.
+	CampaignReferenceId *string
 }
 
 // NewMoReport instantiates a new MoReport object
@@ -59,6 +65,38 @@ func NewMoReportWithDefaults() *MoReport {
 	this := MoReport{}
 
 	return &this
+}
+
+// GetApplicationId returns the ApplicationId field value if set, zero value otherwise.
+func (o *MoReport) GetApplicationId() string {
+	if o == nil || IsNil(o.ApplicationId) {
+		var ret string
+		return ret
+	}
+	return *o.ApplicationId
+}
+
+// GetApplicationIdOk returns a tuple with the ApplicationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MoReport) GetApplicationIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ApplicationId) {
+		return nil, false
+	}
+	return o.ApplicationId, true
+}
+
+// HasApplicationId returns a boolean if a field has been set.
+func (o *MoReport) HasApplicationId() bool {
+	if o != nil && !IsNil(o.ApplicationId) {
+		return true
+	}
+
+	return false
+}
+
+// SetApplicationId gets a reference to the given string and assigns it to the ApplicationId field.
+func (o *MoReport) SetApplicationId(v string) {
+	o.ApplicationId = &v
 }
 
 // GetMessageId returns the MessageId field value if set, zero value otherwise.
@@ -381,6 +419,70 @@ func (o *MoReport) SetCallbackData(v string) {
 	o.CallbackData = &v
 }
 
+// GetEntityId returns the EntityId field value if set, zero value otherwise.
+func (o *MoReport) GetEntityId() string {
+	if o == nil || IsNil(o.EntityId) {
+		var ret string
+		return ret
+	}
+	return *o.EntityId
+}
+
+// GetEntityIdOk returns a tuple with the EntityId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MoReport) GetEntityIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EntityId) {
+		return nil, false
+	}
+	return o.EntityId, true
+}
+
+// HasEntityId returns a boolean if a field has been set.
+func (o *MoReport) HasEntityId() bool {
+	if o != nil && !IsNil(o.EntityId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityId gets a reference to the given string and assigns it to the EntityId field.
+func (o *MoReport) SetEntityId(v string) {
+	o.EntityId = &v
+}
+
+// GetCampaignReferenceId returns the CampaignReferenceId field value if set, zero value otherwise.
+func (o *MoReport) GetCampaignReferenceId() string {
+	if o == nil || IsNil(o.CampaignReferenceId) {
+		var ret string
+		return ret
+	}
+	return *o.CampaignReferenceId
+}
+
+// GetCampaignReferenceIdOk returns a tuple with the CampaignReferenceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MoReport) GetCampaignReferenceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CampaignReferenceId) {
+		return nil, false
+	}
+	return o.CampaignReferenceId, true
+}
+
+// HasCampaignReferenceId returns a boolean if a field has been set.
+func (o *MoReport) HasCampaignReferenceId() bool {
+	if o != nil && !IsNil(o.CampaignReferenceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCampaignReferenceId gets a reference to the given string and assigns it to the CampaignReferenceId field.
+func (o *MoReport) SetCampaignReferenceId(v string) {
+	o.CampaignReferenceId = &v
+}
+
 func (o MoReport) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -391,6 +493,9 @@ func (o MoReport) MarshalJSON() ([]byte, error) {
 
 func (o MoReport) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.ApplicationId) {
+		toSerialize["applicationId"] = o.ApplicationId
+	}
 	if !IsNil(o.MessageId) {
 		toSerialize["messageId"] = o.MessageId
 	}
@@ -420,6 +525,12 @@ func (o MoReport) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.CallbackData) {
 		toSerialize["callbackData"] = o.CallbackData
+	}
+	if !IsNil(o.EntityId) {
+		toSerialize["entityId"] = o.EntityId
+	}
+	if !IsNil(o.CampaignReferenceId) {
+		toSerialize["campaignReferenceId"] = o.CampaignReferenceId
 	}
 	return toSerialize, nil
 }

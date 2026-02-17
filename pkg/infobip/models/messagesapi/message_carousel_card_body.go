@@ -24,9 +24,9 @@ type MessageCarouselCardBody struct {
 	// Title of the card.
 	Title *string
 	// Text to be sent.
-	Text string
-	// URL of the rich link. It can be image or video. When you provide it with `isVideo=true` then it will be mapped as a video, otherwise - as an image.
-	Url string
+	Text *string
+	// URL of the card's media. It can be image or video. When you provide it with `isVideo=true` then it will be mapped as a video, otherwise - as an image.
+	Url *string
 	// Indicates if provided `url` is a video.
 	IsVideo *bool
 	// URL of the thumbnail image. If you add this, then we use as thumbnail image for video you provided in `url`. Applicable only when `isVideo=true`.
@@ -34,17 +34,13 @@ type MessageCarouselCardBody struct {
 	CardOptions  *MessageCardOptions
 }
 
-type _MessageCarouselCardBody MessageCarouselCardBody
-
 // NewMessageCarouselCardBody instantiates a new MessageCarouselCardBody object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewMessageCarouselCardBody(text string, url string) *MessageCarouselCardBody {
+func NewMessageCarouselCardBody() *MessageCarouselCardBody {
 	this := MessageCarouselCardBody{}
-	this.Text = text
-	this.Url = url
 	var isVideo bool = false
 	this.IsVideo = &isVideo
 	return &this
@@ -93,52 +89,68 @@ func (o *MessageCarouselCardBody) SetTitle(v string) {
 	o.Title = &v
 }
 
-// GetText returns the Text field value
+// GetText returns the Text field value if set, zero value otherwise.
 func (o *MessageCarouselCardBody) GetText() string {
-	if o == nil {
+	if o == nil || IsNil(o.Text) {
 		var ret string
 		return ret
 	}
-
-	return o.Text
+	return *o.Text
 }
 
-// GetTextOk returns a tuple with the Text field value
+// GetTextOk returns a tuple with the Text field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MessageCarouselCardBody) GetTextOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Text) {
 		return nil, false
 	}
-	return &o.Text, true
+	return o.Text, true
 }
 
-// SetText sets field value
+// HasText returns a boolean if a field has been set.
+func (o *MessageCarouselCardBody) HasText() bool {
+	if o != nil && !IsNil(o.Text) {
+		return true
+	}
+
+	return false
+}
+
+// SetText gets a reference to the given string and assigns it to the Text field.
 func (o *MessageCarouselCardBody) SetText(v string) {
-	o.Text = v
+	o.Text = &v
 }
 
-// GetUrl returns the Url field value
+// GetUrl returns the Url field value if set, zero value otherwise.
 func (o *MessageCarouselCardBody) GetUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
-
-	return o.Url
+	return *o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MessageCarouselCardBody) GetUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
-	return &o.Url, true
+	return o.Url, true
 }
 
-// SetUrl sets field value
+// HasUrl returns a boolean if a field has been set.
+func (o *MessageCarouselCardBody) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
 func (o *MessageCarouselCardBody) SetUrl(v string) {
-	o.Url = v
+	o.Url = &v
 }
 
 // GetIsVideo returns the IsVideo field value if set, zero value otherwise.
@@ -250,8 +262,12 @@ func (o MessageCarouselCardBody) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Title) {
 		toSerialize["title"] = o.Title
 	}
-	toSerialize["text"] = o.Text
-	toSerialize["url"] = o.Url
+	if !IsNil(o.Text) {
+		toSerialize["text"] = o.Text
+	}
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
 	if !IsNil(o.IsVideo) {
 		toSerialize["isVideo"] = o.IsVideo
 	}

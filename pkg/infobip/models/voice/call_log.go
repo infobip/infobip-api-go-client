@@ -60,6 +60,8 @@ type CallLog struct {
 	// Sender.
 	Sender       *string
 	HangupSource *HangupSource
+	// Client defined call ID.
+	ExternalId *string
 }
 
 type _CallLog CallLog
@@ -812,6 +814,38 @@ func (o *CallLog) SetHangupSource(v HangupSource) {
 	o.HangupSource = &v
 }
 
+// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+func (o *CallLog) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallLog) GetExternalIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalId) {
+		return nil, false
+	}
+	return o.ExternalId, true
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *CallLog) HasExternalId() bool {
+	if o != nil && !IsNil(o.ExternalId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+func (o *CallLog) SetExternalId(v string) {
+	o.ExternalId = &v
+}
+
 func (o CallLog) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -888,6 +922,9 @@ func (o CallLog) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.HangupSource) {
 		toSerialize["hangupSource"] = o.HangupSource
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["externalId"] = o.ExternalId
 	}
 	return toSerialize, nil
 }

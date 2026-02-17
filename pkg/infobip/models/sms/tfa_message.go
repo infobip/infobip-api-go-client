@@ -26,8 +26,10 @@ type TfaMessage struct {
 	// Email template ID that should reference a previously created Email template. This field is present only for [Email message templates](#channels/sms/create-2fa-email-message-template).
 	EmailTemplateId *int64
 	// The sender of the 2FA message, an email address with an optional sender name (e.g. `company@example.com` or `Jane Smith <jane.smith@somecompany.com>`). This field is present only for [Email message templates](#channels/sms/create-2fa-email-message-template).
-	From     *string
-	Language *TfaLanguage
+	From *string
+	// Opt out landing page ID that should reference a previously created landing page template. This field is present only for [Email message templates](#channels/sms/create-2fa-email-message-template).
+	LandingPageId *string
+	Language      *TfaLanguage
 	// The ID of the message template (message body with the PIN placeholder) that is sent to the recipient.
 	MessageId *string
 	// Text of a message that will be sent. Message text must contain `pinPlaceholder`.
@@ -161,6 +163,38 @@ func (o *TfaMessage) HasFrom() bool {
 // SetFrom gets a reference to the given string and assigns it to the From field.
 func (o *TfaMessage) SetFrom(v string) {
 	o.From = &v
+}
+
+// GetLandingPageId returns the LandingPageId field value if set, zero value otherwise.
+func (o *TfaMessage) GetLandingPageId() string {
+	if o == nil || IsNil(o.LandingPageId) {
+		var ret string
+		return ret
+	}
+	return *o.LandingPageId
+}
+
+// GetLandingPageIdOk returns a tuple with the LandingPageId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TfaMessage) GetLandingPageIdOk() (*string, bool) {
+	if o == nil || IsNil(o.LandingPageId) {
+		return nil, false
+	}
+	return o.LandingPageId, true
+}
+
+// HasLandingPageId returns a boolean if a field has been set.
+func (o *TfaMessage) HasLandingPageId() bool {
+	if o != nil && !IsNil(o.LandingPageId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLandingPageId gets a reference to the given string and assigns it to the LandingPageId field.
+func (o *TfaMessage) SetLandingPageId(v string) {
+	o.LandingPageId = &v
 }
 
 // GetLanguage returns the Language field value if set, zero value otherwise.
@@ -533,6 +567,9 @@ func (o TfaMessage) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.From) {
 		toSerialize["from"] = o.From
+	}
+	if !IsNil(o.LandingPageId) {
+		toSerialize["landingPageId"] = o.LandingPageId
 	}
 	if !IsNil(o.Language) {
 		toSerialize["language"] = o.Language

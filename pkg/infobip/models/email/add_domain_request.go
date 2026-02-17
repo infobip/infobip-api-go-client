@@ -31,8 +31,6 @@ type AddDomainRequest struct {
 	ApplicationId *string
 	// Required for entity use in a send request for outbound traffic. Returned in notification events.
 	EntityId *string
-	// Set a custom return path to customize the mailbox that tells receiving email servers where to route delayed bounces.
-	ReturnPathAddress *string
 }
 
 type _AddDomainRequest AddDomainRequest
@@ -206,38 +204,6 @@ func (o *AddDomainRequest) SetEntityId(v string) {
 	o.EntityId = &v
 }
 
-// GetReturnPathAddress returns the ReturnPathAddress field value if set, zero value otherwise.
-func (o *AddDomainRequest) GetReturnPathAddress() string {
-	if o == nil || IsNil(o.ReturnPathAddress) {
-		var ret string
-		return ret
-	}
-	return *o.ReturnPathAddress
-}
-
-// GetReturnPathAddressOk returns a tuple with the ReturnPathAddress field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *AddDomainRequest) GetReturnPathAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.ReturnPathAddress) {
-		return nil, false
-	}
-	return o.ReturnPathAddress, true
-}
-
-// HasReturnPathAddress returns a boolean if a field has been set.
-func (o *AddDomainRequest) HasReturnPathAddress() bool {
-	if o != nil && !IsNil(o.ReturnPathAddress) {
-		return true
-	}
-
-	return false
-}
-
-// SetReturnPathAddress gets a reference to the given string and assigns it to the ReturnPathAddress field.
-func (o *AddDomainRequest) SetReturnPathAddress(v string) {
-	o.ReturnPathAddress = &v
-}
-
 func (o AddDomainRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -258,9 +224,6 @@ func (o AddDomainRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.EntityId) {
 		toSerialize["entityId"] = o.EntityId
-	}
-	if !IsNil(o.ReturnPathAddress) {
-		toSerialize["returnPathAddress"] = o.ReturnPathAddress
 	}
 	return toSerialize, nil
 }

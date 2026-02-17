@@ -21,8 +21,9 @@ var _ MappedNullable = &DefaultMessageRequestOptions{}
 
 // DefaultMessageRequestOptions Options applicable to all messages in the request.
 type DefaultMessageRequestOptions struct {
-	Schedule *RequestSchedulingSettings
-	Tracking *UrlOptions
+	Schedule        *RequestSchedulingSettings
+	Tracking        *UrlOptions
+	MessageOrdering *MessageOrderingOptions
 }
 
 // NewDefaultMessageRequestOptions instantiates a new DefaultMessageRequestOptions object
@@ -108,6 +109,38 @@ func (o *DefaultMessageRequestOptions) SetTracking(v UrlOptions) {
 	o.Tracking = &v
 }
 
+// GetMessageOrdering returns the MessageOrdering field value if set, zero value otherwise.
+func (o *DefaultMessageRequestOptions) GetMessageOrdering() MessageOrderingOptions {
+	if o == nil || IsNil(o.MessageOrdering) {
+		var ret MessageOrderingOptions
+		return ret
+	}
+	return *o.MessageOrdering
+}
+
+// GetMessageOrderingOk returns a tuple with the MessageOrdering field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DefaultMessageRequestOptions) GetMessageOrderingOk() (*MessageOrderingOptions, bool) {
+	if o == nil || IsNil(o.MessageOrdering) {
+		return nil, false
+	}
+	return o.MessageOrdering, true
+}
+
+// HasMessageOrdering returns a boolean if a field has been set.
+func (o *DefaultMessageRequestOptions) HasMessageOrdering() bool {
+	if o != nil && !IsNil(o.MessageOrdering) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessageOrdering gets a reference to the given MessageOrderingOptions and assigns it to the MessageOrdering field.
+func (o *DefaultMessageRequestOptions) SetMessageOrdering(v MessageOrderingOptions) {
+	o.MessageOrdering = &v
+}
+
 func (o DefaultMessageRequestOptions) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -123,6 +156,9 @@ func (o DefaultMessageRequestOptions) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Tracking) {
 		toSerialize["tracking"] = o.Tracking
+	}
+	if !IsNil(o.MessageOrdering) {
+		toSerialize["messageOrdering"] = o.MessageOrdering
 	}
 	return toSerialize, nil
 }

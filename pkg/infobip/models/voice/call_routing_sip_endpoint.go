@@ -22,12 +22,15 @@ var _ MappedNullable = &CallRoutingSipEndpoint{}
 // CallRoutingSipEndpoint struct for CallRoutingSipEndpoint
 type CallRoutingSipEndpoint struct {
 	Type CallRoutingEndpointType
+	// Caller ID that will be used. Defaults to `from` value used in inbound call.
+	From *string
 	// Username sent to a selected SIP trunk. When not defined, Infobip DID number is used instead.
 	Username *string
 	// Unique identifier of a SIP trunk.
 	SipTrunkId string
-	// Custom headers. Only headers starting with `X-Client-` prefix will be propagated.
-	CustomHeaders *map[string]string
+	// Custom headers. Only headers starting with `X-Client-` prefix will be propagated. Supports using variables `${from}` and `${to}`.
+	CustomHeaders      *map[string]string
+	RingbackGeneration *CallRoutingRingbackGeneration
 }
 
 type _CallRoutingSipEndpoint CallRoutingSipEndpoint
@@ -50,6 +53,38 @@ func NewCallRoutingSipEndpointWithDefaults() *CallRoutingSipEndpoint {
 	this := CallRoutingSipEndpoint{}
 	this.Type = "SIP"
 	return &this
+}
+
+// GetFrom returns the From field value if set, zero value otherwise.
+func (o *CallRoutingSipEndpoint) GetFrom() string {
+	if o == nil || IsNil(o.From) {
+		var ret string
+		return ret
+	}
+	return *o.From
+}
+
+// GetFromOk returns a tuple with the From field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallRoutingSipEndpoint) GetFromOk() (*string, bool) {
+	if o == nil || IsNil(o.From) {
+		return nil, false
+	}
+	return o.From, true
+}
+
+// HasFrom returns a boolean if a field has been set.
+func (o *CallRoutingSipEndpoint) HasFrom() bool {
+	if o != nil && !IsNil(o.From) {
+		return true
+	}
+
+	return false
+}
+
+// SetFrom gets a reference to the given string and assigns it to the From field.
+func (o *CallRoutingSipEndpoint) SetFrom(v string) {
+	o.From = &v
 }
 
 // GetUsername returns the Username field value if set, zero value otherwise.
@@ -140,6 +175,38 @@ func (o *CallRoutingSipEndpoint) SetCustomHeaders(v map[string]string) {
 	o.CustomHeaders = &v
 }
 
+// GetRingbackGeneration returns the RingbackGeneration field value if set, zero value otherwise.
+func (o *CallRoutingSipEndpoint) GetRingbackGeneration() CallRoutingRingbackGeneration {
+	if o == nil || IsNil(o.RingbackGeneration) {
+		var ret CallRoutingRingbackGeneration
+		return ret
+	}
+	return *o.RingbackGeneration
+}
+
+// GetRingbackGenerationOk returns a tuple with the RingbackGeneration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallRoutingSipEndpoint) GetRingbackGenerationOk() (*CallRoutingRingbackGeneration, bool) {
+	if o == nil || IsNil(o.RingbackGeneration) {
+		return nil, false
+	}
+	return o.RingbackGeneration, true
+}
+
+// HasRingbackGeneration returns a boolean if a field has been set.
+func (o *CallRoutingSipEndpoint) HasRingbackGeneration() bool {
+	if o != nil && !IsNil(o.RingbackGeneration) {
+		return true
+	}
+
+	return false
+}
+
+// SetRingbackGeneration gets a reference to the given CallRoutingRingbackGeneration and assigns it to the RingbackGeneration field.
+func (o *CallRoutingSipEndpoint) SetRingbackGeneration(v CallRoutingRingbackGeneration) {
+	o.RingbackGeneration = &v
+}
+
 func (o CallRoutingSipEndpoint) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -151,12 +218,18 @@ func (o CallRoutingSipEndpoint) MarshalJSON() ([]byte, error) {
 func (o CallRoutingSipEndpoint) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
+	if !IsNil(o.From) {
+		toSerialize["from"] = o.From
+	}
 	if !IsNil(o.Username) {
 		toSerialize["username"] = o.Username
 	}
 	toSerialize["sipTrunkId"] = o.SipTrunkId
 	if !IsNil(o.CustomHeaders) {
 		toSerialize["customHeaders"] = o.CustomHeaders
+	}
+	if !IsNil(o.RingbackGeneration) {
+		toSerialize["ringbackGeneration"] = o.RingbackGeneration
 	}
 	return toSerialize, nil
 }

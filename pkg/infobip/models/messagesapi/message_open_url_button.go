@@ -26,6 +26,9 @@ type MessageOpenUrlButton struct {
 	Text string
 	// URL to be opened when clicked on the button.
 	Url string
+	// Custom data that will be sent to you when the user replies to the message.
+	PostbackData *string
+	OpenIn       *OpenUrlButtonOpenIn
 }
 
 type _MessageOpenUrlButton MessageOpenUrlButton
@@ -99,6 +102,70 @@ func (o *MessageOpenUrlButton) SetUrl(v string) {
 	o.Url = v
 }
 
+// GetPostbackData returns the PostbackData field value if set, zero value otherwise.
+func (o *MessageOpenUrlButton) GetPostbackData() string {
+	if o == nil || IsNil(o.PostbackData) {
+		var ret string
+		return ret
+	}
+	return *o.PostbackData
+}
+
+// GetPostbackDataOk returns a tuple with the PostbackData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOpenUrlButton) GetPostbackDataOk() (*string, bool) {
+	if o == nil || IsNil(o.PostbackData) {
+		return nil, false
+	}
+	return o.PostbackData, true
+}
+
+// HasPostbackData returns a boolean if a field has been set.
+func (o *MessageOpenUrlButton) HasPostbackData() bool {
+	if o != nil && !IsNil(o.PostbackData) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostbackData gets a reference to the given string and assigns it to the PostbackData field.
+func (o *MessageOpenUrlButton) SetPostbackData(v string) {
+	o.PostbackData = &v
+}
+
+// GetOpenIn returns the OpenIn field value if set, zero value otherwise.
+func (o *MessageOpenUrlButton) GetOpenIn() OpenUrlButtonOpenIn {
+	if o == nil || IsNil(o.OpenIn) {
+		var ret OpenUrlButtonOpenIn
+		return ret
+	}
+	return *o.OpenIn
+}
+
+// GetOpenInOk returns a tuple with the OpenIn field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageOpenUrlButton) GetOpenInOk() (*OpenUrlButtonOpenIn, bool) {
+	if o == nil || IsNil(o.OpenIn) {
+		return nil, false
+	}
+	return o.OpenIn, true
+}
+
+// HasOpenIn returns a boolean if a field has been set.
+func (o *MessageOpenUrlButton) HasOpenIn() bool {
+	if o != nil && !IsNil(o.OpenIn) {
+		return true
+	}
+
+	return false
+}
+
+// SetOpenIn gets a reference to the given OpenUrlButtonOpenIn and assigns it to the OpenIn field.
+func (o *MessageOpenUrlButton) SetOpenIn(v OpenUrlButtonOpenIn) {
+	o.OpenIn = &v
+}
+
 func (o MessageOpenUrlButton) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -112,6 +179,12 @@ func (o MessageOpenUrlButton) ToMap() (map[string]interface{}, error) {
 	toSerialize["type"] = o.Type
 	toSerialize["text"] = o.Text
 	toSerialize["url"] = o.Url
+	if !IsNil(o.PostbackData) {
+		toSerialize["postbackData"] = o.PostbackData
+	}
+	if !IsNil(o.OpenIn) {
+		toSerialize["openIn"] = o.OpenIn
+	}
 	return toSerialize, nil
 }
 

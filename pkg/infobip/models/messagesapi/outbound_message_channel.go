@@ -20,30 +20,30 @@ type OutboundMessageChannel string
 
 // List of OutboundMessageChannel
 const (
-	OUTBOUNDMESSAGECHANNEL_SMS          OutboundMessageChannel = "SMS"
-	OUTBOUNDMESSAGECHANNEL_MMS          OutboundMessageChannel = "MMS"
-	OUTBOUNDMESSAGECHANNEL_WHATSAPP     OutboundMessageChannel = "WHATSAPP"
-	OUTBOUNDMESSAGECHANNEL_VIBER_BM     OutboundMessageChannel = "VIBER_BM"
-	OUTBOUNDMESSAGECHANNEL_VIBER_BOT    OutboundMessageChannel = "VIBER_BOT"
-	OUTBOUNDMESSAGECHANNEL_RCS          OutboundMessageChannel = "RCS"
 	OUTBOUNDMESSAGECHANNEL_APPLE_MB     OutboundMessageChannel = "APPLE_MB"
 	OUTBOUNDMESSAGECHANNEL_INSTAGRAM_DM OutboundMessageChannel = "INSTAGRAM_DM"
 	OUTBOUNDMESSAGECHANNEL_LINE_ON      OutboundMessageChannel = "LINE_ON"
 	OUTBOUNDMESSAGECHANNEL_MESSENGER    OutboundMessageChannel = "MESSENGER"
+	OUTBOUNDMESSAGECHANNEL_MMS          OutboundMessageChannel = "MMS"
+	OUTBOUNDMESSAGECHANNEL_RCS          OutboundMessageChannel = "RCS"
+	OUTBOUNDMESSAGECHANNEL_SMS          OutboundMessageChannel = "SMS"
+	OUTBOUNDMESSAGECHANNEL_VIBER_BM     OutboundMessageChannel = "VIBER_BM"
+	OUTBOUNDMESSAGECHANNEL_VIBER_BOT    OutboundMessageChannel = "VIBER_BOT"
+	OUTBOUNDMESSAGECHANNEL_WHATSAPP     OutboundMessageChannel = "WHATSAPP"
 )
 
 // All allowed values of OutboundMessageChannel enum
 var AllowedOutboundMessageChannelEnumValues = []OutboundMessageChannel{
-	"SMS",
-	"MMS",
-	"WHATSAPP",
-	"VIBER_BM",
-	"VIBER_BOT",
-	"RCS",
 	"APPLE_MB",
 	"INSTAGRAM_DM",
 	"LINE_ON",
 	"MESSENGER",
+	"MMS",
+	"RCS",
+	"SMS",
+	"VIBER_BM",
+	"VIBER_BOT",
+	"WHATSAPP",
 }
 
 func (v *OutboundMessageChannel) UnmarshalJSON(src []byte) error {

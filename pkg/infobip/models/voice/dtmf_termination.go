@@ -21,7 +21,7 @@ var _ MappedNullable = &DtmfTermination{}
 
 // DtmfTermination struct for DtmfTermination
 type DtmfTermination struct {
-	Type TerminationType
+	Type PublicTerminationType
 	// Digits used to end the audio playback. If no digits are set, any DTMF digit will end the audio playback. After first DTMF digit is pressed, playback will stop and pressed digit will be present in `PLAY_FINISHED` or `SAY_FINISHED` event.  If terminator is set to `123`, pressing either `1`, `2` or `3` will terminate the playback.
 	Terminator *string
 }

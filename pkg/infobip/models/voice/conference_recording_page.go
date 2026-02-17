@@ -22,7 +22,7 @@ var _ MappedNullable = &ConferenceRecordingPage{}
 // ConferenceRecordingPage struct for ConferenceRecordingPage
 type ConferenceRecordingPage struct {
 	// The list of the results for this page.
-	Results []ConferenceRecording
+	Results []PublicConferenceRecording
 	Paging  *PageInfo
 }
 
@@ -46,9 +46,9 @@ func NewConferenceRecordingPageWithDefaults() *ConferenceRecordingPage {
 }
 
 // GetResults returns the Results field value if set, zero value otherwise.
-func (o *ConferenceRecordingPage) GetResults() []ConferenceRecording {
+func (o *ConferenceRecordingPage) GetResults() []PublicConferenceRecording {
 	if o == nil || IsNil(o.Results) {
-		var ret []ConferenceRecording
+		var ret []PublicConferenceRecording
 		return ret
 	}
 	return o.Results
@@ -56,7 +56,7 @@ func (o *ConferenceRecordingPage) GetResults() []ConferenceRecording {
 
 // GetResultsOk returns a tuple with the Results field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConferenceRecordingPage) GetResultsOk() ([]ConferenceRecording, bool) {
+func (o *ConferenceRecordingPage) GetResultsOk() ([]PublicConferenceRecording, bool) {
 	if o == nil || IsNil(o.Results) {
 		return nil, false
 	}
@@ -72,8 +72,8 @@ func (o *ConferenceRecordingPage) HasResults() bool {
 	return false
 }
 
-// SetResults gets a reference to the given []ConferenceRecording and assigns it to the Results field.
-func (o *ConferenceRecordingPage) SetResults(v []ConferenceRecording) {
+// SetResults gets a reference to the given []PublicConferenceRecording and assigns it to the Results field.
+func (o *ConferenceRecordingPage) SetResults(v []PublicConferenceRecording) {
 	o.Results = v
 }
 

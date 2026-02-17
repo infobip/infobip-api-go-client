@@ -24,7 +24,7 @@ type MessageRequestLocationButton struct {
 	Type MessageButtonType
 	// Text to be displayed on the button.
 	Text *string
-	// Custom data that will be sent to you when user reply to a message.
+	// Custom data that will be sent to you when the user replies to the message.
 	PostbackData *string
 }
 

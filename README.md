@@ -22,10 +22,12 @@ To use this, you'll need an Infobip account. You can create a free trial account
 Detailed documentation about Infobip API can be found [here][apidocs].
 The current version of this library includes this subset of Infobip products:
 * [SMS](https://www.infobip.com/docs/api/channels/sms)
+* [2FA](https://www.infobip.com/docs/api/platform/2fa)
 * [Messages API](https://www.infobip.com/docs/api/platform/messages-api)
 * [Email](https://www.infobip.com/docs/api/channels/email)
 * [Voice](https://www.infobip.com/docs/api/channels/voice)
 * [Moments](https://www.infobip.com/docs/api/customer-engagement/moments)
+* [RCS](https://www.infobip.com/docs/api/channels/rcs)
 
 ## General Info
 For `infobip-api-go-client` versioning we use [Semantic Versioning][semver] scheme.
@@ -64,8 +66,9 @@ To see your base URL, log in to the [Infobip API Resource][apidocs] hub with you
 Let's first set the configuration field.
 ```go
 configuration := infobip.NewConfiguration()
-configuration.Host = "<YOUR_BASE_URL>"
+configuration.Host = "<YOUR_BASE_URL>" // e.g. "https://<your-domain>.api.infobip.com" or "<your-domain>.api.infobip.com"
 ```
+Note: If the scheme is omitted, `https://` is prepended automatically. `http://` is rejected (HTTPS only).
 
 Now you can initialize the API client.
 ```go
@@ -80,11 +83,12 @@ After that is done, we should set the authentication method.
 ```go
 auth := context.WithValue(
 		context.Background(),
-		infobip.ContextAPIKeys,
-		map[string]infobip.APIKey{
-			"APIKeyHeader": {Key: "<YOUR_API_KEY>", Prefix: "<YOUR_API_PREFIX>"},
-		},
-	)
+			infobip.ContextAPIKeys,
+			map[string]infobip.APIKey{
+				// Prefix is deprecated; the SDK now prepends "App " automatically.
+				"APIKeyHeader": {Key: "<YOUR_API_KEY>"},
+			},
+		)
 ```
 
 To understand how to generate above mentioned tokens, check [this](https://www.infobip.com/docs/essentials/api-authentication) page.
@@ -242,31 +246,28 @@ func main() {
 ```
 
 #### Two-Factor Authentication (2FA)
-For the 2FA quick start guide please check [these examples](two-factor-authentication.md).
+For 2FA quick start guide please check [these examples](two-factor-authentication.md).
 
 #### Messages API
-For the Messages API quick start guide, view [these examples](messages-api.md).
+For Messages API quick start guide, view [these examples](messages-api.md).
 
 #### Email
-For the Email quick start guide, view [these examples](email.md).
+For Email quick start guide, view [these examples](email.md).
 
 #### Moments
-For the Moments quick start guide, view [these examples](moments.md).
+For Moments quick start guide, view [these examples](moments.md).
 
-## Versioning
-
-This project follows a pragmatic Semantic Versioning approach.  
-For full details on how versions are managed, please see our [Versioning guide][versioning].
+#### RCS
+For RCS quick start guide, view [these examples](rcs.md).
 
 ## Ask for help
 
-Feel free to open an issue on the repository if you see any problem or want to request a feature. As per pull requests, for details check the `CONTRIBUTING` [file][contributing] related to it - in short, we will not merge any pull requests, this code is auto generated.
+Feel free to open issues on the repository for any issue or feature request. As per pull requests, for details check the `CONTRIBUTING` [file][contributing] related to it - in short, we will not merge any pull requests, this code is auto-generated.
 
-If it is, however, something that requires our immediate attention, feel free to contact us @ [support@infobip.com](mailto:support@infobip.com).
+If it is, however, something that requires our imminent attention feel free to contact us @ [support@infobip.com](mailto:support@infobip.com).
 
 [apidocs]: https://www.infobip.com/docs/api
 [signup]: https://www.infobip.com/signup
 [semver]: https://semver.org
 [license]: LICENSE
 [contributing]: CONTRIBUTING.md
-[versioning]: VERSIONING.md

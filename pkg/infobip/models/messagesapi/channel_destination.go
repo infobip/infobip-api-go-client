@@ -19,12 +19,13 @@ import (
 // checks if the ChannelDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ChannelDestination{}
 
-// ChannelDestination Array of substitute destinations distinguished by a `channel` they belong to. Only one substitute destination per `channel` is permitted.
+// ChannelDestination An array of substitute destinations, each associated with a specific `channel`. Only one substitute destination is allowed per `channel`. A substitute destination must be provided for the main `channel` defined in the `message`.
 type ChannelDestination struct {
 	Channel OutboundMessageChannel
 	// The destination address of the message associated with given channel. It can be alphanumeric or numeric.
 	To string
 	// The ID that uniquely identifies the message sent.
+	// Deprecated
 	MessageId *string
 }
 
@@ -100,6 +101,7 @@ func (o *ChannelDestination) SetTo(v string) {
 }
 
 // GetMessageId returns the MessageId field value if set, zero value otherwise.
+// Deprecated
 func (o *ChannelDestination) GetMessageId() string {
 	if o == nil || IsNil(o.MessageId) {
 		var ret string
@@ -110,6 +112,7 @@ func (o *ChannelDestination) GetMessageId() string {
 
 // GetMessageIdOk returns a tuple with the MessageId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *ChannelDestination) GetMessageIdOk() (*string, bool) {
 	if o == nil || IsNil(o.MessageId) {
 		return nil, false
@@ -127,6 +130,7 @@ func (o *ChannelDestination) HasMessageId() bool {
 }
 
 // SetMessageId gets a reference to the given string and assigns it to the MessageId field.
+// Deprecated
 func (o *ChannelDestination) SetMessageId(v string) {
 	o.MessageId = &v
 }

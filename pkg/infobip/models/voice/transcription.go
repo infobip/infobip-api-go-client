@@ -24,6 +24,10 @@ type Transcription struct {
 	Language TranscriptionLanguage
 	// Flag indicating whether interim transcription results should be sent.
 	SendInterimResults *bool
+	// Array of custom words used for more accurate transcription.
+	CustomDictionary []string
+	// Toggles enhanced text formatting features like punctuation, proper casing, numeral normalization, and disfluency filtering. Defaults to `false`.
+	AdvancedFormatting *bool
 }
 
 type _Transcription Transcription
@@ -38,6 +42,8 @@ func NewTranscription(language TranscriptionLanguage) *Transcription {
 	this.Language = language
 	var sendInterimResults bool = false
 	this.SendInterimResults = &sendInterimResults
+	var advancedFormatting bool = false
+	this.AdvancedFormatting = &advancedFormatting
 	return &this
 }
 
@@ -49,6 +55,8 @@ func NewTranscriptionWithDefaults() *Transcription {
 
 	var sendInterimResults bool = false
 	this.SendInterimResults = &sendInterimResults
+	var advancedFormatting bool = false
+	this.AdvancedFormatting = &advancedFormatting
 	return &this
 }
 
@@ -108,6 +116,70 @@ func (o *Transcription) SetSendInterimResults(v bool) {
 	o.SendInterimResults = &v
 }
 
+// GetCustomDictionary returns the CustomDictionary field value if set, zero value otherwise.
+func (o *Transcription) GetCustomDictionary() []string {
+	if o == nil || IsNil(o.CustomDictionary) {
+		var ret []string
+		return ret
+	}
+	return o.CustomDictionary
+}
+
+// GetCustomDictionaryOk returns a tuple with the CustomDictionary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transcription) GetCustomDictionaryOk() ([]string, bool) {
+	if o == nil || IsNil(o.CustomDictionary) {
+		return nil, false
+	}
+	return o.CustomDictionary, true
+}
+
+// HasCustomDictionary returns a boolean if a field has been set.
+func (o *Transcription) HasCustomDictionary() bool {
+	if o != nil && !IsNil(o.CustomDictionary) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomDictionary gets a reference to the given []string and assigns it to the CustomDictionary field.
+func (o *Transcription) SetCustomDictionary(v []string) {
+	o.CustomDictionary = v
+}
+
+// GetAdvancedFormatting returns the AdvancedFormatting field value if set, zero value otherwise.
+func (o *Transcription) GetAdvancedFormatting() bool {
+	if o == nil || IsNil(o.AdvancedFormatting) {
+		var ret bool
+		return ret
+	}
+	return *o.AdvancedFormatting
+}
+
+// GetAdvancedFormattingOk returns a tuple with the AdvancedFormatting field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Transcription) GetAdvancedFormattingOk() (*bool, bool) {
+	if o == nil || IsNil(o.AdvancedFormatting) {
+		return nil, false
+	}
+	return o.AdvancedFormatting, true
+}
+
+// HasAdvancedFormatting returns a boolean if a field has been set.
+func (o *Transcription) HasAdvancedFormatting() bool {
+	if o != nil && !IsNil(o.AdvancedFormatting) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdvancedFormatting gets a reference to the given bool and assigns it to the AdvancedFormatting field.
+func (o *Transcription) SetAdvancedFormatting(v bool) {
+	o.AdvancedFormatting = &v
+}
+
 func (o Transcription) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -121,6 +193,12 @@ func (o Transcription) ToMap() (map[string]interface{}, error) {
 	toSerialize["language"] = o.Language
 	if !IsNil(o.SendInterimResults) {
 		toSerialize["sendInterimResults"] = o.SendInterimResults
+	}
+	if !IsNil(o.CustomDictionary) {
+		toSerialize["customDictionary"] = o.CustomDictionary
+	}
+	if !IsNil(o.AdvancedFormatting) {
+		toSerialize["advancedFormatting"] = o.AdvancedFormatting
 	}
 	return toSerialize, nil
 }

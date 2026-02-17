@@ -31,6 +31,8 @@ type StartAuthenticationRequest struct {
 	Placeholders *map[string]string
 	// Phone number to which the 2FA message will be sent. Example: 41793026727.
 	To string
+	// Enables sending of delivery reports via [Subscriptions](https://www.infobip.com/docs/cpaas-x/subscriptions-management). The [retry cycle](https://www.infobip.com/docs/sms/sms-over-api#push-retry-cycle-notify-url) for when your URL becomes unavailable uses the following formula: `1min + (1min * retryNumber * retryNumber)`.
+	TrackDelivery *bool
 }
 
 type _StartAuthenticationRequest StartAuthenticationRequest
@@ -45,6 +47,8 @@ func NewStartAuthenticationRequest(applicationId string, messageId string, to st
 	this.ApplicationId = applicationId
 	this.MessageId = messageId
 	this.To = to
+	var trackDelivery bool = false
+	this.TrackDelivery = &trackDelivery
 	return &this
 }
 
@@ -54,6 +58,8 @@ func NewStartAuthenticationRequest(applicationId string, messageId string, to st
 func NewStartAuthenticationRequestWithDefaults() *StartAuthenticationRequest {
 	this := StartAuthenticationRequest{}
 
+	var trackDelivery bool = false
+	this.TrackDelivery = &trackDelivery
 	return &this
 }
 
@@ -193,6 +199,38 @@ func (o *StartAuthenticationRequest) SetTo(v string) {
 	o.To = v
 }
 
+// GetTrackDelivery returns the TrackDelivery field value if set, zero value otherwise.
+func (o *StartAuthenticationRequest) GetTrackDelivery() bool {
+	if o == nil || IsNil(o.TrackDelivery) {
+		var ret bool
+		return ret
+	}
+	return *o.TrackDelivery
+}
+
+// GetTrackDeliveryOk returns a tuple with the TrackDelivery field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StartAuthenticationRequest) GetTrackDeliveryOk() (*bool, bool) {
+	if o == nil || IsNil(o.TrackDelivery) {
+		return nil, false
+	}
+	return o.TrackDelivery, true
+}
+
+// HasTrackDelivery returns a boolean if a field has been set.
+func (o *StartAuthenticationRequest) HasTrackDelivery() bool {
+	if o != nil && !IsNil(o.TrackDelivery) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackDelivery gets a reference to the given bool and assigns it to the TrackDelivery field.
+func (o *StartAuthenticationRequest) SetTrackDelivery(v bool) {
+	o.TrackDelivery = &v
+}
+
 func (o StartAuthenticationRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -212,6 +250,9 @@ func (o StartAuthenticationRequest) ToMap() (map[string]interface{}, error) {
 		toSerialize["placeholders"] = o.Placeholders
 	}
 	toSerialize["to"] = o.To
+	if !IsNil(o.TrackDelivery) {
+		toSerialize["trackDelivery"] = o.TrackDelivery
+	}
 	return toSerialize, nil
 }
 

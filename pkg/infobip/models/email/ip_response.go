@@ -24,7 +24,9 @@ type IpResponse struct {
 	// Dedicated IP identifier.
 	Id string
 	// Dedicated IP address.
-	Ip string
+	// Deprecated
+	Ip          string
+	IpAddresses []string
 }
 
 type _IpResponse IpResponse
@@ -34,10 +36,11 @@ type _IpResponse IpResponse
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewIpResponse(id string, ip string) *IpResponse {
+func NewIpResponse(id string, ip string, ipAddresses []string) *IpResponse {
 	this := IpResponse{}
 	this.Id = id
 	this.Ip = ip
+	this.IpAddresses = ipAddresses
 	return &this
 }
 
@@ -75,6 +78,7 @@ func (o *IpResponse) SetId(v string) {
 }
 
 // GetIp returns the Ip field value
+// Deprecated
 func (o *IpResponse) GetIp() string {
 	if o == nil {
 		var ret string
@@ -86,6 +90,7 @@ func (o *IpResponse) GetIp() string {
 
 // GetIpOk returns a tuple with the Ip field value
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *IpResponse) GetIpOk() (*string, bool) {
 	if o == nil {
 		return nil, false
@@ -94,8 +99,33 @@ func (o *IpResponse) GetIpOk() (*string, bool) {
 }
 
 // SetIp sets field value
+// Deprecated
 func (o *IpResponse) SetIp(v string) {
 	o.Ip = v
+}
+
+// GetIpAddresses returns the IpAddresses field value
+func (o *IpResponse) GetIpAddresses() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.IpAddresses
+}
+
+// GetIpAddressesOk returns a tuple with the IpAddresses field value
+// and a boolean to check if the value has been set.
+func (o *IpResponse) GetIpAddressesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IpAddresses, true
+}
+
+// SetIpAddresses sets field value
+func (o *IpResponse) SetIpAddresses(v []string) {
+	o.IpAddresses = v
 }
 
 func (o IpResponse) MarshalJSON() ([]byte, error) {
@@ -110,6 +140,7 @@ func (o IpResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["ip"] = o.Ip
+	toSerialize["ipAddresses"] = o.IpAddresses
 	return toSerialize, nil
 }
 

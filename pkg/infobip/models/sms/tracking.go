@@ -19,7 +19,7 @@ import (
 // checks if the Tracking type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &Tracking{}
 
-// Tracking Allows you to set up tracking parameters to track conversion metrics. For more details on SMS Conversion, see: [Track Conversion](https://www.infobip.com/docs/sms/api#track-conversion).
+// Tracking Allows you to set up tracking parameters to track conversion metrics. For more details, see: [SMS with conversion tracking](https://www.infobip.com/docs/sms/sms-over-api#send-sms-with-conversion-tracking).
 type Tracking struct {
 	// Indicates if a message has to be tracked for conversion rates. Default \"false\".
 	UseConversionTracking *bool

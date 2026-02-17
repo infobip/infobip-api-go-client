@@ -21,17 +21,22 @@ var _ MappedNullable = &BulkUpdateStatusResponse{}
 
 // BulkUpdateStatusResponse struct for BulkUpdateStatusResponse
 type BulkUpdateStatusResponse struct {
-	BulkId *string
-	Status *BulkStatus
+	// The ID that uniquely identifies the message within the bulk.
+	BulkId string
+	Status BulkStatus
 }
+
+type _BulkUpdateStatusResponse BulkUpdateStatusResponse
 
 // NewBulkUpdateStatusResponse instantiates a new BulkUpdateStatusResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewBulkUpdateStatusResponse() *BulkUpdateStatusResponse {
+func NewBulkUpdateStatusResponse(bulkId string, status BulkStatus) *BulkUpdateStatusResponse {
 	this := BulkUpdateStatusResponse{}
+	this.BulkId = bulkId
+	this.Status = status
 	return &this
 }
 
@@ -44,68 +49,52 @@ func NewBulkUpdateStatusResponseWithDefaults() *BulkUpdateStatusResponse {
 	return &this
 }
 
-// GetBulkId returns the BulkId field value if set, zero value otherwise.
+// GetBulkId returns the BulkId field value
 func (o *BulkUpdateStatusResponse) GetBulkId() string {
-	if o == nil || IsNil(o.BulkId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.BulkId
+
+	return o.BulkId
 }
 
-// GetBulkIdOk returns a tuple with the BulkId field value if set, nil otherwise
+// GetBulkIdOk returns a tuple with the BulkId field value
 // and a boolean to check if the value has been set.
 func (o *BulkUpdateStatusResponse) GetBulkIdOk() (*string, bool) {
-	if o == nil || IsNil(o.BulkId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.BulkId, true
+	return &o.BulkId, true
 }
 
-// HasBulkId returns a boolean if a field has been set.
-func (o *BulkUpdateStatusResponse) HasBulkId() bool {
-	if o != nil && !IsNil(o.BulkId) {
-		return true
-	}
-
-	return false
-}
-
-// SetBulkId gets a reference to the given string and assigns it to the BulkId field.
+// SetBulkId sets field value
 func (o *BulkUpdateStatusResponse) SetBulkId(v string) {
-	o.BulkId = &v
+	o.BulkId = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *BulkUpdateStatusResponse) GetStatus() BulkStatus {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret BulkStatus
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *BulkUpdateStatusResponse) GetStatusOk() (*BulkStatus, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *BulkUpdateStatusResponse) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given BulkStatus and assigns it to the Status field.
+// SetStatus sets field value
 func (o *BulkUpdateStatusResponse) SetStatus(v BulkStatus) {
-	o.Status = &v
+	o.Status = v
 }
 
 func (o BulkUpdateStatusResponse) MarshalJSON() ([]byte, error) {
@@ -118,12 +107,8 @@ func (o BulkUpdateStatusResponse) MarshalJSON() ([]byte, error) {
 
 func (o BulkUpdateStatusResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.BulkId) {
-		toSerialize["bulkId"] = o.BulkId
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
+	toSerialize["bulkId"] = o.BulkId
+	toSerialize["status"] = o.Status
 	return toSerialize, nil
 }
 

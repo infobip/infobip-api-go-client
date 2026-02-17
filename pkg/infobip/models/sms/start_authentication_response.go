@@ -23,6 +23,8 @@ var _ MappedNullable = &StartAuthenticationResponse{}
 type StartAuthenticationResponse struct {
 	// Call status, e.g. `PENDING_ACCEPTED`.
 	CallStatus *string
+	// Message ID used for delivery tracking.
+	ExternalMessageId *string
 	// Status of sent [Number Lookup](https://www.infobip.com/docs/number-lookup). Number Lookup status can have one of the following values: `NC_DESTINATION_UNKNOWN`, `NC_DESTINATION_REACHABLE`, `NC_DESTINATION_NOT_REACHABLE`, `NC_NOT_CONFIGURED`. Contact your Account Manager, if you get the `NC_NOT_CONFIGURED` status. SMS will not be sent only if Number Lookup status is `NC_NOT_REACHABLE`.
 	NcStatus *string
 	// Sent PIN code ID.
@@ -82,6 +84,38 @@ func (o *StartAuthenticationResponse) HasCallStatus() bool {
 // SetCallStatus gets a reference to the given string and assigns it to the CallStatus field.
 func (o *StartAuthenticationResponse) SetCallStatus(v string) {
 	o.CallStatus = &v
+}
+
+// GetExternalMessageId returns the ExternalMessageId field value if set, zero value otherwise.
+func (o *StartAuthenticationResponse) GetExternalMessageId() string {
+	if o == nil || IsNil(o.ExternalMessageId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalMessageId
+}
+
+// GetExternalMessageIdOk returns a tuple with the ExternalMessageId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StartAuthenticationResponse) GetExternalMessageIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalMessageId) {
+		return nil, false
+	}
+	return o.ExternalMessageId, true
+}
+
+// HasExternalMessageId returns a boolean if a field has been set.
+func (o *StartAuthenticationResponse) HasExternalMessageId() bool {
+	if o != nil && !IsNil(o.ExternalMessageId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalMessageId gets a reference to the given string and assigns it to the ExternalMessageId field.
+func (o *StartAuthenticationResponse) SetExternalMessageId(v string) {
+	o.ExternalMessageId = &v
 }
 
 // GetNcStatus returns the NcStatus field value if set, zero value otherwise.
@@ -224,6 +258,9 @@ func (o StartAuthenticationResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.CallStatus) {
 		toSerialize["callStatus"] = o.CallStatus
+	}
+	if !IsNil(o.ExternalMessageId) {
+		toSerialize["externalMessageId"] = o.ExternalMessageId
 	}
 	if !IsNil(o.NcStatus) {
 		toSerialize["ncStatus"] = o.NcStatus

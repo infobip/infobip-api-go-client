@@ -24,9 +24,10 @@ type MessageContent struct {
 	Header *MessageHeader
 	Body   MessageBody
 	// List of buttons of the message.
-	Buttons          []MessageButton
-	ConfirmationBody *MessageConfirmationBody
-	Footer           *MessageFooter
+	Buttons           []MessageButton
+	ConfirmationBody  *MessageConfirmationBody
+	SenderDisplayInfo *MessageSenderDisplayInfo
+	Footer            *MessageFooter
 }
 
 type _MessageContent MessageContent
@@ -171,6 +172,38 @@ func (o *MessageContent) SetConfirmationBody(v MessageConfirmationBody) {
 	o.ConfirmationBody = &v
 }
 
+// GetSenderDisplayInfo returns the SenderDisplayInfo field value if set, zero value otherwise.
+func (o *MessageContent) GetSenderDisplayInfo() MessageSenderDisplayInfo {
+	if o == nil || IsNil(o.SenderDisplayInfo) {
+		var ret MessageSenderDisplayInfo
+		return ret
+	}
+	return *o.SenderDisplayInfo
+}
+
+// GetSenderDisplayInfoOk returns a tuple with the SenderDisplayInfo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageContent) GetSenderDisplayInfoOk() (*MessageSenderDisplayInfo, bool) {
+	if o == nil || IsNil(o.SenderDisplayInfo) {
+		return nil, false
+	}
+	return o.SenderDisplayInfo, true
+}
+
+// HasSenderDisplayInfo returns a boolean if a field has been set.
+func (o *MessageContent) HasSenderDisplayInfo() bool {
+	if o != nil && !IsNil(o.SenderDisplayInfo) {
+		return true
+	}
+
+	return false
+}
+
+// SetSenderDisplayInfo gets a reference to the given MessageSenderDisplayInfo and assigns it to the SenderDisplayInfo field.
+func (o *MessageContent) SetSenderDisplayInfo(v MessageSenderDisplayInfo) {
+	o.SenderDisplayInfo = &v
+}
+
 // GetFooter returns the Footer field value if set, zero value otherwise.
 func (o *MessageContent) GetFooter() MessageFooter {
 	if o == nil || IsNil(o.Footer) {
@@ -222,6 +255,9 @@ func (o MessageContent) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ConfirmationBody) {
 		toSerialize["confirmationBody"] = o.ConfirmationBody
+	}
+	if !IsNil(o.SenderDisplayInfo) {
+		toSerialize["senderDisplayInfo"] = o.SenderDisplayInfo
 	}
 	if !IsNil(o.Footer) {
 		toSerialize["footer"] = o.Footer

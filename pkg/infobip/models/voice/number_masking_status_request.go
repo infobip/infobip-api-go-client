@@ -58,6 +58,7 @@ type NumberMaskingStatusRequest struct {
 	// Flag that indicates if callee announcement is included in recording file.
 	RecordCalleeAnnouncement *bool
 	RecordingStatus          *NumberMaskingRecordingStatus
+	MachineDetectionResult   *MachineDetectionResult
 	// Client-defined ID of a valid file name. Used to correlate a call with this reference. If recording is enabled and files are stored in the SFTP server, that ID will be used as a file name instead.
 	ClientReferenceId *string
 }
@@ -689,6 +690,38 @@ func (o *NumberMaskingStatusRequest) SetRecordingStatus(v NumberMaskingRecording
 	o.RecordingStatus = &v
 }
 
+// GetMachineDetectionResult returns the MachineDetectionResult field value if set, zero value otherwise.
+func (o *NumberMaskingStatusRequest) GetMachineDetectionResult() MachineDetectionResult {
+	if o == nil || IsNil(o.MachineDetectionResult) {
+		var ret MachineDetectionResult
+		return ret
+	}
+	return *o.MachineDetectionResult
+}
+
+// GetMachineDetectionResultOk returns a tuple with the MachineDetectionResult field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *NumberMaskingStatusRequest) GetMachineDetectionResultOk() (*MachineDetectionResult, bool) {
+	if o == nil || IsNil(o.MachineDetectionResult) {
+		return nil, false
+	}
+	return o.MachineDetectionResult, true
+}
+
+// HasMachineDetectionResult returns a boolean if a field has been set.
+func (o *NumberMaskingStatusRequest) HasMachineDetectionResult() bool {
+	if o != nil && !IsNil(o.MachineDetectionResult) {
+		return true
+	}
+
+	return false
+}
+
+// SetMachineDetectionResult gets a reference to the given MachineDetectionResult and assigns it to the MachineDetectionResult field.
+func (o *NumberMaskingStatusRequest) SetMachineDetectionResult(v MachineDetectionResult) {
+	o.MachineDetectionResult = &v
+}
+
 // GetClientReferenceId returns the ClientReferenceId field value if set, zero value otherwise.
 func (o *NumberMaskingStatusRequest) GetClientReferenceId() string {
 	if o == nil || IsNil(o.ClientReferenceId) {
@@ -787,6 +820,9 @@ func (o NumberMaskingStatusRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RecordingStatus) {
 		toSerialize["recordingStatus"] = o.RecordingStatus
+	}
+	if !IsNil(o.MachineDetectionResult) {
+		toSerialize["machineDetectionResult"] = o.MachineDetectionResult
 	}
 	if !IsNil(o.ClientReferenceId) {
 		toSerialize["clientReferenceId"] = o.ClientReferenceId

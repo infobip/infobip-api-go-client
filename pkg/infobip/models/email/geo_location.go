@@ -19,7 +19,7 @@ import (
 // checks if the GeoLocation type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &GeoLocation{}
 
-// GeoLocation Geolocation data such as Country and  City. This data will be available only for opens, clicks and unsubscribes.
+// GeoLocation Geolocation data such as Country and City. This data will be available only for opens, clicks and unsubscribes.
 type GeoLocation struct {
 	// Country where the user action is recorded.
 	CountryName *string

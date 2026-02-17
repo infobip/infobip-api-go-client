@@ -25,6 +25,7 @@ type AddNewCallRequest struct {
 	// Indicates whether to connect a new call on early media. Otherwise, the call will be connected after being established. Cannot be `true` when `ringbackGeneration` is enabled.
 	ConnectOnEarlyMedia *bool
 	RingbackGeneration  *RingbackGeneration
+	Role                *Role
 }
 
 type _AddNewCallRequest AddNewCallRequest
@@ -141,6 +142,38 @@ func (o *AddNewCallRequest) SetRingbackGeneration(v RingbackGeneration) {
 	o.RingbackGeneration = &v
 }
 
+// GetRole returns the Role field value if set, zero value otherwise.
+func (o *AddNewCallRequest) GetRole() Role {
+	if o == nil || IsNil(o.Role) {
+		var ret Role
+		return ret
+	}
+	return *o.Role
+}
+
+// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddNewCallRequest) GetRoleOk() (*Role, bool) {
+	if o == nil || IsNil(o.Role) {
+		return nil, false
+	}
+	return o.Role, true
+}
+
+// HasRole returns a boolean if a field has been set.
+func (o *AddNewCallRequest) HasRole() bool {
+	if o != nil && !IsNil(o.Role) {
+		return true
+	}
+
+	return false
+}
+
+// SetRole gets a reference to the given Role and assigns it to the Role field.
+func (o *AddNewCallRequest) SetRole(v Role) {
+	o.Role = &v
+}
+
 func (o AddNewCallRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -157,6 +190,9 @@ func (o AddNewCallRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RingbackGeneration) {
 		toSerialize["ringbackGeneration"] = o.RingbackGeneration
+	}
+	if !IsNil(o.Role) {
+		toSerialize["role"] = o.Role
 	}
 	return toSerialize, nil
 }

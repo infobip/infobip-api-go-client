@@ -22,7 +22,7 @@ var _ MappedNullable = &LanguageConfiguration{}
 // LanguageConfiguration Sets up additional configuration that changes the original message content you can preview with this call.
 type LanguageConfiguration struct {
 	Language *PreviewLanguage
-	// Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC` and `NON_UNICODE`.
+	// Conversion of a message text from one script to another. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC`, `NON_UNICODE` and `ALL`.
 	Transliteration *string
 }
 

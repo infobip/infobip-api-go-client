@@ -37,9 +37,13 @@ type ApiReport struct {
 	DoneAt *Time
 	// Email request count.
 	MessageCount *int32
-	Price        *Price
-	Status       *Status
-	Error        *Error
+	// Number of times delivery was attempted for the email.
+	AttemptCount *int32
+	// This is the time in milliseconds between accepting the request and making the first delivery attempt to the destination.
+	TimeToFirstAttempt *int64
+	Price              *Price
+	Status             *Status
+	Error              *Error
 }
 
 // NewApiReport instantiates a new ApiReport object
@@ -317,6 +321,70 @@ func (o *ApiReport) SetMessageCount(v int32) {
 	o.MessageCount = &v
 }
 
+// GetAttemptCount returns the AttemptCount field value if set, zero value otherwise.
+func (o *ApiReport) GetAttemptCount() int32 {
+	if o == nil || IsNil(o.AttemptCount) {
+		var ret int32
+		return ret
+	}
+	return *o.AttemptCount
+}
+
+// GetAttemptCountOk returns a tuple with the AttemptCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiReport) GetAttemptCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.AttemptCount) {
+		return nil, false
+	}
+	return o.AttemptCount, true
+}
+
+// HasAttemptCount returns a boolean if a field has been set.
+func (o *ApiReport) HasAttemptCount() bool {
+	if o != nil && !IsNil(o.AttemptCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttemptCount gets a reference to the given int32 and assigns it to the AttemptCount field.
+func (o *ApiReport) SetAttemptCount(v int32) {
+	o.AttemptCount = &v
+}
+
+// GetTimeToFirstAttempt returns the TimeToFirstAttempt field value if set, zero value otherwise.
+func (o *ApiReport) GetTimeToFirstAttempt() int64 {
+	if o == nil || IsNil(o.TimeToFirstAttempt) {
+		var ret int64
+		return ret
+	}
+	return *o.TimeToFirstAttempt
+}
+
+// GetTimeToFirstAttemptOk returns a tuple with the TimeToFirstAttempt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiReport) GetTimeToFirstAttemptOk() (*int64, bool) {
+	if o == nil || IsNil(o.TimeToFirstAttempt) {
+		return nil, false
+	}
+	return o.TimeToFirstAttempt, true
+}
+
+// HasTimeToFirstAttempt returns a boolean if a field has been set.
+func (o *ApiReport) HasTimeToFirstAttempt() bool {
+	if o != nil && !IsNil(o.TimeToFirstAttempt) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeToFirstAttempt gets a reference to the given int64 and assigns it to the TimeToFirstAttempt field.
+func (o *ApiReport) SetTimeToFirstAttempt(v int64) {
+	o.TimeToFirstAttempt = &v
+}
+
 // GetPrice returns the Price field value if set, zero value otherwise.
 func (o *ApiReport) GetPrice() Price {
 	if o == nil || IsNil(o.Price) {
@@ -446,6 +514,12 @@ func (o ApiReport) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.MessageCount) {
 		toSerialize["messageCount"] = o.MessageCount
+	}
+	if !IsNil(o.AttemptCount) {
+		toSerialize["attemptCount"] = o.AttemptCount
+	}
+	if !IsNil(o.TimeToFirstAttempt) {
+		toSerialize["timeToFirstAttempt"] = o.TimeToFirstAttempt
 	}
 	if !IsNil(o.Price) {
 		toSerialize["price"] = o.Price

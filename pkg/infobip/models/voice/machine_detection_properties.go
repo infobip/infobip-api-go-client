@@ -22,6 +22,8 @@ var _ MappedNullable = &MachineDetectionProperties{}
 // MachineDetectionProperties Properties of the events that provide Answering Machine Detection result.
 type MachineDetectionProperties struct {
 	DetectionResult *DetectionResult
+	// A map representing the confidence rating for each detection class. The key is a tag indicating the detection class, and the value is a float between `0.0` and `1.0` representing the confidence rating. Possible classes are: `HUMAN`, `MACHINE`, `MUSIC`, `RINGING`, `NOISE`, `SILENCE` and `OTHER`. Each class confidence rating is independent from the other, thereby the sum of all confidence values may not equal 1.0.
+	ConfidenceRating *map[string]float64
 	// Custom data.
 	CustomData *map[string]string
 }
@@ -77,6 +79,38 @@ func (o *MachineDetectionProperties) SetDetectionResult(v DetectionResult) {
 	o.DetectionResult = &v
 }
 
+// GetConfidenceRating returns the ConfidenceRating field value if set, zero value otherwise.
+func (o *MachineDetectionProperties) GetConfidenceRating() map[string]float64 {
+	if o == nil || IsNil(o.ConfidenceRating) {
+		var ret map[string]float64
+		return ret
+	}
+	return *o.ConfidenceRating
+}
+
+// GetConfidenceRatingOk returns a tuple with the ConfidenceRating field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MachineDetectionProperties) GetConfidenceRatingOk() (*map[string]float64, bool) {
+	if o == nil || IsNil(o.ConfidenceRating) {
+		return nil, false
+	}
+	return o.ConfidenceRating, true
+}
+
+// HasConfidenceRating returns a boolean if a field has been set.
+func (o *MachineDetectionProperties) HasConfidenceRating() bool {
+	if o != nil && !IsNil(o.ConfidenceRating) {
+		return true
+	}
+
+	return false
+}
+
+// SetConfidenceRating gets a reference to the given map[string]float64 and assigns it to the ConfidenceRating field.
+func (o *MachineDetectionProperties) SetConfidenceRating(v map[string]float64) {
+	o.ConfidenceRating = &v
+}
+
 // GetCustomData returns the CustomData field value if set, zero value otherwise.
 func (o *MachineDetectionProperties) GetCustomData() map[string]string {
 	if o == nil || IsNil(o.CustomData) {
@@ -121,6 +155,9 @@ func (o MachineDetectionProperties) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.DetectionResult) {
 		toSerialize["detectionResult"] = o.DetectionResult
+	}
+	if !IsNil(o.ConfidenceRating) {
+		toSerialize["confidenceRating"] = o.ConfidenceRating
 	}
 	if !IsNil(o.CustomData) {
 		toSerialize["customData"] = o.CustomData

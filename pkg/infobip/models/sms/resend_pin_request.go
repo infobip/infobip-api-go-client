@@ -23,6 +23,8 @@ var _ MappedNullable = &ResendPinRequest{}
 type ResendPinRequest struct {
 	// Key value pairs that will be replaced during message sending. Placeholder keys should NOT contain curly brackets and should NOT contain a `pin` placeholder. Valid example: `\"placeholders\":{\"firstName\":\"John\"}`
 	Placeholders *map[string]string
+	// Enables sending of delivery reports via [Subscriptions](https://www.infobip.com/docs/cpaas-x/subscriptions-management). The [retry cycle](https://www.infobip.com/docs/sms/sms-over-api#push-retry-cycle-notify-url) for when your URL becomes unavailable uses the following formula: `1min + (1min * retryNumber * retryNumber)`.
+	TrackDelivery *bool
 }
 
 // NewResendPinRequest instantiates a new ResendPinRequest object
@@ -32,6 +34,8 @@ type ResendPinRequest struct {
 
 func NewResendPinRequest() *ResendPinRequest {
 	this := ResendPinRequest{}
+	var trackDelivery bool = false
+	this.TrackDelivery = &trackDelivery
 	return &this
 }
 
@@ -41,6 +45,8 @@ func NewResendPinRequest() *ResendPinRequest {
 func NewResendPinRequestWithDefaults() *ResendPinRequest {
 	this := ResendPinRequest{}
 
+	var trackDelivery bool = false
+	this.TrackDelivery = &trackDelivery
 	return &this
 }
 
@@ -76,6 +82,38 @@ func (o *ResendPinRequest) SetPlaceholders(v map[string]string) {
 	o.Placeholders = &v
 }
 
+// GetTrackDelivery returns the TrackDelivery field value if set, zero value otherwise.
+func (o *ResendPinRequest) GetTrackDelivery() bool {
+	if o == nil || IsNil(o.TrackDelivery) {
+		var ret bool
+		return ret
+	}
+	return *o.TrackDelivery
+}
+
+// GetTrackDeliveryOk returns a tuple with the TrackDelivery field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ResendPinRequest) GetTrackDeliveryOk() (*bool, bool) {
+	if o == nil || IsNil(o.TrackDelivery) {
+		return nil, false
+	}
+	return o.TrackDelivery, true
+}
+
+// HasTrackDelivery returns a boolean if a field has been set.
+func (o *ResendPinRequest) HasTrackDelivery() bool {
+	if o != nil && !IsNil(o.TrackDelivery) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackDelivery gets a reference to the given bool and assigns it to the TrackDelivery field.
+func (o *ResendPinRequest) SetTrackDelivery(v bool) {
+	o.TrackDelivery = &v
+}
+
 func (o ResendPinRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -88,6 +126,9 @@ func (o ResendPinRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Placeholders) {
 		toSerialize["placeholders"] = o.Placeholders
+	}
+	if !IsNil(o.TrackDelivery) {
+		toSerialize["trackDelivery"] = o.TrackDelivery
 	}
 	return toSerialize, nil
 }

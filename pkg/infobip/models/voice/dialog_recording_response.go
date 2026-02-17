@@ -27,7 +27,7 @@ type DialogRecordingResponse struct {
 	CallsConfigurationId *string
 	Platform             *Platform
 	// File(s) with a recording of both dialog participants.
-	ComposedFiles []RecordingFile
+	ComposedFiles []PublicRecordingFile
 	// File(s) with a recording of one dialog participant.
 	CallRecordings []Recording
 	// Date and time when the (first) recording started.
@@ -152,9 +152,9 @@ func (o *DialogRecordingResponse) SetPlatform(v Platform) {
 }
 
 // GetComposedFiles returns the ComposedFiles field value if set, zero value otherwise.
-func (o *DialogRecordingResponse) GetComposedFiles() []RecordingFile {
+func (o *DialogRecordingResponse) GetComposedFiles() []PublicRecordingFile {
 	if o == nil || IsNil(o.ComposedFiles) {
-		var ret []RecordingFile
+		var ret []PublicRecordingFile
 		return ret
 	}
 	return o.ComposedFiles
@@ -162,7 +162,7 @@ func (o *DialogRecordingResponse) GetComposedFiles() []RecordingFile {
 
 // GetComposedFilesOk returns a tuple with the ComposedFiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DialogRecordingResponse) GetComposedFilesOk() ([]RecordingFile, bool) {
+func (o *DialogRecordingResponse) GetComposedFilesOk() ([]PublicRecordingFile, bool) {
 	if o == nil || IsNil(o.ComposedFiles) {
 		return nil, false
 	}
@@ -178,8 +178,8 @@ func (o *DialogRecordingResponse) HasComposedFiles() bool {
 	return false
 }
 
-// SetComposedFiles gets a reference to the given []RecordingFile and assigns it to the ComposedFiles field.
-func (o *DialogRecordingResponse) SetComposedFiles(v []RecordingFile) {
+// SetComposedFiles gets a reference to the given []PublicRecordingFile and assigns it to the ComposedFiles field.
+func (o *DialogRecordingResponse) SetComposedFiles(v []PublicRecordingFile) {
 	o.ComposedFiles = v
 }
 

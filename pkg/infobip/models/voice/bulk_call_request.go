@@ -21,7 +21,7 @@ var _ MappedNullable = &BulkCallRequest{}
 
 // BulkCallRequest Call request list.
 type BulkCallRequest struct {
-	// Client defined call ID.
+	// Custom ID assigned by the client.
 	ExternalId *string
 	Endpoint   BulkEndpoint
 }

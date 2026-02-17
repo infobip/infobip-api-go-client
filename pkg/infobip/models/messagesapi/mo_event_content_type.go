@@ -27,10 +27,15 @@ const (
 	MOEVENTCONTENTTYPE_VIDEO                   MoEventContentType = "VIDEO"
 	MOEVENTCONTENTTYPE_DOCUMENT                MoEventContentType = "DOCUMENT"
 	MOEVENTCONTENTTYPE_FILE                    MoEventContentType = "FILE"
+	MOEVENTCONTENTTYPE_URL                     MoEventContentType = "URL"
 	MOEVENTCONTENTTYPE_BUTTON_REPLY            MoEventContentType = "BUTTON_REPLY"
 	MOEVENTCONTENTTYPE_LIST_REPLY              MoEventContentType = "LIST_REPLY"
 	MOEVENTCONTENTTYPE_LOCATION                MoEventContentType = "LOCATION"
 	MOEVENTCONTENTTYPE_AUTHENTICATION_RESPONSE MoEventContentType = "AUTHENTICATION_RESPONSE"
+	MOEVENTCONTENTTYPE_FLOW_RESPONSE           MoEventContentType = "FLOW_RESPONSE"
+	MOEVENTCONTENTTYPE_PAYMENT_RESPONSE        MoEventContentType = "PAYMENT_RESPONSE"
+	MOEVENTCONTENTTYPE_FORM_RESPONSE           MoEventContentType = "FORM_RESPONSE"
+	MOEVENTCONTENTTYPE_REACTION                MoEventContentType = "REACTION"
 )
 
 // All allowed values of MoEventContentType enum
@@ -42,10 +47,15 @@ var AllowedMoEventContentTypeEnumValues = []MoEventContentType{
 	"VIDEO",
 	"DOCUMENT",
 	"FILE",
+	"URL",
 	"BUTTON_REPLY",
 	"LIST_REPLY",
 	"LOCATION",
 	"AUTHENTICATION_RESPONSE",
+	"FLOW_RESPONSE",
+	"PAYMENT_RESPONSE",
+	"FORM_RESPONSE",
+	"REACTION",
 }
 
 func (v *MoEventContentType) UnmarshalJSON(src []byte) error {

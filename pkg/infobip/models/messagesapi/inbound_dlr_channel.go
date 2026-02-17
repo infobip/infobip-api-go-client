@@ -20,30 +20,30 @@ type InboundDlrChannel string
 
 // List of InboundDlrChannel
 const (
-	INBOUNDDLRCHANNEL_SMS          InboundDlrChannel = "SMS"
-	INBOUNDDLRCHANNEL_MMS          InboundDlrChannel = "MMS"
-	INBOUNDDLRCHANNEL_WHATSAPP     InboundDlrChannel = "WHATSAPP"
-	INBOUNDDLRCHANNEL_VIBER_BM     InboundDlrChannel = "VIBER_BM"
-	INBOUNDDLRCHANNEL_VIBER_BOT    InboundDlrChannel = "VIBER_BOT"
-	INBOUNDDLRCHANNEL_RCS          InboundDlrChannel = "RCS"
 	INBOUNDDLRCHANNEL_APPLE_MB     InboundDlrChannel = "APPLE_MB"
 	INBOUNDDLRCHANNEL_INSTAGRAM_DM InboundDlrChannel = "INSTAGRAM_DM"
 	INBOUNDDLRCHANNEL_LINE_ON      InboundDlrChannel = "LINE_ON"
 	INBOUNDDLRCHANNEL_MESSENGER    InboundDlrChannel = "MESSENGER"
+	INBOUNDDLRCHANNEL_MMS          InboundDlrChannel = "MMS"
+	INBOUNDDLRCHANNEL_RCS          InboundDlrChannel = "RCS"
+	INBOUNDDLRCHANNEL_SMS          InboundDlrChannel = "SMS"
+	INBOUNDDLRCHANNEL_VIBER_BM     InboundDlrChannel = "VIBER_BM"
+	INBOUNDDLRCHANNEL_VIBER_BOT    InboundDlrChannel = "VIBER_BOT"
+	INBOUNDDLRCHANNEL_WHATSAPP     InboundDlrChannel = "WHATSAPP"
 )
 
 // All allowed values of InboundDlrChannel enum
 var AllowedInboundDlrChannelEnumValues = []InboundDlrChannel{
-	"SMS",
-	"MMS",
-	"WHATSAPP",
-	"VIBER_BM",
-	"VIBER_BOT",
-	"RCS",
 	"APPLE_MB",
 	"INSTAGRAM_DM",
 	"LINE_ON",
 	"MESSENGER",
+	"MMS",
+	"RCS",
+	"SMS",
+	"VIBER_BM",
+	"VIBER_BOT",
+	"WHATSAPP",
 }
 
 func (v *InboundDlrChannel) UnmarshalJSON(src []byte) error {

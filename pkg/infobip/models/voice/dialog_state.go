@@ -25,6 +25,7 @@ const (
 	DIALOGSTATE_ESTABLISHED     DialogState = "ESTABLISHED"
 	DIALOGSTATE_FINISHED        DialogState = "FINISHED"
 	DIALOGSTATE_FAILED          DialogState = "FAILED"
+	DIALOGSTATE_TRANSFERRING    DialogState = "TRANSFERRING"
 )
 
 // All allowed values of DialogState enum
@@ -34,6 +35,7 @@ var AllowedDialogStateEnumValues = []DialogState{
 	"ESTABLISHED",
 	"FINISHED",
 	"FAILED",
+	"TRANSFERRING",
 }
 
 func (v *DialogState) UnmarshalJSON(src []byte) error {

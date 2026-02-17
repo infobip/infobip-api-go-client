@@ -25,8 +25,13 @@ type UpdateScenarioRequest struct {
 	Name string
 	// Description of IVR scenario.
 	Description *string
-	// Array of IVR actions defining scenario. NOTE: Answering Machine Detection, Call Recording and Speech Recognition (used for Capture action) are add-on features. To enable these add-ons, please contact our [sales](https://www.infobip.com/contact) organisation.
-	Script []ScriptInner
+	// The URL on your callback server on which the Delivery report will be sent.
+	NotifyUrl *string
+	// Preferred Delivery report content type. Can be `application/json` or `application/xml`.
+	NotifyContentType *string
+	// Indicates if all calls using the scenario should be recorded.
+	Record *bool
+	Script string
 }
 
 type _UpdateScenarioRequest UpdateScenarioRequest
@@ -36,7 +41,7 @@ type _UpdateScenarioRequest UpdateScenarioRequest
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewUpdateScenarioRequest(name string, script []ScriptInner) *UpdateScenarioRequest {
+func NewUpdateScenarioRequest(name string, script string) *UpdateScenarioRequest {
 	this := UpdateScenarioRequest{}
 	this.Name = name
 	this.Script = script
@@ -108,10 +113,106 @@ func (o *UpdateScenarioRequest) SetDescription(v string) {
 	o.Description = &v
 }
 
+// GetNotifyUrl returns the NotifyUrl field value if set, zero value otherwise.
+func (o *UpdateScenarioRequest) GetNotifyUrl() string {
+	if o == nil || IsNil(o.NotifyUrl) {
+		var ret string
+		return ret
+	}
+	return *o.NotifyUrl
+}
+
+// GetNotifyUrlOk returns a tuple with the NotifyUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateScenarioRequest) GetNotifyUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.NotifyUrl) {
+		return nil, false
+	}
+	return o.NotifyUrl, true
+}
+
+// HasNotifyUrl returns a boolean if a field has been set.
+func (o *UpdateScenarioRequest) HasNotifyUrl() bool {
+	if o != nil && !IsNil(o.NotifyUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyUrl gets a reference to the given string and assigns it to the NotifyUrl field.
+func (o *UpdateScenarioRequest) SetNotifyUrl(v string) {
+	o.NotifyUrl = &v
+}
+
+// GetNotifyContentType returns the NotifyContentType field value if set, zero value otherwise.
+func (o *UpdateScenarioRequest) GetNotifyContentType() string {
+	if o == nil || IsNil(o.NotifyContentType) {
+		var ret string
+		return ret
+	}
+	return *o.NotifyContentType
+}
+
+// GetNotifyContentTypeOk returns a tuple with the NotifyContentType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateScenarioRequest) GetNotifyContentTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.NotifyContentType) {
+		return nil, false
+	}
+	return o.NotifyContentType, true
+}
+
+// HasNotifyContentType returns a boolean if a field has been set.
+func (o *UpdateScenarioRequest) HasNotifyContentType() bool {
+	if o != nil && !IsNil(o.NotifyContentType) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyContentType gets a reference to the given string and assigns it to the NotifyContentType field.
+func (o *UpdateScenarioRequest) SetNotifyContentType(v string) {
+	o.NotifyContentType = &v
+}
+
+// GetRecord returns the Record field value if set, zero value otherwise.
+func (o *UpdateScenarioRequest) GetRecord() bool {
+	if o == nil || IsNil(o.Record) {
+		var ret bool
+		return ret
+	}
+	return *o.Record
+}
+
+// GetRecordOk returns a tuple with the Record field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateScenarioRequest) GetRecordOk() (*bool, bool) {
+	if o == nil || IsNil(o.Record) {
+		return nil, false
+	}
+	return o.Record, true
+}
+
+// HasRecord returns a boolean if a field has been set.
+func (o *UpdateScenarioRequest) HasRecord() bool {
+	if o != nil && !IsNil(o.Record) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecord gets a reference to the given bool and assigns it to the Record field.
+func (o *UpdateScenarioRequest) SetRecord(v bool) {
+	o.Record = &v
+}
+
 // GetScript returns the Script field value
-func (o *UpdateScenarioRequest) GetScript() []ScriptInner {
+func (o *UpdateScenarioRequest) GetScript() string {
 	if o == nil {
-		var ret []ScriptInner
+		var ret string
 		return ret
 	}
 
@@ -120,15 +221,15 @@ func (o *UpdateScenarioRequest) GetScript() []ScriptInner {
 
 // GetScriptOk returns a tuple with the Script field value
 // and a boolean to check if the value has been set.
-func (o *UpdateScenarioRequest) GetScriptOk() ([]ScriptInner, bool) {
+func (o *UpdateScenarioRequest) GetScriptOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return o.Script, true
+	return &o.Script, true
 }
 
 // SetScript sets field value
-func (o *UpdateScenarioRequest) SetScript(v []ScriptInner) {
+func (o *UpdateScenarioRequest) SetScript(v string) {
 	o.Script = v
 }
 
@@ -145,6 +246,15 @@ func (o UpdateScenarioRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["name"] = o.Name
 	if !IsNil(o.Description) {
 		toSerialize["description"] = o.Description
+	}
+	if !IsNil(o.NotifyUrl) {
+		toSerialize["notifyUrl"] = o.NotifyUrl
+	}
+	if !IsNil(o.NotifyContentType) {
+		toSerialize["notifyContentType"] = o.NotifyContentType
+	}
+	if !IsNil(o.Record) {
+		toSerialize["record"] = o.Record
 	}
 	toSerialize["script"] = o.Script
 	return toSerialize, nil

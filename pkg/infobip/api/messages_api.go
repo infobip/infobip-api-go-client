@@ -17,7 +17,6 @@ import (
 	"net/http"
 	"net/url"
 
-	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip/models/messagesapi"
 )
 
@@ -27,6 +26,405 @@ type MessagesAPIService service
 // ApiMessagesAPIRequest[T any] interface
 type MessagesAPIRequest[T any] interface {
 	Execute() (*T, *http.Response, error)
+}
+
+type ApiGetMessagesApiDeliveryReportsRequest struct {
+	ctx                 context.Context
+	ApiService          *MessagesAPIService
+	channel             *Channel
+	bulkId              *string
+	messageId           *string
+	limit               *int32
+	entityId            *string
+	applicationId       *string
+	campaignReferenceId *string
+}
+
+// Messaging channel for which the report will be fetched.
+func (r ApiGetMessagesApiDeliveryReportsRequest) Channel(channel Channel) ApiGetMessagesApiDeliveryReportsRequest {
+	r.channel = &channel
+	return r
+}
+
+// The ID that uniquely identifies the request. Bulk ID will be received only when you send a message to more than one destination address.
+func (r ApiGetMessagesApiDeliveryReportsRequest) BulkId(bulkId string) ApiGetMessagesApiDeliveryReportsRequest {
+	r.bulkId = &bulkId
+	return r
+}
+
+// The ID that uniquely identifies the message sent.
+func (r ApiGetMessagesApiDeliveryReportsRequest) MessageId(messageId string) ApiGetMessagesApiDeliveryReportsRequest {
+	r.messageId = &messageId
+	return r
+}
+
+// Maximum number of delivery reports to be returned. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access reports for the last 48h
+func (r ApiGetMessagesApiDeliveryReportsRequest) Limit(limit int32) ApiGetMessagesApiDeliveryReportsRequest {
+	r.limit = &limit
+	return r
+}
+
+// Entity id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+func (r ApiGetMessagesApiDeliveryReportsRequest) EntityId(entityId string) ApiGetMessagesApiDeliveryReportsRequest {
+	r.entityId = &entityId
+	return r
+}
+
+// Application id used to send the message. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+func (r ApiGetMessagesApiDeliveryReportsRequest) ApplicationId(applicationId string) ApiGetMessagesApiDeliveryReportsRequest {
+	r.applicationId = &applicationId
+	return r
+}
+
+// ID of a campaign that was sent in the message.
+func (r ApiGetMessagesApiDeliveryReportsRequest) CampaignReferenceId(campaignReferenceId string) ApiGetMessagesApiDeliveryReportsRequest {
+	r.campaignReferenceId = &campaignReferenceId
+	return r
+}
+
+func (r ApiGetMessagesApiDeliveryReportsRequest) Execute() (*DeliveryReport, *http.Response, error) {
+	return r.ApiService.GetMessagesApiDeliveryReportsExecute(r)
+}
+
+/*
+GetMessagesApiDeliveryReports Get delivery reports
+
+If you are unable to receive real-time delivery reports towards your endpoint for various reasons, we offer you an API method to fetch batches of delivery reports to confirm whether specific messages have been delivered. Each request towards this endpoint will return batches of the latest delivery reports. This endpoint retrieves delivery reports for messages sent through Messages API as well as messages sent using channel-specific standalone APIs (for example, Viber, API, WhatsApp API, or SMS API). Please note they will be returned only once.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetMessagesApiDeliveryReportsRequest
+*/
+func (a *MessagesAPIService) GetMessagesApiDeliveryReports(ctx context.Context) ApiGetMessagesApiDeliveryReportsRequest {
+	return ApiGetMessagesApiDeliveryReportsRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return DeliveryReport
+func (a *MessagesAPIService) GetMessagesApiDeliveryReportsExecute(r ApiGetMessagesApiDeliveryReportsRequest) (*DeliveryReport, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *DeliveryReport
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MessagesAPIService.GetMessagesApiDeliveryReports")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/messages-api/1/reports"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.channel != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "channel", r.channel, "form", "")
+	}
+	if r.bulkId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "bulkId", r.bulkId, "form", "")
+	}
+	if r.messageId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "messageId", r.messageId, "form", "")
+	}
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	} else {
+		var defaultValue int32 = 50
+		r.limit = &defaultValue
+	}
+	if r.entityId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "entityId", r.entityId, "form", "")
+	}
+	if r.applicationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "applicationId", r.applicationId, "form", "")
+	}
+	if r.campaignReferenceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "campaignReferenceId", r.campaignReferenceId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetMessagesApiInboundMessagesRequest struct {
+	ctx                 context.Context
+	ApiService          *MessagesAPIService
+	channel             *InboundMoGetEndpointChannel
+	limit               *int32
+	applicationId       *string
+	entityId            *string
+	campaignReferenceId *string
+}
+
+// Messaging channel for which inbound messages will be fetched.
+func (r ApiGetMessagesApiInboundMessagesRequest) Channel(channel InboundMoGetEndpointChannel) ApiGetMessagesApiInboundMessagesRequest {
+	r.channel = &channel
+	return r
+}
+
+// Maximum number of messages to be returned in a response. If not set, last 50 records are returned. Maximum limit is &#x60;1000&#x60; and you can only access messages for the last 48h.
+func (r ApiGetMessagesApiInboundMessagesRequest) Limit(limit int32) ApiGetMessagesApiInboundMessagesRequest {
+	r.limit = &limit
+	return r
+}
+
+// Application ID that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+func (r ApiGetMessagesApiInboundMessagesRequest) ApplicationId(applicationId string) ApiGetMessagesApiInboundMessagesRequest {
+	r.applicationId = &applicationId
+	return r
+}
+
+// Entity ID that the message is linked to. For more details, see our [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+func (r ApiGetMessagesApiInboundMessagesRequest) EntityId(entityId string) ApiGetMessagesApiInboundMessagesRequest {
+	r.entityId = &entityId
+	return r
+}
+
+// ID of a campaign that message belongs to.
+func (r ApiGetMessagesApiInboundMessagesRequest) CampaignReferenceId(campaignReferenceId string) ApiGetMessagesApiInboundMessagesRequest {
+	r.campaignReferenceId = &campaignReferenceId
+	return r
+}
+
+func (r ApiGetMessagesApiInboundMessagesRequest) Execute() (*IncomingMessageResponse, *http.Response, error) {
+	return r.ApiService.GetMessagesApiInboundMessagesExecute(r)
+}
+
+/*
+GetMessagesApiInboundMessages Get inbound messages
+
+If you are unable to receive incoming messages to the endpoint of your choice in real-time, you can use this API call to fetch messages. Each request will return a batch of received messages, only once. The API request will only return new messages that arrived since the last API request.
+
+	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+	@return ApiGetMessagesApiInboundMessagesRequest
+*/
+func (a *MessagesAPIService) GetMessagesApiInboundMessages(ctx context.Context) ApiGetMessagesApiInboundMessagesRequest {
+	return ApiGetMessagesApiInboundMessagesRequest{
+		ApiService: a,
+		ctx:        ctx,
+	}
+}
+
+// Execute executes the request
+//
+//	@return IncomingMessageResponse
+func (a *MessagesAPIService) GetMessagesApiInboundMessagesExecute(r ApiGetMessagesApiInboundMessagesRequest) (*IncomingMessageResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod  = http.MethodGet
+		localVarPostBody    interface{}
+		formFiles           []formFile
+		localVarReturnValue *IncomingMessageResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MessagesAPIService.GetMessagesApiInboundMessages")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/messages-api/1/inbound"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.channel == nil {
+		return localVarReturnValue, nil, reportError("channel is required and must be specified")
+	}
+
+	parameterAddToHeaderOrQuery(localVarQueryParams, "channel", r.channel, "form", "")
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "form", "")
+	}
+	if r.applicationId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "applicationId", r.applicationId, "form", "")
+	}
+	if r.entityId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "entityId", r.entityId, "form", "")
+	}
+	if r.campaignReferenceId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "campaignReferenceId", r.campaignReferenceId, "form", "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 401 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 403 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 500 {
+			var v ApiError
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
 type ApiSendMessagesApiEventsRequest struct {
@@ -47,7 +445,11 @@ func (r ApiSendMessagesApiEventsRequest) Execute() (*MessageResponse, *http.Resp
 /*
 SendMessagesApiEvents Send a Messages API event
 
-Send one or more events to multiple recipients.<br/>An event is an interaction with end-user's device which does not impact messaging content of conversation.<br/>Examples of events are: TYPING_STARTED, TYPING_STOPPED.
+Send one or more events to multiple recipients.
+
+An event is an interaction with end-user's device which does not impact messaging content of conversation.
+
+Examples of events are: TYPING_STARTED, TYPING_STOPPED.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiSendMessagesApiEventsRequest
@@ -103,20 +505,6 @@ func (a *MessagesAPIService) SendMessagesApiEventsExecute(r ApiSendMessagesApiEv
 	}
 	// body params
 	localVarPostBody = r.eventRequest
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -271,20 +659,6 @@ func (a *MessagesAPIService) SendMessagesApiMessageExecute(r ApiSendMessagesApiM
 	}
 	// body params
 	localVarPostBody = r.request
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -439,20 +813,6 @@ func (a *MessagesAPIService) ValidateMessagesApiMessageExecute(r ApiValidateMess
 	}
 	// body params
 	localVarPostBody = r.request
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

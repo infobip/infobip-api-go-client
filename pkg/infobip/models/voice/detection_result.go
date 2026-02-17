@@ -15,21 +15,19 @@ import (
 	"fmt"
 )
 
-// DetectionResult Detected entity that answered the call. `UNKNOWN` if unable to detect.
+// DetectionResult Detected class during analysis of the call. Always returns either HUMAN or MACHINE. Use confidenceRating for a finer grained analysis result
 type DetectionResult string
 
 // List of DetectionResult
 const (
 	DETECTIONRESULT_HUMAN   DetectionResult = "HUMAN"
 	DETECTIONRESULT_MACHINE DetectionResult = "MACHINE"
-	DETECTIONRESULT_UNKNOWN DetectionResult = "UNKNOWN"
 )
 
 // All allowed values of DetectionResult enum
 var AllowedDetectionResultEnumValues = []DetectionResult{
 	"HUMAN",
 	"MACHINE",
-	"UNKNOWN",
 }
 
 func (v *DetectionResult) UnmarshalJSON(src []byte) error {

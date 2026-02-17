@@ -26,7 +26,7 @@ type Recording struct {
 	Endpoint  CallEndpoint
 	Direction *CallDirection
 	// Call recording files.
-	Files  []RecordingFile
+	Files  []PublicRecordingFile
 	Status *RecordingStatus
 	// Reason for recording failure.
 	Reason *string
@@ -150,9 +150,9 @@ func (o *Recording) SetDirection(v CallDirection) {
 }
 
 // GetFiles returns the Files field value if set, zero value otherwise.
-func (o *Recording) GetFiles() []RecordingFile {
+func (o *Recording) GetFiles() []PublicRecordingFile {
 	if o == nil || IsNil(o.Files) {
-		var ret []RecordingFile
+		var ret []PublicRecordingFile
 		return ret
 	}
 	return o.Files
@@ -160,7 +160,7 @@ func (o *Recording) GetFiles() []RecordingFile {
 
 // GetFilesOk returns a tuple with the Files field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *Recording) GetFilesOk() ([]RecordingFile, bool) {
+func (o *Recording) GetFilesOk() ([]PublicRecordingFile, bool) {
 	if o == nil || IsNil(o.Files) {
 		return nil, false
 	}
@@ -176,8 +176,8 @@ func (o *Recording) HasFiles() bool {
 	return false
 }
 
-// SetFiles gets a reference to the given []RecordingFile and assigns it to the Files field.
-func (o *Recording) SetFiles(v []RecordingFile) {
+// SetFiles gets a reference to the given []PublicRecordingFile and assigns it to the Files field.
+func (o *Recording) SetFiles(v []PublicRecordingFile) {
 	o.Files = v
 }
 

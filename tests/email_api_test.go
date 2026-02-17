@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -14,6 +13,31 @@ import (
 	"github.com/infobip/infobip-api-go-client/v3/pkg/infobip/models/email"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
+)
+
+const (
+	EmailBulksEndpoint                      = "/email/1/bulks"
+	EmailBulksStatusEndpoint                = "/email/1/bulks/status"
+	EmailDomainsEndpoint                    = "/email/1/domains"
+	EmailDomainByIdEndpoint                 = "/email/1/domains/%s"
+	EmailDomainReturnPathEndpoint           = "/email/1/domains/%s/return-path"
+	EmailDomainTrackingEndpoint             = "/email/1/domains/%s/tracking"
+	EmailDomainVerifyEndpoint               = "/email/1/domains/%s/verify"
+	EmailIpManagementDomainByIdEndpoint     = "/email/1/ip-management/domains/%d"
+	EmailIpManagementDomainPoolsEndpoint    = "/email/1/ip-management/domains/%d/pools"
+	EmailIpManagementDomainPoolByIdEndpoint = "/email/1/ip-management/domains/%d/pools/%s"
+	EmailIpManagementIpsEndpoint            = "/email/1/ip-management/ips"
+	EmailIpManagementIpByIdEndpoint         = "/email/1/ip-management/ips/%s"
+	EmailIpManagementPoolsEndpoint          = "/email/1/ip-management/pools"
+	EmailIpManagementPoolByIdEndpoint       = "/email/1/ip-management/pools/%s"
+	EmailIpManagementPoolIpsEndpoint        = "/email/1/ip-management/pools/%s/ips"
+	EmailIpManagementPoolIpByIdEndpoint     = "/email/1/ip-management/pools/%s/ips/%s"
+	EmailSendEndpoint                       = "/email/3/send"
+	EmailLogsEndpoint                       = "/email/1/logs"
+	EmailReportsEndpoint                    = "/email/1/reports"
+	EmailSuppressionsEndpoint               = "/email/1/suppressions"
+	EmailSuppressionDomainsEndpoint         = "/email/1/suppressions/domains"
+	EmailValidationEndpoint                 = "/email/2/validation"
 )
 
 func TestShouldSendFullyFeaturedEmail(t *testing.T) {
@@ -28,7 +52,7 @@ func TestShouldSendFullyFeaturedEmail(t *testing.T) {
 	givenDescription := "Message accepted, pending for delivery."
 
 	givenAttachmentText := "Test file text"
-	tempFile, err := ioutil.TempFile("", "attachment*.txt")
+	tempFile, err := os.CreateTemp("", "attachment*.txt")
 	assert.Nil(t, err)
 	defer os.Remove(tempFile.Name())
 	_, err = tempFile.WriteString(givenAttachmentText)
@@ -77,7 +101,7 @@ func TestShouldSendFullyFeaturedEmail(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/email/3/send", expectedResponse, 200)
+	SetUpSuccessRequest("POST", EmailSendEndpoint, expectedResponse, 200)
 
 	response, _, err := infobipClient.EmailAPI.SendEmail(context.Background()).
 		To([]string{givenTo, givenAnotherTo}).
@@ -101,11 +125,11 @@ func TestShouldSendFullyFeaturedEmail(t *testing.T) {
 	assert.Equal(t, 2, len(messages))
 
 	expectedStatus := email.SingleMessageStatus{
-		GroupId:     &givenGroupId,
-		GroupName:   &givenGroupName,
-		Id:          &givenId,
-		Name:        &givenName,
-		Description: &givenDescription,
+		GroupId:     givenGroupId,
+		GroupName:   givenGroupName,
+		Id:          givenId,
+		Name:        givenName,
+		Description: givenDescription,
 	}
 
 	firstMessage := messages[0]
@@ -150,7 +174,7 @@ func TestShouldGetEmailSuppressions(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/suppressions", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailSuppressionsEndpoint, givenResponse, 200)
 
 	// Execute the request
 	response, _, err := infobipClient.
@@ -209,7 +233,7 @@ func TestShouldAddEmailSuppressions(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/email/1/suppressions", "", 204)
+	SetUpSuccessRequest("POST", EmailSuppressionsEndpoint, "", 204)
 
 	_, err := infobipClient.
 		EmailAPI.
@@ -252,7 +276,7 @@ func TestShouldDeleteEmailSuppressions(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", "/email/1/suppressions", "", 204)
+	SetUpSuccessRequest("DELETE", EmailSuppressionsEndpoint, "", 204)
 
 	_, err := infobipClient.
 		EmailAPI.
@@ -322,7 +346,7 @@ func TestShouldGetSuppressionDomains(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/suppressions/domains", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailSuppressionDomainsEndpoint, givenResponse, 200)
 
 	// Execute the request
 	response, _, err := infobipClient.
@@ -365,7 +389,6 @@ func TestShouldAddDomain(t *testing.T) {
 	givenDomainName := "example.com"
 	givenDkimKeyLength := int32(1024)
 	givenTargetedDailyTraffic := int64(15)
-	givenReturnPathAddress := "pathAddress"
 
 	givenDomainId := int64(1)
 	givenActive := false
@@ -397,19 +420,16 @@ func TestShouldAddDomain(t *testing.T) {
 	       }
 	   ],
 	   "blocked": %t,
-	   "createdAt": "%s",
-	   "returnPathAddress": "%s"
-	}`, givenDomainId, givenDomainName, givenActive, givenTracking, givenTracking, givenTracking, givenDnsRecords, givenDnsRecords, givenDnsRecords, givenVerified, givenBlocked, givenCreatedAtString, givenReturnPathAddress)
+	   "createdAt": "%s"
+	}`, givenDomainId, givenDomainName, givenActive, givenTracking, givenTracking, givenTracking, givenDnsRecords, givenDnsRecords, givenDnsRecords, givenVerified, givenBlocked, givenCreatedAtString)
 
 	givenRequest := fmt.Sprintf(`{
         "domainName": "%s",
         "dkimKeyLength": %d,
-        "targetedDailyTraffic": %d,
-        "returnPathAddress": "%s"
-    }`, givenDomainName, givenDkimKeyLength, givenTargetedDailyTraffic, givenReturnPathAddress)
+        "targetedDailyTraffic": %d
+    }`, givenDomainName, givenDkimKeyLength, givenTargetedDailyTraffic)
 
 	request := email.NewAddDomainRequest(givenDomainName, givenTargetedDailyTraffic)
-	request.ReturnPathAddress = &givenReturnPathAddress
 	dkimKeyLength := int32(1024)
 	request.DkimKeyLength = &dkimKeyLength
 
@@ -418,7 +438,7 @@ func TestShouldAddDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/email/1/domains", givenResponse, 200)
+	SetUpSuccessRequest("POST", EmailDomainsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -442,7 +462,6 @@ func TestShouldAddDomain(t *testing.T) {
 	assert.Equal(t, givenVerified, record.GetVerified())
 	assert.Equal(t, givenBlocked, response.GetBlocked())
 	assert.Equal(t, ibTimeCreatedAt, response.GetCreatedAt())
-	assert.Equal(t, givenReturnPathAddress, response.GetReturnPathAddress())
 }
 
 func TestShouldGetAllDomains(t *testing.T) {
@@ -493,7 +512,7 @@ func TestShouldGetAllDomains(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/domains", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailDomainsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -561,7 +580,7 @@ func TestShouldGetDomainDetails(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/email/1/domains/%s", givenDomainName), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(EmailDomainByIdEndpoint, givenDomainName), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -592,7 +611,7 @@ func TestShouldDeleteDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/email/1/domains/%s", givenDomainName), "", givenStatusCode)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(EmailDomainByIdEndpoint, givenDomainName), "", givenStatusCode)
 
 	_, err := infobipClient.
 		EmailAPI.
@@ -653,7 +672,7 @@ func TestShouldUpdateTrackingEvents(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/email/1/domains/%s/tracking", givenDomainName), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(EmailDomainTrackingEndpoint, givenDomainName), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -685,7 +704,7 @@ func TestShouldVerifyDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/email/1/domains/%s/verify", givenDomainName), "", givenStatusCode)
+	SetUpSuccessRequest("POST", fmt.Sprintf(EmailDomainVerifyEndpoint, givenDomainName), "", givenStatusCode)
 
 	_, err := infobipClient.
 		EmailAPI.
@@ -721,7 +740,7 @@ func TestShouldValidateEmail(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/email/2/validation", givenResponse, 200)
+	SetUpSuccessRequest("POST", EmailValidationEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -751,7 +770,7 @@ func TestShouldGetScheduledEmails(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/bulks", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailBulksEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -782,7 +801,7 @@ func TestShouldGetScheduledEmailsStatuses(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/bulks/status", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailBulksStatusEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -822,7 +841,7 @@ func TestShouldRescheduleEmails(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", "/email/1/bulks", givenResponse, 200)
+	SetUpSuccessRequest("PUT", EmailBulksEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -857,7 +876,7 @@ func TestShouldUpdateScheduledEmailStatuses(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", "/email/1/bulks/status", givenResponse, 200)
+	SetUpSuccessRequest("PUT", EmailBulksStatusEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -924,7 +943,7 @@ func TestShouldGetEmailDeliveryReports(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/reports", expectedResponse, 200)
+	SetUpSuccessRequest("GET", EmailReportsEndpoint, expectedResponse, 200)
 
 	response, _, err := infobipClient.
 		EmailAPI.
@@ -961,88 +980,6 @@ func TestShouldGetEmailDeliveryReports(t *testing.T) {
 	assert.Equal(t, false, error.GetPermanent())
 }
 
-func TestShouldUpdateReturnPath(t *testing.T) {
-	givenDomainId := int64(1)
-	givenDomainName := "example.com"
-	givenActive := false
-	givenTracking := true
-	givenOpens := true
-	givenUnsubscribe := true
-	givenRecordType := "string"
-	givenName := "string"
-	givenExpectedValue := "string"
-	givenVerified := true
-	givenBlocked := false
-	givenCreatedAtString := "2021-08-25T16:00:00.000+0000"
-	givenCreatedAt, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenCreatedAtString)
-	ibTimeCreatedAt := infobip.Time{
-		T: givenCreatedAt,
-	}
-	givenReturnPathAddress := "returnpath@example.com"
-
-	givenResponse := fmt.Sprintf(`{
-        "domainId": %d,
-        "domainName": "%s",
-        "active": %t,
-        "tracking": {
-            "clicks": %t,
-            "opens": %t,
-            "unsubscribe": %t
-        },
-        "dnsRecords": [
-            {
-                "recordType": "%s",
-                "name": "%s",
-                "expectedValue": "%s",
-                "verified": %t
-            }
-        ],
-        "blocked": %t,
-        "createdAt": "%s",
-        "returnPathAddress": "%s"
-    }`, givenDomainId, givenDomainName, givenActive, givenTracking, givenOpens, givenUnsubscribe, givenRecordType, givenName, givenExpectedValue, givenVerified, givenBlocked, givenCreatedAtString, givenReturnPathAddress)
-
-	expectedReturnPathAddress := "returnpath@example.com"
-	expectedRequest := fmt.Sprintf(`{
-        "returnPathAddress": "%s"
-    }`, expectedReturnPathAddress)
-
-	request := email.NewReturnPathAddressRequest(givenReturnPathAddress)
-
-	actualRequest, _ := json.Marshal(request)
-	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
-
-	httpmock.Activate()
-	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/email/1/domains/%s/return-path", givenDomainName), givenResponse, 200)
-
-	response, _, err := infobipClient.
-		EmailAPI.
-		UpdateReturnPath(context.Background(), givenDomainName).
-		ReturnPathAddressRequest(*request).
-		Execute()
-
-	assert.Nil(t, err)
-	assert.NotNil(t, response)
-	assert.Equal(t, givenDomainId, response.GetDomainId())
-	assert.Equal(t, givenDomainName, response.GetDomainName())
-	assert.False(t, response.GetActive())
-	assert.NotNil(t, response.GetTracking())
-	assert.Equal(t, &givenTracking, response.GetTracking().Clicks)
-	assert.Equal(t, &givenOpens, response.GetTracking().Opens)
-	assert.Equal(t, &givenUnsubscribe, response.GetTracking().Unsubscribe)
-	assert.Equal(t, 1, len(response.GetDnsRecords()))
-	record := response.GetDnsRecords()[0]
-	assert.NotNil(t, record)
-	assert.Equal(t, givenRecordType, record.GetRecordType())
-	assert.Equal(t, givenName, record.GetName())
-	assert.Equal(t, givenExpectedValue, record.GetExpectedValue())
-	assert.True(t, record.GetVerified())
-	assert.False(t, response.GetBlocked())
-	assert.Equal(t, ibTimeCreatedAt, response.GetCreatedAt())
-	assert.Equal(t, givenReturnPathAddress, response.GetReturnPathAddress())
-}
-
 func TestShouldGetIpManagementIps(t *testing.T) {
 	givenId := "DB3F9D439088BF73F5560443C8054AC4"
 	givenIp := "198.51.100.0"
@@ -1056,7 +993,7 @@ func TestShouldGetIpManagementIps(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/ip-management/ips", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailIpManagementIpsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.EmailAPI.GetAllIps(context.Background()).Execute()
 
@@ -1086,7 +1023,7 @@ func TestShouldGetIpManagementIp(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/email/1/ip-management/ips/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(EmailIpManagementIpByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.EmailAPI.GetIpDetails(context.Background(), givenId).Execute()
 
@@ -1112,7 +1049,7 @@ func TestShouldGetIpManagementPools(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/email/1/ip-management/pools", givenResponse, 200)
+	SetUpSuccessRequest("GET", EmailIpManagementPoolsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.EmailAPI.GetIpPools(context.Background()).Execute()
 
@@ -1142,7 +1079,7 @@ func TestShouldCreateIpManagementPool(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/email/1/ip-management/pools", givenResponse, 201)
+	SetUpSuccessRequest("POST", EmailIpManagementPoolsEndpoint, givenResponse, 201)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
@@ -1174,7 +1111,7 @@ func TestShouldGetIpManagementPool(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/email/1/ip-management/pools/%s", givenPoolId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(EmailIpManagementPoolByIdEndpoint, givenPoolId), givenResponse, 200)
 
 	response, _, err := infobipClient.EmailAPI.GetIpPool(context.Background(), givenPoolId).Execute()
 
@@ -1206,7 +1143,7 @@ func TestShouldUpdateIpManagementPool(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/email/1/ip-management/pools/%s", givenPoolId), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(EmailIpManagementPoolByIdEndpoint, givenPoolId), givenResponse, 200)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
@@ -1225,7 +1162,7 @@ func TestShouldDeleteIpManagementPool(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/email/1/ip-management/pools/%s", givenPoolId), "", givenStatusCode)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(EmailIpManagementPoolByIdEndpoint, givenPoolId), "", givenStatusCode)
 
 	_, err := infobipClient.EmailAPI.DeleteIpPool(context.Background(), givenPoolId).Execute()
 
@@ -1246,7 +1183,7 @@ func TestShouldAssignIpToPool(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/email/1/ip-management/pools/%s/ips", givenPoolId), "", 204)
+	SetUpSuccessRequest("POST", fmt.Sprintf(EmailIpManagementPoolIpsEndpoint, givenPoolId), "", 204)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
@@ -1262,7 +1199,7 @@ func TestShouldRemoveIpFromPool(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/email/1/ip-management/pools/%s/ips/%s", givenPoolId, givenIpId), "", 204)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(EmailIpManagementPoolIpByIdEndpoint, givenPoolId, givenIpId), "", 204)
 
 	_, err := infobipClient.EmailAPI.RemoveIpFromPool(context.Background(), givenPoolId, givenIpId).Execute()
 
@@ -1296,7 +1233,7 @@ func TestShouldGetIpManagementDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/email/1/ip-management/domains/%d", givenDomainId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(EmailIpManagementDomainByIdEndpoint, givenDomainId), givenResponse, 200)
 
 	response, _, err := infobipClient.EmailAPI.GetIpDomain(context.Background(), givenDomainId).Execute()
 
@@ -1330,7 +1267,7 @@ func TestShouldAssignPoolToDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/email/1/ip-management/domains/%d/pools", givenDomainId), "", 204)
+	SetUpSuccessRequest("POST", fmt.Sprintf(EmailIpManagementDomainPoolsEndpoint, givenDomainId), "", 204)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
@@ -1355,7 +1292,7 @@ func TestShouldUpdatePoolPriorityInDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/email/1/ip-management/domains/%d/pools/%s", givenDomainId, givenPoolId), "", 204)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(EmailIpManagementDomainPoolByIdEndpoint, givenDomainId, givenPoolId), "", 204)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
@@ -1372,9 +1309,170 @@ func TestShouldRemovePoolFromDomain(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/email/1/ip-management/domains/%d/pools/%s", givenDomainId, givenPoolId), "", givenStatusCode)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(EmailIpManagementDomainPoolByIdEndpoint, givenDomainId, givenPoolId), "", givenStatusCode)
 
 	_, err := infobipClient.EmailAPI.RemoveIpPoolFromDomain(context.Background(), givenDomainId, givenPoolId).Execute()
 
 	assert.Nil(t, err)
+}
+
+// ==============================================================================
+// Webhook deserialization tests
+// ==============================================================================
+
+func TestReceiveEmailDeliveryReportsWebhook(t *testing.T) {
+	givenBulkId := "bulk-email-123"
+	givenMessageId := "msg-email-456"
+	givenTo := "user@example.com"
+	givenSentAt := "2025-02-06T15:35:12.000+0000"
+	givenDoneAt := "2025-02-06T15:35:14.000+0000"
+
+	givenPayload := fmt.Sprintf(`
+		{
+			"results": [
+				{
+					"bulkId": "%s",
+					"messageId": "%s",
+					"to": "%s",
+					"sentAt": "%s",
+					"doneAt": "%s",
+					"smsCount": 0,
+					"price": {
+						"pricePerMessage": 0.0,
+						"currency": "EUR"
+					},
+					"status": {
+						"groupId": 3,
+						"groupName": "DELIVERED",
+						"id": 5,
+						"name": "DELIVERED_TO_HANDSET",
+						"description": "Message delivered to handset"
+					},
+					"error": {
+						"groupId": 0,
+						"groupName": "OK",
+						"id": 0,
+						"name": "NO_ERROR",
+						"description": "No error",
+						"permanent": false
+					}
+				}
+			]
+		}`,
+		givenBulkId,
+		givenMessageId,
+		givenTo,
+		givenSentAt,
+		givenDoneAt,
+	)
+
+	var responseBody email.DLRReportResponse
+	err := json.Unmarshal([]byte(givenPayload), &responseBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+	assert.Equal(t, 1, len(responseBody.GetResults()))
+
+	result := responseBody.GetResults()[0]
+	assert.Equal(t, givenBulkId, result.GetBulkId())
+	assert.Equal(t, givenMessageId, result.GetMessageId())
+	assert.Equal(t, givenTo, result.GetTo())
+
+	status := result.GetStatus()
+	assert.Equal(t, int32(3), status.GetGroupId())
+	assert.Equal(t, "DELIVERED", status.GetGroupName())
+	assert.Equal(t, int32(5), status.GetId())
+	assert.Equal(t, "DELIVERED_TO_HANDSET", status.GetName())
+
+	errorInfo := result.GetError()
+	assert.Equal(t, int32(0), errorInfo.GetGroupId())
+	assert.Equal(t, "NO_ERROR", errorInfo.GetName())
+	assert.Equal(t, false, errorInfo.GetPermanent())
+}
+
+func TestReceiveEmailTrackingReportsWebhook(t *testing.T) {
+	givenNotificationType := "OPENED"
+	givenEventId := "evt-123"
+	givenDomain := "example.com"
+	givenRecipient := "user@example.com"
+	givenBulkId := "bulk-email-123"
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+	givenCampaignReferenceId := "campaignRef"
+
+	givenPayload := fmt.Sprintf(`
+		{
+			"notificationType": "%s",
+			"eventId": "%s",
+			"domain": "%s",
+			"recipient": "%s",
+			"sendDateTime": 1707234912000,
+			"messageId": 12345,
+			"bulkId": "%s",
+			"entityId": "%s",
+			"applicationId": "%s",
+			"campaignReferenceId": "%s"
+		}`,
+		givenNotificationType,
+		givenEventId,
+		givenDomain,
+		givenRecipient,
+		givenBulkId,
+		givenEntityId,
+		givenApplicationId,
+		givenCampaignReferenceId,
+	)
+
+	var responseBody email.TrackReport
+	err := json.Unmarshal([]byte(givenPayload), &responseBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	assert.Equal(t, givenNotificationType, responseBody.GetNotificationType())
+	assert.Equal(t, givenEventId, responseBody.GetEventId())
+	assert.Equal(t, givenDomain, responseBody.GetDomain())
+	assert.Equal(t, givenRecipient, responseBody.GetRecipient())
+	assert.Equal(t, givenBulkId, responseBody.GetBulkId())
+	assert.Equal(t, givenEntityId, responseBody.GetEntityId())
+	assert.Equal(t, givenApplicationId, responseBody.GetApplicationId())
+	assert.Equal(t, givenCampaignReferenceId, responseBody.GetCampaignReferenceId())
+}
+
+func TestReceiveEmailTrackingReportsWebhook_Clicked(t *testing.T) {
+	givenPayload := `
+		{
+			"notificationType": "CLICKED",
+			"eventId": "evt-456",
+			"domain": "example.com",
+			"recipient": "user@example.com",
+			"url": "https://example.com/click-link",
+			"sendDateTime": 1707234912000,
+			"messageId": 12345,
+			"bulkId": "bulk-email-123",
+			"recipientInfo": {
+				"deviceType": "Desktop",
+				"os": "Windows",
+				"deviceName": "Chrome"
+			},
+			"geoLocation": {
+				"countryName": "Germany",
+				"city": "Berlin"
+			}
+		}`
+
+	var responseBody email.TrackReport
+	err := json.Unmarshal([]byte(givenPayload), &responseBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.Equal(t, "CLICKED", responseBody.GetNotificationType())
+	assert.Equal(t, "https://example.com/click-link", responseBody.GetUrl())
+
+	recipientInfo := responseBody.GetRecipientInfo()
+	assert.Equal(t, "Desktop", recipientInfo.GetDeviceType())
+	assert.Equal(t, "Windows", recipientInfo.GetOs())
+
+	geoLocation := responseBody.GetGeoLocation()
+	assert.Equal(t, "Germany", geoLocation.GetCountryName())
+	assert.Equal(t, "Berlin", geoLocation.GetCity())
 }

@@ -21,7 +21,8 @@ var _ MappedNullable = &FilePlayContent{}
 
 // FilePlayContent struct for FilePlayContent
 type FilePlayContent struct {
-	Type   PlayContentType
+	Type PlayContentType
+	// ID of the previously uploaded audio file.
 	FileId string
 }
 

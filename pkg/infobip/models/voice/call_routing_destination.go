@@ -17,8 +17,16 @@ import (
 
 // CallRoutingDestination List of destinations. First destination in the list is the first one to be executed. Subsequent destinations are executed only if the previous one fails.
 type CallRoutingDestination struct {
-	CallRoutingEndpointDestination *CallRoutingEndpointDestination
-	CallRoutingUrlDestination      *CallRoutingUrlDestination
+	CallRoutingApplicationDestination *CallRoutingApplicationDestination
+	CallRoutingEndpointDestination    *CallRoutingEndpointDestination
+	CallRoutingUrlDestination         *CallRoutingUrlDestination
+}
+
+// CallRoutingApplicationDestinationAsCallRoutingDestination is a convenience function that returns CallRoutingApplicationDestination wrapped in CallRoutingDestination
+func CallRoutingApplicationDestinationAsCallRoutingDestination(v *CallRoutingApplicationDestination) CallRoutingDestination {
+	return CallRoutingDestination{
+		CallRoutingApplicationDestination: v,
+	}
 }
 
 // CallRoutingEndpointDestinationAsCallRoutingDestination is a convenience function that returns CallRoutingEndpointDestination wrapped in CallRoutingDestination
@@ -44,6 +52,21 @@ func (dst *CallRoutingDestination) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("Failed to unmarshal JSON into map for the discrimintor lookup.")
 	}
 
+	// check if the discriminator value is 'APPLICATION'
+	if jsonDict["type"] == "APPLICATION" {
+		// try to unmarshal JSON data into CallRoutingApplicationDestination
+		err = json.Unmarshal(data, &dst.CallRoutingApplicationDestination)
+		if err == nil {
+			jsonCallRoutingApplicationDestination, _ := json.Marshal(dst.CallRoutingApplicationDestination)
+			if string(jsonCallRoutingApplicationDestination) == "{}" { // empty struct
+				dst.CallRoutingApplicationDestination = nil
+			} else {
+				return nil // data stored in dst.CallRoutingApplicationDestination, return on the first match
+			}
+		} else {
+			dst.CallRoutingApplicationDestination = nil
+		}
+	}
 	// check if the discriminator value is 'ENDPOINT'
 	if jsonDict["type"] == "ENDPOINT" {
 		// try to unmarshal JSON data into CallRoutingEndpointDestination
@@ -79,6 +102,9 @@ func (dst *CallRoutingDestination) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src CallRoutingDestination) MarshalJSON() ([]byte, error) {
+	if src.CallRoutingApplicationDestination != nil {
+		return json.Marshal(&src.CallRoutingApplicationDestination)
+	}
 	if src.CallRoutingEndpointDestination != nil {
 		return json.Marshal(&src.CallRoutingEndpointDestination)
 	}
@@ -92,6 +118,9 @@ func (src CallRoutingDestination) MarshalJSON() ([]byte, error) {
 func (obj *CallRoutingDestination) GetActualInstance() interface{} {
 	if obj == nil {
 		return nil
+	}
+	if obj.CallRoutingApplicationDestination != nil {
+		return obj.CallRoutingApplicationDestination
 	}
 	if obj.CallRoutingEndpointDestination != nil {
 		return obj.CallRoutingEndpointDestination

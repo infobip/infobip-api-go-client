@@ -23,7 +23,7 @@ var _ MappedNullable = &MessageRequestOptions{}
 type MessageRequestOptions struct {
 	Schedule *RequestSchedulingSettings
 	Tracking *UrlOptions
-	// Set to true to return smsCount in the response. Default is false. smsCount is the total count of SMS submitted in the request. SMS messages have a character limit and messages longer than that limit will be split into multiple SMS and reflected in the total count of SMS submitted.
+	// Set to true to return `messageCount` in the response. The `messageCount` is the total count of SMS submitted in the request. SMS messages have a character limit and messages longer than the limit will be split into multiple SMS. Not compatible with `binary` message content type.
 	IncludeSmsCountInResponse *bool
 	ConversionTracking        *Tracking
 }

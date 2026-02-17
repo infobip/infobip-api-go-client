@@ -12,6 +12,7 @@ package messagesapi
 
 import (
 	"encoding/json"
+
 	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 )
 
@@ -36,9 +37,12 @@ type MoEvent struct {
 	PairedMessageId *string
 	// Value of the `callbackData` field from the MT message (if exists) or from the MO Action setup (if exists).
 	CallbackData *string
+	// The number of parts the message content was split into.
+	MessageCount int32
 	Platform     *Platform
 	// ID of a campaign that was sent in the MT message
 	CampaignReferenceId *string
+	Metadata            *MoEventMetadata
 }
 
 type _MoEvent MoEvent
@@ -47,7 +51,7 @@ type _MoEvent MoEvent
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMoEvent(channel InboundMoEventChannel, sender string, destination string, content []MoEventContent, receivedAt Time, messageId string) *MoEvent {
+func NewMoEvent(channel InboundMoEventChannel, sender string, destination string, content []MoEventContent, receivedAt Time, messageId string, messageCount int32) *MoEvent {
 	this := MoEvent{}
 	this.Event = "MO"
 	this.Channel = channel
@@ -56,6 +60,7 @@ func NewMoEvent(channel InboundMoEventChannel, sender string, destination string
 	this.Content = content
 	this.ReceivedAt = receivedAt
 	this.MessageId = messageId
+	this.MessageCount = messageCount
 	return &this
 }
 
@@ -276,6 +281,30 @@ func (o *MoEvent) SetCallbackData(v string) {
 	o.CallbackData = &v
 }
 
+// GetMessageCount returns the MessageCount field value
+func (o *MoEvent) GetMessageCount() int32 {
+	if o == nil {
+		var ret int32
+		return ret
+	}
+
+	return o.MessageCount
+}
+
+// GetMessageCountOk returns a tuple with the MessageCount field value
+// and a boolean to check if the value has been set.
+func (o *MoEvent) GetMessageCountOk() (*int32, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.MessageCount, true
+}
+
+// SetMessageCount sets field value
+func (o *MoEvent) SetMessageCount(v int32) {
+	o.MessageCount = v
+}
+
 // GetPlatform returns the Platform field value if set, zero value otherwise.
 func (o *MoEvent) GetPlatform() Platform {
 	if o == nil || IsNil(o.Platform) {
@@ -340,6 +369,38 @@ func (o *MoEvent) SetCampaignReferenceId(v string) {
 	o.CampaignReferenceId = &v
 }
 
+// GetMetadata returns the Metadata field value if set, zero value otherwise.
+func (o *MoEvent) GetMetadata() MoEventMetadata {
+	if o == nil || IsNil(o.Metadata) {
+		var ret MoEventMetadata
+		return ret
+	}
+	return *o.Metadata
+}
+
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MoEvent) GetMetadataOk() (*MoEventMetadata, bool) {
+	if o == nil || IsNil(o.Metadata) {
+		return nil, false
+	}
+	return o.Metadata, true
+}
+
+// HasMetadata returns a boolean if a field has been set.
+func (o *MoEvent) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetMetadata gets a reference to the given MoEventMetadata and assigns it to the Metadata field.
+func (o *MoEvent) SetMetadata(v MoEventMetadata) {
+	o.Metadata = &v
+}
+
 func (o MoEvent) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -363,11 +424,15 @@ func (o MoEvent) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CallbackData) {
 		toSerialize["callbackData"] = o.CallbackData
 	}
+	toSerialize["messageCount"] = o.MessageCount
 	if !IsNil(o.Platform) {
 		toSerialize["platform"] = o.Platform
 	}
 	if !IsNil(o.CampaignReferenceId) {
 		toSerialize["campaignReferenceId"] = o.CampaignReferenceId
+	}
+	if !IsNil(o.Metadata) {
+		toSerialize["metadata"] = o.Metadata
 	}
 	return toSerialize, nil
 }
@@ -377,27 +442,12 @@ func (o *MoEvent) UnmarshalJSON(data []byte) error {
 
 	temp := struct {
 		*alias
-		CallbackData json.RawMessage
 	}{
 		alias: (*alias)(o),
 	}
 
 	if err := json.Unmarshal(data, &temp); err != nil {
 		return err
-	}
-
-	if len(temp.CallbackData) != 0 {
-		var asString string
-		if err := json.Unmarshal(temp.CallbackData, &asString); err == nil {
-			o.CallbackData = &asString
-		} else {
-			cleanedJSON, err := json.Marshal(json.RawMessage(temp.CallbackData))
-			if err != nil {
-				return err
-			}
-			asString := string(cleanedJSON)
-			o.CallbackData = &asString
-		}
 	}
 
 	return nil

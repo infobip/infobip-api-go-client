@@ -22,7 +22,7 @@ var _ MappedNullable = &DialogRecordingLog{}
 // DialogRecordingLog Dialog recordings.
 type DialogRecordingLog struct {
 	// File(s) with a recording of both dialog calls.
-	ComposedFiles []RecordingFile
+	ComposedFiles []PublicRecordingFile
 	// File(s) with a recording of individual dialog calls.
 	CallRecordings []Recording
 }
@@ -47,9 +47,9 @@ func NewDialogRecordingLogWithDefaults() *DialogRecordingLog {
 }
 
 // GetComposedFiles returns the ComposedFiles field value if set, zero value otherwise.
-func (o *DialogRecordingLog) GetComposedFiles() []RecordingFile {
+func (o *DialogRecordingLog) GetComposedFiles() []PublicRecordingFile {
 	if o == nil || IsNil(o.ComposedFiles) {
-		var ret []RecordingFile
+		var ret []PublicRecordingFile
 		return ret
 	}
 	return o.ComposedFiles
@@ -57,7 +57,7 @@ func (o *DialogRecordingLog) GetComposedFiles() []RecordingFile {
 
 // GetComposedFilesOk returns a tuple with the ComposedFiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DialogRecordingLog) GetComposedFilesOk() ([]RecordingFile, bool) {
+func (o *DialogRecordingLog) GetComposedFilesOk() ([]PublicRecordingFile, bool) {
 	if o == nil || IsNil(o.ComposedFiles) {
 		return nil, false
 	}
@@ -73,8 +73,8 @@ func (o *DialogRecordingLog) HasComposedFiles() bool {
 	return false
 }
 
-// SetComposedFiles gets a reference to the given []RecordingFile and assigns it to the ComposedFiles field.
-func (o *DialogRecordingLog) SetComposedFiles(v []RecordingFile) {
+// SetComposedFiles gets a reference to the given []PublicRecordingFile and assigns it to the ComposedFiles field.
+func (o *DialogRecordingLog) SetComposedFiles(v []PublicRecordingFile) {
 	o.ComposedFiles = v
 }
 

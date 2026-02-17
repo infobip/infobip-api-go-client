@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// TransliterationCode The transliteration of your sent message from one script to another. Transliteration is used to replace characters which are not recognized as part of your defaulted alphabet. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC`, `PORTUGUESE`, `COLOMBIAN`, and `NON_UNICODE`.
+// TransliterationCode The transliteration of your sent message from one script to another. [Transliteration](https://www.infobip.com/docs/sms/language#sms-transliteration) is used to replace characters which are not recognized as part of your defaulted alphabet. `ALL` means that the transliteration process will recognize all supported languages.
 type TransliterationCode string
 
 // List of TransliterationCode

@@ -21,24 +21,34 @@ var _ MappedNullable = &TrackReport{}
 
 // TrackReport struct for TrackReport
 type TrackReport struct {
-	// Tells the type of user event that took place. Possible events: `OPENED`, `CLICKED`, `COMPLAINED`, `UNSUBSCRIBED`.
+	// Tells the type of user event that took place. Possible events: `OPENED`, `CLICKED`, `COMPLAINED`, `LATE_BOUNCE`, `UNSUBSCRIBED`.
 	NotificationType *string
+	// Unique ID of the event. This ID can be used for deduplication purposes.
+	EventId *string
 	// The sending domain used to send the email to the recipient.
 	Domain *string
 	// Recipient of the email.
 	Recipient *string
+	// Sender of the email. This attribute will only be present if the event is of the type `COMPLAINED` or `LATE_BOUNCE`.
+	Sender *string
 	// The link the recipient has clicked. This attribute will only be present if the event is of the type `CLICKED`.
 	Url *string
 	// The time at which the email was sent. Time is in milliseconds.
 	SendDateTime *float32
 	// The ID that uniquely identifies the message sent to the recipient.
-	MessageId *string
+	MessageId *float32
 	// The ID that uniquely identifies a list of email messages. This is either defined by user in the request or auto generated.
 	BulkId *string
 	// The callback data sent through the callbackData field in your fully featured Email message.
 	CallbackData  *string
 	RecipientInfo *RecipientInfo
 	GeoLocation   *GeoLocation
+	// ID of a campaign that was sent in the message.
+	CampaignReferenceId *string
+	// Used when specifying an entity in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	EntityId *string
+	// Used when specifying an application in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	ApplicationId *string
 }
 
 // NewTrackReport instantiates a new TrackReport object
@@ -90,6 +100,38 @@ func (o *TrackReport) HasNotificationType() bool {
 // SetNotificationType gets a reference to the given string and assigns it to the NotificationType field.
 func (o *TrackReport) SetNotificationType(v string) {
 	o.NotificationType = &v
+}
+
+// GetEventId returns the EventId field value if set, zero value otherwise.
+func (o *TrackReport) GetEventId() string {
+	if o == nil || IsNil(o.EventId) {
+		var ret string
+		return ret
+	}
+	return *o.EventId
+}
+
+// GetEventIdOk returns a tuple with the EventId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrackReport) GetEventIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EventId) {
+		return nil, false
+	}
+	return o.EventId, true
+}
+
+// HasEventId returns a boolean if a field has been set.
+func (o *TrackReport) HasEventId() bool {
+	if o != nil && !IsNil(o.EventId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEventId gets a reference to the given string and assigns it to the EventId field.
+func (o *TrackReport) SetEventId(v string) {
+	o.EventId = &v
 }
 
 // GetDomain returns the Domain field value if set, zero value otherwise.
@@ -154,6 +196,38 @@ func (o *TrackReport) HasRecipient() bool {
 // SetRecipient gets a reference to the given string and assigns it to the Recipient field.
 func (o *TrackReport) SetRecipient(v string) {
 	o.Recipient = &v
+}
+
+// GetSender returns the Sender field value if set, zero value otherwise.
+func (o *TrackReport) GetSender() string {
+	if o == nil || IsNil(o.Sender) {
+		var ret string
+		return ret
+	}
+	return *o.Sender
+}
+
+// GetSenderOk returns a tuple with the Sender field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrackReport) GetSenderOk() (*string, bool) {
+	if o == nil || IsNil(o.Sender) {
+		return nil, false
+	}
+	return o.Sender, true
+}
+
+// HasSender returns a boolean if a field has been set.
+func (o *TrackReport) HasSender() bool {
+	if o != nil && !IsNil(o.Sender) {
+		return true
+	}
+
+	return false
+}
+
+// SetSender gets a reference to the given string and assigns it to the Sender field.
+func (o *TrackReport) SetSender(v string) {
+	o.Sender = &v
 }
 
 // GetUrl returns the Url field value if set, zero value otherwise.
@@ -221,9 +295,9 @@ func (o *TrackReport) SetSendDateTime(v float32) {
 }
 
 // GetMessageId returns the MessageId field value if set, zero value otherwise.
-func (o *TrackReport) GetMessageId() string {
+func (o *TrackReport) GetMessageId() float32 {
 	if o == nil || IsNil(o.MessageId) {
-		var ret string
+		var ret float32
 		return ret
 	}
 	return *o.MessageId
@@ -231,7 +305,7 @@ func (o *TrackReport) GetMessageId() string {
 
 // GetMessageIdOk returns a tuple with the MessageId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *TrackReport) GetMessageIdOk() (*string, bool) {
+func (o *TrackReport) GetMessageIdOk() (*float32, bool) {
 	if o == nil || IsNil(o.MessageId) {
 		return nil, false
 	}
@@ -247,8 +321,8 @@ func (o *TrackReport) HasMessageId() bool {
 	return false
 }
 
-// SetMessageId gets a reference to the given string and assigns it to the MessageId field.
-func (o *TrackReport) SetMessageId(v string) {
+// SetMessageId gets a reference to the given float32 and assigns it to the MessageId field.
+func (o *TrackReport) SetMessageId(v float32) {
 	o.MessageId = &v
 }
 
@@ -380,6 +454,102 @@ func (o *TrackReport) SetGeoLocation(v GeoLocation) {
 	o.GeoLocation = &v
 }
 
+// GetCampaignReferenceId returns the CampaignReferenceId field value if set, zero value otherwise.
+func (o *TrackReport) GetCampaignReferenceId() string {
+	if o == nil || IsNil(o.CampaignReferenceId) {
+		var ret string
+		return ret
+	}
+	return *o.CampaignReferenceId
+}
+
+// GetCampaignReferenceIdOk returns a tuple with the CampaignReferenceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrackReport) GetCampaignReferenceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CampaignReferenceId) {
+		return nil, false
+	}
+	return o.CampaignReferenceId, true
+}
+
+// HasCampaignReferenceId returns a boolean if a field has been set.
+func (o *TrackReport) HasCampaignReferenceId() bool {
+	if o != nil && !IsNil(o.CampaignReferenceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCampaignReferenceId gets a reference to the given string and assigns it to the CampaignReferenceId field.
+func (o *TrackReport) SetCampaignReferenceId(v string) {
+	o.CampaignReferenceId = &v
+}
+
+// GetEntityId returns the EntityId field value if set, zero value otherwise.
+func (o *TrackReport) GetEntityId() string {
+	if o == nil || IsNil(o.EntityId) {
+		var ret string
+		return ret
+	}
+	return *o.EntityId
+}
+
+// GetEntityIdOk returns a tuple with the EntityId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrackReport) GetEntityIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EntityId) {
+		return nil, false
+	}
+	return o.EntityId, true
+}
+
+// HasEntityId returns a boolean if a field has been set.
+func (o *TrackReport) HasEntityId() bool {
+	if o != nil && !IsNil(o.EntityId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityId gets a reference to the given string and assigns it to the EntityId field.
+func (o *TrackReport) SetEntityId(v string) {
+	o.EntityId = &v
+}
+
+// GetApplicationId returns the ApplicationId field value if set, zero value otherwise.
+func (o *TrackReport) GetApplicationId() string {
+	if o == nil || IsNil(o.ApplicationId) {
+		var ret string
+		return ret
+	}
+	return *o.ApplicationId
+}
+
+// GetApplicationIdOk returns a tuple with the ApplicationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *TrackReport) GetApplicationIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ApplicationId) {
+		return nil, false
+	}
+	return o.ApplicationId, true
+}
+
+// HasApplicationId returns a boolean if a field has been set.
+func (o *TrackReport) HasApplicationId() bool {
+	if o != nil && !IsNil(o.ApplicationId) {
+		return true
+	}
+
+	return false
+}
+
+// SetApplicationId gets a reference to the given string and assigns it to the ApplicationId field.
+func (o *TrackReport) SetApplicationId(v string) {
+	o.ApplicationId = &v
+}
+
 func (o TrackReport) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -393,11 +563,17 @@ func (o TrackReport) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.NotificationType) {
 		toSerialize["notificationType"] = o.NotificationType
 	}
+	if !IsNil(o.EventId) {
+		toSerialize["eventId"] = o.EventId
+	}
 	if !IsNil(o.Domain) {
 		toSerialize["domain"] = o.Domain
 	}
 	if !IsNil(o.Recipient) {
 		toSerialize["recipient"] = o.Recipient
+	}
+	if !IsNil(o.Sender) {
+		toSerialize["sender"] = o.Sender
 	}
 	if !IsNil(o.Url) {
 		toSerialize["url"] = o.Url
@@ -419,6 +595,15 @@ func (o TrackReport) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.GeoLocation) {
 		toSerialize["geoLocation"] = o.GeoLocation
+	}
+	if !IsNil(o.CampaignReferenceId) {
+		toSerialize["campaignReferenceId"] = o.CampaignReferenceId
+	}
+	if !IsNil(o.EntityId) {
+		toSerialize["entityId"] = o.EntityId
+	}
+	if !IsNil(o.ApplicationId) {
+		toSerialize["applicationId"] = o.ApplicationId
 	}
 	return toSerialize, nil
 }

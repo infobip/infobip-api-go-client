@@ -20,9 +20,10 @@ type CallRoutingCriteriaType string
 
 // List of CallRoutingCriteriaType
 const (
-	CALLROUTINGCRITERIATYPE_PHONE  CallRoutingCriteriaType = "PHONE"
-	CALLROUTINGCRITERIATYPE_SIP    CallRoutingCriteriaType = "SIP"
-	CALLROUTINGCRITERIATYPE_WEBRTC CallRoutingCriteriaType = "WEBRTC"
+	CALLROUTINGCRITERIATYPE_PHONE       CallRoutingCriteriaType = "PHONE"
+	CALLROUTINGCRITERIATYPE_SIP         CallRoutingCriteriaType = "SIP"
+	CALLROUTINGCRITERIATYPE_WEBRTC      CallRoutingCriteriaType = "WEBRTC"
+	CALLROUTINGCRITERIATYPE_APPLICATION CallRoutingCriteriaType = "APPLICATION"
 )
 
 // All allowed values of CallRoutingCriteriaType enum
@@ -30,6 +31,7 @@ var AllowedCallRoutingCriteriaTypeEnumValues = []CallRoutingCriteriaType{
 	"PHONE",
 	"SIP",
 	"WEBRTC",
+	"APPLICATION",
 }
 
 func (v *CallRoutingCriteriaType) UnmarshalJSON(src []byte) error {

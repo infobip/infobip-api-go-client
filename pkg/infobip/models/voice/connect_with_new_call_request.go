@@ -21,20 +21,23 @@ var _ MappedNullable = &ConnectWithNewCallRequest{}
 
 // ConnectWithNewCallRequest struct for ConnectWithNewCallRequest
 type ConnectWithNewCallRequest struct {
-	CallRequest *ActionCallRequest
+	CallRequest ActionCallRequest
 	// Indicates whether to connect calls on early media. Otherwise, the calls are connected after being established. Cannot be `true` when `ringbackGeneration` is enabled.
 	ConnectOnEarlyMedia *bool
 	RingbackGeneration  *RingbackGeneration
 	ConferenceRequest   *ActionConferenceRequest
 }
 
+type _ConnectWithNewCallRequest ConnectWithNewCallRequest
+
 // NewConnectWithNewCallRequest instantiates a new ConnectWithNewCallRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewConnectWithNewCallRequest() *ConnectWithNewCallRequest {
+func NewConnectWithNewCallRequest(callRequest ActionCallRequest) *ConnectWithNewCallRequest {
 	this := ConnectWithNewCallRequest{}
+	this.CallRequest = callRequest
 	var connectOnEarlyMedia bool = false
 	this.ConnectOnEarlyMedia = &connectOnEarlyMedia
 	return &this
@@ -51,36 +54,28 @@ func NewConnectWithNewCallRequestWithDefaults() *ConnectWithNewCallRequest {
 	return &this
 }
 
-// GetCallRequest returns the CallRequest field value if set, zero value otherwise.
+// GetCallRequest returns the CallRequest field value
 func (o *ConnectWithNewCallRequest) GetCallRequest() ActionCallRequest {
-	if o == nil || IsNil(o.CallRequest) {
+	if o == nil {
 		var ret ActionCallRequest
 		return ret
 	}
-	return *o.CallRequest
+
+	return o.CallRequest
 }
 
-// GetCallRequestOk returns a tuple with the CallRequest field value if set, nil otherwise
+// GetCallRequestOk returns a tuple with the CallRequest field value
 // and a boolean to check if the value has been set.
 func (o *ConnectWithNewCallRequest) GetCallRequestOk() (*ActionCallRequest, bool) {
-	if o == nil || IsNil(o.CallRequest) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CallRequest, true
+	return &o.CallRequest, true
 }
 
-// HasCallRequest returns a boolean if a field has been set.
-func (o *ConnectWithNewCallRequest) HasCallRequest() bool {
-	if o != nil && !IsNil(o.CallRequest) {
-		return true
-	}
-
-	return false
-}
-
-// SetCallRequest gets a reference to the given ActionCallRequest and assigns it to the CallRequest field.
+// SetCallRequest sets field value
 func (o *ConnectWithNewCallRequest) SetCallRequest(v ActionCallRequest) {
-	o.CallRequest = &v
+	o.CallRequest = v
 }
 
 // GetConnectOnEarlyMedia returns the ConnectOnEarlyMedia field value if set, zero value otherwise.
@@ -189,9 +184,7 @@ func (o ConnectWithNewCallRequest) MarshalJSON() ([]byte, error) {
 
 func (o ConnectWithNewCallRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.CallRequest) {
-		toSerialize["callRequest"] = o.CallRequest
-	}
+	toSerialize["callRequest"] = o.CallRequest
 	if !IsNil(o.ConnectOnEarlyMedia) {
 		toSerialize["connectOnEarlyMedia"] = o.ConnectOnEarlyMedia
 	}

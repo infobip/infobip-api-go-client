@@ -23,8 +23,10 @@ var _ MappedNullable = &MessageDeliveryReporting{}
 type MessageDeliveryReporting struct {
 	// The URL on your call back server where a delivery report will be sent. If your URL becomes unavailable then the [retry cycle](https://www.infobip.com/docs/sms/api#notify-url) uses the following formula: `1min + (1min * retryNumber * retryNumber)`.
 	Url *string
-	// The real-time intermediate delivery report containing GSM error codes, messages status, pricing, network and country codes, etc., which will be sent on your callback server. Defaults to `false`.
+	// The real-time intermediate delivery report containing GSM error codes, messages status, pricing, network and country codes, etc., which will be sent on your callback server. The default setting is `false`.
 	IntermediateReport *bool
+	// Allows you to receive delivery reports for all triggered failover steps, not just the final one (either the first successful or the last failed step). The default setting is `false`.
+	ReceiveTriggeredFailoverReports *bool
 }
 
 // NewMessageDeliveryReporting instantiates a new MessageDeliveryReporting object
@@ -110,6 +112,38 @@ func (o *MessageDeliveryReporting) SetIntermediateReport(v bool) {
 	o.IntermediateReport = &v
 }
 
+// GetReceiveTriggeredFailoverReports returns the ReceiveTriggeredFailoverReports field value if set, zero value otherwise.
+func (o *MessageDeliveryReporting) GetReceiveTriggeredFailoverReports() bool {
+	if o == nil || IsNil(o.ReceiveTriggeredFailoverReports) {
+		var ret bool
+		return ret
+	}
+	return *o.ReceiveTriggeredFailoverReports
+}
+
+// GetReceiveTriggeredFailoverReportsOk returns a tuple with the ReceiveTriggeredFailoverReports field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageDeliveryReporting) GetReceiveTriggeredFailoverReportsOk() (*bool, bool) {
+	if o == nil || IsNil(o.ReceiveTriggeredFailoverReports) {
+		return nil, false
+	}
+	return o.ReceiveTriggeredFailoverReports, true
+}
+
+// HasReceiveTriggeredFailoverReports returns a boolean if a field has been set.
+func (o *MessageDeliveryReporting) HasReceiveTriggeredFailoverReports() bool {
+	if o != nil && !IsNil(o.ReceiveTriggeredFailoverReports) {
+		return true
+	}
+
+	return false
+}
+
+// SetReceiveTriggeredFailoverReports gets a reference to the given bool and assigns it to the ReceiveTriggeredFailoverReports field.
+func (o *MessageDeliveryReporting) SetReceiveTriggeredFailoverReports(v bool) {
+	o.ReceiveTriggeredFailoverReports = &v
+}
+
 func (o MessageDeliveryReporting) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -125,6 +159,9 @@ func (o MessageDeliveryReporting) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.IntermediateReport) {
 		toSerialize["intermediateReport"] = o.IntermediateReport
+	}
+	if !IsNil(o.ReceiveTriggeredFailoverReports) {
+		toSerialize["receiveTriggeredFailoverReports"] = o.ReceiveTriggeredFailoverReports
 	}
 	return toSerialize, nil
 }

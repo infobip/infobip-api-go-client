@@ -30,6 +30,8 @@ type RecordingFile struct {
 	Size *int64
 	// File creation time.
 	CreationTime *Time
+	// File expiration time.
+	ExpirationTime *Time
 	// File duration in seconds.
 	Duration *int64
 	// Date and time when the recording started.
@@ -38,8 +40,8 @@ type RecordingFile struct {
 	EndTime          *Time
 	Location         *RecordingFileLocation
 	SftpUploadStatus *SftpUploadStatus
-	// Custom data.
-	CustomData *map[string]string
+	// A map that associates audio channels with their respective call IDs for managing multichannel composed recordings.
+	MultichannelMappingData *map[string]string
 }
 
 type _RecordingFile RecordingFile
@@ -209,6 +211,38 @@ func (o *RecordingFile) SetCreationTime(v Time) {
 	o.CreationTime = &v
 }
 
+// GetExpirationTime returns the ExpirationTime field value if set, zero value otherwise.
+func (o *RecordingFile) GetExpirationTime() Time {
+	if o == nil || IsNil(o.ExpirationTime) {
+		var ret Time
+		return ret
+	}
+	return *o.ExpirationTime
+}
+
+// GetExpirationTimeOk returns a tuple with the ExpirationTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *RecordingFile) GetExpirationTimeOk() (*Time, bool) {
+	if o == nil || IsNil(o.ExpirationTime) {
+		return nil, false
+	}
+	return o.ExpirationTime, true
+}
+
+// HasExpirationTime returns a boolean if a field has been set.
+func (o *RecordingFile) HasExpirationTime() bool {
+	if o != nil && !IsNil(o.ExpirationTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpirationTime gets a reference to the given Time and assigns it to the ExpirationTime field.
+func (o *RecordingFile) SetExpirationTime(v Time) {
+	o.ExpirationTime = &v
+}
+
 // GetDuration returns the Duration field value if set, zero value otherwise.
 func (o *RecordingFile) GetDuration() int64 {
 	if o == nil || IsNil(o.Duration) {
@@ -369,36 +403,36 @@ func (o *RecordingFile) SetSftpUploadStatus(v SftpUploadStatus) {
 	o.SftpUploadStatus = &v
 }
 
-// GetCustomData returns the CustomData field value if set, zero value otherwise.
-func (o *RecordingFile) GetCustomData() map[string]string {
-	if o == nil || IsNil(o.CustomData) {
+// GetMultichannelMappingData returns the MultichannelMappingData field value if set, zero value otherwise.
+func (o *RecordingFile) GetMultichannelMappingData() map[string]string {
+	if o == nil || IsNil(o.MultichannelMappingData) {
 		var ret map[string]string
 		return ret
 	}
-	return *o.CustomData
+	return *o.MultichannelMappingData
 }
 
-// GetCustomDataOk returns a tuple with the CustomData field value if set, nil otherwise
+// GetMultichannelMappingDataOk returns a tuple with the MultichannelMappingData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RecordingFile) GetCustomDataOk() (*map[string]string, bool) {
-	if o == nil || IsNil(o.CustomData) {
+func (o *RecordingFile) GetMultichannelMappingDataOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.MultichannelMappingData) {
 		return nil, false
 	}
-	return o.CustomData, true
+	return o.MultichannelMappingData, true
 }
 
-// HasCustomData returns a boolean if a field has been set.
-func (o *RecordingFile) HasCustomData() bool {
-	if o != nil && !IsNil(o.CustomData) {
+// HasMultichannelMappingData returns a boolean if a field has been set.
+func (o *RecordingFile) HasMultichannelMappingData() bool {
+	if o != nil && !IsNil(o.MultichannelMappingData) {
 		return true
 	}
 
 	return false
 }
 
-// SetCustomData gets a reference to the given map[string]string and assigns it to the CustomData field.
-func (o *RecordingFile) SetCustomData(v map[string]string) {
-	o.CustomData = &v
+// SetMultichannelMappingData gets a reference to the given map[string]string and assigns it to the MultichannelMappingData field.
+func (o *RecordingFile) SetMultichannelMappingData(v map[string]string) {
+	o.MultichannelMappingData = &v
 }
 
 func (o RecordingFile) MarshalJSON() ([]byte, error) {
@@ -422,6 +456,9 @@ func (o RecordingFile) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CreationTime) {
 		toSerialize["creationTime"] = o.CreationTime
 	}
+	if !IsNil(o.ExpirationTime) {
+		toSerialize["expirationTime"] = o.ExpirationTime
+	}
 	if !IsNil(o.Duration) {
 		toSerialize["duration"] = o.Duration
 	}
@@ -437,8 +474,8 @@ func (o RecordingFile) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SftpUploadStatus) {
 		toSerialize["sftpUploadStatus"] = o.SftpUploadStatus
 	}
-	if !IsNil(o.CustomData) {
-		toSerialize["customData"] = o.CustomData
+	if !IsNil(o.MultichannelMappingData) {
+		toSerialize["multichannelMappingData"] = o.MultichannelMappingData
 	}
 	return toSerialize, nil
 }

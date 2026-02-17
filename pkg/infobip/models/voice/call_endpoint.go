@@ -17,10 +17,12 @@ import (
 
 // CallEndpoint Call endpoint. Represents a caller for the inbound calls and a callee for the outbound calls.
 type CallEndpoint struct {
-	PhoneEndpoint  *PhoneEndpoint
-	SipEndpoint    *SipEndpoint
-	ViberEndpoint  *ViberEndpoint
-	WebRtcEndpoint *WebRtcEndpoint
+	PhoneEndpoint     *PhoneEndpoint
+	SipEndpoint       *SipEndpoint
+	ViberEndpoint     *ViberEndpoint
+	WebRtcEndpoint    *WebRtcEndpoint
+	WebsocketEndpoint *WebsocketEndpoint
+	WhatsAppEndpoint  *WhatsAppEndpoint
 }
 
 // PhoneEndpointAsCallEndpoint is a convenience function that returns PhoneEndpoint wrapped in CallEndpoint
@@ -48,6 +50,20 @@ func ViberEndpointAsCallEndpoint(v *ViberEndpoint) CallEndpoint {
 func WebRtcEndpointAsCallEndpoint(v *WebRtcEndpoint) CallEndpoint {
 	return CallEndpoint{
 		WebRtcEndpoint: v,
+	}
+}
+
+// WebsocketEndpointAsCallEndpoint is a convenience function that returns WebsocketEndpoint wrapped in CallEndpoint
+func WebsocketEndpointAsCallEndpoint(v *WebsocketEndpoint) CallEndpoint {
+	return CallEndpoint{
+		WebsocketEndpoint: v,
+	}
+}
+
+// WhatsAppEndpointAsCallEndpoint is a convenience function that returns WhatsAppEndpoint wrapped in CallEndpoint
+func WhatsAppEndpointAsCallEndpoint(v *WhatsAppEndpoint) CallEndpoint {
+	return CallEndpoint{
+		WhatsAppEndpoint: v,
 	}
 }
 
@@ -120,6 +136,36 @@ func (dst *CallEndpoint) UnmarshalJSON(data []byte) error {
 			dst.WebRtcEndpoint = nil
 		}
 	}
+	// check if the discriminator value is 'WEBSOCKET'
+	if jsonDict["type"] == "WEBSOCKET" {
+		// try to unmarshal JSON data into WebsocketEndpoint
+		err = json.Unmarshal(data, &dst.WebsocketEndpoint)
+		if err == nil {
+			jsonWebsocketEndpoint, _ := json.Marshal(dst.WebsocketEndpoint)
+			if string(jsonWebsocketEndpoint) == "{}" { // empty struct
+				dst.WebsocketEndpoint = nil
+			} else {
+				return nil // data stored in dst.WebsocketEndpoint, return on the first match
+			}
+		} else {
+			dst.WebsocketEndpoint = nil
+		}
+	}
+	// check if the discriminator value is 'WHATSAPP'
+	if jsonDict["type"] == "WHATSAPP" {
+		// try to unmarshal JSON data into WhatsAppEndpoint
+		err = json.Unmarshal(data, &dst.WhatsAppEndpoint)
+		if err == nil {
+			jsonWhatsAppEndpoint, _ := json.Marshal(dst.WhatsAppEndpoint)
+			if string(jsonWhatsAppEndpoint) == "{}" { // empty struct
+				dst.WhatsAppEndpoint = nil
+			} else {
+				return nil // data stored in dst.WhatsAppEndpoint, return on the first match
+			}
+		} else {
+			dst.WhatsAppEndpoint = nil
+		}
+	}
 	return fmt.Errorf("Data failed to match schemas in anyOf(CallEndpoint)")
 }
 
@@ -136,6 +182,12 @@ func (src CallEndpoint) MarshalJSON() ([]byte, error) {
 	}
 	if src.WebRtcEndpoint != nil {
 		return json.Marshal(&src.WebRtcEndpoint)
+	}
+	if src.WebsocketEndpoint != nil {
+		return json.Marshal(&src.WebsocketEndpoint)
+	}
+	if src.WhatsAppEndpoint != nil {
+		return json.Marshal(&src.WhatsAppEndpoint)
 	}
 	return nil, nil // no data in anyOf schemas
 }
@@ -156,6 +208,12 @@ func (obj *CallEndpoint) GetActualInstance() interface{} {
 	}
 	if obj.WebRtcEndpoint != nil {
 		return obj.WebRtcEndpoint
+	}
+	if obj.WebsocketEndpoint != nil {
+		return obj.WebsocketEndpoint
+	}
+	if obj.WhatsAppEndpoint != nil {
+		return obj.WhatsAppEndpoint
 	}
 	// all schemas are nil
 	return nil

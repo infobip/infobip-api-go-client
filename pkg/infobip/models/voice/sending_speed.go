@@ -19,7 +19,7 @@ import (
 // checks if the SendingSpeed type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &SendingSpeed{}
 
-// SendingSpeed Sending rate defined in number of messages sent per second, minute, hour or day. First message will be sent immediately (or at _sendAt_ time if scheduling is used) and subsequent messages will be sent respecting defined speed. For example, if _sendingSpeed_ is defined as 10 messages per hour, messages will be sent every 6 minutes. If this parameter is defined, _validityPeriod_ is ignored.
+// SendingSpeed Sending rate defined in number of messages sent per second, minute, hour or day. You may wish to use this to allow your systems or agents to handle large amounts of incoming traffic. Not setting a send speed limit can overwhelm your resources with incoming traffic. If this parameter is defined, _validityPeriod_ is ignored.
 type SendingSpeed struct {
 	// Defines the number of messages that will be sent per specified time unit.
 	Speed *int32

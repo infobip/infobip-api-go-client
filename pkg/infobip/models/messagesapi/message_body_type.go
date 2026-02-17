@@ -31,6 +31,13 @@ const (
 	MESSAGEBODYTYPE_LOCATION               MessageBodyType = "LOCATION"
 	MESSAGEBODYTYPE_CONTACT                MessageBodyType = "CONTACT"
 	MESSAGEBODYTYPE_STICKER                MessageBodyType = "STICKER"
+	MESSAGEBODYTYPE_PRODUCT                MessageBodyType = "PRODUCT"
+	MESSAGEBODYTYPE_MIXED                  MessageBodyType = "MIXED"
+	MESSAGEBODYTYPE_FLOW                   MessageBodyType = "FLOW"
+	MESSAGEBODYTYPE_TIME_PICKER            MessageBodyType = "TIME_PICKER"
+	MESSAGEBODYTYPE_ORDER_REQUEST          MessageBodyType = "ORDER_REQUEST"
+	MESSAGEBODYTYPE_ORDER_STATUS           MessageBodyType = "ORDER_STATUS"
+	MESSAGEBODYTYPE_FORM                   MessageBodyType = "FORM"
 )
 
 // All allowed values of MessageBodyType enum
@@ -46,6 +53,13 @@ var AllowedMessageBodyTypeEnumValues = []MessageBodyType{
 	"LOCATION",
 	"CONTACT",
 	"STICKER",
+	"PRODUCT",
+	"MIXED",
+	"FLOW",
+	"TIME_PICKER",
+	"ORDER_REQUEST",
+	"ORDER_STATUS",
+	"FORM",
 }
 
 func (v *MessageBodyType) UnmarshalJSON(src []byte) error {

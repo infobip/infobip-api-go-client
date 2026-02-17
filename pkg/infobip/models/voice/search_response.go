@@ -29,12 +29,17 @@ type SearchResponse struct {
 	Id *string
 	// Scenario name.
 	Name *string
-	// Array of IVR actions defining scenario. NOTE: Answering Machine Detection, Call Recording and Speech Recognition (used for Capture action) are add-on features. To enable these add-ons, please contact our [sales](https://www.infobip.com/contact) organisation.
-	Script []ScriptInner
+	// The URL on the client's callback server on which the Delivery report will be sent.
+	NotifyUrl *string
+	// Preferred Delivery report content type. Can be `application/json` or `application/xml`.
+	NotifyContentType *string
+	// Indicates if all calls using the scenario should be recorded.
+	Record *bool
+	Script *string
 	// Update timestamp
 	UpdateTime *Time
 	// Last usage date. `null` for scenarios that are used last time before `2024-01-01`.
-	LastUsageDate *Time
+	LastUsageDate *string
 }
 
 // NewSearchResponse instantiates a new SearchResponse object
@@ -184,18 +189,114 @@ func (o *SearchResponse) SetName(v string) {
 	o.Name = &v
 }
 
-// GetScript returns the Script field value if set, zero value otherwise.
-func (o *SearchResponse) GetScript() []ScriptInner {
-	if o == nil || IsNil(o.Script) {
-		var ret []ScriptInner
+// GetNotifyUrl returns the NotifyUrl field value if set, zero value otherwise.
+func (o *SearchResponse) GetNotifyUrl() string {
+	if o == nil || IsNil(o.NotifyUrl) {
+		var ret string
 		return ret
 	}
-	return o.Script
+	return *o.NotifyUrl
+}
+
+// GetNotifyUrlOk returns a tuple with the NotifyUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchResponse) GetNotifyUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.NotifyUrl) {
+		return nil, false
+	}
+	return o.NotifyUrl, true
+}
+
+// HasNotifyUrl returns a boolean if a field has been set.
+func (o *SearchResponse) HasNotifyUrl() bool {
+	if o != nil && !IsNil(o.NotifyUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyUrl gets a reference to the given string and assigns it to the NotifyUrl field.
+func (o *SearchResponse) SetNotifyUrl(v string) {
+	o.NotifyUrl = &v
+}
+
+// GetNotifyContentType returns the NotifyContentType field value if set, zero value otherwise.
+func (o *SearchResponse) GetNotifyContentType() string {
+	if o == nil || IsNil(o.NotifyContentType) {
+		var ret string
+		return ret
+	}
+	return *o.NotifyContentType
+}
+
+// GetNotifyContentTypeOk returns a tuple with the NotifyContentType field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchResponse) GetNotifyContentTypeOk() (*string, bool) {
+	if o == nil || IsNil(o.NotifyContentType) {
+		return nil, false
+	}
+	return o.NotifyContentType, true
+}
+
+// HasNotifyContentType returns a boolean if a field has been set.
+func (o *SearchResponse) HasNotifyContentType() bool {
+	if o != nil && !IsNil(o.NotifyContentType) {
+		return true
+	}
+
+	return false
+}
+
+// SetNotifyContentType gets a reference to the given string and assigns it to the NotifyContentType field.
+func (o *SearchResponse) SetNotifyContentType(v string) {
+	o.NotifyContentType = &v
+}
+
+// GetRecord returns the Record field value if set, zero value otherwise.
+func (o *SearchResponse) GetRecord() bool {
+	if o == nil || IsNil(o.Record) {
+		var ret bool
+		return ret
+	}
+	return *o.Record
+}
+
+// GetRecordOk returns a tuple with the Record field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchResponse) GetRecordOk() (*bool, bool) {
+	if o == nil || IsNil(o.Record) {
+		return nil, false
+	}
+	return o.Record, true
+}
+
+// HasRecord returns a boolean if a field has been set.
+func (o *SearchResponse) HasRecord() bool {
+	if o != nil && !IsNil(o.Record) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecord gets a reference to the given bool and assigns it to the Record field.
+func (o *SearchResponse) SetRecord(v bool) {
+	o.Record = &v
+}
+
+// GetScript returns the Script field value if set, zero value otherwise.
+func (o *SearchResponse) GetScript() string {
+	if o == nil || IsNil(o.Script) {
+		var ret string
+		return ret
+	}
+	return *o.Script
 }
 
 // GetScriptOk returns a tuple with the Script field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchResponse) GetScriptOk() ([]ScriptInner, bool) {
+func (o *SearchResponse) GetScriptOk() (*string, bool) {
 	if o == nil || IsNil(o.Script) {
 		return nil, false
 	}
@@ -211,9 +312,9 @@ func (o *SearchResponse) HasScript() bool {
 	return false
 }
 
-// SetScript gets a reference to the given []ScriptInner and assigns it to the Script field.
-func (o *SearchResponse) SetScript(v []ScriptInner) {
-	o.Script = v
+// SetScript gets a reference to the given string and assigns it to the Script field.
+func (o *SearchResponse) SetScript(v string) {
+	o.Script = &v
 }
 
 // GetUpdateTime returns the UpdateTime field value if set, zero value otherwise.
@@ -249,9 +350,9 @@ func (o *SearchResponse) SetUpdateTime(v Time) {
 }
 
 // GetLastUsageDate returns the LastUsageDate field value if set, zero value otherwise.
-func (o *SearchResponse) GetLastUsageDate() Time {
+func (o *SearchResponse) GetLastUsageDate() string {
 	if o == nil || IsNil(o.LastUsageDate) {
-		var ret Time
+		var ret string
 		return ret
 	}
 	return *o.LastUsageDate
@@ -259,7 +360,7 @@ func (o *SearchResponse) GetLastUsageDate() Time {
 
 // GetLastUsageDateOk returns a tuple with the LastUsageDate field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchResponse) GetLastUsageDateOk() (*Time, bool) {
+func (o *SearchResponse) GetLastUsageDateOk() (*string, bool) {
 	if o == nil || IsNil(o.LastUsageDate) {
 		return nil, false
 	}
@@ -275,8 +376,8 @@ func (o *SearchResponse) HasLastUsageDate() bool {
 	return false
 }
 
-// SetLastUsageDate gets a reference to the given Time and assigns it to the LastUsageDate field.
-func (o *SearchResponse) SetLastUsageDate(v Time) {
+// SetLastUsageDate gets a reference to the given string and assigns it to the LastUsageDate field.
+func (o *SearchResponse) SetLastUsageDate(v string) {
 	o.LastUsageDate = &v
 }
 
@@ -301,6 +402,15 @@ func (o SearchResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.NotifyUrl) {
+		toSerialize["notifyUrl"] = o.NotifyUrl
+	}
+	if !IsNil(o.NotifyContentType) {
+		toSerialize["notifyContentType"] = o.NotifyContentType
+	}
+	if !IsNil(o.Record) {
+		toSerialize["record"] = o.Record
 	}
 	if !IsNil(o.Script) {
 		toSerialize["script"] = o.Script

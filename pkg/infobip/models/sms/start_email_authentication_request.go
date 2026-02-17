@@ -25,6 +25,8 @@ type StartEmailAuthenticationRequest struct {
 	ApplicationId string
 	// Use this parameter if you wish to override the sender from the [created](#channels/sms/create-2fa-email-message-template) Email message template parameter `from`.
 	From *string
+	// Key value pairs that will be replaced when using personalized opt out landing page. Placeholder keys should NOT contain curly brackets and should NOT contain a `pin` placeholder. Valid example: `\"landingPagePlaceholders\":{\"name\":\"John\", \"surname\": \"Smith\"}`
+	LandingPagePlaceholders *map[string]string
 	// The ID of the Email message template (message with the PIN placeholder) that is sent to the recipient.
 	MessageId string
 	// Key value pairs that will be replaced during message sending. Placeholder keys should NOT contain curly brackets and should NOT contain a `pin` placeholder. Valid example: `\"placeholders\":{\"firstName\":\"John\"}`
@@ -111,6 +113,38 @@ func (o *StartEmailAuthenticationRequest) HasFrom() bool {
 // SetFrom gets a reference to the given string and assigns it to the From field.
 func (o *StartEmailAuthenticationRequest) SetFrom(v string) {
 	o.From = &v
+}
+
+// GetLandingPagePlaceholders returns the LandingPagePlaceholders field value if set, zero value otherwise.
+func (o *StartEmailAuthenticationRequest) GetLandingPagePlaceholders() map[string]string {
+	if o == nil || IsNil(o.LandingPagePlaceholders) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.LandingPagePlaceholders
+}
+
+// GetLandingPagePlaceholdersOk returns a tuple with the LandingPagePlaceholders field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *StartEmailAuthenticationRequest) GetLandingPagePlaceholdersOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.LandingPagePlaceholders) {
+		return nil, false
+	}
+	return o.LandingPagePlaceholders, true
+}
+
+// HasLandingPagePlaceholders returns a boolean if a field has been set.
+func (o *StartEmailAuthenticationRequest) HasLandingPagePlaceholders() bool {
+	if o != nil && !IsNil(o.LandingPagePlaceholders) {
+		return true
+	}
+
+	return false
+}
+
+// SetLandingPagePlaceholders gets a reference to the given map[string]string and assigns it to the LandingPagePlaceholders field.
+func (o *StartEmailAuthenticationRequest) SetLandingPagePlaceholders(v map[string]string) {
+	o.LandingPagePlaceholders = &v
 }
 
 // GetMessageId returns the MessageId field value
@@ -206,6 +240,9 @@ func (o StartEmailAuthenticationRequest) ToMap() (map[string]interface{}, error)
 	toSerialize["applicationId"] = o.ApplicationId
 	if !IsNil(o.From) {
 		toSerialize["from"] = o.From
+	}
+	if !IsNil(o.LandingPagePlaceholders) {
+		toSerialize["landingPagePlaceholders"] = o.LandingPagePlaceholders
 	}
 	toSerialize["messageId"] = o.MessageId
 	if !IsNil(o.Placeholders) {

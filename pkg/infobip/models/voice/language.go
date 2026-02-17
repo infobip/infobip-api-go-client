@@ -56,6 +56,7 @@ const (
 	LANGUAGE_IT        Language = "it"
 	LANGUAGE_JA        Language = "ja"
 	LANGUAGE_KN        Language = "kn"
+	LANGUAGE_KK_KZ     Language = "kk-kz"
 	LANGUAGE_KO        Language = "ko"
 	LANGUAGE_MS        Language = "ms"
 	LANGUAGE_ML        Language = "ml"
@@ -68,6 +69,7 @@ const (
 	LANGUAGE_SK        Language = "sk"
 	LANGUAGE_SL        Language = "sl"
 	LANGUAGE_ES        Language = "es"
+	LANGUAGE_ES_AR     Language = "es-ar"
 	LANGUAGE_ES_GL     Language = "es-gl"
 	LANGUAGE_ES_MX     Language = "es-mx"
 	LANGUAGE_SV        Language = "sv"
@@ -76,10 +78,14 @@ const (
 	LANGUAGE_TH        Language = "th"
 	LANGUAGE_TR        Language = "tr"
 	LANGUAGE_UK        Language = "uk"
+	LANGUAGE_UZ_UZ     Language = "uz-uz"
 	LANGUAGE_VI        Language = "vi"
 	LANGUAGE_WLS       Language = "wls"
 	LANGUAGE_AR_MA     Language = "ar-ma"
 	LANGUAGE_UR_PK     Language = "ur-pk"
+	LANGUAGE_MR_IN     Language = "mr-in"
+	LANGUAGE_SW_KE     Language = "sw-ke"
+	LANGUAGE_SW_TZ     Language = "sw-tz"
 )
 
 // All allowed values of Language enum
@@ -120,6 +126,7 @@ var AllowedLanguageEnumValues = []Language{
 	"it",
 	"ja",
 	"kn",
+	"kk-kz",
 	"ko",
 	"ms",
 	"ml",
@@ -132,6 +139,7 @@ var AllowedLanguageEnumValues = []Language{
 	"sk",
 	"sl",
 	"es",
+	"es-ar",
 	"es-gl",
 	"es-mx",
 	"sv",
@@ -140,10 +148,14 @@ var AllowedLanguageEnumValues = []Language{
 	"th",
 	"tr",
 	"uk",
+	"uz-uz",
 	"vi",
 	"wls",
 	"ar-ma",
 	"ur-pk",
+	"mr-in",
+	"sw-ke",
+	"sw-tz",
 }
 
 func (v *Language) UnmarshalJSON(src []byte) error {

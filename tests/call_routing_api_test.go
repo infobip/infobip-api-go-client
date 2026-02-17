@@ -11,6 +11,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	CallRoutingRoutesEndpoint    = "/callrouting/1/routes"
+	CallRoutingRouteByIdEndpoint = "/callrouting/1/routes/%s"
+)
+
 func TestShouldGetCallRoutes(t *testing.T) {
 	givenId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenName := "SIP endpoint route"
@@ -106,7 +111,7 @@ func TestShouldGetCallRoutes(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/callrouting/1/routes", givenResponse, 200)
+	SetUpSuccessRequest("GET", CallRoutingRoutesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		CallRoutingAPI.
@@ -247,7 +252,7 @@ func TestShouldPostCallRoute(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/callrouting/1/routes", givenResponse, 200)
+	SetUpSuccessRequest("POST", CallRoutingRoutesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		CallRoutingAPI.
@@ -318,7 +323,7 @@ func TestShouldGetCallRoute(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/callrouting/1/routes/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(CallRoutingRouteByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		CallRoutingAPI.
@@ -416,7 +421,7 @@ func TestShouldPutCallRoute(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/callrouting/1/routes/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(CallRoutingRouteByIdEndpoint, givenId), givenResponse, 200)
 
 	sipEndpoint := voice.NewCallRoutingSipEndpoint(givenDestinationsValueSipTrunkId)
 	sipEndpoint.SetUsername(givenDestinationsValueUsername)
@@ -505,7 +510,7 @@ func TestShouldDeleteCallRoute(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/callrouting/1/routes/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(CallRoutingRouteByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		CallRoutingAPI.

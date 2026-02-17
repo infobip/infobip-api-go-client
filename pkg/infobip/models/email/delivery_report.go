@@ -38,10 +38,20 @@ type DeliveryReport struct {
 	BrowserLink *string
 	// The IP address that was used to send out the email.
 	SendingIp *string
+	// Number of times delivery was attempted for the email.
+	AttemptCount *int32
+	// This is the time in milliseconds between accepting the request and making the first delivery attempt to the destination.
+	TimeToFirstAttempt *int64
 	// Callback data sent through `callbackData` field in fully featured email.
 	CallbackData *string
 	// Destination email address.
 	To *string
+	// ID of a campaign that was sent in the message.
+	CampaignReferenceId *string
+	// Used when specifying an entity in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	EntityId *string
+	// Used when specifying an application in outbound send requests. It is also returned in notification events. For detailed usage, refer to the [documentation](https://www.infobip.com/docs/cpaas-x/application-and-entity-management).
+	ApplicationId *string
 }
 
 // NewDeliveryReport instantiates a new DeliveryReport object
@@ -383,6 +393,70 @@ func (o *DeliveryReport) SetSendingIp(v string) {
 	o.SendingIp = &v
 }
 
+// GetAttemptCount returns the AttemptCount field value if set, zero value otherwise.
+func (o *DeliveryReport) GetAttemptCount() int32 {
+	if o == nil || IsNil(o.AttemptCount) {
+		var ret int32
+		return ret
+	}
+	return *o.AttemptCount
+}
+
+// GetAttemptCountOk returns a tuple with the AttemptCount field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliveryReport) GetAttemptCountOk() (*int32, bool) {
+	if o == nil || IsNil(o.AttemptCount) {
+		return nil, false
+	}
+	return o.AttemptCount, true
+}
+
+// HasAttemptCount returns a boolean if a field has been set.
+func (o *DeliveryReport) HasAttemptCount() bool {
+	if o != nil && !IsNil(o.AttemptCount) {
+		return true
+	}
+
+	return false
+}
+
+// SetAttemptCount gets a reference to the given int32 and assigns it to the AttemptCount field.
+func (o *DeliveryReport) SetAttemptCount(v int32) {
+	o.AttemptCount = &v
+}
+
+// GetTimeToFirstAttempt returns the TimeToFirstAttempt field value if set, zero value otherwise.
+func (o *DeliveryReport) GetTimeToFirstAttempt() int64 {
+	if o == nil || IsNil(o.TimeToFirstAttempt) {
+		var ret int64
+		return ret
+	}
+	return *o.TimeToFirstAttempt
+}
+
+// GetTimeToFirstAttemptOk returns a tuple with the TimeToFirstAttempt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliveryReport) GetTimeToFirstAttemptOk() (*int64, bool) {
+	if o == nil || IsNil(o.TimeToFirstAttempt) {
+		return nil, false
+	}
+	return o.TimeToFirstAttempt, true
+}
+
+// HasTimeToFirstAttempt returns a boolean if a field has been set.
+func (o *DeliveryReport) HasTimeToFirstAttempt() bool {
+	if o != nil && !IsNil(o.TimeToFirstAttempt) {
+		return true
+	}
+
+	return false
+}
+
+// SetTimeToFirstAttempt gets a reference to the given int64 and assigns it to the TimeToFirstAttempt field.
+func (o *DeliveryReport) SetTimeToFirstAttempt(v int64) {
+	o.TimeToFirstAttempt = &v
+}
+
 // GetCallbackData returns the CallbackData field value if set, zero value otherwise.
 func (o *DeliveryReport) GetCallbackData() string {
 	if o == nil || IsNil(o.CallbackData) {
@@ -447,6 +521,102 @@ func (o *DeliveryReport) SetTo(v string) {
 	o.To = &v
 }
 
+// GetCampaignReferenceId returns the CampaignReferenceId field value if set, zero value otherwise.
+func (o *DeliveryReport) GetCampaignReferenceId() string {
+	if o == nil || IsNil(o.CampaignReferenceId) {
+		var ret string
+		return ret
+	}
+	return *o.CampaignReferenceId
+}
+
+// GetCampaignReferenceIdOk returns a tuple with the CampaignReferenceId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliveryReport) GetCampaignReferenceIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CampaignReferenceId) {
+		return nil, false
+	}
+	return o.CampaignReferenceId, true
+}
+
+// HasCampaignReferenceId returns a boolean if a field has been set.
+func (o *DeliveryReport) HasCampaignReferenceId() bool {
+	if o != nil && !IsNil(o.CampaignReferenceId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCampaignReferenceId gets a reference to the given string and assigns it to the CampaignReferenceId field.
+func (o *DeliveryReport) SetCampaignReferenceId(v string) {
+	o.CampaignReferenceId = &v
+}
+
+// GetEntityId returns the EntityId field value if set, zero value otherwise.
+func (o *DeliveryReport) GetEntityId() string {
+	if o == nil || IsNil(o.EntityId) {
+		var ret string
+		return ret
+	}
+	return *o.EntityId
+}
+
+// GetEntityIdOk returns a tuple with the EntityId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliveryReport) GetEntityIdOk() (*string, bool) {
+	if o == nil || IsNil(o.EntityId) {
+		return nil, false
+	}
+	return o.EntityId, true
+}
+
+// HasEntityId returns a boolean if a field has been set.
+func (o *DeliveryReport) HasEntityId() bool {
+	if o != nil && !IsNil(o.EntityId) {
+		return true
+	}
+
+	return false
+}
+
+// SetEntityId gets a reference to the given string and assigns it to the EntityId field.
+func (o *DeliveryReport) SetEntityId(v string) {
+	o.EntityId = &v
+}
+
+// GetApplicationId returns the ApplicationId field value if set, zero value otherwise.
+func (o *DeliveryReport) GetApplicationId() string {
+	if o == nil || IsNil(o.ApplicationId) {
+		var ret string
+		return ret
+	}
+	return *o.ApplicationId
+}
+
+// GetApplicationIdOk returns a tuple with the ApplicationId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DeliveryReport) GetApplicationIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ApplicationId) {
+		return nil, false
+	}
+	return o.ApplicationId, true
+}
+
+// HasApplicationId returns a boolean if a field has been set.
+func (o *DeliveryReport) HasApplicationId() bool {
+	if o != nil && !IsNil(o.ApplicationId) {
+		return true
+	}
+
+	return false
+}
+
+// SetApplicationId gets a reference to the given string and assigns it to the ApplicationId field.
+func (o *DeliveryReport) SetApplicationId(v string) {
+	o.ApplicationId = &v
+}
+
 func (o DeliveryReport) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -487,11 +657,26 @@ func (o DeliveryReport) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.SendingIp) {
 		toSerialize["sendingIp"] = o.SendingIp
 	}
+	if !IsNil(o.AttemptCount) {
+		toSerialize["attemptCount"] = o.AttemptCount
+	}
+	if !IsNil(o.TimeToFirstAttempt) {
+		toSerialize["timeToFirstAttempt"] = o.TimeToFirstAttempt
+	}
 	if !IsNil(o.CallbackData) {
 		toSerialize["callbackData"] = o.CallbackData
 	}
 	if !IsNil(o.To) {
 		toSerialize["to"] = o.To
+	}
+	if !IsNil(o.CampaignReferenceId) {
+		toSerialize["campaignReferenceId"] = o.CampaignReferenceId
+	}
+	if !IsNil(o.EntityId) {
+		toSerialize["entityId"] = o.EntityId
+	}
+	if !IsNil(o.ApplicationId) {
+		toSerialize["applicationId"] = o.ApplicationId
 	}
 	return toSerialize, nil
 }

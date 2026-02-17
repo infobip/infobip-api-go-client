@@ -22,9 +22,9 @@ var _ MappedNullable = &TemplateLocationHeader{}
 // TemplateLocationHeader struct for TemplateLocationHeader
 type TemplateLocationHeader struct {
 	Type TemplateHeaderType
-	// Latitude of a location.
+	// Latitude of the location.
 	Latitude float64
-	// Latitude of a location.
+	// Longitude of the location.
 	Longitude float64
 }
 

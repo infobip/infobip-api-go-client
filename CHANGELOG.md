@@ -5,6 +5,109 @@ All notable changes to the library will be documented in this file.
 The format of the file is based on [Keep a Changelog](http://keepachangelog.com/)
 and this library adheres to [Semantic Versioning](http://semver.org/) as mentioned in [README.md][readme] file.
 
+## [ [3.2.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.2.0)] - 2026-02-17
+### Added
+* Support for [Infobip RCS API](https://www.infobip.com/docs/api/channels/rcs)
+* Most recent feature set for:
+    * [Infobip SMS API](https://www.infobip.com/docs/api/channels/sms)
+    * [Infobip TFA API](https://www.infobip.com/docs/api/platform/2fa)
+    * [Infobip Messages API](https://www.infobip.com/docs/api/platform/messages-api)
+    * [Infobip Email API](https://www.infobip.com/docs/api/channels/email)
+    * [Infobip Voice API](https://www.infobip.com/docs/api/channels/voice)
+    * [Infobip Moments](https://www.infobip.com/docs/api/customer-engagement/moments)
+* Additional mock tests to verify the correctness of request payloads and response handling.
+
+### Changed
+
+**General:**
+    * Deprecated `Prefix` in client configuration when setting API key authentication, as the SDK now automatically prepends "App " to the API key, simplifying the configuration process and reducing potential errors in authentication setup. Alternatively you can provide single API key directly instead of a map.
+    * Enforcing usage of HTTPS when setting up base URL in client configuration.
+
+* **SMS:**
+    * Unified existing `InboundMessage` model with `MoReport`.
+    * Unified existing `InboundMessageResult` model with `ReportResponse`.
+    * Extended `CreateEmailMessageRequest`, `EmailMessage` with `LandingPageId`.
+    * Extended `LogsResponse` with `CursorPageInfo` to support cursor-based pagination in the Infobip SMS API.
+
+* **2FA:**
+    * Extended `ResendPinRequest`, `StartAuthenticationRequest` with `TrackDelivery`.
+    * Extended `StartAuthenticationResponse` with `ExternalMessageId`.
+    * Extended `StartEmailAuthenticationRequest` with `LandingPagePlaceholders`.
+    * Extended `TfaMessage`, `UpdateEmailMessageRequest` with `LandingPageId`.
+    * Extended `TrackReport` with `EventId`, `Sender`, `CampaignReferenceId`, `EntityId` and `ApplicationId`.
+
+* **Messages API:**
+    * Extended `ChannelsDestination` with `MessageId`.
+    * Extended `DefaultMessageRequestOptions` with `MessageOrdering`.
+    * Extended `MessageBodyType` with `PRODUCT`, `MIXED`, `FLOW`, `TIME_PICKER`, `ORDER_REQUEST`, `ORDER_STATUS` and `FORM` types.
+    * Extended `MessageButtonType` with `DIAL_PHONE` and `SHOW_LOCATION` types.
+    * Extended `MessageContent` with `SenderDisplayInfo`.
+    * Extended `MessageDeliveryReporting` with `ReceiveTriggeredFailoverReports`.
+    * Extended `MessageOpenUrlButton` with `PostbackData` and `OpenIn`.
+    * Extended `MessageOptions` with `TransliterationCode`, `CorrelationData`, `TrafficType`, `SessionRate` and `PrimaryDevice`.
+    * Extended `MoEvent` with `MessageCount` and `Metadata`.
+    * Extended `MoEventContentType` with `URL`, `FLOW_RESPONSE`, `PAYMENT_RESPONSE`, `FORM_RESPONSE` and `REACTION` types.
+    * Extended `OutboundTemplateChannel` with `VIBER_BM` type.
+    * Changed `Messages` array type from `RequestMessagesInner` to `BaseMessage` in `Request`.
+
+* **Email:**
+    * Extended `ApiReport` with `AttemptCount` and `TimeToFirstAttempt`.
+    * Extended `DeliveryReport` with `AttemptCount`, `TimeToFirstAttempt`, `CampaignReferenceId`, `EntityId` and `ApplicationId`.
+    * Extended `DomainResponse` with `BlocklistConfigurationLevel`.
+    * Extended `IpDetailResponse`, `IpResponse` with `IpAddresses` array of strings.
+
+* **Voice:**
+* Adjusted IVR models in script processing. Scenario scripting is now implemented as a raw string to increase usability of the feature. Scripts should be passed as strings to the IVR request model in all upcoming SDK versions. All related scripts models are removed.
+
+    * Extended `AddExistingCallRequest` with `Role` and `CustomData`.
+    * Extended `AddNewCallRequest` with `Role`.
+    * Extended `Call`, `CallLog`, `CallRequest` with `ExternalId`.
+    * Extended `CallEndpointType` with `WHATSAPP` and `WEBSOCKET` types.
+    * Extended `CallRecordingRequest` with `Channels`.
+    * Extended `CallRoutingCriteriaType` with `APPLICATION` type.
+    * Extended `CallRoutingEndpointType` with `WHATSAPP` and `WEBSOCKET` types.
+    * Extended `CallRoutingPhoneEndpoint`, `CallRoutingSipEndpoint` with `From` and `RingbackGeneration`.
+    * Extended `CallRoutingRouteResponse` with `Status` and `Order`.
+    * Changed `Text` field in `ConferenceBroadcastWebrtcTextRequest` and `DialogBroadcastWebrtcTextRequest` to `Message`.
+    * Changed `Platform` field to `ApplicationId` and `CallRecordings` array type to `CallRecording` in `ConferenceRecording`.
+    * Changed `ComposedFiles` array type from `RecordingFile` to `PublicRecordingFile` in `ConferenceRecordingLog`, `DialogRecordingLog`, `DialogRecordingResponse`.
+    * Changed `Results` array type from `ConferenceRecording` to `PublicConferenceRecording` in `ConferenceRecordingLog`.
+    * Changed `Location` field type in `CreateProviderSipTrunkResponse`, `CreateRegisteredSipTrunkResponse`, `CreateStaticSipTrunkResponse`, `ProviderSipTrunkRequest`, `ProviderSipTrunkResponse`, `RegisteredSipTrunkRequest`, `RegisteredSipTrunkResponse`, `RegisteredSipTrunkUpdateRequest`, `StaticSipTrunkRequest`, `StaticSipTrunkResponse`, `StaticSipTrunkUpdateRequest`  to `string`.
+    * Extended `DialCallbackResponse` with `MachineDetection`.
+    * Extended `DialogLogResponse` with `HangupSource`.
+    * Extended `DialogState` with `TRANSFERRING` type.
+    * Extended `Language` enum with `kk-kz`, `es-ar`, `es-ar`, `uz-uz`, `mr-in`, `sw-ke` and `sw-tz` types.
+    * Extended `MachineDetectionProperties` with `ConfidenceRating`.
+    * Extended `MachineDetectionRequest` with `DetectionTime`.
+    * Changed `MediaStreamConfigRequest` to superclass with `MediaStreamingConfigRequest` and `WebsocketEndpointConfigRequest` subclasses.
+    * Changed `MediaStreamConfigResponse` to superclass with `MediaStreamingConfigResponse` and `WebsocketEndpointConfigResponse` subclasses.
+    * Extended `NumberMaskingStatusRequest` with `MachineDetectionResult`.
+    * Extended `Participant` with `Role`.
+    * Extended `ProviderTrunkType` with `OPENAI_REALTIME` type.
+    * Changed `Files` array type from `RecordingFile` to `PublicRecordingFile` in `Recording`.
+    * Extended `RecordingFile` with `ExpirationTime`.
+    * Changed `CustomData` to `MultiChannelMappingData` in `RecordingFile`.
+    * Changed `Script` field type in `SearchResponse`, `UpdateScenarioRequest` to `string`.
+    * Extended `SearchResponse`, `UpdateScenarioResponse` with `NotifyUrl`, `NotifyContentType`, `Record` and `LastUsageDate`.
+    * Extended `SpeechCaptureRequest` with `TerminateOnKeyPhrase`, `CustomDictionary` and `AdvancedFormatting`.
+    * Extended `Transcription` with `CustomDictionary` and `AdvancedFormatting`.
+    * Extended `UpdateRequest`, `VideoMediaProperties` with `Blind`.
+    * Extended `UpdateScenarioRequest` with `NotifyUrl`, `NotifyContentType`, `Record`
+    * Extended `VoiceData` with `Direction`, `AnsweredBy` and `CallRecordingField`.
+    * Extended `VoiceName` enum with additional voices.
+
+### Removed
+
+* **Email:**
+    * Removed `ReturnPathAddress` field from `AddDomainRequest`, `DomainResponse`.
+
+* **Voice:**
+    * Removed `DISCONNECTED` enum value from `CallState`.
+    * Removed `UNKNOWN` enum value from `DetectionResult`.
+    * Removed `CreationMethod` field from `File`.
+    * Removed `Record` field from `IvrMessage`.
+    * Removed `JOHANNESBURG_1` from `RecordingLocation`.
+
 ## [ [3.1.2](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.2)] - 2025-07-01
 
 ## Fixed
@@ -20,7 +123,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 *  **Renamed Field**: `body` ➜ `requestBody` in `ApiSubmitFormDataRequest` (`FormsApi`) struct to improve clarity and naming consistency.
 *  **Fixed Incorrect Field Type**: Updated `Data` field type from `map[string]map[string]interface{}` to `map[string]interface{}` to align with the current state of the API.
 
-## [ [3.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.0)] - 2025-01-20
+## [ [3.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.0)] - 2025-01-15
 
 ⚠️ IMPORTANT NOTE: This release contains compile time breaking changes.
 All changes, including breaking changes, are addressed and explained in the list bellow.

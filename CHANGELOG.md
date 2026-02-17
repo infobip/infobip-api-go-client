@@ -10,7 +10,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 * Support for [Infobip RCS API](https://www.infobip.com/docs/api/channels/rcs)
 * Most recent feature set for:
     * [Infobip SMS API](https://www.infobip.com/docs/api/channels/sms)
-    * [Infobip TFA API](https://www.infobip.com/docs/api/platform/2fa)
+    * [Infobip 2FA API](https://www.infobip.com/docs/api/platform/2fa)
     * [Infobip Messages API](https://www.infobip.com/docs/api/platform/messages-api)
     * [Infobip Email API](https://www.infobip.com/docs/api/channels/email)
     * [Infobip Voice API](https://www.infobip.com/docs/api/channels/voice)

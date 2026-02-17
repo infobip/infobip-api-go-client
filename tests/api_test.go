@@ -235,3 +235,47 @@ func TestAPIKeyAuthAcceptsRawString(t *testing.T) {
 		t.Fatalf("expected response, got nil")
 	}
 }
+
+func TestAPIKeyAuthAcceptsWithoutAppPrefix(t *testing.T) {
+	configuration := infobip.NewConfiguration()
+	configuration.Host = Host
+
+	client := api.NewAPIClient(configuration)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	endpoint := "/callrouting/1/routes"
+	expected := `{"results":[],"paging":{"page":0,"size":0,"totalPages":0,"totalResults":0}}`
+	rawKey := strings.TrimPrefix(ApiKey, "App ")
+
+	httpmock.RegisterResponder("GET", "https://"+configuration.Host+endpoint,
+		func(req *http.Request) (*http.Response, error) {
+			if got := req.Header.Get("Authorization"); got != ApiKey {
+				return httpmock.NewStringResponse(400, ""), fmt.Errorf("unexpected Authorization header: %s", got)
+			}
+			response := httpmock.NewStringResponse(200, expected)
+			response.Header.Set("Content-Type", "application/json")
+			return response, nil
+		},
+	)
+
+	ctx := context.WithValue(context.Background(),
+		infobip.ContextAPIKeys,
+		map[string]infobip.APIKey{
+			"APIKeyHeader": {Key: rawKey},
+		},
+	)
+
+	resp, _, err := client.
+		CallRoutingAPI.
+		GetCallRoutes(ctx).
+		Execute()
+
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if resp == nil {
+		t.Fatalf("expected response, got nil")
+	}
+}

@@ -16,7 +16,6 @@ The first step is to add your configuration, initialize the api client and set y
         context.Background(),
         infobip.ContextAPIKeys,
         map[string]infobip.APIKey{
-            // Prefix is deprecated; the SDK now prepends "App " automatically.
             "APIKeyHeader": {Key: "<YOUR_API_KEY>"},
         },
     )

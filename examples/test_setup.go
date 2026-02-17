@@ -28,8 +28,9 @@ func newClientAndAuth() (*api.APIClient, context.Context) {
 		sharedAuth = context.WithValue(
 			context.Background(),
 			infobip.ContextAPIKeys,
-			// You can pass a raw API key string; the SDK prepends \"App \" automatically.
-			apiKey,
+			map[string]infobip.APIKey{
+				"APIKeyHeader": {Key: apiKey},
+			},
 		)
 	})
 

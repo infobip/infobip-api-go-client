@@ -68,7 +68,8 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
     * Extended `CallRoutingEndpointType` with `WHATSAPP` and `WEBSOCKET` types.
     * Extended `CallRoutingPhoneEndpoint`, `CallRoutingSipEndpoint` with `From` and `RingbackGeneration`.
     * Extended `CallRoutingRouteResponse` with `Status` and `Order`.
-    * Changed `Text` field in `ConferenceBroadcastWebrtcTextRequest` and `DialogBroadcastWebrtcTextRequest` to `Message`.
+    * Changed `Text` field to `Message` in `ConferenceBroadcastWebrtcTextRequest` model due to previous endpoint `/calls/1/dialogs/{dialogId}/broadcast-webrtc-text` being sunset and migrated to `/calls/1/dialogs/{dialogId}/send-message`
+    * Changed `Text` field to `Message` in `DialogBroadcastWebrtcTextRequest` model due to previous endpoint `/calls/1/conferences/{conferenceId}/broadcast-webrtc-text` being sunset and migrated to `/calls/1/conferences/{conferenceId}/send-message`
     * Changed `Platform` field to `ApplicationId` and `CallRecordings` array type to `CallRecording` in `ConferenceRecording`.
     * Changed `ComposedFiles` array type from `RecordingFile` to `PublicRecordingFile` in `ConferenceRecordingLog`, `DialogRecordingLog`, `DialogRecordingResponse`.
     * Changed `Results` array type from `ConferenceRecording` to `PublicConferenceRecording` in `ConferenceRecordingLog`.

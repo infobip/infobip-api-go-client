@@ -19,7 +19,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 
 ### Changed
 
-**General:**
+* **General:**
     * Deprecated `Prefix` in client configuration when setting API key authentication, as the SDK now automatically prepends "App " to the API key, simplifying the configuration process and reducing potential errors in authentication setup. Alternatively you can provide single API key directly instead of a map.
     * Enforcing usage of HTTPS when setting up base URL in client configuration.
 

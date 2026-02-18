@@ -29,7 +29,7 @@ type CallSayRequest struct {
 	// Number of times to read the text.
 	LoopCount   *int32
 	Preferences *VoicePreferences
-	StopOn      *Termination
+	StopOn      *PublicTermination
 	// Optional parameter to update a call's custom data.
 	CustomData *map[string]string
 }
@@ -202,9 +202,9 @@ func (o *CallSayRequest) SetPreferences(v VoicePreferences) {
 }
 
 // GetStopOn returns the StopOn field value if set, zero value otherwise.
-func (o *CallSayRequest) GetStopOn() Termination {
+func (o *CallSayRequest) GetStopOn() PublicTermination {
 	if o == nil || IsNil(o.StopOn) {
-		var ret Termination
+		var ret PublicTermination
 		return ret
 	}
 	return *o.StopOn
@@ -212,7 +212,7 @@ func (o *CallSayRequest) GetStopOn() Termination {
 
 // GetStopOnOk returns a tuple with the StopOn field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CallSayRequest) GetStopOnOk() (*Termination, bool) {
+func (o *CallSayRequest) GetStopOnOk() (*PublicTermination, bool) {
 	if o == nil || IsNil(o.StopOn) {
 		return nil, false
 	}
@@ -228,8 +228,8 @@ func (o *CallSayRequest) HasStopOn() bool {
 	return false
 }
 
-// SetStopOn gets a reference to the given Termination and assigns it to the StopOn field.
-func (o *CallSayRequest) SetStopOn(v Termination) {
+// SetStopOn gets a reference to the given PublicTermination and assigns it to the StopOn field.
+func (o *CallSayRequest) SetStopOn(v PublicTermination) {
 	o.StopOn = &v
 }
 

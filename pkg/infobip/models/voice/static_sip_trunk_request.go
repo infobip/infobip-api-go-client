@@ -23,7 +23,7 @@ var _ MappedNullable = &StaticSipTrunkRequest{}
 type StaticSipTrunkRequest struct {
 	Type                      SipTrunkType
 	Name                      string
-	Location                  *SipTrunkLocation
+	Location                  *string
 	Tls                       *bool
 	InternationalCallsAllowed *bool
 	ChannelLimit              int32
@@ -104,9 +104,9 @@ func (o *StaticSipTrunkRequest) SetName(v string) {
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.
-func (o *StaticSipTrunkRequest) GetLocation() SipTrunkLocation {
+func (o *StaticSipTrunkRequest) GetLocation() string {
 	if o == nil || IsNil(o.Location) {
-		var ret SipTrunkLocation
+		var ret string
 		return ret
 	}
 	return *o.Location
@@ -114,7 +114,7 @@ func (o *StaticSipTrunkRequest) GetLocation() SipTrunkLocation {
 
 // GetLocationOk returns a tuple with the Location field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *StaticSipTrunkRequest) GetLocationOk() (*SipTrunkLocation, bool) {
+func (o *StaticSipTrunkRequest) GetLocationOk() (*string, bool) {
 	if o == nil || IsNil(o.Location) {
 		return nil, false
 	}
@@ -130,8 +130,8 @@ func (o *StaticSipTrunkRequest) HasLocation() bool {
 	return false
 }
 
-// SetLocation gets a reference to the given SipTrunkLocation and assigns it to the Location field.
-func (o *StaticSipTrunkRequest) SetLocation(v SipTrunkLocation) {
+// SetLocation gets a reference to the given string and assigns it to the Location field.
+func (o *StaticSipTrunkRequest) SetLocation(v string) {
 	o.Location = &v
 }
 

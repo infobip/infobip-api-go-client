@@ -17,10 +17,12 @@ import (
 
 // CallRoutingEndpoint Endpoint for a given destination.
 type CallRoutingEndpoint struct {
-	CallRoutingPhoneEndpoint  *CallRoutingPhoneEndpoint
-	CallRoutingSipEndpoint    *CallRoutingSipEndpoint
-	CallRoutingViberEndpoint  *CallRoutingViberEndpoint
-	CallRoutingWebRtcEndpoint *CallRoutingWebRtcEndpoint
+	CallRoutingPhoneEndpoint     *CallRoutingPhoneEndpoint
+	CallRoutingSipEndpoint       *CallRoutingSipEndpoint
+	CallRoutingViberEndpoint     *CallRoutingViberEndpoint
+	CallRoutingWebRtcEndpoint    *CallRoutingWebRtcEndpoint
+	CallRoutingWebSocketEndpoint *CallRoutingWebSocketEndpoint
+	CallRoutingWhatsAppEndpoint  *CallRoutingWhatsAppEndpoint
 }
 
 // CallRoutingPhoneEndpointAsCallRoutingEndpoint is a convenience function that returns CallRoutingPhoneEndpoint wrapped in CallRoutingEndpoint
@@ -48,6 +50,20 @@ func CallRoutingViberEndpointAsCallRoutingEndpoint(v *CallRoutingViberEndpoint) 
 func CallRoutingWebRtcEndpointAsCallRoutingEndpoint(v *CallRoutingWebRtcEndpoint) CallRoutingEndpoint {
 	return CallRoutingEndpoint{
 		CallRoutingWebRtcEndpoint: v,
+	}
+}
+
+// CallRoutingWebSocketEndpointAsCallRoutingEndpoint is a convenience function that returns CallRoutingWebSocketEndpoint wrapped in CallRoutingEndpoint
+func CallRoutingWebSocketEndpointAsCallRoutingEndpoint(v *CallRoutingWebSocketEndpoint) CallRoutingEndpoint {
+	return CallRoutingEndpoint{
+		CallRoutingWebSocketEndpoint: v,
+	}
+}
+
+// CallRoutingWhatsAppEndpointAsCallRoutingEndpoint is a convenience function that returns CallRoutingWhatsAppEndpoint wrapped in CallRoutingEndpoint
+func CallRoutingWhatsAppEndpointAsCallRoutingEndpoint(v *CallRoutingWhatsAppEndpoint) CallRoutingEndpoint {
+	return CallRoutingEndpoint{
+		CallRoutingWhatsAppEndpoint: v,
 	}
 }
 
@@ -120,6 +136,36 @@ func (dst *CallRoutingEndpoint) UnmarshalJSON(data []byte) error {
 			dst.CallRoutingWebRtcEndpoint = nil
 		}
 	}
+	// check if the discriminator value is 'WEBSOCKET'
+	if jsonDict["type"] == "WEBSOCKET" {
+		// try to unmarshal JSON data into CallRoutingWebSocketEndpoint
+		err = json.Unmarshal(data, &dst.CallRoutingWebSocketEndpoint)
+		if err == nil {
+			jsonCallRoutingWebSocketEndpoint, _ := json.Marshal(dst.CallRoutingWebSocketEndpoint)
+			if string(jsonCallRoutingWebSocketEndpoint) == "{}" { // empty struct
+				dst.CallRoutingWebSocketEndpoint = nil
+			} else {
+				return nil // data stored in dst.CallRoutingWebSocketEndpoint, return on the first match
+			}
+		} else {
+			dst.CallRoutingWebSocketEndpoint = nil
+		}
+	}
+	// check if the discriminator value is 'WHATSAPP'
+	if jsonDict["type"] == "WHATSAPP" {
+		// try to unmarshal JSON data into CallRoutingWhatsAppEndpoint
+		err = json.Unmarshal(data, &dst.CallRoutingWhatsAppEndpoint)
+		if err == nil {
+			jsonCallRoutingWhatsAppEndpoint, _ := json.Marshal(dst.CallRoutingWhatsAppEndpoint)
+			if string(jsonCallRoutingWhatsAppEndpoint) == "{}" { // empty struct
+				dst.CallRoutingWhatsAppEndpoint = nil
+			} else {
+				return nil // data stored in dst.CallRoutingWhatsAppEndpoint, return on the first match
+			}
+		} else {
+			dst.CallRoutingWhatsAppEndpoint = nil
+		}
+	}
 	return fmt.Errorf("Data failed to match schemas in anyOf(CallRoutingEndpoint)")
 }
 
@@ -136,6 +182,12 @@ func (src CallRoutingEndpoint) MarshalJSON() ([]byte, error) {
 	}
 	if src.CallRoutingWebRtcEndpoint != nil {
 		return json.Marshal(&src.CallRoutingWebRtcEndpoint)
+	}
+	if src.CallRoutingWebSocketEndpoint != nil {
+		return json.Marshal(&src.CallRoutingWebSocketEndpoint)
+	}
+	if src.CallRoutingWhatsAppEndpoint != nil {
+		return json.Marshal(&src.CallRoutingWhatsAppEndpoint)
 	}
 	return nil, nil // no data in anyOf schemas
 }
@@ -156,6 +208,12 @@ func (obj *CallRoutingEndpoint) GetActualInstance() interface{} {
 	}
 	if obj.CallRoutingWebRtcEndpoint != nil {
 		return obj.CallRoutingWebRtcEndpoint
+	}
+	if obj.CallRoutingWebSocketEndpoint != nil {
+		return obj.CallRoutingWebSocketEndpoint
+	}
+	if obj.CallRoutingWhatsAppEndpoint != nil {
+		return obj.CallRoutingWhatsAppEndpoint
 	}
 	// all schemas are nil
 	return nil

@@ -22,7 +22,7 @@ var _ MappedNullable = &ConferenceRecordingLog{}
 // ConferenceRecordingLog Conference recordings.
 type ConferenceRecordingLog struct {
 	// File(s) with a recording of all conference participants.
-	ComposedFiles []RecordingFile
+	ComposedFiles []PublicRecordingFile
 	// File(s) with a recording of one conference participant.
 	CallRecordings []Recording
 }
@@ -47,9 +47,9 @@ func NewConferenceRecordingLogWithDefaults() *ConferenceRecordingLog {
 }
 
 // GetComposedFiles returns the ComposedFiles field value if set, zero value otherwise.
-func (o *ConferenceRecordingLog) GetComposedFiles() []RecordingFile {
+func (o *ConferenceRecordingLog) GetComposedFiles() []PublicRecordingFile {
 	if o == nil || IsNil(o.ComposedFiles) {
-		var ret []RecordingFile
+		var ret []PublicRecordingFile
 		return ret
 	}
 	return o.ComposedFiles
@@ -57,7 +57,7 @@ func (o *ConferenceRecordingLog) GetComposedFiles() []RecordingFile {
 
 // GetComposedFilesOk returns a tuple with the ComposedFiles field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConferenceRecordingLog) GetComposedFilesOk() ([]RecordingFile, bool) {
+func (o *ConferenceRecordingLog) GetComposedFilesOk() ([]PublicRecordingFile, bool) {
 	if o == nil || IsNil(o.ComposedFiles) {
 		return nil, false
 	}
@@ -73,8 +73,8 @@ func (o *ConferenceRecordingLog) HasComposedFiles() bool {
 	return false
 }
 
-// SetComposedFiles gets a reference to the given []RecordingFile and assigns it to the ComposedFiles field.
-func (o *ConferenceRecordingLog) SetComposedFiles(v []RecordingFile) {
+// SetComposedFiles gets a reference to the given []PublicRecordingFile and assigns it to the ComposedFiles field.
+func (o *ConferenceRecordingLog) SetComposedFiles(v []PublicRecordingFile) {
 	o.ComposedFiles = v
 }
 

@@ -46,9 +46,7 @@ type IvrMessage struct {
 	// The parameters that should be passed to the scenario on execution.
 	Parameters *map[string]string
 	// Indicating period of time in seconds between end user answering the call and message starting to be played. Minimal value is `0` and maximum value is `10` seconds. Default value is `0`.
-	Pause *int32
-	// [Early access: Contact your account manager to enable the usage] Record the call and expose it to client as URL inside the delivery report. Can be `true` or `false`.
-	Record             *bool
+	Pause              *int32
 	DeliveryTimeWindow *DeliveryTimeWindow
 	// Maximum possible duration of the call to be set, shown in seconds.
 	CallTimeout *int32
@@ -509,38 +507,6 @@ func (o *IvrMessage) SetPause(v int32) {
 	o.Pause = &v
 }
 
-// GetRecord returns the Record field value if set, zero value otherwise.
-func (o *IvrMessage) GetRecord() bool {
-	if o == nil || IsNil(o.Record) {
-		var ret bool
-		return ret
-	}
-	return *o.Record
-}
-
-// GetRecordOk returns a tuple with the Record field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *IvrMessage) GetRecordOk() (*bool, bool) {
-	if o == nil || IsNil(o.Record) {
-		return nil, false
-	}
-	return o.Record, true
-}
-
-// HasRecord returns a boolean if a field has been set.
-func (o *IvrMessage) HasRecord() bool {
-	if o != nil && !IsNil(o.Record) {
-		return true
-	}
-
-	return false
-}
-
-// SetRecord gets a reference to the given bool and assigns it to the Record field.
-func (o *IvrMessage) SetRecord(v bool) {
-	o.Record = &v
-}
-
 // GetDeliveryTimeWindow returns the DeliveryTimeWindow field value if set, zero value otherwise.
 func (o *IvrMessage) GetDeliveryTimeWindow() DeliveryTimeWindow {
 	if o == nil || IsNil(o.DeliveryTimeWindow) {
@@ -652,9 +618,6 @@ func (o IvrMessage) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Pause) {
 		toSerialize["pause"] = o.Pause
-	}
-	if !IsNil(o.Record) {
-		toSerialize["record"] = o.Record
 	}
 	if !IsNil(o.DeliveryTimeWindow) {
 		toSerialize["deliveryTimeWindow"] = o.DeliveryTimeWindow

@@ -12,63 +12,206 @@ package voice
 
 import (
 	"encoding/json"
-	"fmt"
+
+	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 )
 
-// MachineDetection Machine Detection action detects answering machines at the beginning of the call. This action sets `machineAnswered` variable upon completion to `true`  or `false`. Machine Detection introduces a delay of approximately 4s. This is the minimum time needed for machine detection. Machine Detection action has to be followed by a condition action that uses the value of `machineAnswered` for branching into the 'human answered' block and the 'answering machine answered' block. The 'answering machine' block can have a Say/Play/PlayFromRecording action or a Hangup action. If answering machine is detected, and a Say/Play/Play from Recording action is up next - the voice message will start playing into the voice mail only after the answering machine is finished with its greeting.
-type MachineDetection string
+// checks if the MachineDetection type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &MachineDetection{}
 
-// List of MachineDetection
-const (
-	MACHINEDETECTION_MACHINE_DETECTION MachineDetection = "machineDetection"
-)
-
-// All allowed values of MachineDetection enum
-var AllowedMachineDetectionEnumValues = []MachineDetection{
-	"machineDetection",
+// MachineDetection Answering machine detection configuration of a Number Masking call. Detection will be performed only on the callee side of the call.
+type MachineDetection struct {
+	// Indicates whether machine detection is enabled from the callee perspective.
+	Enabled       *bool
+	ExecutionMode *ExecutionMode
+	// Duration of machine detection. Higher values will increase the accuracy of machine detection, but will also increase the time it takes to detect a machine.
+	DetectionTime *float64
+	// Indicates whether the callee side will hangup upon machine detection.
+	HangupOnMachineDetection *bool
 }
 
-func (v *MachineDetection) UnmarshalJSON(src []byte) error {
-	var value string
-	err := json.Unmarshal(src, &value)
-	if err != nil {
-		return err
-	}
-	enumTypeValue := MachineDetection(value)
-	for _, existing := range AllowedMachineDetectionEnumValues {
-		if existing == enumTypeValue {
-			*v = enumTypeValue
-			return nil
-		}
-	}
+// NewMachineDetection instantiates a new MachineDetection object
+// This constructor will assign default values to properties that have it defined,
+// and makes sure properties required by API are set, but the set of arguments
+// will change when the set of required properties is changed
 
-	return fmt.Errorf("%+v is not a valid MachineDetection", value)
+func NewMachineDetection() *MachineDetection {
+	this := MachineDetection{}
+	var executionMode ExecutionMode = EXECUTIONMODE_SYNC
+	this.ExecutionMode = &executionMode
+	var detectionTime float64 = 3.74
+	this.DetectionTime = &detectionTime
+	var hangupOnMachineDetection bool = true
+	this.HangupOnMachineDetection = &hangupOnMachineDetection
+	return &this
 }
 
-// NewMachineDetectionFromValue returns a pointer to a valid MachineDetection
-// for the value passed as argument, or an error if the value passed is not allowed by the enum
-func NewMachineDetectionFromValue(v string) (*MachineDetection, error) {
-	ev := MachineDetection(v)
-	if ev.IsValid() {
-		return &ev, nil
-	} else {
-		return nil, fmt.Errorf("invalid value '%v' for MachineDetection: valid values are %v", v, AllowedMachineDetectionEnumValues)
-	}
+// NewMachineDetectionWithDefaults instantiates a new MachineDetection object
+// This constructor will only assign default values to properties that have it defined,
+// but it doesn't guarantee that properties required by API are set
+func NewMachineDetectionWithDefaults() *MachineDetection {
+	this := MachineDetection{}
+
+	var executionMode ExecutionMode = EXECUTIONMODE_SYNC
+	this.ExecutionMode = &executionMode
+	var detectionTime float64 = 3.74
+	this.DetectionTime = &detectionTime
+	var hangupOnMachineDetection bool = true
+	this.HangupOnMachineDetection = &hangupOnMachineDetection
+	return &this
 }
 
-// IsValid return true if the value is valid for the enum, false otherwise
-func (v MachineDetection) IsValid() bool {
-	for _, existing := range AllowedMachineDetectionEnumValues {
-		if existing == v {
-			return true
-		}
+// GetEnabled returns the Enabled field value if set, zero value otherwise.
+func (o *MachineDetection) GetEnabled() bool {
+	if o == nil || IsNil(o.Enabled) {
+		var ret bool
+		return ret
 	}
+	return *o.Enabled
+}
+
+// GetEnabledOk returns a tuple with the Enabled field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MachineDetection) GetEnabledOk() (*bool, bool) {
+	if o == nil || IsNil(o.Enabled) {
+		return nil, false
+	}
+	return o.Enabled, true
+}
+
+// HasEnabled returns a boolean if a field has been set.
+func (o *MachineDetection) HasEnabled() bool {
+	if o != nil && !IsNil(o.Enabled) {
+		return true
+	}
+
 	return false
 }
 
-// Ptr returns reference to MachineDetection value
-func (v MachineDetection) Ptr() *MachineDetection {
-	return &v
+// SetEnabled gets a reference to the given bool and assigns it to the Enabled field.
+func (o *MachineDetection) SetEnabled(v bool) {
+	o.Enabled = &v
+}
+
+// GetExecutionMode returns the ExecutionMode field value if set, zero value otherwise.
+func (o *MachineDetection) GetExecutionMode() ExecutionMode {
+	if o == nil || IsNil(o.ExecutionMode) {
+		var ret ExecutionMode
+		return ret
+	}
+	return *o.ExecutionMode
+}
+
+// GetExecutionModeOk returns a tuple with the ExecutionMode field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MachineDetection) GetExecutionModeOk() (*ExecutionMode, bool) {
+	if o == nil || IsNil(o.ExecutionMode) {
+		return nil, false
+	}
+	return o.ExecutionMode, true
+}
+
+// HasExecutionMode returns a boolean if a field has been set.
+func (o *MachineDetection) HasExecutionMode() bool {
+	if o != nil && !IsNil(o.ExecutionMode) {
+		return true
+	}
+
+	return false
+}
+
+// SetExecutionMode gets a reference to the given ExecutionMode and assigns it to the ExecutionMode field.
+func (o *MachineDetection) SetExecutionMode(v ExecutionMode) {
+	o.ExecutionMode = &v
+}
+
+// GetDetectionTime returns the DetectionTime field value if set, zero value otherwise.
+func (o *MachineDetection) GetDetectionTime() float64 {
+	if o == nil || IsNil(o.DetectionTime) {
+		var ret float64
+		return ret
+	}
+	return *o.DetectionTime
+}
+
+// GetDetectionTimeOk returns a tuple with the DetectionTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MachineDetection) GetDetectionTimeOk() (*float64, bool) {
+	if o == nil || IsNil(o.DetectionTime) {
+		return nil, false
+	}
+	return o.DetectionTime, true
+}
+
+// HasDetectionTime returns a boolean if a field has been set.
+func (o *MachineDetection) HasDetectionTime() bool {
+	if o != nil && !IsNil(o.DetectionTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetDetectionTime gets a reference to the given float64 and assigns it to the DetectionTime field.
+func (o *MachineDetection) SetDetectionTime(v float64) {
+	o.DetectionTime = &v
+}
+
+// GetHangupOnMachineDetection returns the HangupOnMachineDetection field value if set, zero value otherwise.
+func (o *MachineDetection) GetHangupOnMachineDetection() bool {
+	if o == nil || IsNil(o.HangupOnMachineDetection) {
+		var ret bool
+		return ret
+	}
+	return *o.HangupOnMachineDetection
+}
+
+// GetHangupOnMachineDetectionOk returns a tuple with the HangupOnMachineDetection field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MachineDetection) GetHangupOnMachineDetectionOk() (*bool, bool) {
+	if o == nil || IsNil(o.HangupOnMachineDetection) {
+		return nil, false
+	}
+	return o.HangupOnMachineDetection, true
+}
+
+// HasHangupOnMachineDetection returns a boolean if a field has been set.
+func (o *MachineDetection) HasHangupOnMachineDetection() bool {
+	if o != nil && !IsNil(o.HangupOnMachineDetection) {
+		return true
+	}
+
+	return false
+}
+
+// SetHangupOnMachineDetection gets a reference to the given bool and assigns it to the HangupOnMachineDetection field.
+func (o *MachineDetection) SetHangupOnMachineDetection(v bool) {
+	o.HangupOnMachineDetection = &v
+}
+
+func (o MachineDetection) MarshalJSON() ([]byte, error) {
+	toSerialize, err := o.ToMap()
+	if err != nil {
+		return []byte{}, err
+	}
+	return json.Marshal(toSerialize)
+}
+
+func (o MachineDetection) ToMap() (map[string]interface{}, error) {
+	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Enabled) {
+		toSerialize["enabled"] = o.Enabled
+	}
+	if !IsNil(o.ExecutionMode) {
+		toSerialize["executionMode"] = o.ExecutionMode
+	}
+	if !IsNil(o.DetectionTime) {
+		toSerialize["detectionTime"] = o.DetectionTime
+	}
+	if !IsNil(o.HangupOnMachineDetection) {
+		toSerialize["hangupOnMachineDetection"] = o.HangupOnMachineDetection
+	}
+	return toSerialize, nil
 }
 
 type NullableMachineDetection struct {

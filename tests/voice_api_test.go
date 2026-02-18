@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"os"
 	"testing"
 	"time"
 
@@ -12,6 +13,20 @@ import (
 	"github.com/infobip/infobip-api-go-client/v3/pkg/infobip/models/voice"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
+)
+
+const (
+	VoiceTtsBulksEndpoint        = "/tts/3/bulks"
+	VoiceTtsBulksStatusEndpoint  = "/tts/3/bulks/status"
+	VoiceTtsLogsEndpoint         = "/tts/3/logs"
+	VoiceTtsMultiEndpoint        = "/tts/3/multi"
+	VoiceTtsSingleEndpoint       = "/tts/3/single"
+	VoiceTtsVoiceByIdEndpoint    = "/tts/3/voices/%s"
+	VoiceReportsEndpoint         = "/voice/1/reports"
+	VoiceIvrFilesEndpoint        = "/voice/ivr/1/files"
+	VoiceIvrUploadsEndpoint      = "/voice/ivr/1/uploads"
+	VoiceIvrScenariosEndpoint    = "/voice/ivr/1/scenarios"
+	VoiceIvrScenarioByIdEndpoint = "/voice/ivr/1/scenarios/%s"
 )
 
 func TestShouldGetSentBulks(t *testing.T) {
@@ -29,7 +44,7 @@ func TestShouldGetSentBulks(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/tts/3/bulks", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceTtsBulksEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.GetSentBulks(context.Background()).BulkId(givenBulkId).Execute()
 
@@ -58,7 +73,7 @@ func TestShouldRescheduleSentBulk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", "/tts/3/bulks", givenResponse, 200)
+	SetUpSuccessRequest("PUT", VoiceTtsBulksEndpoint, givenResponse, 200)
 
 	request := voice.BulkRequest{
 		SendAt: ibTimeSendAt,
@@ -86,7 +101,7 @@ func TestShouldGetSentBulksStatus(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/tts/3/bulks/status", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceTtsBulksStatusEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.GetSentBulksStatus(context.Background()).BulkId(givenBulkId).Execute()
 
@@ -111,7 +126,7 @@ func TestShouldManageSentBulksStatus(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", "/tts/3/bulks/status", givenResponse, 200)
+	SetUpSuccessRequest("PUT", VoiceTtsBulksStatusEndpoint, givenResponse, 200)
 
 	request := voice.BulkStatusRequest{
 		Status: givenStatus,
@@ -174,7 +189,7 @@ func TestShouldSendSingleVoiceTts(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/tts/3/single", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceTtsSingleEndpoint, givenResponse, 200)
 
 	givenVoice := voice.Voice{
 		Name:   &givenName,
@@ -274,7 +289,7 @@ func TestShouldSendMultipleVoiceTts(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/tts/3/multi", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceTtsMultiEndpoint, givenResponse, 200)
 
 	request := voice.MultiRequest{
 		Messages: []voice.MultiMessage{
@@ -351,7 +366,7 @@ func TestShouldGetVoices(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/tts/3/voices/%s", givenLanguage), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(VoiceTtsVoiceByIdEndpoint, givenLanguage), givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.GetVoices(context.Background(), givenLanguage).Execute()
 
@@ -449,7 +464,7 @@ func TestShouldGetVoiceDeliveryReports(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/voice/1/reports", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceReportsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.GetVoiceDeliveryReports(context.Background()).Execute()
 
@@ -568,7 +583,7 @@ func TestShouldGetVoiceLogs(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/tts/3/logs", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceTtsLogsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.GetSentVoiceLogs(context.Background()).Execute()
 
@@ -633,7 +648,7 @@ func TestShouldSearchVoiceIvrRecordedFiles(t *testing.T) {
 	givenGroupId2 := "#/script/1"
 	givenUrl2 := "/voice/ivr/1/files/305DE72BA11D81D1BAED75BFC46706761580BDEC2218C22628447FD3814E7913D3058E4ECBFD6F55C80E976235EEB111"
 
-	givenResponse := fmt.Sprintf(`[{
+	givenResponse := fmt.Sprintf(`{
       "files": [
           {
               "messageId": "%s",
@@ -654,19 +669,19 @@ func TestShouldSearchVoiceIvrRecordedFiles(t *testing.T) {
               "recordedAt": "%s"
           }
       ]
-  }]`, givenMessageId1, givenFrom1, givenTo1, givenScenarioId1, givenGroupId1, givenUrl1, givenRecordedAt1, givenMessageId2, givenFrom2, givenTo2, givenScenarioId2, givenGroupId2, givenUrl2, givenRecordedAt2)
+  }`, givenMessageId1, givenFrom1, givenTo1, givenScenarioId1, givenGroupId1, givenUrl1, givenRecordedAt1, givenMessageId2, givenFrom2, givenTo2, givenScenarioId2, givenGroupId2, givenUrl2, givenRecordedAt2)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/voice/ivr/1/files", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceIvrFilesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.SearchVoiceIvrRecordedFiles(context.Background()).Execute()
 
 	assert.Nil(t, err)
 	assert.NotNil(t, response)
-	assert.Len(t, response[0].GetFiles(), 2)
+	assert.Len(t, response.GetFiles(), 2)
 
-	file1 := response[0].GetFiles()[0]
+	file1 := response.GetFiles()[0]
 	assert.Equal(t, givenMessageId1, file1.GetMessageId())
 	assert.Equal(t, givenFrom1, file1.GetFrom())
 	assert.Equal(t, givenTo1, file1.GetTo())
@@ -675,7 +690,7 @@ func TestShouldSearchVoiceIvrRecordedFiles(t *testing.T) {
 	assert.Equal(t, givenUrl1, file1.GetUrl())
 	assert.Equal(t, ibTimeRecordedAt1, file1.GetRecordedAt())
 
-	file2 := response[0].GetFiles()[1]
+	file2 := response.GetFiles()[1]
 	assert.Equal(t, givenMessageId2, file2.GetMessageId())
 	assert.Equal(t, givenFrom2, file2.GetFrom())
 	assert.Equal(t, givenTo2, file2.GetTo())
@@ -683,6 +698,85 @@ func TestShouldSearchVoiceIvrRecordedFiles(t *testing.T) {
 	assert.Equal(t, givenGroupId2, file2.GetGroupId())
 	assert.Equal(t, givenUrl2, file2.GetUrl())
 	assert.Equal(t, ibTimeRecordedAt2, file2.GetRecordedAt())
+}
+
+func TestShouldGetVoiceIvrUploadedFiles(t *testing.T) {
+	givenId1 := "218eceba-c044-430d-9f26-8f1a7f0g2d03"
+	givenName1 := "example-file.wav"
+
+	givenId2 := "328fcfda-d145-541e-0g37-9g2b8g1h3e14"
+	givenName2 := "another-file.mp3"
+
+	givenResponse := fmt.Sprintf(`{
+      "files": [
+          {
+              "id": "%s",
+              "name": "%s"
+          },
+          {
+              "id": "%s",
+              "name": "%s"
+          }
+      ]
+  }`, givenId1, givenName1, givenId2, givenName2)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+	SetUpSuccessRequest("GET", VoiceIvrUploadsEndpoint, givenResponse, 200)
+
+	response, _, err := infobipClient.VoiceAPI.IvrUploadGetFiles(context.Background()).Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, response)
+}
+
+func TestShouldUploadVoiceIvrAudioFile(t *testing.T) {
+	givenId := "218eceba-c044-430d-9f26-8f1a7f0g2d03"
+	givenName := "uploaded-audio.wav"
+	givenFileFormat := voice.FILEFORMAT_WAV
+	givenSize := int64(292190)
+	givenCreationTime := "2021-08-24T15:00:00.000+0000"
+	givenCreationTimeDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenCreationTime)
+	ibTimeCreationTime := infobip.Time{
+		T: givenCreationTimeDateTime,
+	}
+	givenExpirationTime := "2021-08-25T15:00:00.000+0000"
+	givenExpirationTimeDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenExpirationTime)
+	ibTimeExpirationTime := infobip.Time{
+		T: givenExpirationTimeDateTime,
+	}
+	givenDuration := int32(3)
+
+	givenResponse := fmt.Sprintf(`{
+       "id": "%s",
+       "name": "%s",
+       "fileFormat": "%s",
+       "size": %d,
+       "creationTime": "%s",
+       "expirationTime": "%s",
+       "duration": %d
+   }`, givenId, givenName, givenFileFormat, givenSize, givenCreationTime, givenExpirationTime, givenDuration)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+	SetUpSuccessRequest("POST", VoiceIvrUploadsEndpoint, givenResponse, 200)
+
+	tempFile, err := os.CreateTemp("", "ivr-audio-*.wav")
+	assert.Nil(t, err)
+	defer os.Remove(tempFile.Name())
+	defer tempFile.Close()
+
+	response, _, err := infobipClient.VoiceAPI.IvrUploadAudioFile(context.Background()).File(tempFile).Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, response)
+	assert.Equal(t, givenId, response.GetId())
+	assert.Equal(t, givenName, response.GetName())
+	assert.Equal(t, string(givenFileFormat), response.GetFileFormat())
+	assert.Equal(t, givenSize, response.GetSize())
+	assert.Equal(t, ibTimeCreationTime, response.GetCreationTime())
+	assert.Equal(t, ibTimeExpirationTime, response.GetExpirationTime())
+	assert.Equal(t, int64(givenDuration), response.GetDuration())
 }
 
 func TestShouldGetVoiceIvrScenarioById(t *testing.T) {
@@ -701,10 +795,6 @@ func TestShouldGetVoiceIvrScenarioById(t *testing.T) {
 	}
 
 	givenLastUsageDate := "2021-08-28"
-	givenLastUsageDateTime, _ := time.Parse("2006-01-02", givenLastUsageDate)
-	ibTimeLastUsageDate := infobip.Time{
-		T: givenLastUsageDateTime,
-	}
 
 	givenVoiceIvrResponse := voice.UpdateScenarioResponse{
 		Id:            &givenId,
@@ -712,7 +802,7 @@ func TestShouldGetVoiceIvrScenarioById(t *testing.T) {
 		Description:   &givenDescription,
 		CreateTime:    &ibTimeCreateTime,
 		UpdateTime:    &ibTimeUpdateTime,
-		LastUsageDate: &ibTimeLastUsageDate,
+		LastUsageDate: &givenLastUsageDate,
 	}
 
 	givenResponse := fmt.Sprintf(`{
@@ -726,12 +816,12 @@ func TestShouldGetVoiceIvrScenarioById(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/voice/ivr/1/scenarios/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(VoiceIvrScenarioByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.VoiceAPI.GetAVoiceIvrScenario(context.Background(), givenId).Execute()
 
 	assert.Nil(t, err)
-	assert.Equal(t, ibTimeLastUsageDate, response.GetLastUsageDate())
+	assert.Equal(t, givenLastUsageDate, response.GetLastUsageDate())
 	assert.Equal(t, &givenVoiceIvrResponse, response)
 }
 
@@ -750,7 +840,7 @@ func TestShouldCreateVoiceIvrScenario(t *testing.T) {
 		T: givenUpdateTimeDateTime,
 	}
 	givenDial := "dial"
-	script := voice.Dial{Dial: givenDial}
+	givenScript := fmt.Sprintf(`[{"dial": "%s"}]`, givenDial)
 
 	givenRequest := fmt.Sprintf(`{
        "name": "%s",
@@ -777,12 +867,12 @@ func TestShouldCreateVoiceIvrScenario(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/voice/ivr/1/scenarios", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceIvrScenariosEndpoint, givenResponse, 200)
 
 	request := voice.UpdateScenarioRequest{
 		Name:        givenName,
 		Description: &givenDescription,
-		Script:      []voice.ScriptInner{voice.DialAsScriptInner(&script)},
+		Script:      givenScript,
 	}
 
 	actualRequest, _ := json.Marshal(request)
@@ -815,6 +905,50 @@ func TestShouldCreateVoiceIvrScenarios(t *testing.T) {
 	ibTimeUpdateTime := infobip.Time{
 		T: givenUpdateTimeDateTime,
 	}
+	givenScript := `[
+            {
+                "say": "Say discount or press 1 to get discount. Say exit or press 0 to exit."
+            },
+            {
+                "capture": "myVar",
+                "timeout": 5,
+                "speechOptions": {
+                    "language": "en-US",
+                    "maxSilence": 2,
+                    "keyPhrases": [
+                        "discount",
+                        "exit"
+                    ]
+                },
+                "dtmfOptions": {
+                    "maxInputLength": 1
+                }
+            },
+            {
+                "if": "${myVar == 'discount' || myVar == '1'}",
+                "then": [
+                    {
+                        "say": "You will get discount"
+                    }
+                ],
+                "else": [
+                    {
+                        "if": "${myVar == 'exit' || myVar == '0'}",
+                        "then": [
+                            {
+                                "say": "Goodbye"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "say": "I did not understand"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "hangup"
+        ]`
 	givenDial := "dial"
 
 	givenRequest := `{
@@ -879,48 +1013,14 @@ func TestShouldCreateVoiceIvrScenarios(t *testing.T) {
        ]
    }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, givenDial)
 
-	givenMaxSilence := int32(2)
-	givenMaxInputLength := int32(1)
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/voice/ivr/1/scenarios", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceIvrScenariosEndpoint, givenResponse, 200)
 
 	request := voice.UpdateScenarioRequest{
 		Name:        givenName,
 		Description: &givenDescription,
-		Script: []voice.ScriptInner{
-			voice.SayAsScriptInner(&voice.Say{Say: "Say discount or press 1 to get discount. Say exit or press 0 to exit."}),
-			voice.CaptureAsScriptInner(&voice.Capture{
-				Capture: "myVar",
-				Timeout: 5,
-				SpeechOptions: voice.SpeechOptions{
-					Language:   "en-US",
-					MaxSilence: &givenMaxSilence,
-					KeyPhrases: []string{"discount", "exit"},
-				},
-				DtmfOptions: &voice.DtmfOptions{
-					MaxInputLength: &givenMaxInputLength,
-				},
-			}),
-			voice.IfThenElseAsScriptInner(&voice.IfThenElse{
-				If: "${myVar == 'discount' || myVar == '1'}",
-				Then: []voice.ScriptInner{
-					voice.SayAsScriptInner(&voice.Say{Say: "You will get discount"}),
-				},
-				Else: []voice.ScriptInner{
-					voice.IfThenElseAsScriptInner(&voice.IfThenElse{
-						If: "${myVar == 'exit' || myVar == '0'}",
-						Then: []voice.ScriptInner{
-							voice.SayAsScriptInner(&voice.Say{Say: "Goodbye"}),
-						},
-						Else: []voice.ScriptInner{
-							voice.SayAsScriptInner(&voice.Say{Say: "I did not understand"}),
-						},
-					}),
-				},
-			}),
-			voice.HangupAsScriptInner(voice.HANGUP_HANGUP.Ptr()),
-		},
+		Script:      givenScript,
 	}
 
 	actualRequest, _ := json.Marshal(request)
@@ -943,7 +1043,7 @@ func TestShouldUpdateVoiceIvrScenario(t *testing.T) {
 	givenName := "Call API"
 	givenDescription := "Perform a POST request to provided URL with headers and payload."
 	givenRequestUrl := "https://requestb.in/12345"
-	givenRequestMethod := voice.HTTPMETHOD_POST
+	givenRequestMethod := "POST"
 	givenRequestHeaderKey := "content-type"
 	givenRequestHeaderValue := "application/json"
 	givenRequestBodyPayload := "payload"
@@ -957,14 +1057,7 @@ func TestShouldUpdateVoiceIvrScenario(t *testing.T) {
 	ibTimeUpdateTime := infobip.Time{
 		T: givenUpdateTimeDateTime,
 	}
-	givenCallApi := voice.CallApi{
-		Request: givenRequestUrl,
-		Options: voice.CallApiOptions{
-			Method:  givenRequestMethod,
-			Headers: map[string]interface{}{givenRequestHeaderKey: givenRequestHeaderValue},
-			Body:    &givenRequestBodyPayload,
-		},
-	}
+	givenScript := fmt.Sprintf(`[{"request":"%s","options":{"method":"%s","headers":{"%s":"%s"},"body":"%s"}}]`, givenRequestUrl, givenRequestMethod, givenRequestHeaderKey, givenRequestHeaderValue, givenRequestBodyPayload)
 
 	givenRequest := fmt.Sprintf(`{
        "name": "%s",
@@ -1005,12 +1098,12 @@ func TestShouldUpdateVoiceIvrScenario(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/voice/ivr/1/scenarios/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(VoiceIvrScenarioByIdEndpoint, givenId), givenResponse, 200)
 
 	request := voice.UpdateScenarioRequest{
 		Name:        givenName,
 		Description: &givenDescription,
-		Script:      []voice.ScriptInner{voice.CallApiAsScriptInner(&givenCallApi)},
+		Script:      givenScript,
 	}
 
 	actualRequest, _ := json.Marshal(request)
@@ -1025,7 +1118,7 @@ func TestShouldUpdateVoiceIvrScenario(t *testing.T) {
 	assert.Equal(t, givenDescription, response.GetDescription())
 	assert.Equal(t, ibTimeCreateTime, response.GetCreateTime())
 	assert.Equal(t, ibTimeUpdateTime, response.GetUpdateTime())
-	assert.Equal(t, &givenCallApi, response.GetScript()[0].CallApi)
+	assert.Equal(t, givenScript, response.GetScript())
 }
 
 func TestShouldDeleteVoiceIvrScenario(t *testing.T) {
@@ -1034,7 +1127,7 @@ func TestShouldDeleteVoiceIvrScenario(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/voice/ivr/1/scenarios/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(VoiceIvrScenarioByIdEndpoint, givenId), givenResponse, 200)
 
 	_, err := infobipClient.VoiceAPI.DeleteAVoiceIvrScenario(context.Background(), givenId).Execute()
 
@@ -1058,4 +1151,104 @@ func TestShouldDownloadVoiceIvrRecordedFile(t *testing.T) {
 	content, err := io.ReadAll(file)
 	assert.Nil(t, err, "Expected no error while reading the file content")
 	assert.Equal(t, givenBinaryData, content, "File content does not match the expected binary data")
+}
+
+// ==============================================================================
+// Webhook deserialization tests
+// ==============================================================================
+
+func TestReceiveNumberMaskingCallbackWebhook(t *testing.T) {
+	givenFrom := "441134960001"
+	givenTo := "441134960002"
+	givenCorrelationId := "corr-123"
+	givenNmCorrelationId := "nm-corr-456"
+
+	givenPayload := fmt.Sprintf(`
+		{
+			"from": "%s",
+			"to": "%s",
+			"correlationId": "%s",
+			"nmCorrelationId": "%s"
+		}`,
+		givenFrom,
+		givenTo,
+		givenCorrelationId,
+		givenNmCorrelationId,
+	)
+
+	var requestBody voice.NumberMaskingCallbackRequest
+	err := json.Unmarshal([]byte(givenPayload), &requestBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.Equal(t, givenFrom, requestBody.GetFrom())
+	assert.Equal(t, givenTo, requestBody.GetTo())
+	assert.Equal(t, givenCorrelationId, requestBody.GetCorrelationId())
+	assert.Equal(t, givenNmCorrelationId, requestBody.GetNmCorrelationId())
+}
+
+func TestReceiveNumberMaskingCallbackWebhook_WithDtmf(t *testing.T) {
+	givenPayload := `
+		{
+			"from": "441134960001",
+			"to": "441134960002",
+			"correlationId": "corr-123",
+			"nmCorrelationId": "nm-corr-456",
+			"dtmfCaptured": true
+		}`
+
+	var requestBody voice.NumberMaskingCallbackRequest
+	err := json.Unmarshal([]byte(givenPayload), &requestBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.Equal(t, "441134960001", requestBody.GetFrom())
+	assert.Equal(t, true, requestBody.GetDtmfCaptured())
+}
+
+func TestReceiveMaskedCallReportWebhook(t *testing.T) {
+	givenAction := "dial"
+	givenFrom := "441134960001"
+	givenTo := "441134960002"
+	givenTransferTo := "441134960003"
+	givenDuration := 45
+	givenStatus := "answered"
+	givenNmCorrelationId := "nm-corr-456"
+	givenCorrelationId := "corr-123"
+
+	givenPayload := fmt.Sprintf(`
+		{
+			"action": "%s",
+			"from": "%s",
+			"to": "%s",
+			"transferTo": "%s",
+			"duration": %d,
+			"status": "%s",
+			"nmCorrelationId": "%s",
+			"correlationId": "%s",
+			"inboundDuration": 50,
+			"calculatedDuration": 60
+		}`,
+		givenAction,
+		givenFrom,
+		givenTo,
+		givenTransferTo,
+		givenDuration,
+		givenStatus,
+		givenNmCorrelationId,
+		givenCorrelationId,
+	)
+
+	var requestBody voice.NumberMaskingStatusRequest
+	err := json.Unmarshal([]byte(givenPayload), &requestBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.Equal(t, givenAction, requestBody.GetAction())
+	assert.Equal(t, givenFrom, requestBody.GetFrom())
+	assert.Equal(t, givenTo, requestBody.GetTo())
+	assert.Equal(t, givenTransferTo, requestBody.GetTransferTo())
+	assert.Equal(t, int32(givenDuration), requestBody.GetDuration())
+	assert.Equal(t, givenStatus, requestBody.GetStatus())
+	assert.Equal(t, givenNmCorrelationId, requestBody.GetNmCorrelationId())
+	assert.Equal(t, givenCorrelationId, requestBody.GetCorrelationId())
+	assert.Equal(t, int32(50), requestBody.GetInboundDuration())
+	assert.Equal(t, int32(60), requestBody.GetCalculatedDuration())
 }

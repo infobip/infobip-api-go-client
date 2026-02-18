@@ -22,11 +22,16 @@ type MoEventContent struct {
 	MoEventButtonReplyContent            *MoEventButtonReplyContent
 	MoEventDocumentContent               *MoEventDocumentContent
 	MoEventFileContent                   *MoEventFileContent
+	MoEventFlowResponseContent           *MoEventFlowResponseContent
+	MoEventFormContent                   *MoEventFormContent
 	MoEventImageContent                  *MoEventImageContent
 	MoEventListReplyContent              *MoEventListReplyContent
 	MoEventLocationContent               *MoEventLocationContent
+	MoEventPaymentResponseContent        *MoEventPaymentResponseContent
+	MoEventReactionContent               *MoEventReactionContent
 	MoEventSubjectContent                *MoEventSubjectContent
 	MoEventTextContent                   *MoEventTextContent
+	MoEventUrlContent                    *MoEventUrlContent
 	MoEventVideoContent                  *MoEventVideoContent
 }
 
@@ -65,6 +70,20 @@ func MoEventFileContentAsMoEventContent(v *MoEventFileContent) MoEventContent {
 	}
 }
 
+// MoEventFlowResponseContentAsMoEventContent is a convenience function that returns MoEventFlowResponseContent wrapped in MoEventContent
+func MoEventFlowResponseContentAsMoEventContent(v *MoEventFlowResponseContent) MoEventContent {
+	return MoEventContent{
+		MoEventFlowResponseContent: v,
+	}
+}
+
+// MoEventFormContentAsMoEventContent is a convenience function that returns MoEventFormContent wrapped in MoEventContent
+func MoEventFormContentAsMoEventContent(v *MoEventFormContent) MoEventContent {
+	return MoEventContent{
+		MoEventFormContent: v,
+	}
+}
+
 // MoEventImageContentAsMoEventContent is a convenience function that returns MoEventImageContent wrapped in MoEventContent
 func MoEventImageContentAsMoEventContent(v *MoEventImageContent) MoEventContent {
 	return MoEventContent{
@@ -86,6 +105,20 @@ func MoEventLocationContentAsMoEventContent(v *MoEventLocationContent) MoEventCo
 	}
 }
 
+// MoEventPaymentResponseContentAsMoEventContent is a convenience function that returns MoEventPaymentResponseContent wrapped in MoEventContent
+func MoEventPaymentResponseContentAsMoEventContent(v *MoEventPaymentResponseContent) MoEventContent {
+	return MoEventContent{
+		MoEventPaymentResponseContent: v,
+	}
+}
+
+// MoEventReactionContentAsMoEventContent is a convenience function that returns MoEventReactionContent wrapped in MoEventContent
+func MoEventReactionContentAsMoEventContent(v *MoEventReactionContent) MoEventContent {
+	return MoEventContent{
+		MoEventReactionContent: v,
+	}
+}
+
 // MoEventSubjectContentAsMoEventContent is a convenience function that returns MoEventSubjectContent wrapped in MoEventContent
 func MoEventSubjectContentAsMoEventContent(v *MoEventSubjectContent) MoEventContent {
 	return MoEventContent{
@@ -97,6 +130,13 @@ func MoEventSubjectContentAsMoEventContent(v *MoEventSubjectContent) MoEventCont
 func MoEventTextContentAsMoEventContent(v *MoEventTextContent) MoEventContent {
 	return MoEventContent{
 		MoEventTextContent: v,
+	}
+}
+
+// MoEventUrlContentAsMoEventContent is a convenience function that returns MoEventUrlContent wrapped in MoEventContent
+func MoEventUrlContentAsMoEventContent(v *MoEventUrlContent) MoEventContent {
+	return MoEventContent{
+		MoEventUrlContent: v,
 	}
 }
 
@@ -191,6 +231,36 @@ func (dst *MoEventContent) UnmarshalJSON(data []byte) error {
 			dst.MoEventFileContent = nil
 		}
 	}
+	// check if the discriminator value is 'FLOW_RESPONSE'
+	if jsonDict["type"] == "FLOW_RESPONSE" {
+		// try to unmarshal JSON data into MoEventFlowResponseContent
+		err = json.Unmarshal(data, &dst.MoEventFlowResponseContent)
+		if err == nil {
+			jsonMoEventFlowResponseContent, _ := json.Marshal(dst.MoEventFlowResponseContent)
+			if string(jsonMoEventFlowResponseContent) == "{}" { // empty struct
+				dst.MoEventFlowResponseContent = nil
+			} else {
+				return nil // data stored in dst.MoEventFlowResponseContent, return on the first match
+			}
+		} else {
+			dst.MoEventFlowResponseContent = nil
+		}
+	}
+	// check if the discriminator value is 'FORM_RESPONSE'
+	if jsonDict["type"] == "FORM_RESPONSE" {
+		// try to unmarshal JSON data into MoEventFormContent
+		err = json.Unmarshal(data, &dst.MoEventFormContent)
+		if err == nil {
+			jsonMoEventFormContent, _ := json.Marshal(dst.MoEventFormContent)
+			if string(jsonMoEventFormContent) == "{}" { // empty struct
+				dst.MoEventFormContent = nil
+			} else {
+				return nil // data stored in dst.MoEventFormContent, return on the first match
+			}
+		} else {
+			dst.MoEventFormContent = nil
+		}
+	}
 	// check if the discriminator value is 'IMAGE'
 	if jsonDict["type"] == "IMAGE" {
 		// try to unmarshal JSON data into MoEventImageContent
@@ -236,6 +306,36 @@ func (dst *MoEventContent) UnmarshalJSON(data []byte) error {
 			dst.MoEventLocationContent = nil
 		}
 	}
+	// check if the discriminator value is 'PAYMENT_RESPONSE'
+	if jsonDict["type"] == "PAYMENT_RESPONSE" {
+		// try to unmarshal JSON data into MoEventPaymentResponseContent
+		err = json.Unmarshal(data, &dst.MoEventPaymentResponseContent)
+		if err == nil {
+			jsonMoEventPaymentResponseContent, _ := json.Marshal(dst.MoEventPaymentResponseContent)
+			if string(jsonMoEventPaymentResponseContent) == "{}" { // empty struct
+				dst.MoEventPaymentResponseContent = nil
+			} else {
+				return nil // data stored in dst.MoEventPaymentResponseContent, return on the first match
+			}
+		} else {
+			dst.MoEventPaymentResponseContent = nil
+		}
+	}
+	// check if the discriminator value is 'REACTION'
+	if jsonDict["type"] == "REACTION" {
+		// try to unmarshal JSON data into MoEventReactionContent
+		err = json.Unmarshal(data, &dst.MoEventReactionContent)
+		if err == nil {
+			jsonMoEventReactionContent, _ := json.Marshal(dst.MoEventReactionContent)
+			if string(jsonMoEventReactionContent) == "{}" { // empty struct
+				dst.MoEventReactionContent = nil
+			} else {
+				return nil // data stored in dst.MoEventReactionContent, return on the first match
+			}
+		} else {
+			dst.MoEventReactionContent = nil
+		}
+	}
 	// check if the discriminator value is 'SUBJECT'
 	if jsonDict["type"] == "SUBJECT" {
 		// try to unmarshal JSON data into MoEventSubjectContent
@@ -264,6 +364,21 @@ func (dst *MoEventContent) UnmarshalJSON(data []byte) error {
 			}
 		} else {
 			dst.MoEventTextContent = nil
+		}
+	}
+	// check if the discriminator value is 'URL'
+	if jsonDict["type"] == "URL" {
+		// try to unmarshal JSON data into MoEventUrlContent
+		err = json.Unmarshal(data, &dst.MoEventUrlContent)
+		if err == nil {
+			jsonMoEventUrlContent, _ := json.Marshal(dst.MoEventUrlContent)
+			if string(jsonMoEventUrlContent) == "{}" { // empty struct
+				dst.MoEventUrlContent = nil
+			} else {
+				return nil // data stored in dst.MoEventUrlContent, return on the first match
+			}
+		} else {
+			dst.MoEventUrlContent = nil
 		}
 	}
 	// check if the discriminator value is 'VIDEO'
@@ -301,6 +416,12 @@ func (src MoEventContent) MarshalJSON() ([]byte, error) {
 	if src.MoEventFileContent != nil {
 		return json.Marshal(&src.MoEventFileContent)
 	}
+	if src.MoEventFlowResponseContent != nil {
+		return json.Marshal(&src.MoEventFlowResponseContent)
+	}
+	if src.MoEventFormContent != nil {
+		return json.Marshal(&src.MoEventFormContent)
+	}
 	if src.MoEventImageContent != nil {
 		return json.Marshal(&src.MoEventImageContent)
 	}
@@ -310,11 +431,20 @@ func (src MoEventContent) MarshalJSON() ([]byte, error) {
 	if src.MoEventLocationContent != nil {
 		return json.Marshal(&src.MoEventLocationContent)
 	}
+	if src.MoEventPaymentResponseContent != nil {
+		return json.Marshal(&src.MoEventPaymentResponseContent)
+	}
+	if src.MoEventReactionContent != nil {
+		return json.Marshal(&src.MoEventReactionContent)
+	}
 	if src.MoEventSubjectContent != nil {
 		return json.Marshal(&src.MoEventSubjectContent)
 	}
 	if src.MoEventTextContent != nil {
 		return json.Marshal(&src.MoEventTextContent)
+	}
+	if src.MoEventUrlContent != nil {
+		return json.Marshal(&src.MoEventUrlContent)
 	}
 	if src.MoEventVideoContent != nil {
 		return json.Marshal(&src.MoEventVideoContent)
@@ -342,6 +472,12 @@ func (obj *MoEventContent) GetActualInstance() interface{} {
 	if obj.MoEventFileContent != nil {
 		return obj.MoEventFileContent
 	}
+	if obj.MoEventFlowResponseContent != nil {
+		return obj.MoEventFlowResponseContent
+	}
+	if obj.MoEventFormContent != nil {
+		return obj.MoEventFormContent
+	}
 	if obj.MoEventImageContent != nil {
 		return obj.MoEventImageContent
 	}
@@ -351,11 +487,20 @@ func (obj *MoEventContent) GetActualInstance() interface{} {
 	if obj.MoEventLocationContent != nil {
 		return obj.MoEventLocationContent
 	}
+	if obj.MoEventPaymentResponseContent != nil {
+		return obj.MoEventPaymentResponseContent
+	}
+	if obj.MoEventReactionContent != nil {
+		return obj.MoEventReactionContent
+	}
 	if obj.MoEventSubjectContent != nil {
 		return obj.MoEventSubjectContent
 	}
 	if obj.MoEventTextContent != nil {
 		return obj.MoEventTextContent
+	}
+	if obj.MoEventUrlContent != nil {
+		return obj.MoEventUrlContent
 	}
 	if obj.MoEventVideoContent != nil {
 		return obj.MoEventVideoContent

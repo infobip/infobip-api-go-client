@@ -19,7 +19,7 @@ import (
 	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 )
 
-// MessageDestination - Array of destination objects for where messages are being sent. A valid destination is required.
+// MessageDestination - Array of destination objects for where messages are being sent. A valid destination is required. **`Channels Destination` is required when sending messages with defined failover.**
 type MessageDestination struct {
 	ChannelsDestination *ChannelsDestination
 	ToDestination       *ToDestination

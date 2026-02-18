@@ -29,7 +29,6 @@ const (
 	CALLSTATE_CANCELLED       CallState = "CANCELLED"
 	CALLSTATE_NO_ANSWER       CallState = "NO_ANSWER"
 	CALLSTATE_BUSY            CallState = "BUSY"
-	CALLSTATE_DISCONNECTED    CallState = "DISCONNECTED"
 )
 
 // All allowed values of CallState enum
@@ -43,7 +42,6 @@ var AllowedCallStateEnumValues = []CallState{
 	"CANCELLED",
 	"NO_ANSWER",
 	"BUSY",
-	"DISCONNECTED",
 }
 
 func (v *CallState) UnmarshalJSON(src []byte) error {

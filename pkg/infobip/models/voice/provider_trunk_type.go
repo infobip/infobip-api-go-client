@@ -20,9 +20,10 @@ type ProviderTrunkType string
 
 // List of ProviderTrunkType
 const (
-	PROVIDERTRUNKTYPE_FRESHWORKS    ProviderTrunkType = "FRESHWORKS"
-	PROVIDERTRUNKTYPE_GENESYS_CLOUD ProviderTrunkType = "GENESYS_CLOUD"
-	PROVIDERTRUNKTYPE_CISCO_WEBEX   ProviderTrunkType = "CISCO_WEBEX"
+	PROVIDERTRUNKTYPE_FRESHWORKS      ProviderTrunkType = "FRESHWORKS"
+	PROVIDERTRUNKTYPE_GENESYS_CLOUD   ProviderTrunkType = "GENESYS_CLOUD"
+	PROVIDERTRUNKTYPE_CISCO_WEBEX     ProviderTrunkType = "CISCO_WEBEX"
+	PROVIDERTRUNKTYPE_OPENAI_REALTIME ProviderTrunkType = "OPENAI_REALTIME"
 )
 
 // All allowed values of ProviderTrunkType enum
@@ -30,6 +31,7 @@ var AllowedProviderTrunkTypeEnumValues = []ProviderTrunkType{
 	"FRESHWORKS",
 	"GENESYS_CLOUD",
 	"CISCO_WEBEX",
+	"OPENAI_REALTIME",
 }
 
 func (v *ProviderTrunkType) UnmarshalJSON(src []byte) error {

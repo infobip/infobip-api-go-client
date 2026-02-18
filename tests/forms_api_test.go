@@ -13,6 +13,13 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	FormsEndpoint     = "/forms/1/forms"
+	FormByIdEndpoint  = "/forms/1/forms/%s"
+	FormDataEndpoint  = "/forms/1/forms/%s/data"
+	FormViewsEndpoint = "/forms/1/forms/%s/views"
+)
+
 func TestShouldGetAllForms(t *testing.T) {
 	givenFormId1 := "f23f0f7c-9898-4feb-8f21-5afe2c29db7e"
 	givenFormName1 := "Test form"
@@ -72,7 +79,7 @@ func TestShouldGetAllForms(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/forms/1/forms", givenResponse, 200)
+	SetUpSuccessRequest("GET", FormsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.
 		FormsAPI.
@@ -160,7 +167,7 @@ func TestShouldGetFormById(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/forms/1/forms/%s", givenFormId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(FormByIdEndpoint, givenFormId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		FormsAPI.
@@ -200,7 +207,7 @@ func TestShouldIncrementFormViewCount(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/forms/1/forms/%s/views", formId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(FormViewsEndpoint, formId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		FormsAPI.
@@ -238,7 +245,7 @@ func TestShouldSubmitFormData(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/forms/1/forms/%s/data", formId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(FormDataEndpoint, formId), givenResponse, 200)
 
 	response, _, err := infobipClient.
 		FormsAPI.

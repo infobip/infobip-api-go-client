@@ -24,6 +24,9 @@ type AddExistingCallRequest struct {
 	// Indicates whether to add an existing call on early media. Otherwise, the call will be added after being established. This field is applicable for `OUTBOUND` calls only. Cannot be `true` when `ringbackGeneration` is enabled.
 	ConnectOnEarlyMedia *bool
 	RingbackGeneration  *RingbackGeneration
+	Role                *Role
+	// Optional parameter to update a call's custom data.
+	CustomData *map[string]string
 }
 
 // NewAddExistingCallRequest instantiates a new AddExistingCallRequest object
@@ -113,6 +116,70 @@ func (o *AddExistingCallRequest) SetRingbackGeneration(v RingbackGeneration) {
 	o.RingbackGeneration = &v
 }
 
+// GetRole returns the Role field value if set, zero value otherwise.
+func (o *AddExistingCallRequest) GetRole() Role {
+	if o == nil || IsNil(o.Role) {
+		var ret Role
+		return ret
+	}
+	return *o.Role
+}
+
+// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddExistingCallRequest) GetRoleOk() (*Role, bool) {
+	if o == nil || IsNil(o.Role) {
+		return nil, false
+	}
+	return o.Role, true
+}
+
+// HasRole returns a boolean if a field has been set.
+func (o *AddExistingCallRequest) HasRole() bool {
+	if o != nil && !IsNil(o.Role) {
+		return true
+	}
+
+	return false
+}
+
+// SetRole gets a reference to the given Role and assigns it to the Role field.
+func (o *AddExistingCallRequest) SetRole(v Role) {
+	o.Role = &v
+}
+
+// GetCustomData returns the CustomData field value if set, zero value otherwise.
+func (o *AddExistingCallRequest) GetCustomData() map[string]string {
+	if o == nil || IsNil(o.CustomData) {
+		var ret map[string]string
+		return ret
+	}
+	return *o.CustomData
+}
+
+// GetCustomDataOk returns a tuple with the CustomData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *AddExistingCallRequest) GetCustomDataOk() (*map[string]string, bool) {
+	if o == nil || IsNil(o.CustomData) {
+		return nil, false
+	}
+	return o.CustomData, true
+}
+
+// HasCustomData returns a boolean if a field has been set.
+func (o *AddExistingCallRequest) HasCustomData() bool {
+	if o != nil && !IsNil(o.CustomData) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomData gets a reference to the given map[string]string and assigns it to the CustomData field.
+func (o *AddExistingCallRequest) SetCustomData(v map[string]string) {
+	o.CustomData = &v
+}
+
 func (o AddExistingCallRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -128,6 +195,12 @@ func (o AddExistingCallRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.RingbackGeneration) {
 		toSerialize["ringbackGeneration"] = o.RingbackGeneration
+	}
+	if !IsNil(o.Role) {
+		toSerialize["role"] = o.Role
+	}
+	if !IsNil(o.CustomData) {
+		toSerialize["customData"] = o.CustomData
 	}
 	return toSerialize, nil
 }

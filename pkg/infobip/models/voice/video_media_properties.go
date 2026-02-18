@@ -25,6 +25,8 @@ type VideoMediaProperties struct {
 	Camera *bool
 	// Indicates whether the end user is sharing their screen.
 	ScreenShare *bool
+	// Indicates whether the end user can receive remote videos.
+	Blind *bool
 }
 
 // NewVideoMediaProperties instantiates a new VideoMediaProperties object
@@ -110,6 +112,38 @@ func (o *VideoMediaProperties) SetScreenShare(v bool) {
 	o.ScreenShare = &v
 }
 
+// GetBlind returns the Blind field value if set, zero value otherwise.
+func (o *VideoMediaProperties) GetBlind() bool {
+	if o == nil || IsNil(o.Blind) {
+		var ret bool
+		return ret
+	}
+	return *o.Blind
+}
+
+// GetBlindOk returns a tuple with the Blind field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VideoMediaProperties) GetBlindOk() (*bool, bool) {
+	if o == nil || IsNil(o.Blind) {
+		return nil, false
+	}
+	return o.Blind, true
+}
+
+// HasBlind returns a boolean if a field has been set.
+func (o *VideoMediaProperties) HasBlind() bool {
+	if o != nil && !IsNil(o.Blind) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlind gets a reference to the given bool and assigns it to the Blind field.
+func (o *VideoMediaProperties) SetBlind(v bool) {
+	o.Blind = &v
+}
+
 func (o VideoMediaProperties) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -125,6 +159,9 @@ func (o VideoMediaProperties) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ScreenShare) {
 		toSerialize["screenShare"] = o.ScreenShare
+	}
+	if !IsNil(o.Blind) {
+		toSerialize["blind"] = o.Blind
 	}
 	return toSerialize, nil
 }

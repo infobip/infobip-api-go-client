@@ -24,7 +24,7 @@ type RegisteredSipTrunkResponse struct {
 	Id                        *string
 	Type                      SipTrunkType
 	Name                      *string
-	Location                  *SipTrunkLocation
+	Location                  *string
 	Tls                       *bool
 	Codecs                    []AudioCodec
 	Dtmf                      *DtmfType
@@ -126,9 +126,9 @@ func (o *RegisteredSipTrunkResponse) SetName(v string) {
 }
 
 // GetLocation returns the Location field value if set, zero value otherwise.
-func (o *RegisteredSipTrunkResponse) GetLocation() SipTrunkLocation {
+func (o *RegisteredSipTrunkResponse) GetLocation() string {
 	if o == nil || IsNil(o.Location) {
-		var ret SipTrunkLocation
+		var ret string
 		return ret
 	}
 	return *o.Location
@@ -136,7 +136,7 @@ func (o *RegisteredSipTrunkResponse) GetLocation() SipTrunkLocation {
 
 // GetLocationOk returns a tuple with the Location field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *RegisteredSipTrunkResponse) GetLocationOk() (*SipTrunkLocation, bool) {
+func (o *RegisteredSipTrunkResponse) GetLocationOk() (*string, bool) {
 	if o == nil || IsNil(o.Location) {
 		return nil, false
 	}
@@ -152,8 +152,8 @@ func (o *RegisteredSipTrunkResponse) HasLocation() bool {
 	return false
 }
 
-// SetLocation gets a reference to the given SipTrunkLocation and assigns it to the Location field.
-func (o *RegisteredSipTrunkResponse) SetLocation(v SipTrunkLocation) {
+// SetLocation gets a reference to the given string and assigns it to the Location field.
+func (o *RegisteredSipTrunkResponse) SetLocation(v string) {
 	o.Location = &v
 }
 

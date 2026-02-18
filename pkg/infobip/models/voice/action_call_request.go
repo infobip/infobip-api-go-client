@@ -22,8 +22,8 @@ var _ MappedNullable = &ActionCallRequest{}
 // ActionCallRequest struct for ActionCallRequest
 type ActionCallRequest struct {
 	Endpoint CallEndpoint
-	// Caller identifier. Must be a number in the [E.164](https://en.wikipedia.org/wiki/E.164) format for calls to `PHONE`, a string for calls to `WEBRTC` or `SIP`, and a Viber Voice number for calls to `VIBER`.
-	From string
+	// Caller identifier. Must be a number in the [E.164](https://en.wikipedia.org/wiki/E.164) format for calls to `PHONE`, a string for calls to `WEBRTC` or `SIP`, and a Viber Voice number for calls to `VIBER`. Field is mandatory for `VIBER` endpoint and calls to emergency numbers.
+	From *string
 	// Display name to show when placing calls towards WEBRTC endpoints. Can be any alphanumeric string.
 	FromDisplayName *string
 	// Time to wait, in seconds, before the called party answers the call.
@@ -43,10 +43,9 @@ type _ActionCallRequest ActionCallRequest
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewActionCallRequest(endpoint CallEndpoint, from string) *ActionCallRequest {
+func NewActionCallRequest(endpoint CallEndpoint) *ActionCallRequest {
 	this := ActionCallRequest{}
 	this.Endpoint = endpoint
-	this.From = from
 	var maxDuration int32 = 28800
 	this.MaxDuration = &maxDuration
 	return &this
@@ -87,28 +86,36 @@ func (o *ActionCallRequest) SetEndpoint(v CallEndpoint) {
 	o.Endpoint = v
 }
 
-// GetFrom returns the From field value
+// GetFrom returns the From field value if set, zero value otherwise.
 func (o *ActionCallRequest) GetFrom() string {
-	if o == nil {
+	if o == nil || IsNil(o.From) {
 		var ret string
 		return ret
 	}
-
-	return o.From
+	return *o.From
 }
 
-// GetFromOk returns a tuple with the From field value
+// GetFromOk returns a tuple with the From field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *ActionCallRequest) GetFromOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.From) {
 		return nil, false
 	}
-	return &o.From, true
+	return o.From, true
 }
 
-// SetFrom sets field value
+// HasFrom returns a boolean if a field has been set.
+func (o *ActionCallRequest) HasFrom() bool {
+	if o != nil && !IsNil(o.From) {
+		return true
+	}
+
+	return false
+}
+
+// SetFrom gets a reference to the given string and assigns it to the From field.
 func (o *ActionCallRequest) SetFrom(v string) {
-	o.From = v
+	o.From = &v
 }
 
 // GetFromDisplayName returns the FromDisplayName field value if set, zero value otherwise.
@@ -314,7 +321,9 @@ func (o ActionCallRequest) MarshalJSON() ([]byte, error) {
 func (o ActionCallRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["endpoint"] = o.Endpoint
-	toSerialize["from"] = o.From
+	if !IsNil(o.From) {
+		toSerialize["from"] = o.From
+	}
 	if !IsNil(o.FromDisplayName) {
 		toSerialize["fromDisplayName"] = o.FromDisplayName
 	}

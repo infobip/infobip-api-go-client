@@ -22,9 +22,9 @@ var _ MappedNullable = &MessageLocationBody{}
 // MessageLocationBody struct for MessageLocationBody
 type MessageLocationBody struct {
 	Type MessageBodyType
-	// Latitude of a location.
+	// Latitude of the location.
 	Latitude float64
-	// Longitude of a location.
+	// Longitude of the location.
 	Longitude float64
 	// Location name.
 	Name *string

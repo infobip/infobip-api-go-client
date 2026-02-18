@@ -21,7 +21,7 @@ var _ MappedNullable = &HangupRequest{}
 
 // HangupRequest Hangup request.
 type HangupRequest struct {
-	ErrorCode *ErrorCode
+	ErrorCode *PublicErrorCode
 }
 
 // NewHangupRequest instantiates a new HangupRequest object
@@ -44,9 +44,9 @@ func NewHangupRequestWithDefaults() *HangupRequest {
 }
 
 // GetErrorCode returns the ErrorCode field value if set, zero value otherwise.
-func (o *HangupRequest) GetErrorCode() ErrorCode {
+func (o *HangupRequest) GetErrorCode() PublicErrorCode {
 	if o == nil || IsNil(o.ErrorCode) {
-		var ret ErrorCode
+		var ret PublicErrorCode
 		return ret
 	}
 	return *o.ErrorCode
@@ -54,7 +54,7 @@ func (o *HangupRequest) GetErrorCode() ErrorCode {
 
 // GetErrorCodeOk returns a tuple with the ErrorCode field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *HangupRequest) GetErrorCodeOk() (*ErrorCode, bool) {
+func (o *HangupRequest) GetErrorCodeOk() (*PublicErrorCode, bool) {
 	if o == nil || IsNil(o.ErrorCode) {
 		return nil, false
 	}
@@ -70,8 +70,8 @@ func (o *HangupRequest) HasErrorCode() bool {
 	return false
 }
 
-// SetErrorCode gets a reference to the given ErrorCode and assigns it to the ErrorCode field.
-func (o *HangupRequest) SetErrorCode(v ErrorCode) {
+// SetErrorCode gets a reference to the given PublicErrorCode and assigns it to the ErrorCode field.
+func (o *HangupRequest) SetErrorCode(v PublicErrorCode) {
 	o.ErrorCode = &v
 }
 

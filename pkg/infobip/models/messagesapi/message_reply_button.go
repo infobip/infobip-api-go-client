@@ -24,8 +24,8 @@ type MessageReplyButton struct {
 	Type MessageButtonType
 	// Text to be displayed on the button.
 	Text string
-	// Custom data that will be sent to you when user reply to a message.
-	PostbackData string
+	// Custom data that will be sent to you when the user replies to the message.
+	PostbackData *string
 }
 
 type _MessageReplyButton MessageReplyButton
@@ -34,11 +34,10 @@ type _MessageReplyButton MessageReplyButton
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMessageReplyButton(text string, postbackData string) *MessageReplyButton {
+func NewMessageReplyButton(text string) *MessageReplyButton {
 	this := MessageReplyButton{}
 	this.Type = "REPLY"
 	this.Text = text
-	this.PostbackData = postbackData
 	return &this
 }
 
@@ -75,28 +74,36 @@ func (o *MessageReplyButton) SetText(v string) {
 	o.Text = v
 }
 
-// GetPostbackData returns the PostbackData field value
+// GetPostbackData returns the PostbackData field value if set, zero value otherwise.
 func (o *MessageReplyButton) GetPostbackData() string {
-	if o == nil {
+	if o == nil || IsNil(o.PostbackData) {
 		var ret string
 		return ret
 	}
-
-	return o.PostbackData
+	return *o.PostbackData
 }
 
-// GetPostbackDataOk returns a tuple with the PostbackData field value
+// GetPostbackDataOk returns a tuple with the PostbackData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MessageReplyButton) GetPostbackDataOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PostbackData) {
 		return nil, false
 	}
-	return &o.PostbackData, true
+	return o.PostbackData, true
 }
 
-// SetPostbackData sets field value
+// HasPostbackData returns a boolean if a field has been set.
+func (o *MessageReplyButton) HasPostbackData() bool {
+	if o != nil && !IsNil(o.PostbackData) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostbackData gets a reference to the given string and assigns it to the PostbackData field.
 func (o *MessageReplyButton) SetPostbackData(v string) {
-	o.PostbackData = v
+	o.PostbackData = &v
 }
 
 func (o MessageReplyButton) MarshalJSON() ([]byte, error) {
@@ -111,7 +118,9 @@ func (o MessageReplyButton) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
 	toSerialize["text"] = o.Text
-	toSerialize["postbackData"] = o.PostbackData
+	if !IsNil(o.PostbackData) {
+		toSerialize["postbackData"] = o.PostbackData
+	}
 	return toSerialize, nil
 }
 

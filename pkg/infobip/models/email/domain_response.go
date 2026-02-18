@@ -33,9 +33,8 @@ type DomainResponse struct {
 	// Status if the domain is blocked.
 	Blocked *bool
 	// Date the domain was created. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
-	CreatedAt *Time
-	// Mailbox for return path.
-	ReturnPathAddress *string
+	CreatedAt                   *Time
+	BlocklistConfigurationLevel *BlocklistConfigurationLevel
 }
 
 // NewDomainResponse instantiates a new DomainResponse object
@@ -281,36 +280,36 @@ func (o *DomainResponse) SetCreatedAt(v Time) {
 	o.CreatedAt = &v
 }
 
-// GetReturnPathAddress returns the ReturnPathAddress field value if set, zero value otherwise.
-func (o *DomainResponse) GetReturnPathAddress() string {
-	if o == nil || IsNil(o.ReturnPathAddress) {
-		var ret string
+// GetBlocklistConfigurationLevel returns the BlocklistConfigurationLevel field value if set, zero value otherwise.
+func (o *DomainResponse) GetBlocklistConfigurationLevel() BlocklistConfigurationLevel {
+	if o == nil || IsNil(o.BlocklistConfigurationLevel) {
+		var ret BlocklistConfigurationLevel
 		return ret
 	}
-	return *o.ReturnPathAddress
+	return *o.BlocklistConfigurationLevel
 }
 
-// GetReturnPathAddressOk returns a tuple with the ReturnPathAddress field value if set, nil otherwise
+// GetBlocklistConfigurationLevelOk returns a tuple with the BlocklistConfigurationLevel field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *DomainResponse) GetReturnPathAddressOk() (*string, bool) {
-	if o == nil || IsNil(o.ReturnPathAddress) {
+func (o *DomainResponse) GetBlocklistConfigurationLevelOk() (*BlocklistConfigurationLevel, bool) {
+	if o == nil || IsNil(o.BlocklistConfigurationLevel) {
 		return nil, false
 	}
-	return o.ReturnPathAddress, true
+	return o.BlocklistConfigurationLevel, true
 }
 
-// HasReturnPathAddress returns a boolean if a field has been set.
-func (o *DomainResponse) HasReturnPathAddress() bool {
-	if o != nil && !IsNil(o.ReturnPathAddress) {
+// HasBlocklistConfigurationLevel returns a boolean if a field has been set.
+func (o *DomainResponse) HasBlocklistConfigurationLevel() bool {
+	if o != nil && !IsNil(o.BlocklistConfigurationLevel) {
 		return true
 	}
 
 	return false
 }
 
-// SetReturnPathAddress gets a reference to the given string and assigns it to the ReturnPathAddress field.
-func (o *DomainResponse) SetReturnPathAddress(v string) {
-	o.ReturnPathAddress = &v
+// SetBlocklistConfigurationLevel gets a reference to the given BlocklistConfigurationLevel and assigns it to the BlocklistConfigurationLevel field.
+func (o *DomainResponse) SetBlocklistConfigurationLevel(v BlocklistConfigurationLevel) {
+	o.BlocklistConfigurationLevel = &v
 }
 
 func (o DomainResponse) MarshalJSON() ([]byte, error) {
@@ -344,8 +343,8 @@ func (o DomainResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CreatedAt) {
 		toSerialize["createdAt"] = o.CreatedAt
 	}
-	if !IsNil(o.ReturnPathAddress) {
-		toSerialize["returnPathAddress"] = o.ReturnPathAddress
+	if !IsNil(o.BlocklistConfigurationLevel) {
+		toSerialize["blocklistConfigurationLevel"] = o.BlocklistConfigurationLevel
 	}
 	return toSerialize, nil
 }

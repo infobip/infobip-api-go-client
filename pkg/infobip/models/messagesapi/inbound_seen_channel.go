@@ -20,18 +20,18 @@ type InboundSeenChannel string
 
 // List of InboundSeenChannel
 const (
-	INBOUNDSEENCHANNEL_WHATSAPP  InboundSeenChannel = "WHATSAPP"
+	INBOUNDSEENCHANNEL_RCS       InboundSeenChannel = "RCS"
 	INBOUNDSEENCHANNEL_VIBER_BM  InboundSeenChannel = "VIBER_BM"
 	INBOUNDSEENCHANNEL_VIBER_BOT InboundSeenChannel = "VIBER_BOT"
-	INBOUNDSEENCHANNEL_RCS       InboundSeenChannel = "RCS"
+	INBOUNDSEENCHANNEL_WHATSAPP  InboundSeenChannel = "WHATSAPP"
 )
 
 // All allowed values of InboundSeenChannel enum
 var AllowedInboundSeenChannelEnumValues = []InboundSeenChannel{
-	"WHATSAPP",
+	"RCS",
 	"VIBER_BM",
 	"VIBER_BOT",
-	"RCS",
+	"WHATSAPP",
 }
 
 func (v *InboundSeenChannel) UnmarshalJSON(src []byte) error {

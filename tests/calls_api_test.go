@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"os"
 	"testing"
 	"time"
@@ -14,6 +13,69 @@ import (
 	"github.com/infobip/infobip-api-go-client/v3/pkg/infobip/models/voice"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
+)
+
+const (
+	CallsApplicationTransferEndpoint       = "/calls/1/calls/%s/application-transfer"
+	CallsApplicationTransferAcceptEndpoint = "/calls/1/calls/%s/application-transfer/%s/accept"
+	CallsApplicationTransferRejectEndpoint = "/calls/1/calls/%s/application-transfer/%s/reject"
+	CallsEndpoint                          = "/calls/1/calls"
+	CallByIdEndpoint                       = "/calls/1/calls/%s"
+	CallsHistoryEndpoint                   = "/calls/1/calls/history"
+	CallHistoryEndpoint                    = "/calls/1/calls/%s/history"
+	CallsConnectEndpoint                   = "/calls/1/connect"
+	CallConnectEndpoint                    = "/calls/1/calls/%s/connect"
+	CallPreAnswerEndpoint                  = "/calls/1/calls/%s/pre-answer"
+	CallAnswerEndpoint                     = "/calls/1/calls/%s/answer"
+	CallHangupEndpoint                     = "/calls/1/calls/%s/hangup"
+	CallPlayEndpoint                       = "/calls/1/calls/%s/play"
+	CallStopPlayEndpoint                   = "/calls/1/calls/%s/stop-play"
+	CallSayEndpoint                        = "/calls/1/calls/%s/say"
+	CallSendDtmfEndpoint                   = "/calls/1/calls/%s/send-dtmf"
+	CallCaptureDtmfEndpoint                = "/calls/1/calls/%s/capture/dtmf"
+	CallCaptureSpeechEndpoint              = "/calls/1/calls/%s/capture/speech"
+	CallStartRecordingEndpoint             = "/calls/1/calls/%s/start-recording"
+	CallStopRecordingEndpoint              = "/calls/1/calls/%s/stop-recording"
+	CallStartMediaStreamEndpoint           = "/calls/1/calls/%s/start-media-stream"
+	CallStopMediaStreamEndpoint            = "/calls/1/calls/%s/stop-media-stream"
+	CallStartTranscriptionEndpoint         = "/calls/1/calls/%s/start-transcription"
+	CallStopTranscriptionEndpoint          = "/calls/1/calls/%s/stop-transcription"
+	ConferencesEndpoint                    = "/calls/1/conferences"
+	ConferenceByIdEndpoint                 = "/calls/1/conferences/%s"
+	ConferencesHistoryEndpoint             = "/calls/1/conferences/history"
+	ConferenceCallEndpoint                 = "/calls/1/conferences/%s/call"
+	ConferenceCallByIdEndpoint             = "/calls/1/conferences/%s/call/%s"
+	ConferenceHangupEndpoint               = "/calls/1/conferences/%s/hangup"
+	ConferencePlayEndpoint                 = "/calls/1/conferences/%s/play"
+	ConferenceSayEndpoint                  = "/calls/1/conferences/%s/say"
+	ConferenceStopPlayEndpoint             = "/calls/1/conferences/%s/stop-play"
+	ConferenceStartRecordingEndpoint       = "/calls/1/conferences/%s/start-recording"
+	ConferenceStopRecordingEndpoint        = "/calls/1/conferences/%s/stop-recording"
+	ConferenceSendMessageEndpoint          = "/calls/1/conferences/%s/send-message"
+	CallsConfigurationsEndpoint            = "/calls/1/configurations"
+	CallsConfigurationByIdEndpoint         = "/calls/1/configurations/%s"
+	CallsFilesEndpoint                     = "/calls/1/files"
+	CallsFileByIdEndpoint                  = "/calls/1/files/%s"
+	CallRecordingsEndpoint                 = "/calls/1/recordings/calls/%s"
+	ConferencesRecordingsEndpoint          = "/calls/1/recordings/conferences"
+	ConferenceRecordingsEndpoint           = "/calls/1/recordings/conferences/%s"
+	ConferenceRecordingsComposeEndpoint    = "/calls/1/recordings/conferences/%s/compose"
+	RecordingsFileEndpoint                 = "/calls/1/recordings/files/%s"
+	BulksEndpoint                          = "/calls/1/bulks"
+	BulkByIdEndpoint                       = "/calls/1/bulks/%s"
+	BulkRescheduleEndpoint                 = "/calls/1/bulks/%s/reschedule"
+	BulkPauseEndpoint                      = "/calls/1/bulks/%s/pause"
+	BulkResumeEndpoint                     = "/calls/1/bulks/%s/resume"
+	BulkCancelEndpoint                     = "/calls/1/bulks/%s/cancel"
+	DialogsEndpoint                        = "/calls/1/dialogs"
+	DialogSendMessageEndpoint              = "/calls/1/dialogs/%s/send-message"
+	SipTrunksEndpoint                      = "/calls/1/sip-trunks"
+	SipTrunkByIdEndpoint                   = "/calls/1/sip-trunks/%s"
+	SipTrunkServiceAddressesEndpoint       = "/calls/1/sip-trunks/service-addresses"
+	SipTrunkServiceAddressByIdEndpoint     = "/calls/1/sip-trunks/service-addresses/%s"
+	SipTrunkCountriesEndpoint              = "/calls/1/sip-trunks/service-addresses/countries"
+	SipTrunkRegionsEndpoint                = "/calls/1/sip-trunks/service-addresses/countries/regions?countryCode=%s"
+	SipTrunkResetPasswordEndpoint          = "/calls/1/sip-trunks/%s/reset-password"
 )
 
 func TestShouldApplicationTransfer(t *testing.T) {
@@ -50,7 +112,7 @@ func TestShouldApplicationTransfer(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/application-transfer", givenDestinationApplicationId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallsApplicationTransferEndpoint, givenDestinationApplicationId), givenResponse, 200)
 
 	request := voice.ApplicationTransferRequest{
 		DestinationCallsConfigurationId: givenDestinationCallsConfigurationId,
@@ -80,7 +142,7 @@ func TestShouldApplicationTransferAccept(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/application-transfer/%s/accept", givenCallId, givenTransferId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallsApplicationTransferAcceptEndpoint, givenCallId, givenTransferId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.ApplicationTransferAccept(context.Background(), givenCallId, givenTransferId).Execute()
 
@@ -100,7 +162,7 @@ func TestShouldApplicationTransferReject(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/application-transfer/%s/reject", givenCallId, givenTransferId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallsApplicationTransferRejectEndpoint, givenCallId, givenTransferId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.ApplicationTransferReject(context.Background(), givenCallId, givenTransferId).Execute()
 
@@ -208,7 +270,7 @@ func TestShouldGetCalls(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/calls", givenResponse, 200)
+	SetUpSuccessRequest("GET", CallsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCalls(context.Background()).Execute()
 
@@ -356,12 +418,12 @@ func TestShouldCreateCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/calls", givenResponse, 201)
+	SetUpSuccessRequest("POST", CallsEndpoint, givenResponse, 201)
 
 	request := voice.CallRequest{
 		CallsConfigurationId: givenCallsConfigurationId,
 		Endpoint:             voice.PhoneEndpointAsCallEndpoint(voice.NewPhoneEndpoint(givenPhoneNumber)),
-		From:                 givenFrom,
+		From:                 &givenFrom,
 		ConnectTimeout:       &givenConnectTimeout,
 		Recording: &voice.CallRecordingRequest{
 			RecordingType: givenRecordingType,
@@ -489,7 +551,7 @@ func TestShouldGetCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/calls/%s", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(CallByIdEndpoint, givenCallId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCall(context.Background(), givenCallId).Execute()
 
@@ -631,7 +693,7 @@ func TestShouldGetCallsHistory(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/calls/history", givenResponse, 200)
+	SetUpSuccessRequest("GET", CallsHistoryEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallsHistory(context.Background()).Execute()
 
@@ -770,7 +832,7 @@ func TestShouldGetCallHistory(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/calls/%s/history", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(CallHistoryEndpoint, givenCallId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallHistory(context.Background(), givenCallId).Execute()
 
@@ -884,7 +946,7 @@ func TestShouldConnectCalls(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/connect", givenResponse, 200)
+	SetUpSuccessRequest("POST", CallsConnectEndpoint, givenResponse, 200)
 
 	request := voice.ConnectRequest{
 		CallIds: []string{givenCallId1, givenCallId2},
@@ -1072,12 +1134,12 @@ func TestShouldConnectWithNewCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/connect", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallConnectEndpoint, givenId), givenResponse, 200)
 
 	request := voice.ConnectWithNewCallRequest{
-		CallRequest: &voice.ActionCallRequest{
+		CallRequest: voice.ActionCallRequest{
 			Endpoint: voice.PhoneEndpointAsCallEndpoint(voice.NewPhoneEndpoint(givenPhoneNumber)),
-			From:     givenFrom,
+			From:     &givenFrom,
 		},
 		ConnectOnEarlyMedia: &givenConnectOnEarlyMedia,
 	}
@@ -1161,7 +1223,7 @@ func TestShouldPreAnswerCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/pre-answer", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallPreAnswerEndpoint, givenCallId), givenResponse, 200)
 
 	actualRequest, _ := json.Marshal(givenCallPreRequest)
 	ValidateExpectedRequestBodiesMatches(t, givenRequest, string(actualRequest))
@@ -1196,7 +1258,7 @@ func TestShouldAnswerCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/answer", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallAnswerEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.AnswerRequest{
 		Recording: &voice.CallRecordingRequest{
@@ -1216,7 +1278,7 @@ func TestShouldAnswerCall(t *testing.T) {
 }
 
 func TestShouldHangupCall(t *testing.T) {
-	givenErrorCode := voice.ERRORCODE_NORMAL_HANGUP
+	givenErrorCode := voice.PUBLICERRORCODE_NORMAL_HANGUP
 	givenCallId := "d8d84155-3831-43fb-91c9-bb897149a79d"
 	givenPhoneNumber := "44790123456"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
@@ -1290,7 +1352,7 @@ func TestShouldHangupCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/hangup", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallHangupEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.HangupRequest{
 		ErrorCode: &givenErrorCode,
@@ -1342,7 +1404,7 @@ func TestShouldCallPlayFile(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/play", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallPlayEndpoint, givenCallId), givenResponse, 200)
 
 	filePlayContent := voice.NewFilePlayContent(givenFileId)
 
@@ -1384,7 +1446,7 @@ func TestShouldCallStopPlayingFile(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/stop-play", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStopPlayEndpoint, givenCallId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.CallStopPlayingFile(context.Background(), givenCallId).StopPlayRequest(givenCallsStopPlayRequest).Execute()
 
@@ -1420,7 +1482,7 @@ func TestShouldCallSayText(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/say", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallSayEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.CallSayRequest{
 		Text:       givenText,
@@ -1458,7 +1520,7 @@ func TestShouldCallSendDtmf(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/send-dtmf", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallSendDtmfEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.DtmfSendRequest{
 		Dtmf: givenDtmf,
@@ -1493,7 +1555,7 @@ func TestShouldCallCaptureDtmf(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/capture/dtmf", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallCaptureDtmfEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.DtmfCaptureRequest{
 		MaxLength:  givenMaxLength,
@@ -1535,7 +1597,7 @@ func TestShouldCaptureSpeech(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/capture/speech", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallCaptureSpeechEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.SpeechCaptureRequest{
 		Language:   expectedLanguage,
@@ -1579,7 +1641,7 @@ func TestShouldCallStartRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/start-recording", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStartRecordingEndpoint, givenCallId), givenResponse, 200)
 
 	request := voice.RecordingStartRequest{
 		Recording: &voice.RecordingRequest{
@@ -1609,7 +1671,7 @@ func TestShouldCallStopRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/stop-recording", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStopRecordingEndpoint, givenCallId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.CallStopRecording(context.Background(), givenCallId).Execute()
 
@@ -1639,7 +1701,7 @@ func TestShouldStartMediaStream(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/start-media-stream", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStartMediaStreamEndpoint, givenCallId), givenResponse, 200)
 
 	givenMediaStreamProperties := &voice.MediaStreamAudioProperties{
 		MediaStreamConfigId: givenMediaStreamConfigId,
@@ -1672,7 +1734,7 @@ func TestShouldStopMediaStream(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/stop-media-stream", givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStopMediaStreamEndpoint, givenCallId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.StopMediaStream(context.Background(), givenCallId).Execute()
 
@@ -1748,7 +1810,7 @@ func TestShouldGetConferences(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/conferences", givenResponse, 200)
+	SetUpSuccessRequest("GET", ConferencesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetConferences(context.Background()).Execute()
 
@@ -1855,7 +1917,7 @@ func TestShouldCreateConference(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/conferences", givenResponse, 201)
+	SetUpSuccessRequest("POST", ConferencesEndpoint, givenResponse, 201)
 
 	request := voice.ConferenceRequest{
 		Name:                 &givenName,
@@ -1948,7 +2010,7 @@ func TestShouldGetConference(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/conferences/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(ConferenceByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetConference(context.Background(), givenId).Execute()
 
@@ -2115,7 +2177,7 @@ func TestShouldGetConferencesHistory(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/conferences/history", givenResponse, 200)
+	SetUpSuccessRequest("GET", ConferencesHistoryEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetConferencesHistory(context.Background()).Name(givenName).CallId(givenCallId).ApplicationId(givenApplicationId).Execute()
 
@@ -2288,12 +2350,12 @@ func TestShouldAddNewConferenceCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/call", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceCallEndpoint, givenId), givenResponse, 200)
 
 	request := voice.AddNewCallRequest{
 		CallRequest: voice.ActionCallRequest{
 			Endpoint: voice.PhoneEndpointAsCallEndpoint(voice.NewPhoneEndpoint(givenPhoneNumber)),
-			From:     givenFrom,
+			From:     &givenFrom,
 		},
 		ConnectOnEarlyMedia: &givenConnectOnEarlyMedia,
 	}
@@ -2398,7 +2460,7 @@ func TestShouldAddExistingConferenceCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/calls/1/conferences/%s/call/%s", givenId, givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(ConferenceCallByIdEndpoint, givenId, givenCallId), givenResponse, 200)
 
 	request := voice.AddExistingCallRequest{
 		ConnectOnEarlyMedia: &givenConnectOnEarlyMedia,
@@ -2438,7 +2500,7 @@ func TestShouldRemoveConferenceCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/conferences/%s/call/%s", givenId, givenCallId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(ConferenceCallByIdEndpoint, givenId, givenCallId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.RemoveConferenceCall(context.Background(), givenId, givenCallId).Execute()
 
@@ -2502,7 +2564,7 @@ func TestShouldHangupConference(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/hangup", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceHangupEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.HangupConference(context.Background(), givenId).Execute()
 
@@ -2545,7 +2607,7 @@ func TestShouldConferencePlayFile(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/play", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferencePlayEndpoint, givenId), givenResponse, 200)
 
 	request := voice.ConferencePlayRequest{
 		LoopCount: &givenLoopCount,
@@ -2589,7 +2651,7 @@ func TestShouldConferenceSayText(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/say", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceSayEndpoint, givenId), givenResponse, 200)
 
 	request := voice.SayRequest{
 		Text:       givenText,
@@ -2622,7 +2684,7 @@ func TestShouldConferenceStopPlayingFile(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/stop-play", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceStopPlayEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.ConferenceStopPlayingFile(context.Background(), givenId).Execute()
 
@@ -2643,7 +2705,7 @@ func TestShouldConferenceStartRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/start-recording", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceStartRecordingEndpoint, givenId), givenResponse, 200)
 
 	request := voice.ConferenceRecordingRequest{
 		RecordingType: givenRecordingType,
@@ -2669,7 +2731,7 @@ func TestShouldConferenceStopRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/stop-recording", givenId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceStopRecordingEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.ConferenceStopRecording(context.Background(), givenId).Execute()
 
@@ -2678,7 +2740,7 @@ func TestShouldConferenceStopRecording(t *testing.T) {
 	assert.Equal(t, givenStatus, response.GetStatus())
 }
 
-func TestShouldConferenceBroadcastWebRtcText(t *testing.T) {
+func TestShouldConferenceSendMessage(t *testing.T) {
 	givenStatus := voice.ACTIONSTATUS_PENDING
 	givenResponse := fmt.Sprintf(`{
         "status": "%s"
@@ -2686,16 +2748,16 @@ func TestShouldConferenceBroadcastWebRtcText(t *testing.T) {
 
 	expectedText := "This meeting will end in 5 minutes."
 	expectedRequest := fmt.Sprintf(`{
-        "text": "%s"
+        "message": "%s"
     }`, expectedText)
 
 	givenConferenceId := "123"
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/conferences/%s/broadcast-webrtc-text", givenConferenceId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceSendMessageEndpoint, givenConferenceId), givenResponse, 200)
 
 	request := voice.ConferenceBroadcastWebrtcTextRequest{
-		Text: &expectedText,
+		Message: expectedText,
 	}
 
 	actualRequest, _ := json.Marshal(request)
@@ -2713,7 +2775,6 @@ func TestShouldGetCallsFiles(t *testing.T) {
 	givenName := "Example file"
 	givenFileFormat := voice.FILEFORMAT_WAV
 	givenSize := int64(292190)
-	givenCreationMethod := voice.CREATIONMETHOD_RECORDED
 	givenCreationTime := "2021-08-24T15:00:00.000+0000"
 	givenCreationTimeDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenCreationTime)
 	ibTimeCreationTime := infobip.Time{
@@ -2738,7 +2799,6 @@ func TestShouldGetCallsFiles(t *testing.T) {
             "name": "%s",
             "fileFormat": "%s",
             "size": %d,
-            "creationMethod": "%s",
             "creationTime": "%s",
             "expirationTime": "%s",
             "duration": %d
@@ -2749,11 +2809,11 @@ func TestShouldGetCallsFiles(t *testing.T) {
             "totalPages": %d,
             "totalResults": %d
         }
-    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationMethod, givenCreationTime, givenExpirationTime, givenDuration, givenPage, givenPageSize, givenPageTotalPages, givenPageTotalResults)
+    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationTime, givenExpirationTime, givenDuration, givenPage, givenPageSize, givenPageTotalPages, givenPageTotalResults)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/files", givenResponse, 200)
+	SetUpSuccessRequest("GET", CallsFilesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallsFiles(context.Background()).Execute()
 
@@ -2765,7 +2825,6 @@ func TestShouldGetCallsFiles(t *testing.T) {
 	assert.Equal(t, givenName, result.GetName())
 	assert.Equal(t, givenFileFormat, result.GetFileFormat())
 	assert.Equal(t, givenSize, result.GetSize())
-	assert.Equal(t, givenCreationMethod, result.GetCreationMethod())
 	assert.Equal(t, ibTimeCreationTime, result.GetCreationTime())
 	assert.Equal(t, ibTimeExpirationTime, result.GetExpirationTime())
 	assert.Equal(t, givenDuration, result.GetDuration())
@@ -2781,7 +2840,6 @@ func TestShouldUploadCallsAudioFile(t *testing.T) {
 	givenName := "Example file"
 	givenFileFormat := voice.FILEFORMAT_WAV
 	givenSize := int64(292190)
-	givenCreationMethod := voice.CREATIONMETHOD_RECORDED
 	givenCreationTime := "2021-08-24T15:00:00.000+0000"
 	givenCreationTimeDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenCreationTime)
 	ibTimeCreationTime := infobip.Time{
@@ -2797,7 +2855,7 @@ func TestShouldUploadCallsAudioFile(t *testing.T) {
 	givenDuration := int64(3)
 
 	givenAttachmentText := "Test file text"
-	tempFile, err := ioutil.TempFile("", "attachment.txt")
+	tempFile, err := os.CreateTemp("", "attachment.txt")
 	assert.Nil(t, err)
 	defer os.Remove(tempFile.Name())
 	_, err = tempFile.WriteString(givenAttachmentText)
@@ -2808,15 +2866,14 @@ func TestShouldUploadCallsAudioFile(t *testing.T) {
         "name": "%s",
         "fileFormat": "%s",
         "size": %d,
-        "creationMethod": "%s",
         "creationTime": "%s",
         "expirationTime": "%s",
         "duration": %d
-    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationMethod, givenCreationTime, givenExpirationTime, givenDuration)
+    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationTime, givenExpirationTime, givenDuration)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/files", givenResponse, 200)
+	SetUpSuccessRequest("POST", CallsFilesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.UploadCallsAudioFile(context.Background()).File(tempFile).Execute()
 
@@ -2826,7 +2883,6 @@ func TestShouldUploadCallsAudioFile(t *testing.T) {
 	assert.Equal(t, givenName, response.GetName())
 	assert.Equal(t, givenFileFormat, response.GetFileFormat())
 	assert.Equal(t, givenSize, response.GetSize())
-	assert.Equal(t, givenCreationMethod, response.GetCreationMethod())
 	assert.Equal(t, ibTimeCreationTime, response.GetCreationTime())
 	assert.Equal(t, ibTimeExpirationTime, response.GetExpirationTime())
 	assert.Equal(t, givenDuration, response.GetDuration())
@@ -2837,7 +2893,6 @@ func TestShouldGetCallsFile(t *testing.T) {
 	givenName := "Example file"
 	givenFileFormat := voice.FILEFORMAT_WAV
 	givenSize := int64(292190)
-	givenCreationMethod := voice.CREATIONMETHOD_RECORDED
 	givenCreationTime := "2021-08-24T15:00:00.000+0000"
 	givenCreationTimeDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenCreationTime)
 	ibTimeCreationTime := infobip.Time{
@@ -2857,15 +2912,14 @@ func TestShouldGetCallsFile(t *testing.T) {
         "name": "%s",
         "fileFormat": "%s",
         "size": %d,
-        "creationMethod": "%s",
         "creationTime": "%s",
         "expirationTime": "%s",
         "duration": %d
-    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationMethod, givenCreationTime, givenExpirationTime, givenDuration)
+    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationTime, givenExpirationTime, givenDuration)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/files/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(CallsFileByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallsFile(context.Background(), givenId).Execute()
 
@@ -2875,7 +2929,6 @@ func TestShouldGetCallsFile(t *testing.T) {
 	assert.Equal(t, givenName, response.GetName())
 	assert.Equal(t, givenFileFormat, response.GetFileFormat())
 	assert.Equal(t, givenSize, response.GetSize())
-	assert.Equal(t, givenCreationMethod, response.GetCreationMethod())
 	assert.Equal(t, ibTimeCreationTime, response.GetCreationTime())
 	assert.Equal(t, ibTimeExpirationTime, response.GetExpirationTime())
 	assert.Equal(t, givenDuration, response.GetDuration())
@@ -2886,7 +2939,6 @@ func TestShouldDeleteCallsFile(t *testing.T) {
 	givenName := "Example file"
 	givenFileFormat := voice.FILEFORMAT_WAV
 	givenSize := int64(292190)
-	givenCreationMethod := voice.CREATIONMETHOD_RECORDED
 	givenCreationTime := "2021-08-24T15:00:00.000+0000"
 	givenCreationTimeDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenCreationTime)
 	ibTimeCreationTime := infobip.Time{
@@ -2905,15 +2957,14 @@ func TestShouldDeleteCallsFile(t *testing.T) {
         "name": "%s",
         "fileFormat": "%s",
         "size": %d,
-        "creationMethod": "%s",
         "creationTime": "%s",
         "expirationTime": "%s",
         "duration": %d
-    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationMethod, givenCreationTime, givenExpirationTime, givenDuration)
+    }`, givenId, givenName, givenFileFormat, givenSize, givenCreationTime, givenExpirationTime, givenDuration)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/files/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(CallsFileByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DeleteCallsFile(context.Background(), givenId).Execute()
 
@@ -2923,7 +2974,6 @@ func TestShouldDeleteCallsFile(t *testing.T) {
 	assert.Equal(t, givenName, response.GetName())
 	assert.Equal(t, givenFileFormat, response.GetFileFormat())
 	assert.Equal(t, givenSize, response.GetSize())
-	assert.Equal(t, givenCreationMethod, response.GetCreationMethod())
 	assert.Equal(t, ibTimeCreationTime, response.GetCreationTime())
 	assert.Equal(t, ibTimeExpirationTime, response.GetExpirationTime())
 	assert.Equal(t, givenDuration, response.GetDuration())
@@ -2989,7 +3039,7 @@ func TestShouldGetCallRecordings(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/recordings/calls/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(CallRecordingsEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallRecordings(context.Background(), givenId).Execute()
 
@@ -3075,7 +3125,7 @@ func TestShouldDeleteCallRecordings(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/recordings/calls/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(CallRecordingsEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DeleteCallRecordings(context.Background(), givenId).Execute()
 
@@ -3202,7 +3252,7 @@ func TestShouldGetConferencesRecordings(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/recordings/conferences", givenResponse, 200)
+	SetUpSuccessRequest("GET", ConferencesRecordingsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetConferencesRecordings(context.Background()).Execute()
 
@@ -3340,7 +3390,7 @@ func TestShouldGetConferenceRecordings(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/recordings/conferences/%s", givenConferenceId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(ConferenceRecordingsEndpoint, givenConferenceId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetConferenceRecordings(context.Background(), givenConferenceId).Execute()
 
@@ -3469,7 +3519,7 @@ func TestShouldDeleteConferenceRecordings(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/recordings/conferences/%s", givenConferenceId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(ConferenceRecordingsEndpoint, givenConferenceId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DeleteConferenceRecordings(context.Background(), givenConferenceId).Execute()
 
@@ -3519,7 +3569,7 @@ func TestShouldDownloadCallsRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/recordings/files/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(RecordingsFileEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DownloadRecordingFile(context.Background(), givenId).Execute()
 
@@ -3570,7 +3620,7 @@ func TestShouldDeleteCallsRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/recordings/files/%s", givenFileId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(RecordingsFileEndpoint, givenFileId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DeleteRecordingFile(context.Background(), givenFileId).Execute()
 
@@ -3603,7 +3653,7 @@ func TestShouldComposeConferenceRecording(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/recordings/conferences/%s/compose", givenConferenceId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(ConferenceRecordingsComposeEndpoint, givenConferenceId), givenResponse, 200)
 
 	request := voice.OnDemandComposition{
 		DeleteCallRecordings: &givenDeleteCallRecordings,
@@ -3735,14 +3785,14 @@ func TestShouldCreateBulk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/bulks", givenResponse, 201)
+	SetUpSuccessRequest("POST", BulksEndpoint, givenResponse, 201)
 
 	request := voice.CallBulkRequest{
 		CallsConfigurationId: givenCallsConfigurationId,
 		BulkId:               &givenBulkId,
 		Platform:             &givenPlatform,
 		Items: []voice.BulkItem{{
-			From: givenFrom1,
+			From: &givenFrom1,
 			CallRequests: []voice.BulkCallRequest{{
 				Endpoint:   voice.BulkPhoneEndpointAsBulkEndpoint(voice.NewBulkPhoneEndpoint(givenPhoneNumber1)),
 				ExternalId: &givenExternalId1,
@@ -3823,7 +3873,7 @@ func TestShouldGetBulkStatus(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/bulks/%s", givenBulkId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(BulkByIdEndpoint, givenBulkId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetBulkStatus(context.Background(), givenBulkId).Execute()
 
@@ -3855,7 +3905,7 @@ func TestShouldRescheduleBulk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/bulks/%s/reschedule", givenBulkId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(BulkRescheduleEndpoint, givenBulkId), givenResponse, 200)
 
 	request := voice.RescheduleRequest{
 		StartTime: ibTimeStartTime,
@@ -3890,7 +3940,7 @@ func TestShouldPauseBulk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/bulks/%s/pause", givenBulkId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(BulkPauseEndpoint, givenBulkId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.PauseBulk(context.Background(), givenBulkId).Execute()
 
@@ -3918,7 +3968,7 @@ func TestShouldResumeBulk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/bulks/%s/resume", givenBulkId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(BulkResumeEndpoint, givenBulkId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.ResumeBulk(context.Background(), givenBulkId).Execute()
 
@@ -3946,7 +3996,7 @@ func TestShouldCancelBulk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/bulks/%s/cancel", givenBulkId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(BulkCancelEndpoint, givenBulkId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.CancelBulk(context.Background(), givenBulkId).Execute()
 
@@ -4159,7 +4209,7 @@ func TestShouldPostDialogCall(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/dialogs", givenResponse, 200)
+	SetUpSuccessRequest("POST", DialogsEndpoint, givenResponse, 200)
 
 	givenEndpoint := voice.PhoneEndpointAsCallEndpoint(voice.NewPhoneEndpoint(givenRequestPhoneNumber))
 
@@ -4167,7 +4217,7 @@ func TestShouldPostDialogCall(t *testing.T) {
 		ParentCallId: givenParentCallId,
 		ChildCallRequest: &voice.DialogCallRequest{
 			Endpoint:       &givenEndpoint,
-			From:           givenFrom,
+			From:           &givenFrom,
 			ConnectTimeout: &givenConnectTimeout,
 			MachineDetection: &voice.MachineDetectionRequest{
 				Enabled: givenEnabled,
@@ -4251,7 +4301,7 @@ func TestShouldPostDialogCall(t *testing.T) {
 	assert.Equal(t, &givenSecondDialogId, response.GetChildCall().DialogId)
 }
 
-func TestShouldDialogBroadcastText(t *testing.T) {
+func TestShouldDialogSendMessage(t *testing.T) {
 	givenStatus := voice.ACTIONSTATUS_PENDING
 
 	givenResponse := fmt.Sprintf(`{
@@ -4260,23 +4310,23 @@ func TestShouldDialogBroadcastText(t *testing.T) {
 
 	expectedText := "This dialog will end in 5 minutes."
 	expectedRequest := fmt.Sprintf(`{
-        "text": "%s"
+        "message": "%s"
     }`, expectedText)
 
 	givenDialogId := "123"
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/dialogs/%s/broadcast-webrtc-text", givenDialogId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(DialogSendMessageEndpoint, givenDialogId), givenResponse, 200)
 
-	callsDialogBroadcastWebrtcTextRequest := voice.DialogBroadcastWebrtcTextRequest{
-		Text: &expectedText,
+	callsDialogSendMessageRequest := voice.DialogBroadcastWebrtcTextRequest{
+		Message: expectedText,
 	}
 
-	actualRequest, _ := json.Marshal(callsDialogBroadcastWebrtcTextRequest)
+	actualRequest, _ := json.Marshal(callsDialogSendMessageRequest)
 	ValidateExpectedRequestBodiesMatches(t, expectedRequest, string(actualRequest))
 
-	response, _, err := infobipClient.CallsAPI.DialogBroadcastWebrtcText(context.Background(), givenDialogId).DialogBroadcastWebrtcTextRequest(callsDialogBroadcastWebrtcTextRequest).Execute()
+	response, _, err := infobipClient.CallsAPI.DialogBroadcastWebrtcText(context.Background(), givenDialogId).DialogBroadcastWebrtcTextRequest(callsDialogSendMessageRequest).Execute()
 
 	assert.Nil(t, err)
 	assert.NotNil(t, response)
@@ -4286,7 +4336,7 @@ func TestShouldDialogBroadcastText(t *testing.T) {
 func TestShouldCreateSipTrunk(t *testing.T) {
 	givenId := "string"
 	givenName := "string"
-	givenLocation := voice.SIPTRUNKLOCATION_SAO_PAULO
+	givenLocation := "SAO_PAULO"
 	givenTls := true
 	givenCodecs := voice.AUDIOCODEC_PCMU
 	givenDtmf := voice.DTMFTYPE_RFC2833
@@ -4360,7 +4410,7 @@ func TestShouldCreateSipTrunk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/sip-trunks", givenResponse, 202)
+	SetUpSuccessRequest("POST", SipTrunksEndpoint, givenResponse, 202)
 
 	callsStaticSipTrunkRequest := voice.NewStaticSipTrunkRequest()
 	callsStaticSipTrunkRequest.SourceHosts = []string{givenSourceHosts}
@@ -4415,7 +4465,7 @@ func TestShouldCreateSipTrunk(t *testing.T) {
 func TestShouldGetSipTrunk(t *testing.T) {
 	givenId := "string"
 	givenName := "string"
-	givenLocation := voice.SIPTRUNKLOCATION_SAO_PAULO
+	givenLocation := "SAO_PAULO"
 	givenTls := true
 	givenCodecs := voice.AUDIOCODEC_PCMU
 	givenDtmf := voice.DTMFTYPE_RFC2833
@@ -4467,7 +4517,7 @@ func TestShouldGetSipTrunk(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/sip-trunks/%s", givenSipTrunkId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(SipTrunkByIdEndpoint, givenSipTrunkId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetSipTrunk(context.Background(), givenSipTrunkId).Execute()
 	staticResponse := response.StaticSipTrunkResponse
@@ -4539,7 +4589,7 @@ func TestShouldCreateSipTrunkServiceAddress(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/sip-trunks/service-addresses", givenResponse, 201)
+	SetUpSuccessRequest("POST", SipTrunkServiceAddressesEndpoint, givenResponse, 201)
 
 	callsSipTrunkServiceAddressRequest := voice.SipTrunkServiceAddressRequest{
 		Name:              givenName,
@@ -4605,7 +4655,7 @@ func TestShouldGetSipTrunkServiceAddress(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/sip-trunks/service-addresses/%s", givenSipTrunkServiceAddressId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(SipTrunkServiceAddressByIdEndpoint, givenSipTrunkServiceAddressId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetSipTrunkServiceAddress(context.Background(), givenSipTrunkServiceAddressId).Execute()
 
@@ -4668,7 +4718,7 @@ func TestShouldUpdateSipTrunkServiceAddress(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/calls/1/sip-trunks/service-addresses/%s", givenSipTrunkServiceAddressId), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(SipTrunkServiceAddressByIdEndpoint, givenSipTrunkServiceAddressId), givenResponse, 200)
 
 	callsSipTrunkServiceAddressRequest := voice.SipTrunkServiceAddressRequest{
 		Name:              givenName,
@@ -4734,7 +4784,7 @@ func TestShouldDeleteSipTrunkServiceAddress(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/sip-trunks/service-addresses/%s", givenSipTrunkServiceAddressId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(SipTrunkServiceAddressByIdEndpoint, givenSipTrunkServiceAddressId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DeleteSipTrunkServiceAddress(context.Background(), givenSipTrunkServiceAddressId).Execute()
 
@@ -4762,29 +4812,27 @@ func TestShouldGetCountries(t *testing.T) {
 	givenName3 := "Guadeloupe"
 	givenCode3 := "GLP"
 
-	givenResponse := fmt.Sprintf(`{
-        "countries": [
+	givenResponse := fmt.Sprintf(`[
             {"name": "%s", "code": "%s"},
             {"name": "%s", "code": "%s"},
             {"name": "%s", "code": "%s"}
-        ]
-    }`, givenName1, givenCode1, givenName2, givenCode2, givenName3, givenCode3)
+        ]`, givenName1, givenCode1, givenName2, givenCode2, givenName3, givenCode3)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/sip-trunks/service-addresses/countries", givenResponse, 200)
+	SetUpSuccessRequest("GET", SipTrunkCountriesEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCountries(context.Background()).Execute()
 
 	assert.Nil(t, err)
 	assert.NotNil(t, response)
-	assert.Equal(t, 3, len(response.GetCountries()))
-	assert.Equal(t, givenName1, response.GetCountries()[0].GetName())
-	assert.Equal(t, givenCode1, response.GetCountries()[0].GetCode())
-	assert.Equal(t, givenName2, response.GetCountries()[1].GetName())
-	assert.Equal(t, givenCode2, response.GetCountries()[1].GetCode())
-	assert.Equal(t, givenName3, response.GetCountries()[2].GetName())
-	assert.Equal(t, givenCode3, response.GetCountries()[2].GetCode())
+	assert.Equal(t, 3, len(response))
+	assert.Equal(t, givenName1, response[0].GetName())
+	assert.Equal(t, givenCode1, response[0].GetCode())
+	assert.Equal(t, givenName2, response[1].GetName())
+	assert.Equal(t, givenCode2, response[1].GetCode())
+	assert.Equal(t, givenName3, response[2].GetName())
+	assert.Equal(t, givenCode3, response[2].GetCode())
 }
 
 func TestShouldGetRegions(t *testing.T) {
@@ -4798,34 +4846,32 @@ func TestShouldGetRegions(t *testing.T) {
 	givenCode3 := "HR-21"
 	givenCountryCode3 := "HRV"
 
-	givenResponse := fmt.Sprintf(`{
-        "regions": [
+	givenResponse := fmt.Sprintf(`[
             {"name": "%s", "code": "%s", "countryCode": "%s"},
             {"name": "%s", "code": "%s", "countryCode": "%s"},
             {"name": "%s", "code": "%s", "countryCode": "%s"}
-        ]
-    }`, givenName1, givenCode1, givenCountryCode1, givenName2, givenCode2, givenCountryCode2, givenName3, givenCode3, givenCountryCode3)
+        ]`, givenName1, givenCode1, givenCountryCode1, givenName2, givenCode2, givenCountryCode2, givenName3, givenCode3, givenCountryCode3)
 
 	givenCountryCode := "HRV"
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/sip-trunks/service-addresses/countries/regions?countryCode=%s", givenCountryCode), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(SipTrunkRegionsEndpoint, givenCountryCode), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetRegions(context.Background()).CountryCode(givenCountryCode).Execute()
 
 	assert.Nil(t, err)
 	assert.NotNil(t, response)
-	assert.Equal(t, 3, len(response.GetRegions()))
-	assert.Equal(t, givenName1, response.GetRegions()[0].GetName())
-	assert.Equal(t, givenCode1, response.GetRegions()[0].GetCode())
-	assert.Equal(t, givenCountryCode1, response.GetRegions()[0].GetCountryCode())
-	assert.Equal(t, givenName2, response.GetRegions()[1].GetName())
-	assert.Equal(t, givenCode2, response.GetRegions()[1].GetCode())
-	assert.Equal(t, givenCountryCode2, response.GetRegions()[1].GetCountryCode())
-	assert.Equal(t, givenName3, response.GetRegions()[2].GetName())
-	assert.Equal(t, givenCode3, response.GetRegions()[2].GetCode())
-	assert.Equal(t, givenCountryCode3, response.GetRegions()[2].GetCountryCode())
+	assert.Equal(t, 3, len(response))
+	assert.Equal(t, givenName1, response[0].GetName())
+	assert.Equal(t, givenCode1, response[0].GetCode())
+	assert.Equal(t, givenCountryCode1, response[0].GetCountryCode())
+	assert.Equal(t, givenName2, response[1].GetName())
+	assert.Equal(t, givenCode2, response[1].GetCode())
+	assert.Equal(t, givenCountryCode2, response[1].GetCountryCode())
+	assert.Equal(t, givenName3, response[2].GetName())
+	assert.Equal(t, givenCode3, response[2].GetCode())
+	assert.Equal(t, givenCountryCode3, response[2].GetCountryCode())
 }
 
 func TestShouldResetSipTrunkPassword(t *testing.T) {
@@ -4840,7 +4886,7 @@ func TestShouldResetSipTrunkPassword(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/sip-trunks/%s/reset-password", sipTrunkId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(SipTrunkResetPasswordEndpoint, sipTrunkId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.ResetSipTrunkPassword(context.Background(), sipTrunkId).Execute()
 
@@ -4869,7 +4915,7 @@ func TestShouldStartTranscription(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/start-transcription", callId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStartTranscriptionEndpoint, callId), givenResponse, 200)
 
 	request := voice.StartTranscriptionRequest{
 		Transcription: &voice.Transcription{
@@ -4898,7 +4944,7 @@ func TestShouldStopTranscription(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", fmt.Sprintf("/calls/1/calls/%s/stop-transcription", callId), givenResponse, 200)
+	SetUpSuccessRequest("POST", fmt.Sprintf(CallStopTranscriptionEndpoint, callId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.CallStopTranscription(context.Background(), callId).Execute()
 
@@ -4932,7 +4978,7 @@ func TestShouldGetCallsConfigurations(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/calls/1/configurations", givenResponse, 200)
+	SetUpSuccessRequest("GET", CallsConfigurationsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallsConfigurations(context.Background()).Execute()
 
@@ -4965,7 +5011,7 @@ func TestShouldCreateCallsConfiguration(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/calls/1/configurations", givenResponse, 201)
+	SetUpSuccessRequest("POST", CallsConfigurationsEndpoint, givenResponse, 201)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	ValidateExpectedRequestBodiesMatches(t, givenResponse, string(actualRequest))
@@ -4989,7 +5035,7 @@ func TestShouldGetCallsConfiguration(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", fmt.Sprintf("/calls/1/configurations/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("GET", fmt.Sprintf(CallsConfigurationByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.GetCallsConfiguration(context.Background(), givenId).Execute()
 
@@ -5014,7 +5060,7 @@ func TestShouldUpdateCallsConfiguration(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/calls/1/configurations/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(CallsConfigurationByIdEndpoint, givenId), givenResponse, 200)
 
 	actualRequest, _ := json.Marshal(givenRequest)
 	expectedRequest := fmt.Sprintf(`{
@@ -5041,7 +5087,7 @@ func TestShouldDeleteCallsConfiguration(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("DELETE", fmt.Sprintf("/calls/1/configurations/%s", givenId), givenResponse, 200)
+	SetUpSuccessRequest("DELETE", fmt.Sprintf(CallsConfigurationByIdEndpoint, givenId), givenResponse, 200)
 
 	response, _, err := infobipClient.CallsAPI.DeleteCallsConfiguration(context.Background(), givenId).Execute()
 
@@ -5058,7 +5104,7 @@ func TestShouldDownloadRecordingFile(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
-	SetUpGetRequestOctet(fmt.Sprintf("/calls/1/recordings/files/%s", givenFileId), givenBinaryData, 200)
+	SetUpGetRequestOctet(fmt.Sprintf(RecordingsFileEndpoint, givenFileId), givenBinaryData, 200)
 
 	file, _, err := infobipClient.CallsAPI.DownloadRecordingFile(context.Background(), givenFileId).Execute()
 

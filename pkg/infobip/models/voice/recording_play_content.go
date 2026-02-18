@@ -21,7 +21,8 @@ var _ MappedNullable = &RecordingPlayContent{}
 
 // RecordingPlayContent struct for RecordingPlayContent
 type RecordingPlayContent struct {
-	Type   PlayContentType
+	Type PlayContentType
+	// ID of the file to be played.
 	FileId string
 }
 

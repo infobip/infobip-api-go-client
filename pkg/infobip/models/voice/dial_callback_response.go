@@ -25,9 +25,10 @@ type DialCallbackResponse struct {
 	// Destination phone number to call.
 	PhoneNumber string
 	// Caller ID displayed to a called party.
-	CallerId      string
-	Announcements *Announcements
-	Recording     *CallsRecording
+	CallerId         string
+	Announcements    *Announcements
+	Recording        *CallsRecording
+	MachineDetection *MachineDetection
 	// A user-defined reference ID for associating with a number masking session. This ID will appear in subsequent status requests and, if the session is recorded and our SFTP facility is used, will name the recording file. **Note:** In the case of recording, please limit this field to `200` characters as generated file name uses this field, call ID and extension, and if total file name is bigger than 256 characters, saving of the recording file will fail.
 	ClientReferenceId *string
 }
@@ -191,6 +192,38 @@ func (o *DialCallbackResponse) SetRecording(v CallsRecording) {
 	o.Recording = &v
 }
 
+// GetMachineDetection returns the MachineDetection field value if set, zero value otherwise.
+func (o *DialCallbackResponse) GetMachineDetection() MachineDetection {
+	if o == nil || IsNil(o.MachineDetection) {
+		var ret MachineDetection
+		return ret
+	}
+	return *o.MachineDetection
+}
+
+// GetMachineDetectionOk returns a tuple with the MachineDetection field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DialCallbackResponse) GetMachineDetectionOk() (*MachineDetection, bool) {
+	if o == nil || IsNil(o.MachineDetection) {
+		return nil, false
+	}
+	return o.MachineDetection, true
+}
+
+// HasMachineDetection returns a boolean if a field has been set.
+func (o *DialCallbackResponse) HasMachineDetection() bool {
+	if o != nil && !IsNil(o.MachineDetection) {
+		return true
+	}
+
+	return false
+}
+
+// SetMachineDetection gets a reference to the given MachineDetection and assigns it to the MachineDetection field.
+func (o *DialCallbackResponse) SetMachineDetection(v MachineDetection) {
+	o.MachineDetection = &v
+}
+
 // GetClientReferenceId returns the ClientReferenceId field value if set, zero value otherwise.
 func (o *DialCallbackResponse) GetClientReferenceId() string {
 	if o == nil || IsNil(o.ClientReferenceId) {
@@ -241,6 +274,9 @@ func (o DialCallbackResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Recording) {
 		toSerialize["recording"] = o.Recording
+	}
+	if !IsNil(o.MachineDetection) {
+		toSerialize["machineDetection"] = o.MachineDetection
 	}
 	if !IsNil(o.ClientReferenceId) {
 		toSerialize["clientReferenceId"] = o.ClientReferenceId

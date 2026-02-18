@@ -21,7 +21,7 @@ var _ MappedNullable = &MessageDeliveryReporting{}
 
 // MessageDeliveryReporting Provides options for configuring the delivery report behavior.
 type MessageDeliveryReporting struct {
-	// The URL on your call back server where a delivery report will be sent. If your URL becomes unavailable then the [retry cycle](https://www.infobip.com/docs/sms/api#notify-url) uses the following formula: `1min + (1min * retryNumber * retryNumber)`.
+	// The URL on your call back server where a delivery report will be sent. If your URL becomes unavailable then the [retry cycle](https://www.infobip.com/docs/sms/sms-over-api#push-retry-cycle-notify-url) uses the following formula: `1min + (1min * retryNumber * retryNumber)`.
 	Url *string
 	// The real-time intermediate delivery report containing GSM error codes, messages status, pricing, network and country codes, etc., which will be sent on your callback server. Defaults to `false`.
 	IntermediateReport *bool

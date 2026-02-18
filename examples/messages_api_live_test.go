@@ -1,28 +1,16 @@
 package examples
 
 import (
-	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
-	"github.com/infobip/infobip-api-go-client/v3/pkg/infobip/api"
 	"github.com/infobip/infobip-api-go-client/v3/pkg/infobip/models/messagesapi"
 )
 
 func TestSendMessagesApiMessage(t *testing.T) {
-	configuration := infobip.NewConfiguration()
-	configuration.Host = "<YOUR_BASE_URL>"
-
-	infobipClient := api.NewAPIClient(configuration)
-
-	auth := context.WithValue(
-		context.Background(),
-		infobip.ContextAPIKeys,
-		map[string]infobip.APIKey{
-			"APIKeyHeader": {Key: "<YOUR_API_KEY>", Prefix: "<API_PREFIX>"},
-		},
-	)
+	infobipClient, auth := newClientAndAuth()
 
 	channel := messagesapi.OUTBOUNDMESSAGECHANNEL_SMS
 	sender := "<SENDER>"
@@ -65,6 +53,62 @@ func TestSendMessagesApiMessage(t *testing.T) {
 	fmt.Printf("HTTP Response Details: %+v\n", httpResponse)
 
 	// Validate response
+	if apiResponse == nil || apiResponse.Messages == nil || len(apiResponse.Messages) == 0 {
+		t.Fatalf("Invalid response: expected messages, but got: %+v", apiResponse)
+	}
+}
+
+// Sends a scheduled Messages API SMS with URL tracking and campaign metadata.
+func TestSendMessagesApiScheduledWithTracking(t *testing.T) {
+	client, auth := newClientAndAuth()
+
+	body := messagesapi.MessageTextBodyAsMessageBody(messagesapi.NewMessageTextBody("Sending you lots of otterly delightful vibes today!"))
+	content := messagesapi.NewMessageContent(body)
+	dest := messagesapi.ToDestinationAsMessageDestination(messagesapi.NewToDestination("<DESTINATION>"))
+
+	givenMessage := messagesapi.NewMessage(
+		messagesapi.OUTBOUNDMESSAGECHANNEL_SMS,
+		"<SENDER>",
+		[]messagesapi.MessageDestination{dest},
+		*content,
+	)
+
+	givenMessage.SetOptions(messagesapi.MessageOptions{
+		ValidityPeriod:      messagesapi.NewValidityPeriod(10),
+		CampaignReferenceId: infobip.PtrString("campaign-spring"),
+	})
+
+	req := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
+		{Message: givenMessage},
+	})
+
+	sendAtTime := time.Now().Add(2 * time.Minute)
+	req.SetOptions(messagesapi.DefaultMessageRequestOptions{
+		Schedule: &messagesapi.RequestSchedulingSettings{
+			BulkId: infobip.PtrString("bulk-messagesapi-001"),
+			SendAt: &infobip.Time{T: sendAtTime},
+		},
+		Tracking: &messagesapi.UrlOptions{
+			ShortenUrl:     infobip.PtrBool(true),
+			TrackClicks:    infobip.PtrBool(true),
+			TrackingUrl:    infobip.PtrString("https://example.com/track-url"),
+			RemoveProtocol: infobip.PtrBool(true),
+		},
+	})
+
+	apiResponse, httpResponse, err := client.
+		MessagesAPI.
+		SendMessagesApiMessage(auth).
+		Request(*req).
+		Execute()
+
+	if err != nil {
+		t.Fatalf("Failed to send scheduled Messages API message: %v", err)
+	}
+
+	fmt.Printf("Response: %+v\n", apiResponse)
+	fmt.Printf("HTTP Response Details: %+v\n", httpResponse)
+
 	if apiResponse == nil || apiResponse.Messages == nil || len(apiResponse.Messages) == 0 {
 		t.Fatalf("Invalid response: expected messages, but got: %+v", apiResponse)
 	}

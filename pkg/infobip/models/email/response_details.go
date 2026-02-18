@@ -22,19 +22,24 @@ var _ MappedNullable = &ResponseDetails{}
 // ResponseDetails List of message response details.
 type ResponseDetails struct {
 	// The destination address of the message.
-	To *string
+	To string
 	// The ID that uniquely identifies a message response.
-	MessageId *string
-	Status    *SingleMessageStatus
+	MessageId string
+	Status    SingleMessageStatus
 }
+
+type _ResponseDetails ResponseDetails
 
 // NewResponseDetails instantiates a new ResponseDetails object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewResponseDetails() *ResponseDetails {
+func NewResponseDetails(to string, messageId string, status SingleMessageStatus) *ResponseDetails {
 	this := ResponseDetails{}
+	this.To = to
+	this.MessageId = messageId
+	this.Status = status
 	return &this
 }
 
@@ -47,100 +52,76 @@ func NewResponseDetailsWithDefaults() *ResponseDetails {
 	return &this
 }
 
-// GetTo returns the To field value if set, zero value otherwise.
+// GetTo returns the To field value
 func (o *ResponseDetails) GetTo() string {
-	if o == nil || IsNil(o.To) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.To
+
+	return o.To
 }
 
-// GetToOk returns a tuple with the To field value if set, nil otherwise
+// GetToOk returns a tuple with the To field value
 // and a boolean to check if the value has been set.
 func (o *ResponseDetails) GetToOk() (*string, bool) {
-	if o == nil || IsNil(o.To) {
+	if o == nil {
 		return nil, false
 	}
-	return o.To, true
+	return &o.To, true
 }
 
-// HasTo returns a boolean if a field has been set.
-func (o *ResponseDetails) HasTo() bool {
-	if o != nil && !IsNil(o.To) {
-		return true
-	}
-
-	return false
-}
-
-// SetTo gets a reference to the given string and assigns it to the To field.
+// SetTo sets field value
 func (o *ResponseDetails) SetTo(v string) {
-	o.To = &v
+	o.To = v
 }
 
-// GetMessageId returns the MessageId field value if set, zero value otherwise.
+// GetMessageId returns the MessageId field value
 func (o *ResponseDetails) GetMessageId() string {
-	if o == nil || IsNil(o.MessageId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.MessageId
+
+	return o.MessageId
 }
 
-// GetMessageIdOk returns a tuple with the MessageId field value if set, nil otherwise
+// GetMessageIdOk returns a tuple with the MessageId field value
 // and a boolean to check if the value has been set.
 func (o *ResponseDetails) GetMessageIdOk() (*string, bool) {
-	if o == nil || IsNil(o.MessageId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.MessageId, true
+	return &o.MessageId, true
 }
 
-// HasMessageId returns a boolean if a field has been set.
-func (o *ResponseDetails) HasMessageId() bool {
-	if o != nil && !IsNil(o.MessageId) {
-		return true
-	}
-
-	return false
-}
-
-// SetMessageId gets a reference to the given string and assigns it to the MessageId field.
+// SetMessageId sets field value
 func (o *ResponseDetails) SetMessageId(v string) {
-	o.MessageId = &v
+	o.MessageId = v
 }
 
-// GetStatus returns the Status field value if set, zero value otherwise.
+// GetStatus returns the Status field value
 func (o *ResponseDetails) GetStatus() SingleMessageStatus {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		var ret SingleMessageStatus
 		return ret
 	}
-	return *o.Status
+
+	return o.Status
 }
 
-// GetStatusOk returns a tuple with the Status field value if set, nil otherwise
+// GetStatusOk returns a tuple with the Status field value
 // and a boolean to check if the value has been set.
 func (o *ResponseDetails) GetStatusOk() (*SingleMessageStatus, bool) {
-	if o == nil || IsNil(o.Status) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Status, true
+	return &o.Status, true
 }
 
-// HasStatus returns a boolean if a field has been set.
-func (o *ResponseDetails) HasStatus() bool {
-	if o != nil && !IsNil(o.Status) {
-		return true
-	}
-
-	return false
-}
-
-// SetStatus gets a reference to the given SingleMessageStatus and assigns it to the Status field.
+// SetStatus sets field value
 func (o *ResponseDetails) SetStatus(v SingleMessageStatus) {
-	o.Status = &v
+	o.Status = v
 }
 
 func (o ResponseDetails) MarshalJSON() ([]byte, error) {
@@ -153,15 +134,9 @@ func (o ResponseDetails) MarshalJSON() ([]byte, error) {
 
 func (o ResponseDetails) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.To) {
-		toSerialize["to"] = o.To
-	}
-	if !IsNil(o.MessageId) {
-		toSerialize["messageId"] = o.MessageId
-	}
-	if !IsNil(o.Status) {
-		toSerialize["status"] = o.Status
-	}
+	toSerialize["to"] = o.To
+	toSerialize["messageId"] = o.MessageId
+	toSerialize["status"] = o.Status
 	return toSerialize, nil
 }
 

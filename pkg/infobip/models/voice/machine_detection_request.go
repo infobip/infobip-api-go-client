@@ -25,6 +25,8 @@ type MachineDetectionRequest struct {
 	Enabled bool
 	// Indicates maximum duration for detecting the end of the message when a answering machine is detected. If set to 0, no end of message detection will be done. Expressed in seconds.
 	MessageDetectionTimeout *int32
+	// Indicates time in seconds during which answering machine detection will analyse the call before making a decision. Shorter detection time may come at the expense of accuracy. Must be lower than `messageDetectionTimeout` if `messageDetectionTimeout` is specified.
+	DetectionTime *float64
 }
 
 type _MachineDetectionRequest MachineDetectionRequest
@@ -37,6 +39,8 @@ type _MachineDetectionRequest MachineDetectionRequest
 func NewMachineDetectionRequest(enabled bool) *MachineDetectionRequest {
 	this := MachineDetectionRequest{}
 	this.Enabled = enabled
+	var detectionTime float64 = 3.7
+	this.DetectionTime = &detectionTime
 	return &this
 }
 
@@ -46,6 +50,8 @@ func NewMachineDetectionRequest(enabled bool) *MachineDetectionRequest {
 func NewMachineDetectionRequestWithDefaults() *MachineDetectionRequest {
 	this := MachineDetectionRequest{}
 
+	var detectionTime float64 = 3.7
+	this.DetectionTime = &detectionTime
 	return &this
 }
 
@@ -105,6 +111,38 @@ func (o *MachineDetectionRequest) SetMessageDetectionTimeout(v int32) {
 	o.MessageDetectionTimeout = &v
 }
 
+// GetDetectionTime returns the DetectionTime field value if set, zero value otherwise.
+func (o *MachineDetectionRequest) GetDetectionTime() float64 {
+	if o == nil || IsNil(o.DetectionTime) {
+		var ret float64
+		return ret
+	}
+	return *o.DetectionTime
+}
+
+// GetDetectionTimeOk returns a tuple with the DetectionTime field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MachineDetectionRequest) GetDetectionTimeOk() (*float64, bool) {
+	if o == nil || IsNil(o.DetectionTime) {
+		return nil, false
+	}
+	return o.DetectionTime, true
+}
+
+// HasDetectionTime returns a boolean if a field has been set.
+func (o *MachineDetectionRequest) HasDetectionTime() bool {
+	if o != nil && !IsNil(o.DetectionTime) {
+		return true
+	}
+
+	return false
+}
+
+// SetDetectionTime gets a reference to the given float64 and assigns it to the DetectionTime field.
+func (o *MachineDetectionRequest) SetDetectionTime(v float64) {
+	o.DetectionTime = &v
+}
+
 func (o MachineDetectionRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -118,6 +156,9 @@ func (o MachineDetectionRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize["enabled"] = o.Enabled
 	if !IsNil(o.MessageDetectionTimeout) {
 		toSerialize["messageDetectionTimeout"] = o.MessageDetectionTimeout
+	}
+	if !IsNil(o.DetectionTime) {
+		toSerialize["detectionTime"] = o.DetectionTime
 	}
 	return toSerialize, nil
 }

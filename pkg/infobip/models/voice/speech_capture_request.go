@@ -28,6 +28,12 @@ type SpeechCaptureRequest struct {
 	MaxSilence *int32
 	// Array of key-phrases used for matching capturing speech.
 	KeyPhrases []string
+	// Indicates whether speech capture should terminate immediately upon detecting a key phrase. Defaults to `true`. When `false`, capture proceeds until completion and retains only the first matched key phrase, if any.
+	TerminateOnKeyPhrase *bool
+	// Array of custom words (typically, industry-specific terms) used for improved speech capture.
+	CustomDictionary []string
+	// Toggles enhanced text formatting features like punctuation, proper casing, numeral normalization, and disfluency filtering. Defaults to `false`.
+	AdvancedFormatting *bool
 }
 
 type _SpeechCaptureRequest SpeechCaptureRequest
@@ -37,11 +43,14 @@ type _SpeechCaptureRequest SpeechCaptureRequest
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewSpeechCaptureRequest(language TranscriptionLanguage, timeout int32, keyPhrases []string) *SpeechCaptureRequest {
+func NewSpeechCaptureRequest(language TranscriptionLanguage, timeout int32) *SpeechCaptureRequest {
 	this := SpeechCaptureRequest{}
 	this.Language = language
 	this.Timeout = timeout
-	this.KeyPhrases = keyPhrases
+	var terminateOnKeyPhrase bool = true
+	this.TerminateOnKeyPhrase = &terminateOnKeyPhrase
+	var advancedFormatting bool = false
+	this.AdvancedFormatting = &advancedFormatting
 	return &this
 }
 
@@ -51,6 +60,10 @@ func NewSpeechCaptureRequest(language TranscriptionLanguage, timeout int32, keyP
 func NewSpeechCaptureRequestWithDefaults() *SpeechCaptureRequest {
 	this := SpeechCaptureRequest{}
 
+	var terminateOnKeyPhrase bool = true
+	this.TerminateOnKeyPhrase = &terminateOnKeyPhrase
+	var advancedFormatting bool = false
+	this.AdvancedFormatting = &advancedFormatting
 	return &this
 }
 
@@ -134,28 +147,132 @@ func (o *SpeechCaptureRequest) SetMaxSilence(v int32) {
 	o.MaxSilence = &v
 }
 
-// GetKeyPhrases returns the KeyPhrases field value
+// GetKeyPhrases returns the KeyPhrases field value if set, zero value otherwise.
 func (o *SpeechCaptureRequest) GetKeyPhrases() []string {
-	if o == nil {
+	if o == nil || IsNil(o.KeyPhrases) {
 		var ret []string
 		return ret
 	}
-
 	return o.KeyPhrases
 }
 
-// GetKeyPhrasesOk returns a tuple with the KeyPhrases field value
+// GetKeyPhrasesOk returns a tuple with the KeyPhrases field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *SpeechCaptureRequest) GetKeyPhrasesOk() ([]string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.KeyPhrases) {
 		return nil, false
 	}
 	return o.KeyPhrases, true
 }
 
-// SetKeyPhrases sets field value
+// HasKeyPhrases returns a boolean if a field has been set.
+func (o *SpeechCaptureRequest) HasKeyPhrases() bool {
+	if o != nil && !IsNil(o.KeyPhrases) {
+		return true
+	}
+
+	return false
+}
+
+// SetKeyPhrases gets a reference to the given []string and assigns it to the KeyPhrases field.
 func (o *SpeechCaptureRequest) SetKeyPhrases(v []string) {
 	o.KeyPhrases = v
+}
+
+// GetTerminateOnKeyPhrase returns the TerminateOnKeyPhrase field value if set, zero value otherwise.
+func (o *SpeechCaptureRequest) GetTerminateOnKeyPhrase() bool {
+	if o == nil || IsNil(o.TerminateOnKeyPhrase) {
+		var ret bool
+		return ret
+	}
+	return *o.TerminateOnKeyPhrase
+}
+
+// GetTerminateOnKeyPhraseOk returns a tuple with the TerminateOnKeyPhrase field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SpeechCaptureRequest) GetTerminateOnKeyPhraseOk() (*bool, bool) {
+	if o == nil || IsNil(o.TerminateOnKeyPhrase) {
+		return nil, false
+	}
+	return o.TerminateOnKeyPhrase, true
+}
+
+// HasTerminateOnKeyPhrase returns a boolean if a field has been set.
+func (o *SpeechCaptureRequest) HasTerminateOnKeyPhrase() bool {
+	if o != nil && !IsNil(o.TerminateOnKeyPhrase) {
+		return true
+	}
+
+	return false
+}
+
+// SetTerminateOnKeyPhrase gets a reference to the given bool and assigns it to the TerminateOnKeyPhrase field.
+func (o *SpeechCaptureRequest) SetTerminateOnKeyPhrase(v bool) {
+	o.TerminateOnKeyPhrase = &v
+}
+
+// GetCustomDictionary returns the CustomDictionary field value if set, zero value otherwise.
+func (o *SpeechCaptureRequest) GetCustomDictionary() []string {
+	if o == nil || IsNil(o.CustomDictionary) {
+		var ret []string
+		return ret
+	}
+	return o.CustomDictionary
+}
+
+// GetCustomDictionaryOk returns a tuple with the CustomDictionary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SpeechCaptureRequest) GetCustomDictionaryOk() ([]string, bool) {
+	if o == nil || IsNil(o.CustomDictionary) {
+		return nil, false
+	}
+	return o.CustomDictionary, true
+}
+
+// HasCustomDictionary returns a boolean if a field has been set.
+func (o *SpeechCaptureRequest) HasCustomDictionary() bool {
+	if o != nil && !IsNil(o.CustomDictionary) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomDictionary gets a reference to the given []string and assigns it to the CustomDictionary field.
+func (o *SpeechCaptureRequest) SetCustomDictionary(v []string) {
+	o.CustomDictionary = v
+}
+
+// GetAdvancedFormatting returns the AdvancedFormatting field value if set, zero value otherwise.
+func (o *SpeechCaptureRequest) GetAdvancedFormatting() bool {
+	if o == nil || IsNil(o.AdvancedFormatting) {
+		var ret bool
+		return ret
+	}
+	return *o.AdvancedFormatting
+}
+
+// GetAdvancedFormattingOk returns a tuple with the AdvancedFormatting field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SpeechCaptureRequest) GetAdvancedFormattingOk() (*bool, bool) {
+	if o == nil || IsNil(o.AdvancedFormatting) {
+		return nil, false
+	}
+	return o.AdvancedFormatting, true
+}
+
+// HasAdvancedFormatting returns a boolean if a field has been set.
+func (o *SpeechCaptureRequest) HasAdvancedFormatting() bool {
+	if o != nil && !IsNil(o.AdvancedFormatting) {
+		return true
+	}
+
+	return false
+}
+
+// SetAdvancedFormatting gets a reference to the given bool and assigns it to the AdvancedFormatting field.
+func (o *SpeechCaptureRequest) SetAdvancedFormatting(v bool) {
+	o.AdvancedFormatting = &v
 }
 
 func (o SpeechCaptureRequest) MarshalJSON() ([]byte, error) {
@@ -173,7 +290,18 @@ func (o SpeechCaptureRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.MaxSilence) {
 		toSerialize["maxSilence"] = o.MaxSilence
 	}
-	toSerialize["keyPhrases"] = o.KeyPhrases
+	if !IsNil(o.KeyPhrases) {
+		toSerialize["keyPhrases"] = o.KeyPhrases
+	}
+	if !IsNil(o.TerminateOnKeyPhrase) {
+		toSerialize["terminateOnKeyPhrase"] = o.TerminateOnKeyPhrase
+	}
+	if !IsNil(o.CustomDictionary) {
+		toSerialize["customDictionary"] = o.CustomDictionary
+	}
+	if !IsNil(o.AdvancedFormatting) {
+		toSerialize["advancedFormatting"] = o.AdvancedFormatting
+	}
 	return toSerialize, nil
 }
 

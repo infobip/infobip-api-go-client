@@ -12,12 +12,12 @@ The first step is to add your configuration, initialize the api client and set y
     infobipClient := api.NewAPIClient(configuration)
     
     auth := context.WithValue(
-		context.Background(),
-		infobip.ContextAPIKeys,
-		map[string]infobip.APIKey{
-			"APIKeyHeader": {Key: "<YOUR_API_KEY>", Prefix: "<YOUR_API_PREFIX>"},
-		},
-	)
+        context.Background(),
+        infobip.ContextAPIKeys,
+        map[string]infobip.APIKey{
+            "APIKeyHeader": {Key: "<YOUR_API_KEY>"},
+        },
+    )
 ````
 
 For details, check the [client](https://github.com/infobip/infobip-api-go-client/blob/master/v3/pkg/infobip/client.go) source code.
@@ -45,7 +45,7 @@ Keep in mind the following restrictions while using a trial account:
         To([]string{"john.smith@somedomain.com"}).
         From("Jane Smith <jane.smith@somecompany.com>").
         Subject("Mail subject text").
-        Text("Test message with a file")).
+        Text("Test message with a file").
         Attachment([]*os.File{attachmentFile}).
         Execute()
 ```

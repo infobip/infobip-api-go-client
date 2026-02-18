@@ -38,9 +38,10 @@ type DialogLogResponse struct {
 	// Unique child call ID.
 	ChildCallId *string
 	// Dialog duration in seconds.
-	Duration  *int64
-	Recording *DialogRecordingLog
-	ErrorCode *ErrorCodeInfo
+	Duration     *int64
+	Recording    *DialogRecordingLog
+	ErrorCode    *ErrorCodeInfo
+	HangupSource *DialogHangupSource
 }
 
 // NewDialogLogResponse instantiates a new DialogLogResponse object
@@ -446,6 +447,38 @@ func (o *DialogLogResponse) SetErrorCode(v ErrorCodeInfo) {
 	o.ErrorCode = &v
 }
 
+// GetHangupSource returns the HangupSource field value if set, zero value otherwise.
+func (o *DialogLogResponse) GetHangupSource() DialogHangupSource {
+	if o == nil || IsNil(o.HangupSource) {
+		var ret DialogHangupSource
+		return ret
+	}
+	return *o.HangupSource
+}
+
+// GetHangupSourceOk returns a tuple with the HangupSource field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *DialogLogResponse) GetHangupSourceOk() (*DialogHangupSource, bool) {
+	if o == nil || IsNil(o.HangupSource) {
+		return nil, false
+	}
+	return o.HangupSource, true
+}
+
+// HasHangupSource returns a boolean if a field has been set.
+func (o *DialogLogResponse) HasHangupSource() bool {
+	if o != nil && !IsNil(o.HangupSource) {
+		return true
+	}
+
+	return false
+}
+
+// SetHangupSource gets a reference to the given DialogHangupSource and assigns it to the HangupSource field.
+func (o *DialogLogResponse) SetHangupSource(v DialogHangupSource) {
+	o.HangupSource = &v
+}
+
 func (o DialogLogResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -491,6 +524,9 @@ func (o DialogLogResponse) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ErrorCode) {
 		toSerialize["errorCode"] = o.ErrorCode
+	}
+	if !IsNil(o.HangupSource) {
+		toSerialize["hangupSource"] = o.HangupSource
 	}
 	return toSerialize, nil
 }

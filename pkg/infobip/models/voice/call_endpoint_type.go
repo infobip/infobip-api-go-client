@@ -20,10 +20,12 @@ type CallEndpointType string
 
 // List of CallEndpointType
 const (
-	CALLENDPOINTTYPE_PHONE  CallEndpointType = "PHONE"
-	CALLENDPOINTTYPE_SIP    CallEndpointType = "SIP"
-	CALLENDPOINTTYPE_WEBRTC CallEndpointType = "WEBRTC"
-	CALLENDPOINTTYPE_VIBER  CallEndpointType = "VIBER"
+	CALLENDPOINTTYPE_PHONE     CallEndpointType = "PHONE"
+	CALLENDPOINTTYPE_SIP       CallEndpointType = "SIP"
+	CALLENDPOINTTYPE_WEBRTC    CallEndpointType = "WEBRTC"
+	CALLENDPOINTTYPE_VIBER     CallEndpointType = "VIBER"
+	CALLENDPOINTTYPE_WHATSAPP  CallEndpointType = "WHATSAPP"
+	CALLENDPOINTTYPE_WEBSOCKET CallEndpointType = "WEBSOCKET"
 )
 
 // All allowed values of CallEndpointType enum
@@ -32,6 +34,8 @@ var AllowedCallEndpointTypeEnumValues = []CallEndpointType{
 	"SIP",
 	"WEBRTC",
 	"VIBER",
+	"WHATSAPP",
+	"WEBSOCKET",
 }
 
 func (v *CallEndpointType) UnmarshalJSON(src []byte) error {

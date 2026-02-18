@@ -21,7 +21,8 @@ var _ MappedNullable = &UrlPlayContent{}
 
 // UrlPlayContent struct for UrlPlayContent
 type UrlPlayContent struct {
-	Type          PlayContentType
+	Type PlayContentType
+	// URL of the audio file. Only `wav` and `mp3` files are supported.
 	FileUrl       string
 	CacheDuration *int32
 }

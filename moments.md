@@ -11,12 +11,12 @@ The first step is to add your configuration, initialize the api client and set y
     infobipClient := api.NewAPIClient(configuration)
     
     auth := context.WithValue(
-		context.Background(),
-		infobip.ContextAPIKeys,
-		map[string]infobip.APIKey{
-			"APIKeyHeader": {Key: "<YOUR_API_KEY>", Prefix: "<YOUR_API_PREFIX>"},
-		},
-	)
+        context.Background(),
+        infobip.ContextAPIKeys,
+        map[string]infobip.APIKey{
+            "APIKeyHeader": {Key: "<YOUR_API_KEY>"},
+        },
+    )
 ````
 
 For details, check the [client](https://github.com/infobip/infobip-api-go-client/blob/master/v3/pkg/infobip/client.go) source code.
@@ -126,7 +126,7 @@ To submit data to a specific form, you can use the following code:
 
     response, _, err := infobipClient.
         FormsAPI.
-        SubmitFormData(context.Background(), formId).
+        SubmitFormData(auth, formId).
         RequestBody(formDataRequest).
         Execute()
 ````

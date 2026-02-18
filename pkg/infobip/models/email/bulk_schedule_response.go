@@ -21,17 +21,22 @@ var _ MappedNullable = &BulkScheduleResponse{}
 
 // BulkScheduleResponse struct for BulkScheduleResponse
 type BulkScheduleResponse struct {
-	ExternalBulkId *string
+	// The ID that uniquely identifies the sent bulk.
+	ExternalBulkId string
 	Bulks          []BulkInfo
 }
+
+type _BulkScheduleResponse BulkScheduleResponse
 
 // NewBulkScheduleResponse instantiates a new BulkScheduleResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewBulkScheduleResponse() *BulkScheduleResponse {
+func NewBulkScheduleResponse(externalBulkId string, bulks []BulkInfo) *BulkScheduleResponse {
 	this := BulkScheduleResponse{}
+	this.ExternalBulkId = externalBulkId
+	this.Bulks = bulks
 	return &this
 }
 
@@ -44,66 +49,50 @@ func NewBulkScheduleResponseWithDefaults() *BulkScheduleResponse {
 	return &this
 }
 
-// GetExternalBulkId returns the ExternalBulkId field value if set, zero value otherwise.
+// GetExternalBulkId returns the ExternalBulkId field value
 func (o *BulkScheduleResponse) GetExternalBulkId() string {
-	if o == nil || IsNil(o.ExternalBulkId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ExternalBulkId
+
+	return o.ExternalBulkId
 }
 
-// GetExternalBulkIdOk returns a tuple with the ExternalBulkId field value if set, nil otherwise
+// GetExternalBulkIdOk returns a tuple with the ExternalBulkId field value
 // and a boolean to check if the value has been set.
 func (o *BulkScheduleResponse) GetExternalBulkIdOk() (*string, bool) {
-	if o == nil || IsNil(o.ExternalBulkId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ExternalBulkId, true
+	return &o.ExternalBulkId, true
 }
 
-// HasExternalBulkId returns a boolean if a field has been set.
-func (o *BulkScheduleResponse) HasExternalBulkId() bool {
-	if o != nil && !IsNil(o.ExternalBulkId) {
-		return true
-	}
-
-	return false
-}
-
-// SetExternalBulkId gets a reference to the given string and assigns it to the ExternalBulkId field.
+// SetExternalBulkId sets field value
 func (o *BulkScheduleResponse) SetExternalBulkId(v string) {
-	o.ExternalBulkId = &v
+	o.ExternalBulkId = v
 }
 
-// GetBulks returns the Bulks field value if set, zero value otherwise.
+// GetBulks returns the Bulks field value
 func (o *BulkScheduleResponse) GetBulks() []BulkInfo {
-	if o == nil || IsNil(o.Bulks) {
+	if o == nil {
 		var ret []BulkInfo
 		return ret
 	}
+
 	return o.Bulks
 }
 
-// GetBulksOk returns a tuple with the Bulks field value if set, nil otherwise
+// GetBulksOk returns a tuple with the Bulks field value
 // and a boolean to check if the value has been set.
 func (o *BulkScheduleResponse) GetBulksOk() ([]BulkInfo, bool) {
-	if o == nil || IsNil(o.Bulks) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Bulks, true
 }
 
-// HasBulks returns a boolean if a field has been set.
-func (o *BulkScheduleResponse) HasBulks() bool {
-	if o != nil && !IsNil(o.Bulks) {
-		return true
-	}
-
-	return false
-}
-
-// SetBulks gets a reference to the given []BulkInfo and assigns it to the Bulks field.
+// SetBulks sets field value
 func (o *BulkScheduleResponse) SetBulks(v []BulkInfo) {
 	o.Bulks = v
 }
@@ -118,12 +107,8 @@ func (o BulkScheduleResponse) MarshalJSON() ([]byte, error) {
 
 func (o BulkScheduleResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.ExternalBulkId) {
-		toSerialize["externalBulkId"] = o.ExternalBulkId
-	}
-	if !IsNil(o.Bulks) {
-		toSerialize["bulks"] = o.Bulks
-	}
+	toSerialize["externalBulkId"] = o.ExternalBulkId
+	toSerialize["bulks"] = o.Bulks
 	return toSerialize, nil
 }
 

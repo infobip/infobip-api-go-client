@@ -23,9 +23,9 @@ var _ MappedNullable = &PreviewRequest{}
 type PreviewRequest struct {
 	// Content of the message being sent.
 	Text string
-	// Language code for the correct character set. Possible values: `TR` for Turkish, `ES` for Spanish, `PT` for Portuguese, or `AUTODETECT` to let platform select the character set based on message content.
+	// [Language code](https://www.infobip.com/docs/sms/language#national-language-identifier) for the correct character set. `AUTODETECT` lets the platform select the character set based on message content only for supported languages.
 	LanguageCode *string
-	// The transliteration of your sent message from one script to another. Transliteration is used to replace characters which are not recognized as part of your defaulted alphabet. Possible values: `TURKISH`, `GREEK`, `CYRILLIC`, `SERBIAN_CYRILLIC`, `BULGARIAN_CYRILLIC`, `CENTRAL_EUROPEAN`, `BALTIC`, `PORTUGUESE`, `COLOMBIAN`, `NON_UNICDE`, `ALL` and `NONE`.
+	// The transliteration of your sent message from one script to another. [Transliteration](https://www.infobip.com/docs/sms/language#sms-transliteration) is used to replace characters which are not recognized as part of your defaulted alphabet. `ALL` means that the transliteration process will recognize all supported languages.
 	Transliteration *string
 }
 

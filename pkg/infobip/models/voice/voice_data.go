@@ -35,9 +35,14 @@ type VoiceData struct {
 	ChargedDuration *int32
 	// Duration of the voice message audio file, in seconds.
 	FileDuration *float64
+	Direction    *CallDirection
 	// DTMF code entered by user. Can be empty string, if user did not press anything, or `null` in case of IVR if user did not participate in Collect action.
 	DtmfCodes *string
-	Ivr       *IvrData
+	// If machine detection is used, contains the result of the machine detection (`HUMAN` or `MACHINE`).
+	AnsweredBy *string
+	// Call recording file identification, if the call was recorded. Currently, populated only if the call was IVR.
+	CallRecordingFileId *string
+	Ivr                 *IvrData
 }
 
 // NewVoiceData instantiates a new VoiceData object
@@ -283,6 +288,38 @@ func (o *VoiceData) SetFileDuration(v float64) {
 	o.FileDuration = &v
 }
 
+// GetDirection returns the Direction field value if set, zero value otherwise.
+func (o *VoiceData) GetDirection() CallDirection {
+	if o == nil || IsNil(o.Direction) {
+		var ret CallDirection
+		return ret
+	}
+	return *o.Direction
+}
+
+// GetDirectionOk returns a tuple with the Direction field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VoiceData) GetDirectionOk() (*CallDirection, bool) {
+	if o == nil || IsNil(o.Direction) {
+		return nil, false
+	}
+	return o.Direction, true
+}
+
+// HasDirection returns a boolean if a field has been set.
+func (o *VoiceData) HasDirection() bool {
+	if o != nil && !IsNil(o.Direction) {
+		return true
+	}
+
+	return false
+}
+
+// SetDirection gets a reference to the given CallDirection and assigns it to the Direction field.
+func (o *VoiceData) SetDirection(v CallDirection) {
+	o.Direction = &v
+}
+
 // GetDtmfCodes returns the DtmfCodes field value if set, zero value otherwise.
 func (o *VoiceData) GetDtmfCodes() string {
 	if o == nil || IsNil(o.DtmfCodes) {
@@ -313,6 +350,70 @@ func (o *VoiceData) HasDtmfCodes() bool {
 // SetDtmfCodes gets a reference to the given string and assigns it to the DtmfCodes field.
 func (o *VoiceData) SetDtmfCodes(v string) {
 	o.DtmfCodes = &v
+}
+
+// GetAnsweredBy returns the AnsweredBy field value if set, zero value otherwise.
+func (o *VoiceData) GetAnsweredBy() string {
+	if o == nil || IsNil(o.AnsweredBy) {
+		var ret string
+		return ret
+	}
+	return *o.AnsweredBy
+}
+
+// GetAnsweredByOk returns a tuple with the AnsweredBy field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VoiceData) GetAnsweredByOk() (*string, bool) {
+	if o == nil || IsNil(o.AnsweredBy) {
+		return nil, false
+	}
+	return o.AnsweredBy, true
+}
+
+// HasAnsweredBy returns a boolean if a field has been set.
+func (o *VoiceData) HasAnsweredBy() bool {
+	if o != nil && !IsNil(o.AnsweredBy) {
+		return true
+	}
+
+	return false
+}
+
+// SetAnsweredBy gets a reference to the given string and assigns it to the AnsweredBy field.
+func (o *VoiceData) SetAnsweredBy(v string) {
+	o.AnsweredBy = &v
+}
+
+// GetCallRecordingFileId returns the CallRecordingFileId field value if set, zero value otherwise.
+func (o *VoiceData) GetCallRecordingFileId() string {
+	if o == nil || IsNil(o.CallRecordingFileId) {
+		var ret string
+		return ret
+	}
+	return *o.CallRecordingFileId
+}
+
+// GetCallRecordingFileIdOk returns a tuple with the CallRecordingFileId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *VoiceData) GetCallRecordingFileIdOk() (*string, bool) {
+	if o == nil || IsNil(o.CallRecordingFileId) {
+		return nil, false
+	}
+	return o.CallRecordingFileId, true
+}
+
+// HasCallRecordingFileId returns a boolean if a field has been set.
+func (o *VoiceData) HasCallRecordingFileId() bool {
+	if o != nil && !IsNil(o.CallRecordingFileId) {
+		return true
+	}
+
+	return false
+}
+
+// SetCallRecordingFileId gets a reference to the given string and assigns it to the CallRecordingFileId field.
+func (o *VoiceData) SetCallRecordingFileId(v string) {
+	o.CallRecordingFileId = &v
 }
 
 // GetIvr returns the Ivr field value if set, zero value otherwise.
@@ -378,8 +479,17 @@ func (o VoiceData) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.FileDuration) {
 		toSerialize["fileDuration"] = o.FileDuration
 	}
+	if !IsNil(o.Direction) {
+		toSerialize["direction"] = o.Direction
+	}
 	if !IsNil(o.DtmfCodes) {
 		toSerialize["dtmfCodes"] = o.DtmfCodes
+	}
+	if !IsNil(o.AnsweredBy) {
+		toSerialize["answeredBy"] = o.AnsweredBy
+	}
+	if !IsNil(o.CallRecordingFileId) {
+		toSerialize["callRecordingFileId"] = o.CallRecordingFileId
 	}
 	if !IsNil(o.Ivr) {
 		toSerialize["ivr"] = o.Ivr

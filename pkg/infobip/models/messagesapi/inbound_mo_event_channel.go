@@ -20,28 +20,28 @@ type InboundMoEventChannel string
 
 // List of InboundMoEventChannel
 const (
-	INBOUNDMOEVENTCHANNEL_SMS          InboundMoEventChannel = "SMS"
-	INBOUNDMOEVENTCHANNEL_MMS          InboundMoEventChannel = "MMS"
-	INBOUNDMOEVENTCHANNEL_WHATSAPP     InboundMoEventChannel = "WHATSAPP"
-	INBOUNDMOEVENTCHANNEL_VIBER_BM     InboundMoEventChannel = "VIBER_BM"
-	INBOUNDMOEVENTCHANNEL_VIBER_BOT    InboundMoEventChannel = "VIBER_BOT"
-	INBOUNDMOEVENTCHANNEL_RCS          InboundMoEventChannel = "RCS"
 	INBOUNDMOEVENTCHANNEL_APPLE_MB     InboundMoEventChannel = "APPLE_MB"
 	INBOUNDMOEVENTCHANNEL_INSTAGRAM_DM InboundMoEventChannel = "INSTAGRAM_DM"
 	INBOUNDMOEVENTCHANNEL_MESSENGER    InboundMoEventChannel = "MESSENGER"
+	INBOUNDMOEVENTCHANNEL_MMS          InboundMoEventChannel = "MMS"
+	INBOUNDMOEVENTCHANNEL_RCS          InboundMoEventChannel = "RCS"
+	INBOUNDMOEVENTCHANNEL_SMS          InboundMoEventChannel = "SMS"
+	INBOUNDMOEVENTCHANNEL_VIBER_BM     InboundMoEventChannel = "VIBER_BM"
+	INBOUNDMOEVENTCHANNEL_VIBER_BOT    InboundMoEventChannel = "VIBER_BOT"
+	INBOUNDMOEVENTCHANNEL_WHATSAPP     InboundMoEventChannel = "WHATSAPP"
 )
 
 // All allowed values of InboundMoEventChannel enum
 var AllowedInboundMoEventChannelEnumValues = []InboundMoEventChannel{
-	"SMS",
-	"MMS",
-	"WHATSAPP",
-	"VIBER_BM",
-	"VIBER_BOT",
-	"RCS",
 	"APPLE_MB",
 	"INSTAGRAM_DM",
 	"MESSENGER",
+	"MMS",
+	"RCS",
+	"SMS",
+	"VIBER_BM",
+	"VIBER_BOT",
+	"WHATSAPP",
 }
 
 func (v *InboundMoEventChannel) UnmarshalJSON(src []byte) error {

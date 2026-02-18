@@ -45,7 +45,8 @@ var (
 
 // APIKey provides API key based authentication to a request passed via context using ContextAPIKey
 type APIKey struct {
-	Key    string
+	Key string
+	// Deprecated: Prefix is no longer required; the SDK prepends "App " automatically.
 	Prefix string
 }
 
@@ -82,7 +83,7 @@ type Configuration struct {
 func NewConfiguration() *Configuration {
 	cfg := &Configuration{
 		DefaultHeader: make(map[string]string),
-		UserAgent:     "infobip-api-client-go/3.1.2",
+		UserAgent:     "infobip-api-client-go/3.2.0",
 		Debug:         false,
 		Scheme:        "https",
 		Servers: ServerConfigurations{
@@ -99,6 +100,32 @@ func NewConfiguration() *Configuration {
 // AddDefaultHeader adds a new HTTP header to the default header in the request
 func (c *Configuration) AddDefaultHeader(key string, value string) {
 	c.DefaultHeader[key] = value
+}
+
+func ensureHTTPS(baseURL string) (string, error) {
+	trimmed := strings.TrimSpace(baseURL)
+	if trimmed == "" {
+		return "", reportError("Base URL must not be empty")
+	}
+	lower := strings.ToLower(trimmed)
+	if strings.Contains(lower, "localhost") || strings.Contains(lower, "127.0.0.1") {
+		trimmed = strings.TrimRight(trimmed, "/")
+		if strings.HasPrefix(lower, "http://") || strings.HasPrefix(lower, "https://") {
+			return trimmed, nil
+		}
+		return "https://" + trimmed, nil
+	}
+	if strings.HasPrefix(lower, "http://") {
+		return "", reportError("Only HTTPS is supported for the base URL")
+	}
+	if strings.Contains(lower, "://") && !strings.HasPrefix(lower, "https://") {
+		return "", reportError("Only HTTPS is supported for the base URL")
+	}
+	trimmed = strings.TrimRight(trimmed, "/")
+	if strings.HasPrefix(strings.ToLower(trimmed), "https://") {
+		return trimmed, nil
+	}
+	return "https://" + trimmed, nil
 }
 
 // URL formats template on a index using given variables
@@ -126,7 +153,7 @@ func (sc ServerConfigurations) URL(index int, variables map[string]string) (stri
 			url = strings.Replace(url, "{"+name+"}", variable.DefaultValue, -1)
 		}
 	}
-	return url, nil
+	return ensureHTTPS(url)
 }
 
 // ServerURL returns URL based on server settings
@@ -188,6 +215,10 @@ func getServerOperationVariables(ctx context.Context, endpoint string) (map[stri
 
 // ServerURLWithContext returns a new server URL given an endpoint
 func (c *Configuration) ServerURLWithContext(ctx context.Context, endpoint string) (string, error) {
+	if strings.TrimSpace(c.Host) != "" {
+		return ensureHTTPS(c.Host)
+	}
+
 	sc, ok := c.OperationServers[endpoint]
 	if !ok {
 		sc = c.Servers

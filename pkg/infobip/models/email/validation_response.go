@@ -19,35 +19,44 @@ import (
 // checks if the ValidationResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationResponse{}
 
-// ValidationResponse struct for ValidationResponse
+// ValidationResponse Validation response
 type ValidationResponse struct {
-	// Email address of the recipient.
-	To *string
-	// Represents status of recipient email address.
-	ValidMailbox *string
-	// Represents syntax of recipient email address.
-	ValidSyntax *bool
-	// Denotes catch all status of recipient email address.
-	CatchAll *bool
-	// Suggests alternate addresses that maybe valid.
+	// The validated email address.
+	To string
+	// Indicates whether email address is valid.
+	ValidMailbox string
+	// Indicates whether email address syntax is valid.
+	ValidSyntax bool
+	// Indicates catch all status of email address.
+	CatchAll bool
+	// Suggests similar alternate address that may be valid.
 	DidYouMean *string
-	Disposable *bool
-	RoleBased  *bool
-	// Reason is provided when validMailbox status is unknown. 1. INBOX_FULL - The user quota exceeded / The user inbox is full / The user doesn't accept any more requests.  2. UNEXPECTED_FAILURE - The mail Server returned a temporary error. 3. THROTTLED - The mail server is not allowing us momentarily because of too many requests. 4. TIMED_OUT - The Mail Server took a longer time to respond / there was a delay in the network. 5. TEMP_REJECTION - Mail server temporarily rejected. 6. UNABLE_TO_CONNECT - Unable to connect to the Mail Server.
-	Reason *string
-	// Is provided when validMailbox is 'unknown' or 'false' and lists reasons clarifying why validMailbox has that status.
+	// Indicates whether email address is disposable. A disposable email address is a temporary address that is often used for short-term purposes and can be discarded after use.
+	Disposable bool
+	// Indicates whether email address is role-based. A role-based email address is one that is associated with a specific function or group within an organization, such as marketing@example.org, rather than an individual person.
+	RoleBased bool
+	Reason    *ValidationReason
+	Risk      ApiRisk
+	// This field is provided when the validMailbox status is 'unknown' or 'false', offering specific explanations for why the email address has been assigned that status.
 	DetailedReasons *string
-	// Returns one of the following values: 'High', 'Medium', 'Low' or 'Unknown'. High risk addresses have very high chances of bouncing (and potentially damaging the sender's reputation), whereas low risk addresses have very low chances of bouncing and damaging the sender's reputation.
-	Risk *string
 }
+
+type _ValidationResponse ValidationResponse
 
 // NewValidationResponse instantiates a new ValidationResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewValidationResponse() *ValidationResponse {
+func NewValidationResponse(to string, validMailbox string, validSyntax bool, catchAll bool, disposable bool, roleBased bool, risk ApiRisk) *ValidationResponse {
 	this := ValidationResponse{}
+	this.To = to
+	this.ValidMailbox = validMailbox
+	this.ValidSyntax = validSyntax
+	this.CatchAll = catchAll
+	this.Disposable = disposable
+	this.RoleBased = roleBased
+	this.Risk = risk
 	return &this
 }
 
@@ -60,132 +69,100 @@ func NewValidationResponseWithDefaults() *ValidationResponse {
 	return &this
 }
 
-// GetTo returns the To field value if set, zero value otherwise.
+// GetTo returns the To field value
 func (o *ValidationResponse) GetTo() string {
-	if o == nil || IsNil(o.To) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.To
+
+	return o.To
 }
 
-// GetToOk returns a tuple with the To field value if set, nil otherwise
+// GetToOk returns a tuple with the To field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetToOk() (*string, bool) {
-	if o == nil || IsNil(o.To) {
+	if o == nil {
 		return nil, false
 	}
-	return o.To, true
+	return &o.To, true
 }
 
-// HasTo returns a boolean if a field has been set.
-func (o *ValidationResponse) HasTo() bool {
-	if o != nil && !IsNil(o.To) {
-		return true
-	}
-
-	return false
-}
-
-// SetTo gets a reference to the given string and assigns it to the To field.
+// SetTo sets field value
 func (o *ValidationResponse) SetTo(v string) {
-	o.To = &v
+	o.To = v
 }
 
-// GetValidMailbox returns the ValidMailbox field value if set, zero value otherwise.
+// GetValidMailbox returns the ValidMailbox field value
 func (o *ValidationResponse) GetValidMailbox() string {
-	if o == nil || IsNil(o.ValidMailbox) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.ValidMailbox
+
+	return o.ValidMailbox
 }
 
-// GetValidMailboxOk returns a tuple with the ValidMailbox field value if set, nil otherwise
+// GetValidMailboxOk returns a tuple with the ValidMailbox field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetValidMailboxOk() (*string, bool) {
-	if o == nil || IsNil(o.ValidMailbox) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ValidMailbox, true
+	return &o.ValidMailbox, true
 }
 
-// HasValidMailbox returns a boolean if a field has been set.
-func (o *ValidationResponse) HasValidMailbox() bool {
-	if o != nil && !IsNil(o.ValidMailbox) {
-		return true
-	}
-
-	return false
-}
-
-// SetValidMailbox gets a reference to the given string and assigns it to the ValidMailbox field.
+// SetValidMailbox sets field value
 func (o *ValidationResponse) SetValidMailbox(v string) {
-	o.ValidMailbox = &v
+	o.ValidMailbox = v
 }
 
-// GetValidSyntax returns the ValidSyntax field value if set, zero value otherwise.
+// GetValidSyntax returns the ValidSyntax field value
 func (o *ValidationResponse) GetValidSyntax() bool {
-	if o == nil || IsNil(o.ValidSyntax) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.ValidSyntax
+
+	return o.ValidSyntax
 }
 
-// GetValidSyntaxOk returns a tuple with the ValidSyntax field value if set, nil otherwise
+// GetValidSyntaxOk returns a tuple with the ValidSyntax field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetValidSyntaxOk() (*bool, bool) {
-	if o == nil || IsNil(o.ValidSyntax) {
+	if o == nil {
 		return nil, false
 	}
-	return o.ValidSyntax, true
+	return &o.ValidSyntax, true
 }
 
-// HasValidSyntax returns a boolean if a field has been set.
-func (o *ValidationResponse) HasValidSyntax() bool {
-	if o != nil && !IsNil(o.ValidSyntax) {
-		return true
-	}
-
-	return false
-}
-
-// SetValidSyntax gets a reference to the given bool and assigns it to the ValidSyntax field.
+// SetValidSyntax sets field value
 func (o *ValidationResponse) SetValidSyntax(v bool) {
-	o.ValidSyntax = &v
+	o.ValidSyntax = v
 }
 
-// GetCatchAll returns the CatchAll field value if set, zero value otherwise.
+// GetCatchAll returns the CatchAll field value
 func (o *ValidationResponse) GetCatchAll() bool {
-	if o == nil || IsNil(o.CatchAll) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.CatchAll
+
+	return o.CatchAll
 }
 
-// GetCatchAllOk returns a tuple with the CatchAll field value if set, nil otherwise
+// GetCatchAllOk returns a tuple with the CatchAll field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetCatchAllOk() (*bool, bool) {
-	if o == nil || IsNil(o.CatchAll) {
+	if o == nil {
 		return nil, false
 	}
-	return o.CatchAll, true
+	return &o.CatchAll, true
 }
 
-// HasCatchAll returns a boolean if a field has been set.
-func (o *ValidationResponse) HasCatchAll() bool {
-	if o != nil && !IsNil(o.CatchAll) {
-		return true
-	}
-
-	return false
-}
-
-// SetCatchAll gets a reference to the given bool and assigns it to the CatchAll field.
+// SetCatchAll sets field value
 func (o *ValidationResponse) SetCatchAll(v bool) {
-	o.CatchAll = &v
+	o.CatchAll = v
 }
 
 // GetDidYouMean returns the DidYouMean field value if set, zero value otherwise.
@@ -220,74 +197,58 @@ func (o *ValidationResponse) SetDidYouMean(v string) {
 	o.DidYouMean = &v
 }
 
-// GetDisposable returns the Disposable field value if set, zero value otherwise.
+// GetDisposable returns the Disposable field value
 func (o *ValidationResponse) GetDisposable() bool {
-	if o == nil || IsNil(o.Disposable) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.Disposable
+
+	return o.Disposable
 }
 
-// GetDisposableOk returns a tuple with the Disposable field value if set, nil otherwise
+// GetDisposableOk returns a tuple with the Disposable field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetDisposableOk() (*bool, bool) {
-	if o == nil || IsNil(o.Disposable) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Disposable, true
+	return &o.Disposable, true
 }
 
-// HasDisposable returns a boolean if a field has been set.
-func (o *ValidationResponse) HasDisposable() bool {
-	if o != nil && !IsNil(o.Disposable) {
-		return true
-	}
-
-	return false
-}
-
-// SetDisposable gets a reference to the given bool and assigns it to the Disposable field.
+// SetDisposable sets field value
 func (o *ValidationResponse) SetDisposable(v bool) {
-	o.Disposable = &v
+	o.Disposable = v
 }
 
-// GetRoleBased returns the RoleBased field value if set, zero value otherwise.
+// GetRoleBased returns the RoleBased field value
 func (o *ValidationResponse) GetRoleBased() bool {
-	if o == nil || IsNil(o.RoleBased) {
+	if o == nil {
 		var ret bool
 		return ret
 	}
-	return *o.RoleBased
+
+	return o.RoleBased
 }
 
-// GetRoleBasedOk returns a tuple with the RoleBased field value if set, nil otherwise
+// GetRoleBasedOk returns a tuple with the RoleBased field value
 // and a boolean to check if the value has been set.
 func (o *ValidationResponse) GetRoleBasedOk() (*bool, bool) {
-	if o == nil || IsNil(o.RoleBased) {
+	if o == nil {
 		return nil, false
 	}
-	return o.RoleBased, true
+	return &o.RoleBased, true
 }
 
-// HasRoleBased returns a boolean if a field has been set.
-func (o *ValidationResponse) HasRoleBased() bool {
-	if o != nil && !IsNil(o.RoleBased) {
-		return true
-	}
-
-	return false
-}
-
-// SetRoleBased gets a reference to the given bool and assigns it to the RoleBased field.
+// SetRoleBased sets field value
 func (o *ValidationResponse) SetRoleBased(v bool) {
-	o.RoleBased = &v
+	o.RoleBased = v
 }
 
 // GetReason returns the Reason field value if set, zero value otherwise.
-func (o *ValidationResponse) GetReason() string {
+func (o *ValidationResponse) GetReason() ValidationReason {
 	if o == nil || IsNil(o.Reason) {
-		var ret string
+		var ret ValidationReason
 		return ret
 	}
 	return *o.Reason
@@ -295,7 +256,7 @@ func (o *ValidationResponse) GetReason() string {
 
 // GetReasonOk returns a tuple with the Reason field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ValidationResponse) GetReasonOk() (*string, bool) {
+func (o *ValidationResponse) GetReasonOk() (*ValidationReason, bool) {
 	if o == nil || IsNil(o.Reason) {
 		return nil, false
 	}
@@ -311,9 +272,33 @@ func (o *ValidationResponse) HasReason() bool {
 	return false
 }
 
-// SetReason gets a reference to the given string and assigns it to the Reason field.
-func (o *ValidationResponse) SetReason(v string) {
+// SetReason gets a reference to the given ValidationReason and assigns it to the Reason field.
+func (o *ValidationResponse) SetReason(v ValidationReason) {
 	o.Reason = &v
+}
+
+// GetRisk returns the Risk field value
+func (o *ValidationResponse) GetRisk() ApiRisk {
+	if o == nil {
+		var ret ApiRisk
+		return ret
+	}
+
+	return o.Risk
+}
+
+// GetRiskOk returns a tuple with the Risk field value
+// and a boolean to check if the value has been set.
+func (o *ValidationResponse) GetRiskOk() (*ApiRisk, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Risk, true
+}
+
+// SetRisk sets field value
+func (o *ValidationResponse) SetRisk(v ApiRisk) {
+	o.Risk = v
 }
 
 // GetDetailedReasons returns the DetailedReasons field value if set, zero value otherwise.
@@ -348,38 +333,6 @@ func (o *ValidationResponse) SetDetailedReasons(v string) {
 	o.DetailedReasons = &v
 }
 
-// GetRisk returns the Risk field value if set, zero value otherwise.
-func (o *ValidationResponse) GetRisk() string {
-	if o == nil || IsNil(o.Risk) {
-		var ret string
-		return ret
-	}
-	return *o.Risk
-}
-
-// GetRiskOk returns a tuple with the Risk field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ValidationResponse) GetRiskOk() (*string, bool) {
-	if o == nil || IsNil(o.Risk) {
-		return nil, false
-	}
-	return o.Risk, true
-}
-
-// HasRisk returns a boolean if a field has been set.
-func (o *ValidationResponse) HasRisk() bool {
-	if o != nil && !IsNil(o.Risk) {
-		return true
-	}
-
-	return false
-}
-
-// SetRisk gets a reference to the given string and assigns it to the Risk field.
-func (o *ValidationResponse) SetRisk(v string) {
-	o.Risk = &v
-}
-
 func (o ValidationResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -390,35 +343,21 @@ func (o ValidationResponse) MarshalJSON() ([]byte, error) {
 
 func (o ValidationResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.To) {
-		toSerialize["to"] = o.To
-	}
-	if !IsNil(o.ValidMailbox) {
-		toSerialize["validMailbox"] = o.ValidMailbox
-	}
-	if !IsNil(o.ValidSyntax) {
-		toSerialize["validSyntax"] = o.ValidSyntax
-	}
-	if !IsNil(o.CatchAll) {
-		toSerialize["catchAll"] = o.CatchAll
-	}
+	toSerialize["to"] = o.To
+	toSerialize["validMailbox"] = o.ValidMailbox
+	toSerialize["validSyntax"] = o.ValidSyntax
+	toSerialize["catchAll"] = o.CatchAll
 	if !IsNil(o.DidYouMean) {
 		toSerialize["didYouMean"] = o.DidYouMean
 	}
-	if !IsNil(o.Disposable) {
-		toSerialize["disposable"] = o.Disposable
-	}
-	if !IsNil(o.RoleBased) {
-		toSerialize["roleBased"] = o.RoleBased
-	}
+	toSerialize["disposable"] = o.Disposable
+	toSerialize["roleBased"] = o.RoleBased
 	if !IsNil(o.Reason) {
 		toSerialize["reason"] = o.Reason
 	}
+	toSerialize["risk"] = o.Risk
 	if !IsNil(o.DetailedReasons) {
 		toSerialize["detailedReasons"] = o.DetailedReasons
-	}
-	if !IsNil(o.Risk) {
-		toSerialize["risk"] = o.Risk
 	}
 	return toSerialize, nil
 }

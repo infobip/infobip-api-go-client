@@ -22,24 +22,31 @@ var _ MappedNullable = &SingleMessageStatus{}
 // SingleMessageStatus Indicates the message status.
 type SingleMessageStatus struct {
 	// Status group ID.
-	GroupId *int32
+	GroupId int32
 	// Status group name.
-	GroupName *string
+	GroupName string
 	// Status ID.
-	Id *int32
+	Id int32
 	// Status name.
-	Name *string
+	Name string
 	// Status description.
-	Description *string
+	Description string
 }
+
+type _SingleMessageStatus SingleMessageStatus
 
 // NewSingleMessageStatus instantiates a new SingleMessageStatus object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewSingleMessageStatus() *SingleMessageStatus {
+func NewSingleMessageStatus(groupId int32, groupName string, id int32, name string, description string) *SingleMessageStatus {
 	this := SingleMessageStatus{}
+	this.GroupId = groupId
+	this.GroupName = groupName
+	this.Id = id
+	this.Name = name
+	this.Description = description
 	return &this
 }
 
@@ -52,164 +59,124 @@ func NewSingleMessageStatusWithDefaults() *SingleMessageStatus {
 	return &this
 }
 
-// GetGroupId returns the GroupId field value if set, zero value otherwise.
+// GetGroupId returns the GroupId field value
 func (o *SingleMessageStatus) GetGroupId() int32 {
-	if o == nil || IsNil(o.GroupId) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.GroupId
+
+	return o.GroupId
 }
 
-// GetGroupIdOk returns a tuple with the GroupId field value if set, nil otherwise
+// GetGroupIdOk returns a tuple with the GroupId field value
 // and a boolean to check if the value has been set.
 func (o *SingleMessageStatus) GetGroupIdOk() (*int32, bool) {
-	if o == nil || IsNil(o.GroupId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GroupId, true
+	return &o.GroupId, true
 }
 
-// HasGroupId returns a boolean if a field has been set.
-func (o *SingleMessageStatus) HasGroupId() bool {
-	if o != nil && !IsNil(o.GroupId) {
-		return true
-	}
-
-	return false
-}
-
-// SetGroupId gets a reference to the given int32 and assigns it to the GroupId field.
+// SetGroupId sets field value
 func (o *SingleMessageStatus) SetGroupId(v int32) {
-	o.GroupId = &v
+	o.GroupId = v
 }
 
-// GetGroupName returns the GroupName field value if set, zero value otherwise.
+// GetGroupName returns the GroupName field value
 func (o *SingleMessageStatus) GetGroupName() string {
-	if o == nil || IsNil(o.GroupName) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.GroupName
+
+	return o.GroupName
 }
 
-// GetGroupNameOk returns a tuple with the GroupName field value if set, nil otherwise
+// GetGroupNameOk returns a tuple with the GroupName field value
 // and a boolean to check if the value has been set.
 func (o *SingleMessageStatus) GetGroupNameOk() (*string, bool) {
-	if o == nil || IsNil(o.GroupName) {
+	if o == nil {
 		return nil, false
 	}
-	return o.GroupName, true
+	return &o.GroupName, true
 }
 
-// HasGroupName returns a boolean if a field has been set.
-func (o *SingleMessageStatus) HasGroupName() bool {
-	if o != nil && !IsNil(o.GroupName) {
-		return true
-	}
-
-	return false
-}
-
-// SetGroupName gets a reference to the given string and assigns it to the GroupName field.
+// SetGroupName sets field value
 func (o *SingleMessageStatus) SetGroupName(v string) {
-	o.GroupName = &v
+	o.GroupName = v
 }
 
-// GetId returns the Id field value if set, zero value otherwise.
+// GetId returns the Id field value
 func (o *SingleMessageStatus) GetId() int32 {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		var ret int32
 		return ret
 	}
-	return *o.Id
+
+	return o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
 func (o *SingleMessageStatus) GetIdOk() (*int32, bool) {
-	if o == nil || IsNil(o.Id) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Id, true
+	return &o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *SingleMessageStatus) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given int32 and assigns it to the Id field.
+// SetId sets field value
 func (o *SingleMessageStatus) SetId(v int32) {
-	o.Id = &v
+	o.Id = v
 }
 
-// GetName returns the Name field value if set, zero value otherwise.
+// GetName returns the Name field value
 func (o *SingleMessageStatus) GetName() string {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Name
+
+	return o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
+// GetNameOk returns a tuple with the Name field value
 // and a boolean to check if the value has been set.
 func (o *SingleMessageStatus) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Name, true
+	return &o.Name, true
 }
 
-// HasName returns a boolean if a field has been set.
-func (o *SingleMessageStatus) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
+// SetName sets field value
 func (o *SingleMessageStatus) SetName(v string) {
-	o.Name = &v
+	o.Name = v
 }
 
-// GetDescription returns the Description field value if set, zero value otherwise.
+// GetDescription returns the Description field value
 func (o *SingleMessageStatus) GetDescription() string {
-	if o == nil || IsNil(o.Description) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Description
+
+	return o.Description
 }
 
-// GetDescriptionOk returns a tuple with the Description field value if set, nil otherwise
+// GetDescriptionOk returns a tuple with the Description field value
 // and a boolean to check if the value has been set.
 func (o *SingleMessageStatus) GetDescriptionOk() (*string, bool) {
-	if o == nil || IsNil(o.Description) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Description, true
+	return &o.Description, true
 }
 
-// HasDescription returns a boolean if a field has been set.
-func (o *SingleMessageStatus) HasDescription() bool {
-	if o != nil && !IsNil(o.Description) {
-		return true
-	}
-
-	return false
-}
-
-// SetDescription gets a reference to the given string and assigns it to the Description field.
+// SetDescription sets field value
 func (o *SingleMessageStatus) SetDescription(v string) {
-	o.Description = &v
+	o.Description = v
 }
 
 func (o SingleMessageStatus) MarshalJSON() ([]byte, error) {
@@ -222,21 +189,11 @@ func (o SingleMessageStatus) MarshalJSON() ([]byte, error) {
 
 func (o SingleMessageStatus) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.GroupId) {
-		toSerialize["groupId"] = o.GroupId
-	}
-	if !IsNil(o.GroupName) {
-		toSerialize["groupName"] = o.GroupName
-	}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
-	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
-	}
-	if !IsNil(o.Description) {
-		toSerialize["description"] = o.Description
-	}
+	toSerialize["groupId"] = o.GroupId
+	toSerialize["groupName"] = o.GroupName
+	toSerialize["id"] = o.Id
+	toSerialize["name"] = o.Name
+	toSerialize["description"] = o.Description
 	return toSerialize, nil
 }
 

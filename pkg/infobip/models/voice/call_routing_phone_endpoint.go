@@ -22,8 +22,11 @@ var _ MappedNullable = &CallRoutingPhoneEndpoint{}
 // CallRoutingPhoneEndpoint struct for CallRoutingPhoneEndpoint
 type CallRoutingPhoneEndpoint struct {
 	Type CallRoutingEndpointType
-	// Phone number in the [E.164](https://en.wikipedia.org/wiki/E.164) format. Defaults to `to` value used in inbound call.
-	PhoneNumber *string
+	// Phone number in the [E.164](https://en.wikipedia.org/wiki/E.164) format. Defaults to `from` value used in inbound call.
+	From *string
+	// Phone number in the [E.164] format. Defaults to `to` value used in inbound call.
+	PhoneNumber        *string
+	RingbackGeneration *CallRoutingRingbackGeneration
 }
 
 type _CallRoutingPhoneEndpoint CallRoutingPhoneEndpoint
@@ -45,6 +48,38 @@ func NewCallRoutingPhoneEndpointWithDefaults() *CallRoutingPhoneEndpoint {
 	this := CallRoutingPhoneEndpoint{}
 	this.Type = "PHONE"
 	return &this
+}
+
+// GetFrom returns the From field value if set, zero value otherwise.
+func (o *CallRoutingPhoneEndpoint) GetFrom() string {
+	if o == nil || IsNil(o.From) {
+		var ret string
+		return ret
+	}
+	return *o.From
+}
+
+// GetFromOk returns a tuple with the From field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallRoutingPhoneEndpoint) GetFromOk() (*string, bool) {
+	if o == nil || IsNil(o.From) {
+		return nil, false
+	}
+	return o.From, true
+}
+
+// HasFrom returns a boolean if a field has been set.
+func (o *CallRoutingPhoneEndpoint) HasFrom() bool {
+	if o != nil && !IsNil(o.From) {
+		return true
+	}
+
+	return false
+}
+
+// SetFrom gets a reference to the given string and assigns it to the From field.
+func (o *CallRoutingPhoneEndpoint) SetFrom(v string) {
+	o.From = &v
 }
 
 // GetPhoneNumber returns the PhoneNumber field value if set, zero value otherwise.
@@ -79,6 +114,38 @@ func (o *CallRoutingPhoneEndpoint) SetPhoneNumber(v string) {
 	o.PhoneNumber = &v
 }
 
+// GetRingbackGeneration returns the RingbackGeneration field value if set, zero value otherwise.
+func (o *CallRoutingPhoneEndpoint) GetRingbackGeneration() CallRoutingRingbackGeneration {
+	if o == nil || IsNil(o.RingbackGeneration) {
+		var ret CallRoutingRingbackGeneration
+		return ret
+	}
+	return *o.RingbackGeneration
+}
+
+// GetRingbackGenerationOk returns a tuple with the RingbackGeneration field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallRoutingPhoneEndpoint) GetRingbackGenerationOk() (*CallRoutingRingbackGeneration, bool) {
+	if o == nil || IsNil(o.RingbackGeneration) {
+		return nil, false
+	}
+	return o.RingbackGeneration, true
+}
+
+// HasRingbackGeneration returns a boolean if a field has been set.
+func (o *CallRoutingPhoneEndpoint) HasRingbackGeneration() bool {
+	if o != nil && !IsNil(o.RingbackGeneration) {
+		return true
+	}
+
+	return false
+}
+
+// SetRingbackGeneration gets a reference to the given CallRoutingRingbackGeneration and assigns it to the RingbackGeneration field.
+func (o *CallRoutingPhoneEndpoint) SetRingbackGeneration(v CallRoutingRingbackGeneration) {
+	o.RingbackGeneration = &v
+}
+
 func (o CallRoutingPhoneEndpoint) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -90,8 +157,14 @@ func (o CallRoutingPhoneEndpoint) MarshalJSON() ([]byte, error) {
 func (o CallRoutingPhoneEndpoint) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
+	if !IsNil(o.From) {
+		toSerialize["from"] = o.From
+	}
 	if !IsNil(o.PhoneNumber) {
 		toSerialize["phoneNumber"] = o.PhoneNumber
+	}
+	if !IsNil(o.RingbackGeneration) {
+		toSerialize["ringbackGeneration"] = o.RingbackGeneration
 	}
 	return toSerialize, nil
 }

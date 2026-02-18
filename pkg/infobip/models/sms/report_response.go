@@ -19,13 +19,14 @@ import (
 // checks if the ReportResponse type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ReportResponse{}
 
-// ReportResponse The array of objects for your sent messages.
+// ReportResponse struct for ReportResponse
 type ReportResponse struct {
-	// Number of returned messages in this request.
+	// An array of result objects.
+	Results []MoReport
+	// The number of messages returned in the `results` array.
 	MessageCount *int32
-	// Number of remaining new messages on Infobip servers ready to be returned in the next request.
+	// The number of messages that have not been pulled in.
 	PendingMessageCount *int32
-	Results             []MoReport
 }
 
 // NewReportResponse instantiates a new ReportResponse object
@@ -45,6 +46,38 @@ func NewReportResponseWithDefaults() *ReportResponse {
 	this := ReportResponse{}
 
 	return &this
+}
+
+// GetResults returns the Results field value if set, zero value otherwise.
+func (o *ReportResponse) GetResults() []MoReport {
+	if o == nil || IsNil(o.Results) {
+		var ret []MoReport
+		return ret
+	}
+	return o.Results
+}
+
+// GetResultsOk returns a tuple with the Results field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ReportResponse) GetResultsOk() ([]MoReport, bool) {
+	if o == nil || IsNil(o.Results) {
+		return nil, false
+	}
+	return o.Results, true
+}
+
+// HasResults returns a boolean if a field has been set.
+func (o *ReportResponse) HasResults() bool {
+	if o != nil && !IsNil(o.Results) {
+		return true
+	}
+
+	return false
+}
+
+// SetResults gets a reference to the given []MoReport and assigns it to the Results field.
+func (o *ReportResponse) SetResults(v []MoReport) {
+	o.Results = v
 }
 
 // GetMessageCount returns the MessageCount field value if set, zero value otherwise.
@@ -111,38 +144,6 @@ func (o *ReportResponse) SetPendingMessageCount(v int32) {
 	o.PendingMessageCount = &v
 }
 
-// GetResults returns the Results field value if set, zero value otherwise.
-func (o *ReportResponse) GetResults() []MoReport {
-	if o == nil || IsNil(o.Results) {
-		var ret []MoReport
-		return ret
-	}
-	return o.Results
-}
-
-// GetResultsOk returns a tuple with the Results field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *ReportResponse) GetResultsOk() ([]MoReport, bool) {
-	if o == nil || IsNil(o.Results) {
-		return nil, false
-	}
-	return o.Results, true
-}
-
-// HasResults returns a boolean if a field has been set.
-func (o *ReportResponse) HasResults() bool {
-	if o != nil && !IsNil(o.Results) {
-		return true
-	}
-
-	return false
-}
-
-// SetResults gets a reference to the given []MoReport and assigns it to the Results field.
-func (o *ReportResponse) SetResults(v []MoReport) {
-	o.Results = v
-}
-
 func (o ReportResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -153,14 +154,14 @@ func (o ReportResponse) MarshalJSON() ([]byte, error) {
 
 func (o ReportResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.Results) {
+		toSerialize["results"] = o.Results
+	}
 	if !IsNil(o.MessageCount) {
 		toSerialize["messageCount"] = o.MessageCount
 	}
 	if !IsNil(o.PendingMessageCount) {
 		toSerialize["pendingMessageCount"] = o.PendingMessageCount
-	}
-	if !IsNil(o.Results) {
-		toSerialize["results"] = o.Results
 	}
 	return toSerialize, nil
 }

@@ -22,7 +22,7 @@ var _ MappedNullable = &BulkItem{}
 // BulkItem Bulk item list.
 type BulkItem struct {
 	// Caller identifier. Must be a number in the [E.164](https://en.wikipedia.org/wiki/E.164) format.
-	From string
+	From *string
 	// Call request list.
 	CallRequests     []BulkCallRequest
 	Recording        *CallRecordingRequest
@@ -47,9 +47,8 @@ type _BulkItem BulkItem
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewBulkItem(from string, callRequests []BulkCallRequest) *BulkItem {
+func NewBulkItem(callRequests []BulkCallRequest) *BulkItem {
 	this := BulkItem{}
-	this.From = from
 	this.CallRequests = callRequests
 	var maxDuration int32 = 28800
 	this.MaxDuration = &maxDuration
@@ -67,28 +66,36 @@ func NewBulkItemWithDefaults() *BulkItem {
 	return &this
 }
 
-// GetFrom returns the From field value
+// GetFrom returns the From field value if set, zero value otherwise.
 func (o *BulkItem) GetFrom() string {
-	if o == nil {
+	if o == nil || IsNil(o.From) {
 		var ret string
 		return ret
 	}
-
-	return o.From
+	return *o.From
 }
 
-// GetFromOk returns a tuple with the From field value
+// GetFromOk returns a tuple with the From field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *BulkItem) GetFromOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.From) {
 		return nil, false
 	}
-	return &o.From, true
+	return o.From, true
 }
 
-// SetFrom sets field value
+// HasFrom returns a boolean if a field has been set.
+func (o *BulkItem) HasFrom() bool {
+	if o != nil && !IsNil(o.From) {
+		return true
+	}
+
+	return false
+}
+
+// SetFrom gets a reference to the given string and assigns it to the From field.
 func (o *BulkItem) SetFrom(v string) {
-	o.From = v
+	o.From = &v
 }
 
 // GetCallRequests returns the CallRequests field value
@@ -413,7 +420,9 @@ func (o BulkItem) MarshalJSON() ([]byte, error) {
 
 func (o BulkItem) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["from"] = o.From
+	if !IsNil(o.From) {
+		toSerialize["from"] = o.From
+	}
 	toSerialize["callRequests"] = o.CallRequests
 	if !IsNil(o.Recording) {
 		toSerialize["recording"] = o.Recording

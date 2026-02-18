@@ -21,17 +21,20 @@ var _ MappedNullable = &ConferenceBroadcastWebrtcTextRequest{}
 
 // ConferenceBroadcastWebrtcTextRequest struct for ConferenceBroadcastWebrtcTextRequest
 type ConferenceBroadcastWebrtcTextRequest struct {
-	// Text to broadcast.
-	Text *string
+	// Message to send.
+	Message string
 }
+
+type _ConferenceBroadcastWebrtcTextRequest ConferenceBroadcastWebrtcTextRequest
 
 // NewConferenceBroadcastWebrtcTextRequest instantiates a new ConferenceBroadcastWebrtcTextRequest object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewConferenceBroadcastWebrtcTextRequest() *ConferenceBroadcastWebrtcTextRequest {
+func NewConferenceBroadcastWebrtcTextRequest(message string) *ConferenceBroadcastWebrtcTextRequest {
 	this := ConferenceBroadcastWebrtcTextRequest{}
+	this.Message = message
 	return &this
 }
 
@@ -44,36 +47,28 @@ func NewConferenceBroadcastWebrtcTextRequestWithDefaults() *ConferenceBroadcastW
 	return &this
 }
 
-// GetText returns the Text field value if set, zero value otherwise.
-func (o *ConferenceBroadcastWebrtcTextRequest) GetText() string {
-	if o == nil || IsNil(o.Text) {
+// GetMessage returns the Message field value
+func (o *ConferenceBroadcastWebrtcTextRequest) GetMessage() string {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.Text
+
+	return o.Message
 }
 
-// GetTextOk returns a tuple with the Text field value if set, nil otherwise
+// GetMessageOk returns a tuple with the Message field value
 // and a boolean to check if the value has been set.
-func (o *ConferenceBroadcastWebrtcTextRequest) GetTextOk() (*string, bool) {
-	if o == nil || IsNil(o.Text) {
+func (o *ConferenceBroadcastWebrtcTextRequest) GetMessageOk() (*string, bool) {
+	if o == nil {
 		return nil, false
 	}
-	return o.Text, true
+	return &o.Message, true
 }
 
-// HasText returns a boolean if a field has been set.
-func (o *ConferenceBroadcastWebrtcTextRequest) HasText() bool {
-	if o != nil && !IsNil(o.Text) {
-		return true
-	}
-
-	return false
-}
-
-// SetText gets a reference to the given string and assigns it to the Text field.
-func (o *ConferenceBroadcastWebrtcTextRequest) SetText(v string) {
-	o.Text = &v
+// SetMessage sets field value
+func (o *ConferenceBroadcastWebrtcTextRequest) SetMessage(v string) {
+	o.Message = v
 }
 
 func (o ConferenceBroadcastWebrtcTextRequest) MarshalJSON() ([]byte, error) {
@@ -86,9 +81,7 @@ func (o ConferenceBroadcastWebrtcTextRequest) MarshalJSON() ([]byte, error) {
 
 func (o ConferenceBroadcastWebrtcTextRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Text) {
-		toSerialize["text"] = o.Text
-	}
+	toSerialize["message"] = o.Message
 	return toSerialize, nil
 }
 

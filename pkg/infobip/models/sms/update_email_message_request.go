@@ -25,6 +25,8 @@ type UpdateEmailMessageRequest struct {
 	EmailTemplateId *int64
 	// The sender of the 2FA message, an email address with an optional sender name (e.g. `company@example.com` or `Jane Smith <jane.smith@somecompany.com>`).
 	From *string
+	// Opt out landing page ID that should reference a previously created landing page template.
+	LandingPageId *string
 	// PIN code length.
 	PinLength *int32
 	PinType   *PinType
@@ -113,6 +115,38 @@ func (o *UpdateEmailMessageRequest) SetFrom(v string) {
 	o.From = &v
 }
 
+// GetLandingPageId returns the LandingPageId field value if set, zero value otherwise.
+func (o *UpdateEmailMessageRequest) GetLandingPageId() string {
+	if o == nil || IsNil(o.LandingPageId) {
+		var ret string
+		return ret
+	}
+	return *o.LandingPageId
+}
+
+// GetLandingPageIdOk returns a tuple with the LandingPageId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateEmailMessageRequest) GetLandingPageIdOk() (*string, bool) {
+	if o == nil || IsNil(o.LandingPageId) {
+		return nil, false
+	}
+	return o.LandingPageId, true
+}
+
+// HasLandingPageId returns a boolean if a field has been set.
+func (o *UpdateEmailMessageRequest) HasLandingPageId() bool {
+	if o != nil && !IsNil(o.LandingPageId) {
+		return true
+	}
+
+	return false
+}
+
+// SetLandingPageId gets a reference to the given string and assigns it to the LandingPageId field.
+func (o *UpdateEmailMessageRequest) SetLandingPageId(v string) {
+	o.LandingPageId = &v
+}
+
 // GetPinLength returns the PinLength field value if set, zero value otherwise.
 func (o *UpdateEmailMessageRequest) GetPinLength() int32 {
 	if o == nil || IsNil(o.PinLength) {
@@ -192,6 +226,9 @@ func (o UpdateEmailMessageRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.From) {
 		toSerialize["from"] = o.From
+	}
+	if !IsNil(o.LandingPageId) {
+		toSerialize["landingPageId"] = o.LandingPageId
 	}
 	if !IsNil(o.PinLength) {
 		toSerialize["pinLength"] = o.PinLength

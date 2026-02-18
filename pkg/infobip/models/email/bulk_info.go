@@ -21,19 +21,23 @@ var _ MappedNullable = &BulkInfo{}
 
 // BulkInfo struct for BulkInfo
 type BulkInfo struct {
-	// The ID uniquely identifies the sent email request.
-	BulkId *string
+	// The ID that uniquely identifies the message within the bulk.
+	BulkId string
 	// Date and time when the email is to be sent. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
-	SendAt *Time
+	SendAt Time
 }
+
+type _BulkInfo BulkInfo
 
 // NewBulkInfo instantiates a new BulkInfo object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewBulkInfo() *BulkInfo {
+func NewBulkInfo(bulkId string, sendAt Time) *BulkInfo {
 	this := BulkInfo{}
+	this.BulkId = bulkId
+	this.SendAt = sendAt
 	return &this
 }
 
@@ -46,68 +50,52 @@ func NewBulkInfoWithDefaults() *BulkInfo {
 	return &this
 }
 
-// GetBulkId returns the BulkId field value if set, zero value otherwise.
+// GetBulkId returns the BulkId field value
 func (o *BulkInfo) GetBulkId() string {
-	if o == nil || IsNil(o.BulkId) {
+	if o == nil {
 		var ret string
 		return ret
 	}
-	return *o.BulkId
+
+	return o.BulkId
 }
 
-// GetBulkIdOk returns a tuple with the BulkId field value if set, nil otherwise
+// GetBulkIdOk returns a tuple with the BulkId field value
 // and a boolean to check if the value has been set.
 func (o *BulkInfo) GetBulkIdOk() (*string, bool) {
-	if o == nil || IsNil(o.BulkId) {
+	if o == nil {
 		return nil, false
 	}
-	return o.BulkId, true
+	return &o.BulkId, true
 }
 
-// HasBulkId returns a boolean if a field has been set.
-func (o *BulkInfo) HasBulkId() bool {
-	if o != nil && !IsNil(o.BulkId) {
-		return true
-	}
-
-	return false
-}
-
-// SetBulkId gets a reference to the given string and assigns it to the BulkId field.
+// SetBulkId sets field value
 func (o *BulkInfo) SetBulkId(v string) {
-	o.BulkId = &v
+	o.BulkId = v
 }
 
-// GetSendAt returns the SendAt field value if set, zero value otherwise.
+// GetSendAt returns the SendAt field value
 func (o *BulkInfo) GetSendAt() Time {
-	if o == nil || IsNil(o.SendAt) {
+	if o == nil {
 		var ret Time
 		return ret
 	}
-	return *o.SendAt
+
+	return o.SendAt
 }
 
-// GetSendAtOk returns a tuple with the SendAt field value if set, nil otherwise
+// GetSendAtOk returns a tuple with the SendAt field value
 // and a boolean to check if the value has been set.
 func (o *BulkInfo) GetSendAtOk() (*Time, bool) {
-	if o == nil || IsNil(o.SendAt) {
+	if o == nil {
 		return nil, false
 	}
-	return o.SendAt, true
+	return &o.SendAt, true
 }
 
-// HasSendAt returns a boolean if a field has been set.
-func (o *BulkInfo) HasSendAt() bool {
-	if o != nil && !IsNil(o.SendAt) {
-		return true
-	}
-
-	return false
-}
-
-// SetSendAt gets a reference to the given Time and assigns it to the SendAt field.
+// SetSendAt sets field value
 func (o *BulkInfo) SetSendAt(v Time) {
-	o.SendAt = &v
+	o.SendAt = v
 }
 
 func (o BulkInfo) MarshalJSON() ([]byte, error) {
@@ -120,12 +108,8 @@ func (o BulkInfo) MarshalJSON() ([]byte, error) {
 
 func (o BulkInfo) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.BulkId) {
-		toSerialize["bulkId"] = o.BulkId
-	}
-	if !IsNil(o.SendAt) {
-		toSerialize["sendAt"] = o.SendAt
-	}
+	toSerialize["bulkId"] = o.BulkId
+	toSerialize["sendAt"] = o.SendAt
 	return toSerialize, nil
 }
 

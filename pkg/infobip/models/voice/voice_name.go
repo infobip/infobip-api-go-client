@@ -53,6 +53,8 @@ const (
 	VOICENAME_JOEY                VoiceName = "Joey"
 	VOICENAME_JUSTIN              VoiceName = "Justin"
 	VOICENAME_MATTHEW             VoiceName = "Matthew"
+	VOICENAME_JENNIFER            VoiceName = "Jennifer"
+	VOICENAME_DAVID               VoiceName = "David"
 	VOICENAME_RUSSELL             VoiceName = "Russell"
 	VOICENAME_NICOLE              VoiceName = "Nicole"
 	VOICENAME_BRIAN               VoiceName = "Brian"
@@ -96,6 +98,8 @@ const (
 	VOICENAME_MIZUKI              VoiceName = "Mizuki"
 	VOICENAME_SHASHANK__BETA      VoiceName = "Shashank (beta)"
 	VOICENAME_NAMRATHA__BETA      VoiceName = "Namratha (beta)"
+	VOICENAME_AIGUL__NEURAL       VoiceName = "Aigul (neural)"
+	VOICENAME_DAULET__NEURAL      VoiceName = "Daulet (neural)"
 	VOICENAME_SEOYEON             VoiceName = "Seoyeon"
 	VOICENAME_SUMI__BETA          VoiceName = "Sumi (beta)"
 	VOICENAME_JINA__BETA          VoiceName = "Jina (beta)"
@@ -140,11 +144,16 @@ const (
 	VOICENAME_NATCHAYA__BETA      VoiceName = "Natchaya (beta)"
 	VOICENAME_FILIZ               VoiceName = "Filiz"
 	VOICENAME_ULYANA              VoiceName = "Ulyana"
+	VOICENAME_MADINA__NEURAL      VoiceName = "Madina (neural)"
+	VOICENAME_SARDOR__NEURAL      VoiceName = "Sardor (neural)"
 	VOICENAME_LIEN__BETA          VoiceName = "Lien (beta)"
 	VOICENAME_QUAN__BETA          VoiceName = "Quan (beta)"
 	VOICENAME_MAI__BETA           VoiceName = "Mai (beta)"
 	VOICENAME_TUAN__BETA          VoiceName = "Tuan (beta)"
 	VOICENAME_GWYNETH             VoiceName = "Gwyneth"
+	VOICENAME_AARYA               VoiceName = "Aarya"
+	VOICENAME_ARJUN               VoiceName = "Arjun"
+	VOICENAME_REVATI              VoiceName = "Revati"
 	VOICENAME_HAMED__NEURAL       VoiceName = "Hamed (neural)"
 	VOICENAME_SALMA__NEURAL       VoiceName = "Salma (neural)"
 	VOICENAME_SHAKIR__NEURAL      VoiceName = "Shakir (neural)"
@@ -412,6 +421,8 @@ const (
 	VOICENAME_PELAYO__NEURAL      VoiceName = "Pelayo (neural)"
 	VOICENAME_RENATA__NEURAL      VoiceName = "Renata (neural)"
 	VOICENAME_YAGO__NEURAL        VoiceName = "Yago (neural)"
+	VOICENAME_ELENA__NEURAL       VoiceName = "Elena (neural)"
+	VOICENAME_TOMAS__NEURAL       VoiceName = "Tomas (neural)"
 	VOICENAME_HILLEVI__NEURAL     VoiceName = "Hillevi (neural)"
 	VOICENAME_MATTIAS__NEURAL     VoiceName = "Mattias (neural)"
 	VOICENAME_SOFIE__NEURAL       VoiceName = "Sofie (neural)"
@@ -434,6 +445,12 @@ const (
 	VOICENAME_JAMAL__NEURAL       VoiceName = "Jamal (neural)"
 	VOICENAME_UZMA__NEURAL        VoiceName = "Uzma (neural)"
 	VOICENAME_ASAD__NEURAL        VoiceName = "Asad (neural)"
+	VOICENAME_AAROHI__NEURAL      VoiceName = "Aarohi (neural)"
+	VOICENAME_MANOHAR__NEURAL     VoiceName = "Manohar (neural)"
+	VOICENAME_ZURI__NEURAL        VoiceName = "Zuri (neural)"
+	VOICENAME_RAFIKI__NEURAL      VoiceName = "Rafiki (neural)"
+	VOICENAME_REHEMA__NEURAL      VoiceName = "Rehema (neural)"
+	VOICENAME_DAUDI__NEURAL       VoiceName = "Daudi (neural)"
 )
 
 // All allowed values of VoiceName enum
@@ -471,6 +488,8 @@ var AllowedVoiceNameEnumValues = []VoiceName{
 	"Joey",
 	"Justin",
 	"Matthew",
+	"Jennifer",
+	"David",
 	"Russell",
 	"Nicole",
 	"Brian",
@@ -514,6 +533,8 @@ var AllowedVoiceNameEnumValues = []VoiceName{
 	"Mizuki",
 	"Shashank (beta)",
 	"Namratha (beta)",
+	"Aigul (neural)",
+	"Daulet (neural)",
 	"Seoyeon",
 	"Sumi (beta)",
 	"Jina (beta)",
@@ -558,11 +579,16 @@ var AllowedVoiceNameEnumValues = []VoiceName{
 	"Natchaya (beta)",
 	"Filiz",
 	"Ulyana",
+	"Madina (neural)",
+	"Sardor (neural)",
 	"Lien (beta)",
 	"Quan (beta)",
 	"Mai (beta)",
 	"Tuan (beta)",
 	"Gwyneth",
+	"Aarya",
+	"Arjun",
+	"Revati",
 	"Hamed (neural)",
 	"Salma (neural)",
 	"Shakir (neural)",
@@ -830,6 +856,8 @@ var AllowedVoiceNameEnumValues = []VoiceName{
 	"Pelayo (neural)",
 	"Renata (neural)",
 	"Yago (neural)",
+	"Elena (neural)",
+	"Tomas (neural)",
 	"Hillevi (neural)",
 	"Mattias (neural)",
 	"Sofie (neural)",
@@ -852,6 +880,12 @@ var AllowedVoiceNameEnumValues = []VoiceName{
 	"Jamal (neural)",
 	"Uzma (neural)",
 	"Asad (neural)",
+	"Aarohi (neural)",
+	"Manohar (neural)",
+	"Zuri (neural)",
+	"Rafiki (neural)",
+	"Rehema (neural)",
+	"Daudi (neural)",
 }
 
 func (v *VoiceName) UnmarshalJSON(src []byte) error {

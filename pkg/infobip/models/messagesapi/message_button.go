@@ -18,15 +18,24 @@ import (
 // MessageButton List of buttons of the message.
 type MessageButton struct {
 	MessageAddCalendarEventButton *MessageAddCalendarEventButton
+	MessageDialPhoneButton        *MessageDialPhoneButton
 	MessageOpenUrlButton          *MessageOpenUrlButton
 	MessageReplyButton            *MessageReplyButton
 	MessageRequestLocationButton  *MessageRequestLocationButton
+	MessageShowLocationButton     *MessageShowLocationButton
 }
 
 // MessageAddCalendarEventButtonAsMessageButton is a convenience function that returns MessageAddCalendarEventButton wrapped in MessageButton
 func MessageAddCalendarEventButtonAsMessageButton(v *MessageAddCalendarEventButton) MessageButton {
 	return MessageButton{
 		MessageAddCalendarEventButton: v,
+	}
+}
+
+// MessageDialPhoneButtonAsMessageButton is a convenience function that returns MessageDialPhoneButton wrapped in MessageButton
+func MessageDialPhoneButtonAsMessageButton(v *MessageDialPhoneButton) MessageButton {
+	return MessageButton{
+		MessageDialPhoneButton: v,
 	}
 }
 
@@ -48,6 +57,13 @@ func MessageReplyButtonAsMessageButton(v *MessageReplyButton) MessageButton {
 func MessageRequestLocationButtonAsMessageButton(v *MessageRequestLocationButton) MessageButton {
 	return MessageButton{
 		MessageRequestLocationButton: v,
+	}
+}
+
+// MessageShowLocationButtonAsMessageButton is a convenience function that returns MessageShowLocationButton wrapped in MessageButton
+func MessageShowLocationButtonAsMessageButton(v *MessageShowLocationButton) MessageButton {
+	return MessageButton{
+		MessageShowLocationButton: v,
 	}
 }
 
@@ -73,6 +89,21 @@ func (dst *MessageButton) UnmarshalJSON(data []byte) error {
 			}
 		} else {
 			dst.MessageAddCalendarEventButton = nil
+		}
+	}
+	// check if the discriminator value is 'DIAL_PHONE'
+	if jsonDict["type"] == "DIAL_PHONE" {
+		// try to unmarshal JSON data into MessageDialPhoneButton
+		err = json.Unmarshal(data, &dst.MessageDialPhoneButton)
+		if err == nil {
+			jsonMessageDialPhoneButton, _ := json.Marshal(dst.MessageDialPhoneButton)
+			if string(jsonMessageDialPhoneButton) == "{}" { // empty struct
+				dst.MessageDialPhoneButton = nil
+			} else {
+				return nil // data stored in dst.MessageDialPhoneButton, return on the first match
+			}
+		} else {
+			dst.MessageDialPhoneButton = nil
 		}
 	}
 	// check if the discriminator value is 'OPEN_URL'
@@ -120,6 +151,21 @@ func (dst *MessageButton) UnmarshalJSON(data []byte) error {
 			dst.MessageRequestLocationButton = nil
 		}
 	}
+	// check if the discriminator value is 'SHOW_LOCATION'
+	if jsonDict["type"] == "SHOW_LOCATION" {
+		// try to unmarshal JSON data into MessageShowLocationButton
+		err = json.Unmarshal(data, &dst.MessageShowLocationButton)
+		if err == nil {
+			jsonMessageShowLocationButton, _ := json.Marshal(dst.MessageShowLocationButton)
+			if string(jsonMessageShowLocationButton) == "{}" { // empty struct
+				dst.MessageShowLocationButton = nil
+			} else {
+				return nil // data stored in dst.MessageShowLocationButton, return on the first match
+			}
+		} else {
+			dst.MessageShowLocationButton = nil
+		}
+	}
 	return fmt.Errorf("Data failed to match schemas in anyOf(MessageButton)")
 }
 
@@ -127,6 +173,9 @@ func (dst *MessageButton) UnmarshalJSON(data []byte) error {
 func (src MessageButton) MarshalJSON() ([]byte, error) {
 	if src.MessageAddCalendarEventButton != nil {
 		return json.Marshal(&src.MessageAddCalendarEventButton)
+	}
+	if src.MessageDialPhoneButton != nil {
+		return json.Marshal(&src.MessageDialPhoneButton)
 	}
 	if src.MessageOpenUrlButton != nil {
 		return json.Marshal(&src.MessageOpenUrlButton)
@@ -136,6 +185,9 @@ func (src MessageButton) MarshalJSON() ([]byte, error) {
 	}
 	if src.MessageRequestLocationButton != nil {
 		return json.Marshal(&src.MessageRequestLocationButton)
+	}
+	if src.MessageShowLocationButton != nil {
+		return json.Marshal(&src.MessageShowLocationButton)
 	}
 	return nil, nil // no data in anyOf schemas
 }
@@ -148,6 +200,9 @@ func (obj *MessageButton) GetActualInstance() interface{} {
 	if obj.MessageAddCalendarEventButton != nil {
 		return obj.MessageAddCalendarEventButton
 	}
+	if obj.MessageDialPhoneButton != nil {
+		return obj.MessageDialPhoneButton
+	}
 	if obj.MessageOpenUrlButton != nil {
 		return obj.MessageOpenUrlButton
 	}
@@ -156,6 +211,9 @@ func (obj *MessageButton) GetActualInstance() interface{} {
 	}
 	if obj.MessageRequestLocationButton != nil {
 		return obj.MessageRequestLocationButton
+	}
+	if obj.MessageShowLocationButton != nil {
+		return obj.MessageShowLocationButton
 	}
 	// all schemas are nil
 	return nil

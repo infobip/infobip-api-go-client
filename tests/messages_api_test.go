@@ -12,8 +12,11 @@ import (
 )
 
 const (
-	SendMessagesApiMessages string = "/messages-api/1/messages"
-	SendMessagesApiEvents   string = "/messages-api/1/events"
+	SendMessagesApiMessages            string = "/messages-api/1/messages"
+	SendMessagesApiEvents              string = "/messages-api/1/events"
+	MessagesApiDeliveryReportsEndpoint string = "/messages-api/1/reports"
+	MessagesApiInboundEndpoint         string = "/messages-api/1/inbound"
+	MessagesApiValidateEndpoint        string = "/messages-api/1/messages/validate"
 )
 
 func TestSendMessagesApiMessage(t *testing.T) {
@@ -48,10 +51,10 @@ func TestSendMessagesApiMessage(t *testing.T) {
 		givenDestination,
 	)
 
-	givenChannel := "SMS"
-	givenSender := "447491163443"
-	givenTo := "111111111"
-	givenText := "May the Force be with you."
+	givenChannel := "WHATSAPP"
+	givenSender := "447491163862"
+	givenTo := "123456789"
+	givenText := "Sending you lots of otterly delightful vibes today!"
 	givenType := "TEXT"
 
 	givenRequest := fmt.Sprintf(`
@@ -69,6 +72,27 @@ func TestSendMessagesApiMessage(t *testing.T) {
 				  "body": {
 					"text": "%s",
 					"type": "%s"
+				  }
+				},
+				"options": {
+				  "platform": {
+					"entityId": "entityId",
+					"applicationId": "applicationId"
+				  },
+				  "validityPeriod": {
+					"amount": 10,
+					"timeUnit": "MINUTES"
+				  },
+				  "adaptationMode": false,
+				  "campaignReferenceId": "campaignReferenceId"
+				},
+				"webhooks": {
+				  "delivery": {
+					"url": "https://example.com/delivery-webhook"
+				  },
+				  "callbackData": "callbackData",
+				  "seen": {
+					"url": "https://example.com/seen-webhook"
 				  }
 				}
 			  }
@@ -90,7 +114,7 @@ func TestSendMessagesApiMessage(t *testing.T) {
 	}
 
 	givenMessage := messagesapi.NewMessage(
-		messagesapi.OUTBOUNDMESSAGECHANNEL_SMS,
+		messagesapi.OUTBOUNDMESSAGECHANNEL_WHATSAPP,
 		givenSender,
 		[]messagesapi.MessageDestination{
 			destination,
@@ -99,6 +123,33 @@ func TestSendMessagesApiMessage(t *testing.T) {
 			Body: body,
 		},
 	)
+
+	platform := messagesapi.NewPlatform()
+	platform.SetEntityId("entityId")
+	platform.SetApplicationId("applicationId")
+
+	validityPeriod := messagesapi.NewValidityPeriod(10)
+	validityPeriod.SetTimeUnit(messagesapi.VALIDITYPERIODTIMEUNIT_MINUTES)
+
+	options := messagesapi.NewMessageOptions()
+	options.SetPlatform(*platform)
+	options.SetValidityPeriod(*validityPeriod)
+	options.SetAdaptationMode(false)
+	options.SetCampaignReferenceId("campaignReferenceId")
+
+	delivery := messagesapi.NewMessageDeliveryReporting()
+	delivery.SetUrl("https://example.com/delivery-webhook")
+
+	seen := messagesapi.NewSeenStatusReporting()
+	seen.SetUrl("https://example.com/seen-webhook")
+
+	webhooks := messagesapi.NewOttWebhooks()
+	webhooks.SetDelivery(*delivery)
+	webhooks.SetCallbackData("callbackData")
+	webhooks.SetSeen(*seen)
+
+	givenMessage.Options = options
+	givenMessage.Webhooks = webhooks
 
 	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{Message: givenMessage},
@@ -640,10 +691,7 @@ func TestReceiveIncomingMessagesWebhookWithCallBackDataAsObject(t *testing.T) {
 				],
 				"receivedAt": "%s",
 				"messageId": "%s",
-				"callbackData": {
-					"key1": "value1", 
-					"key2": "value2"
-				},
+				"callbackData": "{\"key1\":\"value1\",\"key2\":\"value2\"}",
 				"platform": {
 				  "entityId": "%s",
 				  "applicationId": "%s"
@@ -719,7 +767,7 @@ func TestReceiveIncomingMessagesWebhookWithCallBackDataAsEmptyObject(t *testing.
 				],
 				"receivedAt": "%s",
 				"messageId": "%s",
-				"callbackData": {},
+				"callbackData": "{}",
 				"platform": {
 				  "entityId": "%s",
 				  "applicationId": "%s"
@@ -800,8 +848,8 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 	givenChannel := "WHATSAPP"
 	givenSender := "447860099299"
 	givenTo := "11111111"
-	givenTemplateName := "episodeV"
-	givenLanguage := "en_GB"
+	givenTemplateName := "templateName"
+	givenLanguage := "en"
 
 	givenRequest := fmt.Sprintf(`
 		{
@@ -820,18 +868,18 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 				},
 				"content": {
 				  "body": {
-					"1": "Luke",
-					"2": "Skywalker",
+					"1": "Infobip",
+					"2": "5:30 AM",
 					"type": "TEXT"
 				  },
 				  "buttons": [
 					{
-					  "postbackData": "I am the father",
-					  "type": "QUICK_REPLY"
+					  "suffix": "example1",
+					  "type": "OPEN_URL"
 					},
 					{
-					  "postbackData": "I am not the father",
-					  "type": "QUICK_REPLY"
+					  "suffix": "example2",
+					  "type": "OPEN_URL"
 					}
 				  ]
 				}
@@ -846,8 +894,8 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 	)
 
 	templateTextBody := messagesapi.NewTemplateTextBody()
-	templateTextBody.AdditionalProperties["1"] = "Luke"
-	templateTextBody.AdditionalProperties["2"] = "Skywalker"
+	templateTextBody.AdditionalProperties["1"] = "Infobip"
+	templateTextBody.AdditionalProperties["2"] = "5:30 AM"
 
 	body := messagesapi.TemplateBody{
 		TemplateTextBody: templateTextBody,
@@ -857,13 +905,10 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 		ToDestination: messagesapi.NewToDestination(givenTo),
 	}
 
-	givenButtonPostbackData1 := "I am the father"
-	givenButtonPostbackData2 := "I am not the father"
-
-	givenButton1 := messagesapi.NewTemplateQuickReplyButton(givenButtonPostbackData1)
-	givenTemplateButton1 := messagesapi.TemplateButton{TemplateQuickReplyButton: givenButton1}
-	givenButton2 := messagesapi.NewTemplateQuickReplyButton(givenButtonPostbackData2)
-	givenTemplateButton2 := messagesapi.TemplateButton{TemplateQuickReplyButton: givenButton2}
+	givenButton1 := messagesapi.NewTemplateOpenUrlButton("example1")
+	givenTemplateButton1 := messagesapi.TemplateButton{TemplateOpenUrlButton: givenButton1}
+	givenButton2 := messagesapi.NewTemplateOpenUrlButton("example2")
+	givenTemplateButton2 := messagesapi.TemplateButton{TemplateOpenUrlButton: givenButton2}
 
 	givenTemplate := messagesapi.NewTemplate(givenTemplateName)
 	givenTemplate.Language = &givenLanguage
@@ -919,4 +964,626 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 	assert.Equal(t, int32(PendingStatusId), messageStatus.GetId())
 	assert.Equal(t, PendingStatusName, messageStatus.GetName())
 	assert.Equal(t, PendingStatusDescription, messageStatus.GetDescription())
+}
+
+func TestGetMessagesApiDeliveryReports(t *testing.T) {
+	givenBulkId := "1688025180464000013"
+	givenMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	givenSender := "senderNumber"
+	givenDestination := "41793026727"
+	givenSentAt := "2024-02-06T14:18:29.797+0000"
+	givenDoneAt := "2024-02-06T17:18:29.797+0000"
+	givenMessageCount := 1
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+	givenCampaignReferenceId := "campaignRef"
+
+	givenResponse := fmt.Sprintf(`{
+		"results": [
+			{
+				"event": "DELIVERY",
+				"channel": "WHATSAPP",
+				"sender": "%s",
+				"destination": "%s",
+				"sentAt": "%s",
+				"doneAt": "%s",
+				"bulkId": "%s",
+				"messageId": "%s",
+				"messageCount": %d,
+				"status": {
+					"groupId": %d,
+					"groupName": "%s",
+					"id": %d,
+					"name": "%s",
+					"description": "%s"
+				},
+				"error": {
+					"groupId": %d,
+					"groupName": "%s",
+					"id": %d,
+					"name": "%s",
+					"description": "%s",
+					"permanent": %t
+				},
+				"platform": {
+					"entityId": "%s",
+					"applicationId": "%s"
+				},
+				"campaignReferenceId": "%s"
+			}
+		]
+	}`,
+		givenSender,
+		givenDestination,
+		givenSentAt,
+		givenDoneAt,
+		givenBulkId,
+		givenMessageId,
+		givenMessageCount,
+		StatusGroupId, StatusGroupName, StatusId, StatusName, StatusDescription,
+		NoErrorStatusGroupId, NoErrorStatusGroupName, NoErrorStatusId, NoErrorStatusName, NoErrorStatusDescription, NoErrorPermanent,
+		givenEntityId,
+		givenApplicationId,
+		givenCampaignReferenceId,
+	)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("GET", MessagesApiDeliveryReportsEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		GetMessagesApiDeliveryReports(context.Background()).
+		BulkId(givenBulkId).
+		MessageId(givenMessageId).
+		Limit(1).
+		EntityId(givenEntityId).
+		ApplicationId(givenApplicationId).
+		CampaignReferenceId(givenCampaignReferenceId).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	results := responseBody.GetResults()
+	assert.True(t, len(results) == 1)
+
+	result := results[0]
+	assert.Equal(t, "DELIVERY", result.GetEvent())
+	assert.Equal(t, givenSender, result.GetSender())
+	assert.Equal(t, givenDestination, result.GetDestination())
+	assert.Equal(t, givenBulkId, result.GetBulkId())
+	assert.Equal(t, givenMessageId, result.GetMessageId())
+	assert.Equal(t, int32(givenMessageCount), result.GetMessageCount())
+	assert.Equal(t, givenCampaignReferenceId, result.GetCampaignReferenceId())
+
+	status := result.GetStatus()
+	assert.Equal(t, int32(StatusGroupId), status.GetGroupId())
+	assert.Equal(t, StatusName, status.GetName())
+
+	errorInfo := result.GetError()
+	assert.Equal(t, int32(NoErrorStatusGroupId), errorInfo.GetGroupId())
+	assert.Equal(t, NoErrorStatusName, errorInfo.GetName())
+	assert.Equal(t, NoErrorPermanent, errorInfo.GetPermanent())
+
+	platform := result.GetPlatform()
+	assert.Equal(t, givenEntityId, platform.GetEntityId())
+	assert.Equal(t, givenApplicationId, platform.GetApplicationId())
+}
+
+func TestGetMessagesApiDeliveryReportsWithChannel(t *testing.T) {
+	givenBulkId := "bulk-123"
+	givenMessageId := "msg-456"
+	givenDestination := "41793026727"
+
+	givenResponse := fmt.Sprintf(`{
+		"results": [
+			{
+				"event": "DELIVERY",
+				"channel": "SMS",
+				"destination": "%s",
+				"bulkId": "%s",
+				"messageId": "%s",
+				"messageCount": 1,
+				"status": {
+					"groupId": %d,
+					"groupName": "%s",
+					"id": %d,
+					"name": "%s",
+					"description": "%s"
+				},
+				"error": {
+					"groupId": %d,
+					"groupName": "%s",
+					"id": %d,
+					"name": "%s",
+					"description": "%s",
+					"permanent": %t
+				}
+			}
+		]
+	}`,
+		givenDestination,
+		givenBulkId,
+		givenMessageId,
+		StatusGroupId, StatusGroupName, StatusId, StatusName, StatusDescription,
+		NoErrorStatusGroupId, NoErrorStatusGroupName, NoErrorStatusId, NoErrorStatusName, NoErrorStatusDescription, NoErrorPermanent,
+	)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("GET", MessagesApiDeliveryReportsEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		GetMessagesApiDeliveryReports(context.Background()).
+		Channel(messagesapi.CHANNEL_SMS).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	results := responseBody.GetResults()
+	assert.True(t, len(results) == 1)
+
+	result := results[0]
+	assert.Equal(t, "SMS", string(result.GetChannel()))
+}
+
+func TestGetMessagesApiInboundMessages_TextMessage(t *testing.T) {
+	givenChannel := "SMS"
+	givenSender := "48123234567"
+	givenDestination := "48123098765"
+	givenText := "Text message 123"
+	givenCleanText := "Text message"
+	givenReceivedAt := "2020-02-06T14:18:29.797+0000"
+	givenMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	givenMessageCount := 1
+	givenPendingMessageCount := 0
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+
+	givenResponse := fmt.Sprintf(`{
+		"results": [
+			{
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+					{
+						"text": "%s",
+						"cleanText": "%s",
+						"type": "TEXT"
+					}
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"messageCount": %d,
+				"platform": {
+					"entityId": "%s",
+					"applicationId": "%s"
+				},
+				"event": "MO"
+			}
+		],
+		"messageCount": %d,
+		"pendingMessageCount": %d
+	}`,
+		givenChannel,
+		givenSender,
+		givenDestination,
+		givenText,
+		givenCleanText,
+		givenReceivedAt,
+		givenMessageId,
+		givenMessageCount,
+		givenEntityId,
+		givenApplicationId,
+		givenMessageCount,
+		givenPendingMessageCount,
+	)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("GET", MessagesApiInboundEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		GetMessagesApiInboundMessages(context.Background()).
+		Channel(messagesapi.INBOUNDMOGETENDPOINTCHANNEL_SMS).
+		Limit(10).
+		EntityId(givenEntityId).
+		ApplicationId(givenApplicationId).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	assert.Equal(t, int32(givenMessageCount), responseBody.GetMessageCount())
+	assert.Equal(t, int32(givenPendingMessageCount), responseBody.GetPendingMessageCount())
+
+	results := responseBody.GetResults()
+	assert.True(t, len(results) == 1)
+
+	result := results[0]
+	assert.NotNil(t, result.MoEvent)
+	assert.Equal(t, messagesapi.InboundMoEventChannel(givenChannel), result.MoEvent.GetChannel())
+	assert.Equal(t, givenSender, result.MoEvent.GetSender())
+	assert.Equal(t, givenDestination, result.MoEvent.GetDestination())
+	assert.Equal(t, givenMessageId, result.MoEvent.GetMessageId())
+
+	platform := result.MoEvent.GetPlatform()
+	assert.Equal(t, givenEntityId, platform.GetEntityId())
+	assert.Equal(t, givenApplicationId, platform.GetApplicationId())
+}
+
+func TestGetMessagesApiInboundMessages_TextMessageWithKeyword(t *testing.T) {
+	givenChannel := "SMS"
+	givenSender := "48123234567"
+	givenDestination := "48123098765"
+	givenText := "KWRDText message 123"
+	givenCleanText := "Text message"
+	givenKeyword := "KWRD"
+	givenReceivedAt := "2020-02-06T14:18:29.797+0000"
+	givenMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	givenMessageCount := 1
+	givenPendingMessageCount := 0
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+
+	givenResponse := fmt.Sprintf(`{
+		"results": [
+			{
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+					{
+						"text": "%s",
+						"cleanText": "%s",
+						"keyword": "%s",
+						"type": "TEXT"
+					}
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"messageCount": %d,
+				"platform": {
+					"entityId": "%s",
+					"applicationId": "%s"
+				},
+				"event": "MO"
+			}
+		],
+		"messageCount": %d,
+		"pendingMessageCount": %d
+	}`,
+		givenChannel,
+		givenSender,
+		givenDestination,
+		givenText,
+		givenCleanText,
+		givenKeyword,
+		givenReceivedAt,
+		givenMessageId,
+		givenMessageCount,
+		givenEntityId,
+		givenApplicationId,
+		givenMessageCount,
+		givenPendingMessageCount,
+	)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("GET", MessagesApiInboundEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		GetMessagesApiInboundMessages(context.Background()).
+		Channel(messagesapi.INBOUNDMOGETENDPOINTCHANNEL_SMS).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	results := responseBody.GetResults()
+	assert.True(t, len(results) == 1)
+}
+
+func TestGetMessagesApiInboundMessages_ImageWithCaption(t *testing.T) {
+	givenChannel := "WHATSAPP"
+	givenSender := "48123234567"
+	givenDestination := "48123098765"
+	givenUrl := "http://my.domain/image.jpg"
+	givenText := "Image caption"
+	givenReceivedAt := "2020-02-06T14:18:29.797+0000"
+	givenMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	givenMessageCount := 1
+	givenPendingMessageCount := 0
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+
+	givenResponse := fmt.Sprintf(`{
+		"results": [
+			{
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+					{
+						"url": "%s",
+						"text": "%s",
+						"type": "IMAGE"
+					}
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"messageCount": %d,
+				"platform": {
+					"entityId": "%s",
+					"applicationId": "%s"
+				},
+				"event": "MO"
+			}
+		],
+		"messageCount": %d,
+		"pendingMessageCount": %d
+	}`,
+		givenChannel,
+		givenSender,
+		givenDestination,
+		givenUrl,
+		givenText,
+		givenReceivedAt,
+		givenMessageId,
+		givenMessageCount,
+		givenEntityId,
+		givenApplicationId,
+		givenMessageCount,
+		givenPendingMessageCount,
+	)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("GET", MessagesApiInboundEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		GetMessagesApiInboundMessages(context.Background()).
+		Channel(messagesapi.INBOUNDMOGETENDPOINTCHANNEL_WHATSAPP).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	results := responseBody.GetResults()
+	assert.True(t, len(results) == 1)
+}
+
+func TestGetMessagesApiInboundMessages_LocationMessage(t *testing.T) {
+	givenChannel := "WHATSAPP"
+	givenSender := "48123234567"
+	givenDestination := "48123098765"
+	givenLatitude := float64(16)
+	givenLongitude := float64(18)
+	givenUrl := "http://my.domain/media/my-location"
+	givenReceivedAt := "2020-02-06T14:18:29.797+0000"
+	givenMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
+	givenMessageCount := 1
+	givenPendingMessageCount := 0
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+
+	givenResponse := fmt.Sprintf(`{
+		"results": [
+			{
+				"channel": "%s",
+				"sender": "%s",
+				"destination": "%s",
+				"content": [
+					{
+						"latitude": %g,
+						"longitude": %g,
+						"url": "%s",
+						"type": "LOCATION"
+					}
+				],
+				"receivedAt": "%s",
+				"messageId": "%s",
+				"messageCount": %d,
+				"platform": {
+					"entityId": "%s",
+					"applicationId": "%s"
+				},
+				"event": "MO"
+			}
+		],
+		"messageCount": %d,
+		"pendingMessageCount": %d
+	}`,
+		givenChannel,
+		givenSender,
+		givenDestination,
+		givenLatitude,
+		givenLongitude,
+		givenUrl,
+		givenReceivedAt,
+		givenMessageId,
+		givenMessageCount,
+		givenEntityId,
+		givenApplicationId,
+		givenMessageCount,
+		givenPendingMessageCount,
+	)
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("GET", MessagesApiInboundEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		GetMessagesApiInboundMessages(context.Background()).
+		Channel(messagesapi.INBOUNDMOGETENDPOINTCHANNEL_WHATSAPP).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	results := responseBody.GetResults()
+	assert.True(t, len(results) == 1)
+}
+
+func TestValidateMessagesApiMessage_Success(t *testing.T) {
+	givenChannel := "SMS"
+	givenSender := "447491163862"
+	givenTo := "123456789"
+	givenText := "Sending you lots of otterly delightful vibes today!"
+
+	givenRequest := fmt.Sprintf(`{
+		"messages": [
+			{
+				"channel": "%s",
+				"sender": "%s",
+				"destinations": [
+					{
+						"to": "%s"
+					}
+				],
+				"content": {
+					"body": {
+						"text": "%s",
+						"type": "TEXT"
+					}
+				}
+			}
+		]
+	}`,
+		givenChannel,
+		givenSender,
+		givenTo,
+		givenText,
+	)
+
+	givenResponse := `{
+		"description": "Request can be sent through '/messages' endpoint and should be accepted by our platform.",
+		"action": "No action is required, but it is recommended to check and address any violations.",
+		"skippableViolations": [
+			{
+				"property": "messages[0].metadata",
+				"violation": "Unknown property"
+			}
+		]
+	}`
+
+	body := messagesapi.MessageBody{
+		MessageTextBody: messagesapi.NewMessageTextBody(givenText),
+	}
+
+	destination := messagesapi.MessageDestination{
+		ToDestination: messagesapi.NewToDestination(givenTo),
+	}
+
+	givenMessage := messagesapi.NewMessage(
+		messagesapi.OUTBOUNDMESSAGECHANNEL_SMS,
+		givenSender,
+		[]messagesapi.MessageDestination{
+			destination,
+		},
+		messagesapi.MessageContent{
+			Body: body,
+		},
+	)
+
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
+		{Message: givenMessage},
+	})
+
+	actualRequest, _ := json.Marshal(request)
+	ValidateExpectedRequestBodiesMatches(t, givenRequest, string(actualRequest))
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("POST", MessagesApiValidateEndpoint, givenResponse, 200)
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		ValidateMessagesApiMessage(context.Background()).
+		Request(*request).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	assert.Equal(t, "Request can be sent through '/messages' endpoint and should be accepted by our platform.", responseBody.GetDescription())
+	assert.Equal(t, "No action is required, but it is recommended to check and address any violations.", responseBody.GetAction())
+	skippableViolations := responseBody.GetSkippableViolations()
+	assert.Len(t, skippableViolations, 1)
+	assert.Equal(t, "messages[0].metadata", skippableViolations[0].GetProperty())
+	assert.Equal(t, "Unknown property", skippableViolations[0].GetViolation())
+}
+
+func TestValidateMessagesApiMessage_WithSkippableViolations(t *testing.T) {
+	givenResponse := `{
+		"description": "Request can be sent through '/messages' endpoint and should be accepted by our platform.",
+		"action": "No action is required, but it is recommended to check and address any violations.",
+		"skippableViolations": [
+			{
+				"property": "messages[0].metadata",
+				"violation": "Unknown property"
+			}
+		]
+	}`
+
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+
+	SetUpSuccessRequest("POST", MessagesApiValidateEndpoint, givenResponse, 200)
+
+	body := messagesapi.MessageBody{
+		MessageTextBody: messagesapi.NewMessageTextBody("Test message"),
+	}
+
+	destination := messagesapi.MessageDestination{
+		ToDestination: messagesapi.NewToDestination("123456789"),
+	}
+
+	givenMessage := messagesapi.NewMessage(
+		messagesapi.OUTBOUNDMESSAGECHANNEL_SMS,
+		"447491163862",
+		[]messagesapi.MessageDestination{destination},
+		messagesapi.MessageContent{Body: body},
+	)
+
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
+		{Message: givenMessage},
+	})
+
+	responseBody, r, err := infobipClient.
+		MessagesAPI.
+		ValidateMessagesApiMessage(context.Background()).
+		Request(*request).
+		Execute()
+
+	assert.Nil(t, err)
+	assert.NotNil(t, r, "Expected non-nil response")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+
+	skippableViolations := responseBody.GetSkippableViolations()
+	assert.True(t, len(skippableViolations) == 1)
+	assert.Equal(t, "messages[0].metadata", skippableViolations[0].GetProperty())
+	assert.Equal(t, "Unknown property", skippableViolations[0].GetViolation())
 }

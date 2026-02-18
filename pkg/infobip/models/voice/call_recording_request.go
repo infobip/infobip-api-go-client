@@ -24,6 +24,7 @@ type CallRecordingRequest struct {
 	RecordingType RecordingType
 	CustomData    *map[string]string
 	FilePrefix    *string
+	Channels      *RecordingChannels
 }
 
 type _CallRecordingRequest CallRecordingRequest
@@ -36,6 +37,8 @@ type _CallRecordingRequest CallRecordingRequest
 func NewCallRecordingRequest(recordingType RecordingType) *CallRecordingRequest {
 	this := CallRecordingRequest{}
 	this.RecordingType = recordingType
+	var channels RecordingChannels = RECORDINGCHANNELS_MONO
+	this.Channels = &channels
 	return &this
 }
 
@@ -45,6 +48,8 @@ func NewCallRecordingRequest(recordingType RecordingType) *CallRecordingRequest 
 func NewCallRecordingRequestWithDefaults() *CallRecordingRequest {
 	this := CallRecordingRequest{}
 
+	var channels RecordingChannels = RECORDINGCHANNELS_MONO
+	this.Channels = &channels
 	return &this
 }
 
@@ -136,6 +141,38 @@ func (o *CallRecordingRequest) SetFilePrefix(v string) {
 	o.FilePrefix = &v
 }
 
+// GetChannels returns the Channels field value if set, zero value otherwise.
+func (o *CallRecordingRequest) GetChannels() RecordingChannels {
+	if o == nil || IsNil(o.Channels) {
+		var ret RecordingChannels
+		return ret
+	}
+	return *o.Channels
+}
+
+// GetChannelsOk returns a tuple with the Channels field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallRecordingRequest) GetChannelsOk() (*RecordingChannels, bool) {
+	if o == nil || IsNil(o.Channels) {
+		return nil, false
+	}
+	return o.Channels, true
+}
+
+// HasChannels returns a boolean if a field has been set.
+func (o *CallRecordingRequest) HasChannels() bool {
+	if o != nil && !IsNil(o.Channels) {
+		return true
+	}
+
+	return false
+}
+
+// SetChannels gets a reference to the given RecordingChannels and assigns it to the Channels field.
+func (o *CallRecordingRequest) SetChannels(v RecordingChannels) {
+	o.Channels = &v
+}
+
 func (o CallRecordingRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -152,6 +189,9 @@ func (o CallRecordingRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.FilePrefix) {
 		toSerialize["filePrefix"] = o.FilePrefix
+	}
+	if !IsNil(o.Channels) {
+		toSerialize["channels"] = o.Channels
 	}
 	return toSerialize, nil
 }

@@ -27,13 +27,16 @@ type SendResponse struct {
 	Messages []ResponseDetails
 }
 
+type _SendResponse SendResponse
+
 // NewSendResponse instantiates a new SendResponse object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewSendResponse() *SendResponse {
+func NewSendResponse(messages []ResponseDetails) *SendResponse {
 	this := SendResponse{}
+	this.Messages = messages
 	return &this
 }
 
@@ -78,34 +81,26 @@ func (o *SendResponse) SetBulkId(v string) {
 	o.BulkId = &v
 }
 
-// GetMessages returns the Messages field value if set, zero value otherwise.
+// GetMessages returns the Messages field value
 func (o *SendResponse) GetMessages() []ResponseDetails {
-	if o == nil || IsNil(o.Messages) {
+	if o == nil {
 		var ret []ResponseDetails
 		return ret
 	}
+
 	return o.Messages
 }
 
-// GetMessagesOk returns a tuple with the Messages field value if set, nil otherwise
+// GetMessagesOk returns a tuple with the Messages field value
 // and a boolean to check if the value has been set.
 func (o *SendResponse) GetMessagesOk() ([]ResponseDetails, bool) {
-	if o == nil || IsNil(o.Messages) {
+	if o == nil {
 		return nil, false
 	}
 	return o.Messages, true
 }
 
-// HasMessages returns a boolean if a field has been set.
-func (o *SendResponse) HasMessages() bool {
-	if o != nil && !IsNil(o.Messages) {
-		return true
-	}
-
-	return false
-}
-
-// SetMessages gets a reference to the given []ResponseDetails and assigns it to the Messages field.
+// SetMessages sets field value
 func (o *SendResponse) SetMessages(v []ResponseDetails) {
 	o.Messages = v
 }
@@ -123,9 +118,7 @@ func (o SendResponse) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.BulkId) {
 		toSerialize["bulkId"] = o.BulkId
 	}
-	if !IsNil(o.Messages) {
-		toSerialize["messages"] = o.Messages
-	}
+	toSerialize["messages"] = o.Messages
 	return toSerialize, nil
 }
 

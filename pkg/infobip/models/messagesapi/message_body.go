@@ -21,12 +21,19 @@ type MessageBody struct {
 	MessageCarouselBody              *MessageCarouselBody
 	MessageContactBody               *MessageContactBody
 	MessageDocumentBody              *MessageDocumentBody
+	MessageFlowBody                  *MessageFlowBody
+	MessageFormBody                  *MessageFormBody
 	MessageImageBody                 *MessageImageBody
 	MessageListBody                  *MessageListBody
 	MessageLocationBody              *MessageLocationBody
+	MessageMixedBody                 *MessageMixedBody
+	MessageOrderRequestBody          *MessageOrderRequestBody
+	MessageOrderStatusBody           *MessageOrderStatusBody
+	MessageProductBody               *MessageProductBody
 	MessageRichLinkBody              *MessageRichLinkBody
 	MessageStickerBody               *MessageStickerBody
 	MessageTextBody                  *MessageTextBody
+	MessageTimePickerBody            *MessageTimePickerBody
 	MessageVideoBody                 *MessageVideoBody
 }
 
@@ -58,6 +65,20 @@ func MessageDocumentBodyAsMessageBody(v *MessageDocumentBody) MessageBody {
 	}
 }
 
+// MessageFlowBodyAsMessageBody is a convenience function that returns MessageFlowBody wrapped in MessageBody
+func MessageFlowBodyAsMessageBody(v *MessageFlowBody) MessageBody {
+	return MessageBody{
+		MessageFlowBody: v,
+	}
+}
+
+// MessageFormBodyAsMessageBody is a convenience function that returns MessageFormBody wrapped in MessageBody
+func MessageFormBodyAsMessageBody(v *MessageFormBody) MessageBody {
+	return MessageBody{
+		MessageFormBody: v,
+	}
+}
+
 // MessageImageBodyAsMessageBody is a convenience function that returns MessageImageBody wrapped in MessageBody
 func MessageImageBodyAsMessageBody(v *MessageImageBody) MessageBody {
 	return MessageBody{
@@ -79,6 +100,34 @@ func MessageLocationBodyAsMessageBody(v *MessageLocationBody) MessageBody {
 	}
 }
 
+// MessageMixedBodyAsMessageBody is a convenience function that returns MessageMixedBody wrapped in MessageBody
+func MessageMixedBodyAsMessageBody(v *MessageMixedBody) MessageBody {
+	return MessageBody{
+		MessageMixedBody: v,
+	}
+}
+
+// MessageOrderRequestBodyAsMessageBody is a convenience function that returns MessageOrderRequestBody wrapped in MessageBody
+func MessageOrderRequestBodyAsMessageBody(v *MessageOrderRequestBody) MessageBody {
+	return MessageBody{
+		MessageOrderRequestBody: v,
+	}
+}
+
+// MessageOrderStatusBodyAsMessageBody is a convenience function that returns MessageOrderStatusBody wrapped in MessageBody
+func MessageOrderStatusBodyAsMessageBody(v *MessageOrderStatusBody) MessageBody {
+	return MessageBody{
+		MessageOrderStatusBody: v,
+	}
+}
+
+// MessageProductBodyAsMessageBody is a convenience function that returns MessageProductBody wrapped in MessageBody
+func MessageProductBodyAsMessageBody(v *MessageProductBody) MessageBody {
+	return MessageBody{
+		MessageProductBody: v,
+	}
+}
+
 // MessageRichLinkBodyAsMessageBody is a convenience function that returns MessageRichLinkBody wrapped in MessageBody
 func MessageRichLinkBodyAsMessageBody(v *MessageRichLinkBody) MessageBody {
 	return MessageBody{
@@ -97,6 +146,13 @@ func MessageStickerBodyAsMessageBody(v *MessageStickerBody) MessageBody {
 func MessageTextBodyAsMessageBody(v *MessageTextBody) MessageBody {
 	return MessageBody{
 		MessageTextBody: v,
+	}
+}
+
+// MessageTimePickerBodyAsMessageBody is a convenience function that returns MessageTimePickerBody wrapped in MessageBody
+func MessageTimePickerBodyAsMessageBody(v *MessageTimePickerBody) MessageBody {
+	return MessageBody{
+		MessageTimePickerBody: v,
 	}
 }
 
@@ -176,6 +232,36 @@ func (dst *MessageBody) UnmarshalJSON(data []byte) error {
 			dst.MessageDocumentBody = nil
 		}
 	}
+	// check if the discriminator value is 'FLOW'
+	if jsonDict["type"] == "FLOW" {
+		// try to unmarshal JSON data into MessageFlowBody
+		err = json.Unmarshal(data, &dst.MessageFlowBody)
+		if err == nil {
+			jsonMessageFlowBody, _ := json.Marshal(dst.MessageFlowBody)
+			if string(jsonMessageFlowBody) == "{}" { // empty struct
+				dst.MessageFlowBody = nil
+			} else {
+				return nil // data stored in dst.MessageFlowBody, return on the first match
+			}
+		} else {
+			dst.MessageFlowBody = nil
+		}
+	}
+	// check if the discriminator value is 'FORM'
+	if jsonDict["type"] == "FORM" {
+		// try to unmarshal JSON data into MessageFormBody
+		err = json.Unmarshal(data, &dst.MessageFormBody)
+		if err == nil {
+			jsonMessageFormBody, _ := json.Marshal(dst.MessageFormBody)
+			if string(jsonMessageFormBody) == "{}" { // empty struct
+				dst.MessageFormBody = nil
+			} else {
+				return nil // data stored in dst.MessageFormBody, return on the first match
+			}
+		} else {
+			dst.MessageFormBody = nil
+		}
+	}
 	// check if the discriminator value is 'IMAGE'
 	if jsonDict["type"] == "IMAGE" {
 		// try to unmarshal JSON data into MessageImageBody
@@ -219,6 +305,66 @@ func (dst *MessageBody) UnmarshalJSON(data []byte) error {
 			}
 		} else {
 			dst.MessageLocationBody = nil
+		}
+	}
+	// check if the discriminator value is 'MIXED'
+	if jsonDict["type"] == "MIXED" {
+		// try to unmarshal JSON data into MessageMixedBody
+		err = json.Unmarshal(data, &dst.MessageMixedBody)
+		if err == nil {
+			jsonMessageMixedBody, _ := json.Marshal(dst.MessageMixedBody)
+			if string(jsonMessageMixedBody) == "{}" { // empty struct
+				dst.MessageMixedBody = nil
+			} else {
+				return nil // data stored in dst.MessageMixedBody, return on the first match
+			}
+		} else {
+			dst.MessageMixedBody = nil
+		}
+	}
+	// check if the discriminator value is 'ORDER_REQUEST'
+	if jsonDict["type"] == "ORDER_REQUEST" {
+		// try to unmarshal JSON data into MessageOrderRequestBody
+		err = json.Unmarshal(data, &dst.MessageOrderRequestBody)
+		if err == nil {
+			jsonMessageOrderRequestBody, _ := json.Marshal(dst.MessageOrderRequestBody)
+			if string(jsonMessageOrderRequestBody) == "{}" { // empty struct
+				dst.MessageOrderRequestBody = nil
+			} else {
+				return nil // data stored in dst.MessageOrderRequestBody, return on the first match
+			}
+		} else {
+			dst.MessageOrderRequestBody = nil
+		}
+	}
+	// check if the discriminator value is 'ORDER_STATUS'
+	if jsonDict["type"] == "ORDER_STATUS" {
+		// try to unmarshal JSON data into MessageOrderStatusBody
+		err = json.Unmarshal(data, &dst.MessageOrderStatusBody)
+		if err == nil {
+			jsonMessageOrderStatusBody, _ := json.Marshal(dst.MessageOrderStatusBody)
+			if string(jsonMessageOrderStatusBody) == "{}" { // empty struct
+				dst.MessageOrderStatusBody = nil
+			} else {
+				return nil // data stored in dst.MessageOrderStatusBody, return on the first match
+			}
+		} else {
+			dst.MessageOrderStatusBody = nil
+		}
+	}
+	// check if the discriminator value is 'PRODUCT'
+	if jsonDict["type"] == "PRODUCT" {
+		// try to unmarshal JSON data into MessageProductBody
+		err = json.Unmarshal(data, &dst.MessageProductBody)
+		if err == nil {
+			jsonMessageProductBody, _ := json.Marshal(dst.MessageProductBody)
+			if string(jsonMessageProductBody) == "{}" { // empty struct
+				dst.MessageProductBody = nil
+			} else {
+				return nil // data stored in dst.MessageProductBody, return on the first match
+			}
+		} else {
+			dst.MessageProductBody = nil
 		}
 	}
 	// check if the discriminator value is 'RICH_LINK'
@@ -266,6 +412,21 @@ func (dst *MessageBody) UnmarshalJSON(data []byte) error {
 			dst.MessageTextBody = nil
 		}
 	}
+	// check if the discriminator value is 'TIME_PICKER'
+	if jsonDict["type"] == "TIME_PICKER" {
+		// try to unmarshal JSON data into MessageTimePickerBody
+		err = json.Unmarshal(data, &dst.MessageTimePickerBody)
+		if err == nil {
+			jsonMessageTimePickerBody, _ := json.Marshal(dst.MessageTimePickerBody)
+			if string(jsonMessageTimePickerBody) == "{}" { // empty struct
+				dst.MessageTimePickerBody = nil
+			} else {
+				return nil // data stored in dst.MessageTimePickerBody, return on the first match
+			}
+		} else {
+			dst.MessageTimePickerBody = nil
+		}
+	}
 	// check if the discriminator value is 'VIDEO'
 	if jsonDict["type"] == "VIDEO" {
 		// try to unmarshal JSON data into MessageVideoBody
@@ -298,6 +459,12 @@ func (src MessageBody) MarshalJSON() ([]byte, error) {
 	if src.MessageDocumentBody != nil {
 		return json.Marshal(&src.MessageDocumentBody)
 	}
+	if src.MessageFlowBody != nil {
+		return json.Marshal(&src.MessageFlowBody)
+	}
+	if src.MessageFormBody != nil {
+		return json.Marshal(&src.MessageFormBody)
+	}
 	if src.MessageImageBody != nil {
 		return json.Marshal(&src.MessageImageBody)
 	}
@@ -307,6 +474,18 @@ func (src MessageBody) MarshalJSON() ([]byte, error) {
 	if src.MessageLocationBody != nil {
 		return json.Marshal(&src.MessageLocationBody)
 	}
+	if src.MessageMixedBody != nil {
+		return json.Marshal(&src.MessageMixedBody)
+	}
+	if src.MessageOrderRequestBody != nil {
+		return json.Marshal(&src.MessageOrderRequestBody)
+	}
+	if src.MessageOrderStatusBody != nil {
+		return json.Marshal(&src.MessageOrderStatusBody)
+	}
+	if src.MessageProductBody != nil {
+		return json.Marshal(&src.MessageProductBody)
+	}
 	if src.MessageRichLinkBody != nil {
 		return json.Marshal(&src.MessageRichLinkBody)
 	}
@@ -315,6 +494,9 @@ func (src MessageBody) MarshalJSON() ([]byte, error) {
 	}
 	if src.MessageTextBody != nil {
 		return json.Marshal(&src.MessageTextBody)
+	}
+	if src.MessageTimePickerBody != nil {
+		return json.Marshal(&src.MessageTimePickerBody)
 	}
 	if src.MessageVideoBody != nil {
 		return json.Marshal(&src.MessageVideoBody)
@@ -339,6 +521,12 @@ func (obj *MessageBody) GetActualInstance() interface{} {
 	if obj.MessageDocumentBody != nil {
 		return obj.MessageDocumentBody
 	}
+	if obj.MessageFlowBody != nil {
+		return obj.MessageFlowBody
+	}
+	if obj.MessageFormBody != nil {
+		return obj.MessageFormBody
+	}
 	if obj.MessageImageBody != nil {
 		return obj.MessageImageBody
 	}
@@ -348,6 +536,18 @@ func (obj *MessageBody) GetActualInstance() interface{} {
 	if obj.MessageLocationBody != nil {
 		return obj.MessageLocationBody
 	}
+	if obj.MessageMixedBody != nil {
+		return obj.MessageMixedBody
+	}
+	if obj.MessageOrderRequestBody != nil {
+		return obj.MessageOrderRequestBody
+	}
+	if obj.MessageOrderStatusBody != nil {
+		return obj.MessageOrderStatusBody
+	}
+	if obj.MessageProductBody != nil {
+		return obj.MessageProductBody
+	}
 	if obj.MessageRichLinkBody != nil {
 		return obj.MessageRichLinkBody
 	}
@@ -356,6 +556,9 @@ func (obj *MessageBody) GetActualInstance() interface{} {
 	}
 	if obj.MessageTextBody != nil {
 		return obj.MessageTextBody
+	}
+	if obj.MessageTimePickerBody != nil {
+		return obj.MessageTimePickerBody
 	}
 	if obj.MessageVideoBody != nil {
 		return obj.MessageVideoBody

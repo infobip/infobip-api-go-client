@@ -19,7 +19,7 @@ import (
 	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
 )
 
-// RequestMessagesInner - struct for RequestMessagesInner
+// RequestMessagesInner - Array of message objects of a single message or multiple messages sent under one bulk ID.
 type RequestMessagesInner struct {
 	Message         *Message
 	TemplateMessage *TemplateMessage

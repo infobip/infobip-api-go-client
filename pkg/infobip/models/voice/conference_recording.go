@@ -27,11 +27,13 @@ type ConferenceRecording struct {
 	ConferenceName *string
 	// Calls Configuration ID.
 	CallsConfigurationId *string
-	Platform             *Platform
+	// Application ID.
+	// Deprecated
+	ApplicationId *string
 	// File(s) with a recording of all conference participants.
 	ComposedFiles []RecordingFile
 	// File(s) with a recording of one conference participant.
-	CallRecordings []Recording
+	CallRecordings []CallRecording
 	// Date and time when the (first) recording started.
 	StartTime *Time
 	// Date and time when the (last) recording ended.
@@ -153,36 +155,39 @@ func (o *ConferenceRecording) SetCallsConfigurationId(v string) {
 	o.CallsConfigurationId = &v
 }
 
-// GetPlatform returns the Platform field value if set, zero value otherwise.
-func (o *ConferenceRecording) GetPlatform() Platform {
-	if o == nil || IsNil(o.Platform) {
-		var ret Platform
+// GetApplicationId returns the ApplicationId field value if set, zero value otherwise.
+// Deprecated
+func (o *ConferenceRecording) GetApplicationId() string {
+	if o == nil || IsNil(o.ApplicationId) {
+		var ret string
 		return ret
 	}
-	return *o.Platform
+	return *o.ApplicationId
 }
 
-// GetPlatformOk returns a tuple with the Platform field value if set, nil otherwise
+// GetApplicationIdOk returns a tuple with the ApplicationId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConferenceRecording) GetPlatformOk() (*Platform, bool) {
-	if o == nil || IsNil(o.Platform) {
+// Deprecated
+func (o *ConferenceRecording) GetApplicationIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ApplicationId) {
 		return nil, false
 	}
-	return o.Platform, true
+	return o.ApplicationId, true
 }
 
-// HasPlatform returns a boolean if a field has been set.
-func (o *ConferenceRecording) HasPlatform() bool {
-	if o != nil && !IsNil(o.Platform) {
+// HasApplicationId returns a boolean if a field has been set.
+func (o *ConferenceRecording) HasApplicationId() bool {
+	if o != nil && !IsNil(o.ApplicationId) {
 		return true
 	}
 
 	return false
 }
 
-// SetPlatform gets a reference to the given Platform and assigns it to the Platform field.
-func (o *ConferenceRecording) SetPlatform(v Platform) {
-	o.Platform = &v
+// SetApplicationId gets a reference to the given string and assigns it to the ApplicationId field.
+// Deprecated
+func (o *ConferenceRecording) SetApplicationId(v string) {
+	o.ApplicationId = &v
 }
 
 // GetComposedFiles returns the ComposedFiles field value if set, zero value otherwise.
@@ -218,9 +223,9 @@ func (o *ConferenceRecording) SetComposedFiles(v []RecordingFile) {
 }
 
 // GetCallRecordings returns the CallRecordings field value if set, zero value otherwise.
-func (o *ConferenceRecording) GetCallRecordings() []Recording {
+func (o *ConferenceRecording) GetCallRecordings() []CallRecording {
 	if o == nil || IsNil(o.CallRecordings) {
-		var ret []Recording
+		var ret []CallRecording
 		return ret
 	}
 	return o.CallRecordings
@@ -228,7 +233,7 @@ func (o *ConferenceRecording) GetCallRecordings() []Recording {
 
 // GetCallRecordingsOk returns a tuple with the CallRecordings field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ConferenceRecording) GetCallRecordingsOk() ([]Recording, bool) {
+func (o *ConferenceRecording) GetCallRecordingsOk() ([]CallRecording, bool) {
 	if o == nil || IsNil(o.CallRecordings) {
 		return nil, false
 	}
@@ -244,8 +249,8 @@ func (o *ConferenceRecording) HasCallRecordings() bool {
 	return false
 }
 
-// SetCallRecordings gets a reference to the given []Recording and assigns it to the CallRecordings field.
-func (o *ConferenceRecording) SetCallRecordings(v []Recording) {
+// SetCallRecordings gets a reference to the given []CallRecording and assigns it to the CallRecordings field.
+func (o *ConferenceRecording) SetCallRecordings(v []CallRecording) {
 	o.CallRecordings = v
 }
 
@@ -332,8 +337,8 @@ func (o ConferenceRecording) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.CallsConfigurationId) {
 		toSerialize["callsConfigurationId"] = o.CallsConfigurationId
 	}
-	if !IsNil(o.Platform) {
-		toSerialize["platform"] = o.Platform
+	if !IsNil(o.ApplicationId) {
+		toSerialize["applicationId"] = o.ApplicationId
 	}
 	if !IsNil(o.ComposedFiles) {
 		toSerialize["composedFiles"] = o.ComposedFiles

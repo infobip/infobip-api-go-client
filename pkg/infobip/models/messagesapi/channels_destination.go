@@ -19,9 +19,11 @@ import (
 // checks if the ChannelsDestination type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ChannelsDestination{}
 
-// ChannelsDestination Represents a destination which can be specified by a `channel`. It is required for a message failover.
+// ChannelsDestination Represents a destination which can be specified by a `channel`. **It is required for a message failover**.
 type ChannelsDestination struct {
-	// Array of substitute destinations distinguished by a `channel` they belong to. Only one substitute destination per `channel` is permitted.
+	// The ID that uniquely identifies the message sent. If failover is defined, then it will override values provided in `byChannel` array and be applied to each message in failover flow.
+	MessageId *string
+	// An array of substitute destinations, each associated with a specific `channel`. Only one substitute destination is allowed per `channel`. A substitute destination must be provided for the main `channel` defined in the `message`.
 	ByChannel []ChannelDestination
 }
 
@@ -45,6 +47,38 @@ func NewChannelsDestinationWithDefaults() *ChannelsDestination {
 	this := ChannelsDestination{}
 
 	return &this
+}
+
+// GetMessageId returns the MessageId field value if set, zero value otherwise.
+func (o *ChannelsDestination) GetMessageId() string {
+	if o == nil || IsNil(o.MessageId) {
+		var ret string
+		return ret
+	}
+	return *o.MessageId
+}
+
+// GetMessageIdOk returns a tuple with the MessageId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ChannelsDestination) GetMessageIdOk() (*string, bool) {
+	if o == nil || IsNil(o.MessageId) {
+		return nil, false
+	}
+	return o.MessageId, true
+}
+
+// HasMessageId returns a boolean if a field has been set.
+func (o *ChannelsDestination) HasMessageId() bool {
+	if o != nil && !IsNil(o.MessageId) {
+		return true
+	}
+
+	return false
+}
+
+// SetMessageId gets a reference to the given string and assigns it to the MessageId field.
+func (o *ChannelsDestination) SetMessageId(v string) {
+	o.MessageId = &v
 }
 
 // GetByChannel returns the ByChannel field value
@@ -81,6 +115,9 @@ func (o ChannelsDestination) MarshalJSON() ([]byte, error) {
 
 func (o ChannelsDestination) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.MessageId) {
+		toSerialize["messageId"] = o.MessageId
+	}
 	toSerialize["byChannel"] = o.ByChannel
 	return toSerialize, nil
 }

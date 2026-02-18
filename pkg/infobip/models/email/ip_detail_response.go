@@ -24,8 +24,10 @@ type IpDetailResponse struct {
 	// Dedicated IP identifier.
 	Id string
 	// Dedicated IP address.
-	Ip    string
-	Pools []IpPoolResponse
+	// Deprecated
+	Ip          string
+	IpAddresses []string
+	Pools       []IpPoolResponse
 }
 
 type _IpDetailResponse IpDetailResponse
@@ -35,10 +37,11 @@ type _IpDetailResponse IpDetailResponse
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewIpDetailResponse(id string, ip string, pools []IpPoolResponse) *IpDetailResponse {
+func NewIpDetailResponse(id string, ip string, ipAddresses []string, pools []IpPoolResponse) *IpDetailResponse {
 	this := IpDetailResponse{}
 	this.Id = id
 	this.Ip = ip
+	this.IpAddresses = ipAddresses
 	this.Pools = pools
 	return &this
 }
@@ -77,6 +80,7 @@ func (o *IpDetailResponse) SetId(v string) {
 }
 
 // GetIp returns the Ip field value
+// Deprecated
 func (o *IpDetailResponse) GetIp() string {
 	if o == nil {
 		var ret string
@@ -88,6 +92,7 @@ func (o *IpDetailResponse) GetIp() string {
 
 // GetIpOk returns a tuple with the Ip field value
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *IpDetailResponse) GetIpOk() (*string, bool) {
 	if o == nil {
 		return nil, false
@@ -96,8 +101,33 @@ func (o *IpDetailResponse) GetIpOk() (*string, bool) {
 }
 
 // SetIp sets field value
+// Deprecated
 func (o *IpDetailResponse) SetIp(v string) {
 	o.Ip = v
+}
+
+// GetIpAddresses returns the IpAddresses field value
+func (o *IpDetailResponse) GetIpAddresses() []string {
+	if o == nil {
+		var ret []string
+		return ret
+	}
+
+	return o.IpAddresses
+}
+
+// GetIpAddressesOk returns a tuple with the IpAddresses field value
+// and a boolean to check if the value has been set.
+func (o *IpDetailResponse) GetIpAddressesOk() ([]string, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return o.IpAddresses, true
+}
+
+// SetIpAddresses sets field value
+func (o *IpDetailResponse) SetIpAddresses(v []string) {
+	o.IpAddresses = v
 }
 
 // GetPools returns the Pools field value
@@ -136,6 +166,7 @@ func (o IpDetailResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["ip"] = o.Ip
+	toSerialize["ipAddresses"] = o.IpAddresses
 	toSerialize["pools"] = o.Pools
 	return toSerialize, nil
 }

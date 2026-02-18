@@ -24,13 +24,13 @@ type TemplateMessage struct {
 	Channel OutboundTemplateChannel
 	// The sender ID. It can be alphanumeric or numeric (e.g., `CompanyName`). Make sure you don't exceed [character limit](https://www.infobip.com/docs/sms/get-started#sender-names).
 	Sender string
-	// Array of destination objects for where messages are being sent. A valid destination is required.
+	// Array of destination objects for where messages are being sent. A valid destination is required. **`Channels Destination` is required when sending messages with defined failover.**
 	Destinations []MessageDestination
 	Template     Template
 	Content      *TemplateMessageContent
 	Options      *MessageOptions
 	Webhooks     *OttWebhooks
-	// Provides options for configuring a message failover. When message fails it will be sent over channels in order specified in an array. Make sure to provide correct sender and destinations specified as `Channels Destination` for each channel.
+	// Provides options for configuring a message failover. When message fails it will be sent over channels in order specified in an array. It has to contain unique entries per channel and it cannot contain entry with the same channel as original message. **Make sure to provide correct sender and destinations specified as `Channels Destination` for each channel**.
 	Failover []BaseFailover
 }
 

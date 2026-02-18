@@ -17,9 +17,17 @@ import (
 
 // CallRoutingCriteria Criteria type.
 type CallRoutingCriteria struct {
-	CallRoutingPhoneCriteria  *CallRoutingPhoneCriteria
-	CallRoutingSipCriteria    *CallRoutingSipCriteria
-	CallRoutingWebRTCCriteria *CallRoutingWebRTCCriteria
+	CallRoutingApplicationCriteria *CallRoutingApplicationCriteria
+	CallRoutingPhoneCriteria       *CallRoutingPhoneCriteria
+	CallRoutingSipCriteria         *CallRoutingSipCriteria
+	CallRoutingWebRTCCriteria      *CallRoutingWebRTCCriteria
+}
+
+// CallRoutingApplicationCriteriaAsCallRoutingCriteria is a convenience function that returns CallRoutingApplicationCriteria wrapped in CallRoutingCriteria
+func CallRoutingApplicationCriteriaAsCallRoutingCriteria(v *CallRoutingApplicationCriteria) CallRoutingCriteria {
+	return CallRoutingCriteria{
+		CallRoutingApplicationCriteria: v,
+	}
 }
 
 // CallRoutingPhoneCriteriaAsCallRoutingCriteria is a convenience function that returns CallRoutingPhoneCriteria wrapped in CallRoutingCriteria
@@ -52,6 +60,21 @@ func (dst *CallRoutingCriteria) UnmarshalJSON(data []byte) error {
 		return fmt.Errorf("Failed to unmarshal JSON into map for the discrimintor lookup.")
 	}
 
+	// check if the discriminator value is 'APPLICATION'
+	if jsonDict["type"] == "APPLICATION" {
+		// try to unmarshal JSON data into CallRoutingApplicationCriteria
+		err = json.Unmarshal(data, &dst.CallRoutingApplicationCriteria)
+		if err == nil {
+			jsonCallRoutingApplicationCriteria, _ := json.Marshal(dst.CallRoutingApplicationCriteria)
+			if string(jsonCallRoutingApplicationCriteria) == "{}" { // empty struct
+				dst.CallRoutingApplicationCriteria = nil
+			} else {
+				return nil // data stored in dst.CallRoutingApplicationCriteria, return on the first match
+			}
+		} else {
+			dst.CallRoutingApplicationCriteria = nil
+		}
+	}
 	// check if the discriminator value is 'PHONE'
 	if jsonDict["type"] == "PHONE" {
 		// try to unmarshal JSON data into CallRoutingPhoneCriteria
@@ -102,6 +125,9 @@ func (dst *CallRoutingCriteria) UnmarshalJSON(data []byte) error {
 
 // Marshal data from the first non-nil pointers in the struct to JSON
 func (src CallRoutingCriteria) MarshalJSON() ([]byte, error) {
+	if src.CallRoutingApplicationCriteria != nil {
+		return json.Marshal(&src.CallRoutingApplicationCriteria)
+	}
 	if src.CallRoutingPhoneCriteria != nil {
 		return json.Marshal(&src.CallRoutingPhoneCriteria)
 	}
@@ -118,6 +144,9 @@ func (src CallRoutingCriteria) MarshalJSON() ([]byte, error) {
 func (obj *CallRoutingCriteria) GetActualInstance() interface{} {
 	if obj == nil {
 		return nil
+	}
+	if obj.CallRoutingApplicationCriteria != nil {
+		return obj.CallRoutingApplicationCriteria
 	}
 	if obj.CallRoutingPhoneCriteria != nil {
 		return obj.CallRoutingPhoneCriteria

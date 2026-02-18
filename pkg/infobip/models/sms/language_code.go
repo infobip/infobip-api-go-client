@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// LanguageCode Language code for the correct character set. Possible values: `TR` for Turkish, `ES` for Spanish, `PT` for Portuguese, or `AUTODETECT` to let platform select the character set based on message content.
+// LanguageCode [Language code](https://www.infobip.com/docs/sms/language#national-language-identifier) for the correct character set. `AUTODETECT` lets the platform select the character set based on message content only for supported languages.
 type LanguageCode string
 
 // List of LanguageCode

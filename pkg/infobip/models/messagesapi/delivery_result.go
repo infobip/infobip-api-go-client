@@ -38,7 +38,7 @@ type DeliveryResult struct {
 	MessageId string
 	// Value of the `callbackData` field from the MT message (if exists) or from the MO Action setup (if exists).
 	CallbackData *string
-	// Number of returned messages in this request.
+	// The number of parts the message content was split into.
 	MessageCount int32
 	Status       DeliveryStatus
 	Error        DeliveryError

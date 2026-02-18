@@ -63,14 +63,14 @@ func (r ApiGetInboundSmsMessagesRequest) CampaignReferenceId(campaignReferenceId
 	return r
 }
 
-func (r ApiGetInboundSmsMessagesRequest) Execute() (*InboundMessageResult, *http.Response, error) {
+func (r ApiGetInboundSmsMessagesRequest) Execute() (*ReportResponse, *http.Response, error) {
 	return r.ApiService.GetInboundSmsMessagesExecute(r)
 }
 
 /*
 GetInboundSmsMessages Get inbound SMS messages
 
-If for some reason you are unable to receive incoming SMS to the endpoint of your choice in real time, you can use this API call to fetch messages. Each request will return a batch of received messages - only once. The API request will only return new messages that arrived since the last API request.
+If you are unable to receive incoming SMS to the endpoint of your choice in real-time, you can use this API call to fetch messages. Each request will return a batch of received messages, only once. The API request will only return new messages that arrived since the last API request. To use this method, you’d need to:<ol><li><a href="https://www.infobip.com/docs/api/platform/numbers/phone-numbers/purchase-number">Buy a number</a> capable of receiving SMS traffic.</li><li>Specify a forwarding endpoint for the number and optionally configure other <a href="https://www.infobip.com/docs/api/platform/numbers/my-numbers/resource-management/manage-inbound-configuration">inbound settings</a>.</li></ol>
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetInboundSmsMessagesRequest
@@ -84,13 +84,13 @@ func (a *SmsAPIService) GetInboundSmsMessages(ctx context.Context) ApiGetInbound
 
 // Execute executes the request
 //
-//	@return InboundMessageResult
-func (a *SmsAPIService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMessagesRequest) (*InboundMessageResult, *http.Response, error) {
+//	@return ReportResponse
+func (a *SmsAPIService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMessagesRequest) (*ReportResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod  = http.MethodGet
 		localVarPostBody    interface{}
 		formFiles           []formFile
-		localVarReturnValue *InboundMessageResult
+		localVarReturnValue *ReportResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "SmsAPIService.GetInboundSmsMessages")
@@ -133,20 +133,6 @@ func (a *SmsAPIService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMessagesR
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -168,6 +154,17 @@ func (a *SmsAPIService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMessagesR
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ApiException
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v ApiException
@@ -200,38 +197,7 @@ func (a *SmsAPIService) GetInboundSmsMessagesExecute(r ApiGetInboundSmsMessagesR
 			}
 			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		var v InboundMessageResult
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -373,20 +339,6 @@ func (a *SmsAPIService) GetOutboundSmsMessageDeliveryReportsExecute(r ApiGetOutb
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -472,6 +424,8 @@ type ApiGetOutboundSmsMessageLogsRequest struct {
 	entityId            *string
 	applicationId       *string
 	campaignReferenceId *[]string
+	useCursor           *bool
+	cursor              *string
 }
 
 // Mobile Country Code.
@@ -515,19 +469,19 @@ func (r ApiGetOutboundSmsMessageLogsRequest) GeneralStatus(generalStatus Message
 	return r
 }
 
-// The logs will only include messages sent after this date. Use it together with sentUntil to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSSZ.
+// The logs will only include messages sent after this date. Use it alongside sentUntil to specify a time range for the logs, but only up to the maximum limit of 1000 logs per call. Has the following format: yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSSZ.
 func (r ApiGetOutboundSmsMessageLogsRequest) SentSince(sentSince Time) ApiGetOutboundSmsMessageLogsRequest {
 	r.sentSince = &sentSince
 	return r
 }
 
-// The logs will only include messages sent before this date. Use it together with sentSince to return a time range or if you want to fetch more than 1000 logs allowed per call. Has the following format: yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSSZ.
+// The logs will only include messages sent before this date. Use it alongside sentSince to specify a time range for the logs, but only up to the maximum limit of 1000 logs per call. Has the following format: yyyy-MM-dd&#39;T&#39;HH:mm:ss.SSSZ.
 func (r ApiGetOutboundSmsMessageLogsRequest) SentUntil(sentUntil Time) ApiGetOutboundSmsMessageLogsRequest {
 	r.sentUntil = &sentUntil
 	return r
 }
 
-// Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h. If you want to fetch more than 1000 logs allowed per call, use sentBefore and sentUntil to retrieve them in pages.
+// Maximum number of messages to include in logs. If not set, the latest 50 records are returned. Maximum limit value is 1000 and you can only access logs for the last 48h.
 func (r ApiGetOutboundSmsMessageLogsRequest) Limit(limit int32) ApiGetOutboundSmsMessageLogsRequest {
 	r.limit = &limit
 	return r
@@ -551,6 +505,18 @@ func (r ApiGetOutboundSmsMessageLogsRequest) CampaignReferenceId(campaignReferen
 	return r
 }
 
+// Flag used to enable cursor-based pagination. When set to true, the system will use the cursor to fetch the next set of logs.
+func (r ApiGetOutboundSmsMessageLogsRequest) UseCursor(useCursor bool) ApiGetOutboundSmsMessageLogsRequest {
+	r.useCursor = &useCursor
+	return r
+}
+
+// Value which represents the current position in the data set. For the first request, this field shouldn&#39;t be defined. In subsequent requests, use the &#x60;nextCursor&#x60; value returned from the previous response to continue fetching data.
+func (r ApiGetOutboundSmsMessageLogsRequest) Cursor(cursor string) ApiGetOutboundSmsMessageLogsRequest {
+	r.cursor = &cursor
+	return r
+}
+
 func (r ApiGetOutboundSmsMessageLogsRequest) Execute() (*LogsResponse, *http.Response, error) {
 	return r.ApiService.GetOutboundSmsMessageLogsExecute(r)
 }
@@ -558,7 +524,7 @@ func (r ApiGetOutboundSmsMessageLogsRequest) Execute() (*LogsResponse, *http.Res
 /*
 GetOutboundSmsMessageLogs Get outbound SMS message logs
 
-Use this method for displaying logs, for example, in the user interface. Available are the logs for the last 48 hours and you can only retrieve maximum of 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports-v3) if your use case is to verify message delivery.
+Use this method to obtain the logs associated with outbound messages. The available logs are limited to those generated in the last 48 hours, and you can retrieve a maximum of only 1000 logs per call. See [message delivery reports](#channels/sms/get-outbound-sms-message-delivery-reports-v3) if your use case is to verify message delivery.
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetOutboundSmsMessageLogsRequest
@@ -658,6 +624,12 @@ func (a *SmsAPIService) GetOutboundSmsMessageLogsExecute(r ApiGetOutboundSmsMess
 			parameterAddToHeaderOrQuery(localVarQueryParams, "campaignReferenceId", t, "form", "multi")
 		}
 	}
+	if r.useCursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "useCursor", r.useCursor, "form", "")
+	}
+	if r.cursor != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "cursor", r.cursor, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -674,20 +646,6 @@ func (a *SmsAPIService) GetOutboundSmsMessageLogsExecute(r ApiGetOutboundSmsMess
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -775,6 +733,7 @@ type ApiGetScheduledSmsMessagesRequest struct {
 	bulkId     *string
 }
 
+// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 func (r ApiGetScheduledSmsMessagesRequest) BulkId(bulkId string) ApiGetScheduledSmsMessagesRequest {
 	r.bulkId = &bulkId
 	return r
@@ -787,7 +746,7 @@ func (r ApiGetScheduledSmsMessagesRequest) Execute() (*BulkResponse, *http.Respo
 /*
 GetScheduledSmsMessages Get scheduled SMS messages
 
-See all scheduled messages and their scheduled date and time. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
+See all [scheduled messages](https://www.infobip.com/docs/sms/sms-over-api#schedule-sms) and their scheduled date and time. To schedule a message, use the `sendAt` field when [sending a message](#channels/sms/sms-messaging/outbound-sms/send-sms-messages).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetScheduledSmsMessagesRequest
@@ -842,20 +801,6 @@ func (a *SmsAPIService) GetScheduledSmsMessagesExecute(r ApiGetScheduledSmsMessa
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -877,6 +822,17 @@ func (a *SmsAPIService) GetScheduledSmsMessagesExecute(r ApiGetScheduledSmsMessa
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v ApiException
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v ApiException
@@ -900,6 +856,17 @@ func (a *SmsAPIService) GetScheduledSmsMessagesExecute(r ApiGetScheduledSmsMessa
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ApiException
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v ApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -909,38 +876,7 @@ func (a *SmsAPIService) GetScheduledSmsMessagesExecute(r ApiGetScheduledSmsMessa
 			}
 			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		var v BulkResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -962,6 +898,7 @@ type ApiGetScheduledSmsMessagesStatusRequest struct {
 	bulkId     *string
 }
 
+// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 func (r ApiGetScheduledSmsMessagesStatusRequest) BulkId(bulkId string) ApiGetScheduledSmsMessagesStatusRequest {
 	r.bulkId = &bulkId
 	return r
@@ -974,7 +911,7 @@ func (r ApiGetScheduledSmsMessagesStatusRequest) Execute() (*BulkStatusResponse,
 /*
 GetScheduledSmsMessagesStatus Get scheduled SMS messages status
 
-See the status of scheduled messages. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
+See the status of [scheduled messages](https://www.infobip.com/docs/sms/sms-over-api#schedule-sms). To schedule a message, use the `sendAt` field when [sending a message](#channels/sms/sms-messaging/outbound-sms/send-sms-messages).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiGetScheduledSmsMessagesStatusRequest
@@ -1028,20 +965,6 @@ func (a *SmsAPIService) GetScheduledSmsMessagesStatusExecute(r ApiGetScheduledSm
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
-	}
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -1208,20 +1131,6 @@ func (a *SmsAPIService) PreviewSmsMessageExecute(r ApiPreviewSmsMessageRequest) 
 	}
 	// body params
 	localVarPostBody = r.previewRequest
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1309,6 +1218,7 @@ type ApiRescheduleSmsMessagesRequest struct {
 	bulkRequest *BulkRequest
 }
 
+// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 func (r ApiRescheduleSmsMessagesRequest) BulkId(bulkId string) ApiRescheduleSmsMessagesRequest {
 	r.bulkId = &bulkId
 	return r
@@ -1326,7 +1236,7 @@ func (r ApiRescheduleSmsMessagesRequest) Execute() (*BulkResponse, *http.Respons
 /*
 RescheduleSmsMessages Reschedule SMS messages
 
-Change the date and time of already scheduled messages. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
+Change the date and time of already [scheduled messages](https://www.infobip.com/docs/sms/sms-over-api#schedule-sms). To schedule a message, use the `sendAt` field when [sending a message](#channels/sms/sms-messaging/outbound-sms/send-sms-messages).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiRescheduleSmsMessagesRequest
@@ -1386,20 +1296,6 @@ func (a *SmsAPIService) RescheduleSmsMessagesExecute(r ApiRescheduleSmsMessagesR
 	}
 	// body params
 	localVarPostBody = r.bulkRequest
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1455,6 +1351,17 @@ func (a *SmsAPIService) RescheduleSmsMessagesExecute(r ApiRescheduleSmsMessagesR
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ApiException
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v ApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1464,38 +1371,7 @@ func (a *SmsAPIService) RescheduleSmsMessagesExecute(r ApiRescheduleSmsMessagesR
 			}
 			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		var v BulkResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 
@@ -1587,20 +1463,6 @@ func (a *SmsAPIService) SendSmsMessagesExecute(r ApiSendSmsMessagesRequest) (*Re
 	}
 	// body params
 	localVarPostBody = r.requestEnvelope
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1688,6 +1550,7 @@ type ApiUpdateScheduledSmsMessagesStatusRequest struct {
 	updateStatusRequest *UpdateStatusRequest
 }
 
+// Unique ID assigned to the request if messaging multiple recipients or sending multiple messages via a single API request.
 func (r ApiUpdateScheduledSmsMessagesStatusRequest) BulkId(bulkId string) ApiUpdateScheduledSmsMessagesStatusRequest {
 	r.bulkId = &bulkId
 	return r
@@ -1705,7 +1568,7 @@ func (r ApiUpdateScheduledSmsMessagesStatusRequest) Execute() (*BulkStatusRespon
 /*
 UpdateScheduledSmsMessagesStatus Update scheduled SMS messages status
 
-Change the status or completely cancel sending of scheduled messages. To schedule a message, use the `sendAt` field when [sending a message](https://www.infobip.com/docs/api/channels/sms/sms-messaging/outbound-sms/send-sms-message).
+Change the status or completely cancel sending of [scheduled messages](https://www.infobip.com/docs/sms/sms-over-api#schedule-sms). To schedule a message, use the `sendAt` field when [sending a message](#channels/sms/sms-messaging/outbound-sms/send-sms-messages).
 
 	@param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
 	@return ApiUpdateScheduledSmsMessagesStatusRequest
@@ -1765,20 +1628,6 @@ func (a *SmsAPIService) UpdateScheduledSmsMessagesStatusExecute(r ApiUpdateSched
 	}
 	// body params
 	localVarPostBody = r.updateStatusRequest
-	if r.ctx != nil {
-		// API Key Authentication
-		if auth, ok := r.ctx.Value(ContextAPIKeys).(map[string]APIKey); ok {
-			if apiKey, ok := auth["APIKeyHeader"]; ok {
-				var key string
-				if apiKey.Prefix != "" {
-					key = apiKey.Prefix + " " + apiKey.Key
-				} else {
-					key = apiKey.Key
-				}
-				localVarHeaderParams["Authorization"] = key
-			}
-		}
-	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -1834,6 +1683,17 @@ func (a *SmsAPIService) UpdateScheduledSmsMessagesStatusExecute(r ApiUpdateSched
 			newErr.model = v
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
+		if localVarHTTPResponse.StatusCode == 404 {
+			var v ApiException
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+			newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
 		if localVarHTTPResponse.StatusCode == 500 {
 			var v ApiException
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
@@ -1843,38 +1703,7 @@ func (a *SmsAPIService) UpdateScheduledSmsMessagesStatusExecute(r ApiUpdateSched
 			}
 			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
 			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
-		if localVarHTTPResponse.StatusCode >= 400 && localVarHTTPResponse.StatusCode < 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		if localVarHTTPResponse.StatusCode >= 500 {
-			var v ApiException
-			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-			if err != nil {
-				newErr.error = err.Error()
-				return localVarReturnValue, localVarHTTPResponse, newErr
-			}
-			newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-			newErr.model = v
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		var v BulkStatusResponse
-		err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
-		if err != nil {
-			newErr.error = err.Error()
-			return localVarReturnValue, localVarHTTPResponse, newErr
-		}
-		newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
-		newErr.model = v
 		return localVarReturnValue, localVarHTTPResponse, newErr
 	}
 

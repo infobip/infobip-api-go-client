@@ -15,7 +15,7 @@ import (
 	"fmt"
 )
 
-// BulkStatus the model 'BulkStatus'
+// BulkStatus Status of scheduled email messages.
 type BulkStatus string
 
 // List of BulkStatus

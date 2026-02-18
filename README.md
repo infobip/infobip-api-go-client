@@ -22,10 +22,12 @@ To use this, you'll need an Infobip account. You can create a free trial account
 Detailed documentation about Infobip API can be found [here][apidocs].
 The current version of this library includes this subset of Infobip products:
 * [SMS](https://www.infobip.com/docs/api/channels/sms)
+* [2FA](https://www.infobip.com/docs/api/platform/2fa)
 * [Messages API](https://www.infobip.com/docs/api/platform/messages-api)
 * [Email](https://www.infobip.com/docs/api/channels/email)
 * [Voice](https://www.infobip.com/docs/api/channels/voice)
 * [Moments](https://www.infobip.com/docs/api/customer-engagement/moments)
+* [RCS](https://www.infobip.com/docs/api/channels/rcs)
 
 ## General Info
 For `infobip-api-go-client` versioning we use [Semantic Versioning][semver] scheme.
@@ -64,8 +66,9 @@ To see your base URL, log in to the [Infobip API Resource][apidocs] hub with you
 Let's first set the configuration field.
 ```go
 configuration := infobip.NewConfiguration()
-configuration.Host = "<YOUR_BASE_URL>"
+configuration.Host = "<YOUR_BASE_URL>" // e.g. "https://<your-domain>.api.infobip.com" or "<your-domain>.api.infobip.com"
 ```
+Note: If the scheme is omitted, `https://` is prepended automatically. `http://` is rejected (HTTPS only).
 
 Now you can initialize the API client.
 ```go
@@ -80,11 +83,11 @@ After that is done, we should set the authentication method.
 ```go
 auth := context.WithValue(
 		context.Background(),
-		infobip.ContextAPIKeys,
-		map[string]infobip.APIKey{
-			"APIKeyHeader": {Key: "<YOUR_API_KEY>", Prefix: "<YOUR_API_PREFIX>"},
-		},
-	)
+			infobip.ContextAPIKeys,
+			map[string]infobip.APIKey{
+				"APIKeyHeader": {Key: "<YOUR_API_KEY>"},
+			},
+		)
 ```
 
 To understand how to generate above mentioned tokens, check [this](https://www.infobip.com/docs/essentials/api-authentication) page.
@@ -252,6 +255,9 @@ For the Email quick start guide, view [these examples](email.md).
 
 #### Moments
 For the Moments quick start guide, view [these examples](moments.md).
+
+#### RCS
+For the RCS quick start guide, view [these examples](rcs.md).
 
 ## Versioning
 

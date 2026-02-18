@@ -13,6 +13,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+const (
+	VoiceMaskingUploadEndpoint          = "/voice/masking/1/upload"
+	VoiceMaskingConfigEndpoint          = "/voice/masking/2/config"
+	VoiceMaskingConfigByIdEndpoint      = "/voice/masking/2/config/%s"
+	VoiceMaskingCredentialsEndpoint     = "/voice/masking/2/credentials"
+	VoiceMaskingCredentialsByIdEndpoint = "/voice/masking/2/credentials/%s"
+)
+
 func TestShouldGetVoiceMaskingConfig(t *testing.T) {
 	givenKey := "string"
 	givenName := "string"
@@ -49,7 +57,7 @@ func TestShouldGetVoiceMaskingConfig(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/voice/masking/2/config", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceMaskingConfigEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.NumberMaskingAPI.GetNumberMaskingConfigurations(context.Background()).Execute()
 
@@ -103,7 +111,7 @@ func TestShouldCreateNumberMaskingConfiguration(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/voice/masking/2/config", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceMaskingConfigEndpoint, givenResponse, 200)
 
 	request := voice.NumberMaskingSetupBody{
 		Name:        givenName,
@@ -160,7 +168,7 @@ func TestShouldUpdateNumberMaskingConfiguration(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", fmt.Sprintf("/voice/masking/2/config/%s", givenKey), givenResponse, 200)
+	SetUpSuccessRequest("PUT", fmt.Sprintf(VoiceMaskingConfigByIdEndpoint, givenKey), givenResponse, 200)
 
 	request := voice.NumberMaskingSetupBody{
 		Name:        givenName,
@@ -204,7 +212,7 @@ func TestShouldUploadAudioFile(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/voice/masking/1/upload", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceMaskingUploadEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.NumberMaskingAPI.UploadAudioFiles(context.Background()).NumberMaskingUploadBody(request).Execute()
 
@@ -224,7 +232,7 @@ func TestShouldGetNumberMaskingCredentials(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("GET", "/voice/masking/2/credentials", givenResponse, 200)
+	SetUpSuccessRequest("GET", VoiceMaskingCredentialsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.NumberMaskingAPI.GetNumberMaskingCredentials(context.Background()).Execute()
 
@@ -258,7 +266,7 @@ func TestShouldCreateNumberMaskingCredentials(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("POST", "/voice/masking/2/credentials", givenResponse, 200)
+	SetUpSuccessRequest("POST", VoiceMaskingCredentialsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.NumberMaskingAPI.CreateNumberMaskingCredentials(context.Background()).NumberMaskingCredentialsBody(request).Execute()
 
@@ -292,7 +300,7 @@ func TestShouldUpdateNumberMaskingCredentials(t *testing.T) {
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
-	SetUpSuccessRequest("PUT", "/voice/masking/2/credentials", givenResponse, 200)
+	SetUpSuccessRequest("PUT", VoiceMaskingCredentialsEndpoint, givenResponse, 200)
 
 	response, _, err := infobipClient.NumberMaskingAPI.UpdateNumberMaskingCredentials(context.Background()).NumberMaskingCredentialsBody(request).Execute()
 

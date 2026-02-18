@@ -27,8 +27,7 @@ type File struct {
 	Name       string
 	FileFormat FileFormat
 	// File size in bytes.
-	Size           *int64
-	CreationMethod *CreationMethod
+	Size *int64
 	// File creation time.
 	CreationTime *Time
 	// File expiration time.
@@ -172,38 +171,6 @@ func (o *File) SetSize(v int64) {
 	o.Size = &v
 }
 
-// GetCreationMethod returns the CreationMethod field value if set, zero value otherwise.
-func (o *File) GetCreationMethod() CreationMethod {
-	if o == nil || IsNil(o.CreationMethod) {
-		var ret CreationMethod
-		return ret
-	}
-	return *o.CreationMethod
-}
-
-// GetCreationMethodOk returns a tuple with the CreationMethod field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *File) GetCreationMethodOk() (*CreationMethod, bool) {
-	if o == nil || IsNil(o.CreationMethod) {
-		return nil, false
-	}
-	return o.CreationMethod, true
-}
-
-// HasCreationMethod returns a boolean if a field has been set.
-func (o *File) HasCreationMethod() bool {
-	if o != nil && !IsNil(o.CreationMethod) {
-		return true
-	}
-
-	return false
-}
-
-// SetCreationMethod gets a reference to the given CreationMethod and assigns it to the CreationMethod field.
-func (o *File) SetCreationMethod(v CreationMethod) {
-	o.CreationMethod = &v
-}
-
 // GetCreationTime returns the CreationTime field value if set, zero value otherwise.
 func (o *File) GetCreationTime() Time {
 	if o == nil || IsNil(o.CreationTime) {
@@ -317,9 +284,6 @@ func (o File) ToMap() (map[string]interface{}, error) {
 	toSerialize["fileFormat"] = o.FileFormat
 	if !IsNil(o.Size) {
 		toSerialize["size"] = o.Size
-	}
-	if !IsNil(o.CreationMethod) {
-		toSerialize["creationMethod"] = o.CreationMethod
 	}
 	if !IsNil(o.CreationTime) {
 		toSerialize["creationTime"] = o.CreationTime

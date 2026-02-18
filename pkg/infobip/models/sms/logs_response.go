@@ -23,6 +23,7 @@ var _ MappedNullable = &LogsResponse{}
 type LogsResponse struct {
 	// An array of message log results, one object per each message log entry.
 	Results []Log
+	Cursor  *CursorPageInfo
 }
 
 // NewLogsResponse instantiates a new LogsResponse object
@@ -76,6 +77,38 @@ func (o *LogsResponse) SetResults(v []Log) {
 	o.Results = v
 }
 
+// GetCursor returns the Cursor field value if set, zero value otherwise.
+func (o *LogsResponse) GetCursor() CursorPageInfo {
+	if o == nil || IsNil(o.Cursor) {
+		var ret CursorPageInfo
+		return ret
+	}
+	return *o.Cursor
+}
+
+// GetCursorOk returns a tuple with the Cursor field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *LogsResponse) GetCursorOk() (*CursorPageInfo, bool) {
+	if o == nil || IsNil(o.Cursor) {
+		return nil, false
+	}
+	return o.Cursor, true
+}
+
+// HasCursor returns a boolean if a field has been set.
+func (o *LogsResponse) HasCursor() bool {
+	if o != nil && !IsNil(o.Cursor) {
+		return true
+	}
+
+	return false
+}
+
+// SetCursor gets a reference to the given CursorPageInfo and assigns it to the Cursor field.
+func (o *LogsResponse) SetCursor(v CursorPageInfo) {
+	o.Cursor = &v
+}
+
 func (o LogsResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -88,6 +121,9 @@ func (o LogsResponse) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Results) {
 		toSerialize["results"] = o.Results
+	}
+	if !IsNil(o.Cursor) {
+		toSerialize["cursor"] = o.Cursor
 	}
 	return toSerialize, nil
 }

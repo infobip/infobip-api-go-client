@@ -21,9 +21,11 @@ var _ MappedNullable = &TextPlayContent{}
 
 // TextPlayContent struct for TextPlayContent
 type TextPlayContent struct {
-	Type        PlayContentType
-	Text        string
-	Language    Language
+	Type PlayContentType
+	// Text to read. Use the Speech Synthesis Markup Language (SSML) in a request to fine-tune your output.
+	Text     string
+	Language Language
+	// Speech rate. Must be within `[0.5 - 2.0]` range, default value is `1`.
 	SpeechRate  *float64
 	Preferences *VoicePreferences
 }

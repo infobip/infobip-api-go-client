@@ -29,6 +29,9 @@ type CallRoutingRouteResponse struct {
 	Criteria []CallRoutingSearchCriteria
 	// List of destinations. First destination in the list is the first one to be executed. Subsequent destinations are executed only if the previous one fails.
 	Destinations []CallRoutingDestination
+	Status       CallRoutingRouteStatus
+	// Indicates priority index of the route. Routes with lower priority index are executed first.
+	Order *int32
 }
 
 type _CallRoutingRouteResponse CallRoutingRouteResponse
@@ -38,11 +41,12 @@ type _CallRoutingRouteResponse CallRoutingRouteResponse
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewCallRoutingRouteResponse(id string, name string, destinations []CallRoutingDestination) *CallRoutingRouteResponse {
+func NewCallRoutingRouteResponse(id string, name string, destinations []CallRoutingDestination, status CallRoutingRouteStatus) *CallRoutingRouteResponse {
 	this := CallRoutingRouteResponse{}
 	this.Id = id
 	this.Name = name
 	this.Destinations = destinations
+	this.Status = status
 	return &this
 }
 
@@ -159,6 +163,62 @@ func (o *CallRoutingRouteResponse) SetDestinations(v []CallRoutingDestination) {
 	o.Destinations = v
 }
 
+// GetStatus returns the Status field value
+func (o *CallRoutingRouteResponse) GetStatus() CallRoutingRouteStatus {
+	if o == nil {
+		var ret CallRoutingRouteStatus
+		return ret
+	}
+
+	return o.Status
+}
+
+// GetStatusOk returns a tuple with the Status field value
+// and a boolean to check if the value has been set.
+func (o *CallRoutingRouteResponse) GetStatusOk() (*CallRoutingRouteStatus, bool) {
+	if o == nil {
+		return nil, false
+	}
+	return &o.Status, true
+}
+
+// SetStatus sets field value
+func (o *CallRoutingRouteResponse) SetStatus(v CallRoutingRouteStatus) {
+	o.Status = v
+}
+
+// GetOrder returns the Order field value if set, zero value otherwise.
+func (o *CallRoutingRouteResponse) GetOrder() int32 {
+	if o == nil || IsNil(o.Order) {
+		var ret int32
+		return ret
+	}
+	return *o.Order
+}
+
+// GetOrderOk returns a tuple with the Order field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CallRoutingRouteResponse) GetOrderOk() (*int32, bool) {
+	if o == nil || IsNil(o.Order) {
+		return nil, false
+	}
+	return o.Order, true
+}
+
+// HasOrder returns a boolean if a field has been set.
+func (o *CallRoutingRouteResponse) HasOrder() bool {
+	if o != nil && !IsNil(o.Order) {
+		return true
+	}
+
+	return false
+}
+
+// SetOrder gets a reference to the given int32 and assigns it to the Order field.
+func (o *CallRoutingRouteResponse) SetOrder(v int32) {
+	o.Order = &v
+}
+
 func (o CallRoutingRouteResponse) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -175,6 +235,10 @@ func (o CallRoutingRouteResponse) ToMap() (map[string]interface{}, error) {
 		toSerialize["criteria"] = o.Criteria
 	}
 	toSerialize["destinations"] = o.Destinations
+	toSerialize["status"] = o.Status
+	if !IsNil(o.Order) {
+		toSerialize["order"] = o.Order
+	}
 	return toSerialize, nil
 }
 

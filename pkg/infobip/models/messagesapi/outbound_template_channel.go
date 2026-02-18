@@ -15,13 +15,14 @@ import (
 	"fmt"
 )
 
-// OutboundTemplateChannel Messaging channel used for sending a message.
+// OutboundTemplateChannel Messaging channel used for sending a template message.
 type OutboundTemplateChannel string
 
 // List of OutboundTemplateChannel
 const (
 	OUTBOUNDTEMPLATECHANNEL_APPLE_MB OutboundTemplateChannel = "APPLE_MB"
 	OUTBOUNDTEMPLATECHANNEL_RCS      OutboundTemplateChannel = "RCS"
+	OUTBOUNDTEMPLATECHANNEL_VIBER_BM OutboundTemplateChannel = "VIBER_BM"
 	OUTBOUNDTEMPLATECHANNEL_WHATSAPP OutboundTemplateChannel = "WHATSAPP"
 )
 
@@ -29,6 +30,7 @@ const (
 var AllowedOutboundTemplateChannelEnumValues = []OutboundTemplateChannel{
 	"APPLE_MB",
 	"RCS",
+	"VIBER_BM",
 	"WHATSAPP",
 }
 

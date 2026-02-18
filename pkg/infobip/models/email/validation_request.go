@@ -19,9 +19,9 @@ import (
 // checks if the ValidationRequest type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ValidationRequest{}
 
-// ValidationRequest struct for ValidationRequest
+// ValidationRequest Validation request
 type ValidationRequest struct {
-	// Email address of the recipient.
+	// The email address to be validated.
 	To string
 }
 

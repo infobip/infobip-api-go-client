@@ -51,6 +51,8 @@ type Call struct {
 	CustomData *map[string]string
 	// Dialog ID.
 	DialogId *string
+	// Client defined call ID.
+	ExternalId *string
 }
 
 type _Call Call
@@ -643,6 +645,38 @@ func (o *Call) SetDialogId(v string) {
 	o.DialogId = &v
 }
 
+// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+func (o *Call) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Call) GetExternalIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalId) {
+		return nil, false
+	}
+	return o.ExternalId, true
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *Call) HasExternalId() bool {
+	if o != nil && !IsNil(o.ExternalId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+func (o *Call) SetExternalId(v string) {
+	o.ExternalId = &v
+}
+
 func (o Call) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -704,6 +738,9 @@ func (o Call) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.DialogId) {
 		toSerialize["dialogId"] = o.DialogId
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["externalId"] = o.ExternalId
 	}
 	return toSerialize, nil
 }

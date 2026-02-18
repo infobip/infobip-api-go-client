@@ -12,158 +12,95 @@ package voice
 
 import (
 	"encoding/json"
-
-	. "github.com/infobip/infobip-api-go-client/v3/pkg/infobip"
+	"fmt"
 )
-
-// checks if the MediaStreamConfigResponse type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &MediaStreamConfigResponse{}
 
 // MediaStreamConfigResponse struct for MediaStreamConfigResponse
 type MediaStreamConfigResponse struct {
-	// Media-stream configuration ID.
-	Id *string
-	// Media-stream configuration name.
-	Name *string
-	// Destination websocket or load balancer URL.
-	Url *string
+	MediaStreamingConfigResponse    *MediaStreamingConfigResponse
+	WebsocketEndpointConfigResponse *WebsocketEndpointConfigResponse
 }
 
-// NewMediaStreamConfigResponse instantiates a new MediaStreamConfigResponse object
-// This constructor will assign default values to properties that have it defined,
-// and makes sure properties required by API are set, but the set of arguments
-// will change when the set of required properties is changed
-
-func NewMediaStreamConfigResponse() *MediaStreamConfigResponse {
-	this := MediaStreamConfigResponse{}
-	return &this
-}
-
-// NewMediaStreamConfigResponseWithDefaults instantiates a new MediaStreamConfigResponse object
-// This constructor will only assign default values to properties that have it defined,
-// but it doesn't guarantee that properties required by API are set
-func NewMediaStreamConfigResponseWithDefaults() *MediaStreamConfigResponse {
-	this := MediaStreamConfigResponse{}
-
-	return &this
-}
-
-// GetId returns the Id field value if set, zero value otherwise.
-func (o *MediaStreamConfigResponse) GetId() string {
-	if o == nil || IsNil(o.Id) {
-		var ret string
-		return ret
+// MediaStreamingConfigResponseAsMediaStreamConfigResponse is a convenience function that returns MediaStreamingConfigResponse wrapped in MediaStreamConfigResponse
+func MediaStreamingConfigResponseAsMediaStreamConfigResponse(v *MediaStreamingConfigResponse) MediaStreamConfigResponse {
+	return MediaStreamConfigResponse{
+		MediaStreamingConfigResponse: v,
 	}
-	return *o.Id
 }
 
-// GetIdOk returns a tuple with the Id field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MediaStreamConfigResponse) GetIdOk() (*string, bool) {
-	if o == nil || IsNil(o.Id) {
-		return nil, false
+// WebsocketEndpointConfigResponseAsMediaStreamConfigResponse is a convenience function that returns WebsocketEndpointConfigResponse wrapped in MediaStreamConfigResponse
+func WebsocketEndpointConfigResponseAsMediaStreamConfigResponse(v *WebsocketEndpointConfigResponse) MediaStreamConfigResponse {
+	return MediaStreamConfigResponse{
+		WebsocketEndpointConfigResponse: v,
 	}
-	return o.Id, true
 }
 
-// HasId returns a boolean if a field has been set.
-func (o *MediaStreamConfigResponse) HasId() bool {
-	if o != nil && !IsNil(o.Id) {
-		return true
-	}
-
-	return false
-}
-
-// SetId gets a reference to the given string and assigns it to the Id field.
-func (o *MediaStreamConfigResponse) SetId(v string) {
-	o.Id = &v
-}
-
-// GetName returns the Name field value if set, zero value otherwise.
-func (o *MediaStreamConfigResponse) GetName() string {
-	if o == nil || IsNil(o.Name) {
-		var ret string
-		return ret
-	}
-	return *o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MediaStreamConfigResponse) GetNameOk() (*string, bool) {
-	if o == nil || IsNil(o.Name) {
-		return nil, false
-	}
-	return o.Name, true
-}
-
-// HasName returns a boolean if a field has been set.
-func (o *MediaStreamConfigResponse) HasName() bool {
-	if o != nil && !IsNil(o.Name) {
-		return true
-	}
-
-	return false
-}
-
-// SetName gets a reference to the given string and assigns it to the Name field.
-func (o *MediaStreamConfigResponse) SetName(v string) {
-	o.Name = &v
-}
-
-// GetUrl returns the Url field value if set, zero value otherwise.
-func (o *MediaStreamConfigResponse) GetUrl() string {
-	if o == nil || IsNil(o.Url) {
-		var ret string
-		return ret
-	}
-	return *o.Url
-}
-
-// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *MediaStreamConfigResponse) GetUrlOk() (*string, bool) {
-	if o == nil || IsNil(o.Url) {
-		return nil, false
-	}
-	return o.Url, true
-}
-
-// HasUrl returns a boolean if a field has been set.
-func (o *MediaStreamConfigResponse) HasUrl() bool {
-	if o != nil && !IsNil(o.Url) {
-		return true
-	}
-
-	return false
-}
-
-// SetUrl gets a reference to the given string and assigns it to the Url field.
-func (o *MediaStreamConfigResponse) SetUrl(v string) {
-	o.Url = &v
-}
-
-func (o MediaStreamConfigResponse) MarshalJSON() ([]byte, error) {
-	toSerialize, err := o.ToMap()
+// Unmarshal JSON data into any of the pointers in the struct
+func (dst *MediaStreamConfigResponse) UnmarshalJSON(data []byte) error {
+	// use discriminator value to speed up the lookup
+	var jsonDict map[string]interface{}
+	err := json.Unmarshal(data, &jsonDict)
 	if err != nil {
-		return []byte{}, err
+		return fmt.Errorf("Failed to unmarshal JSON into map for the discrimintor lookup.")
 	}
-	return json.Marshal(toSerialize)
+
+	// check if the discriminator value is 'MEDIA_STREAMING'
+	if jsonDict["type"] == "MEDIA_STREAMING" {
+		// try to unmarshal JSON data into MediaStreamingConfigResponse
+		err = json.Unmarshal(data, &dst.MediaStreamingConfigResponse)
+		if err == nil {
+			jsonMediaStreamingConfigResponse, _ := json.Marshal(dst.MediaStreamingConfigResponse)
+			if string(jsonMediaStreamingConfigResponse) == "{}" { // empty struct
+				dst.MediaStreamingConfigResponse = nil
+			} else {
+				return nil // data stored in dst.MediaStreamingConfigResponse, return on the first match
+			}
+		} else {
+			dst.MediaStreamingConfigResponse = nil
+		}
+	}
+	// check if the discriminator value is 'WEBSOCKET_ENDPOINT'
+	if jsonDict["type"] == "WEBSOCKET_ENDPOINT" {
+		// try to unmarshal JSON data into WebsocketEndpointConfigResponse
+		err = json.Unmarshal(data, &dst.WebsocketEndpointConfigResponse)
+		if err == nil {
+			jsonWebsocketEndpointConfigResponse, _ := json.Marshal(dst.WebsocketEndpointConfigResponse)
+			if string(jsonWebsocketEndpointConfigResponse) == "{}" { // empty struct
+				dst.WebsocketEndpointConfigResponse = nil
+			} else {
+				return nil // data stored in dst.WebsocketEndpointConfigResponse, return on the first match
+			}
+		} else {
+			dst.WebsocketEndpointConfigResponse = nil
+		}
+	}
+	return fmt.Errorf("Data failed to match schemas in anyOf(MediaStreamConfigResponse)")
 }
 
-func (o MediaStreamConfigResponse) ToMap() (map[string]interface{}, error) {
-	toSerialize := map[string]interface{}{}
-	if !IsNil(o.Id) {
-		toSerialize["id"] = o.Id
+// Marshal data from the first non-nil pointers in the struct to JSON
+func (src MediaStreamConfigResponse) MarshalJSON() ([]byte, error) {
+	if src.MediaStreamingConfigResponse != nil {
+		return json.Marshal(&src.MediaStreamingConfigResponse)
 	}
-	if !IsNil(o.Name) {
-		toSerialize["name"] = o.Name
+	if src.WebsocketEndpointConfigResponse != nil {
+		return json.Marshal(&src.WebsocketEndpointConfigResponse)
 	}
-	if !IsNil(o.Url) {
-		toSerialize["url"] = o.Url
+	return nil, nil // no data in anyOf schemas
+}
+
+// Get the actual instance
+func (obj *MediaStreamConfigResponse) GetActualInstance() interface{} {
+	if obj == nil {
+		return nil
 	}
-	return toSerialize, nil
+	if obj.MediaStreamingConfigResponse != nil {
+		return obj.MediaStreamingConfigResponse
+	}
+	if obj.WebsocketEndpointConfigResponse != nil {
+		return obj.WebsocketEndpointConfigResponse
+	}
+	// all schemas are nil
+	return nil
 }
 
 type NullableMediaStreamConfigResponse struct {

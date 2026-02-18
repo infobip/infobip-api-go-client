@@ -30,6 +30,7 @@ type Participant struct {
 	// Date and time when the participant has left.
 	LeaveTime *Time
 	Media     *MediaProperties
+	Role      *Role
 }
 
 type _Participant Participant
@@ -238,6 +239,38 @@ func (o *Participant) SetMedia(v MediaProperties) {
 	o.Media = &v
 }
 
+// GetRole returns the Role field value if set, zero value otherwise.
+func (o *Participant) GetRole() Role {
+	if o == nil || IsNil(o.Role) {
+		var ret Role
+		return ret
+	}
+	return *o.Role
+}
+
+// GetRoleOk returns a tuple with the Role field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Participant) GetRoleOk() (*Role, bool) {
+	if o == nil || IsNil(o.Role) {
+		return nil, false
+	}
+	return o.Role, true
+}
+
+// HasRole returns a boolean if a field has been set.
+func (o *Participant) HasRole() bool {
+	if o != nil && !IsNil(o.Role) {
+		return true
+	}
+
+	return false
+}
+
+// SetRole gets a reference to the given Role and assigns it to the Role field.
+func (o *Participant) SetRole(v Role) {
+	o.Role = &v
+}
+
 func (o Participant) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -263,6 +296,9 @@ func (o Participant) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Media) {
 		toSerialize["media"] = o.Media
+	}
+	if !IsNil(o.Role) {
+		toSerialize["role"] = o.Role
 	}
 	return toSerialize, nil
 }

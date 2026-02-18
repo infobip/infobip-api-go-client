@@ -22,6 +22,8 @@ type MessageButtonType string
 const (
 	MESSAGEBUTTONTYPE_REPLY              MessageButtonType = "REPLY"
 	MESSAGEBUTTONTYPE_OPEN_URL           MessageButtonType = "OPEN_URL"
+	MESSAGEBUTTONTYPE_DIAL_PHONE         MessageButtonType = "DIAL_PHONE"
+	MESSAGEBUTTONTYPE_SHOW_LOCATION      MessageButtonType = "SHOW_LOCATION"
 	MESSAGEBUTTONTYPE_REQUEST_LOCATION   MessageButtonType = "REQUEST_LOCATION"
 	MESSAGEBUTTONTYPE_ADD_CALENDAR_EVENT MessageButtonType = "ADD_CALENDAR_EVENT"
 )
@@ -30,6 +32,8 @@ const (
 var AllowedMessageButtonTypeEnumValues = []MessageButtonType{
 	"REPLY",
 	"OPEN_URL",
+	"DIAL_PHONE",
+	"SHOW_LOCATION",
 	"REQUEST_LOCATION",
 	"ADD_CALENDAR_EVENT",
 }

@@ -24,8 +24,8 @@ type MessageAddCalendarEventButton struct {
 	Type MessageButtonType
 	// Text to be displayed on the button.
 	Text string
-	// Custom data that will be sent to you when user reply to a message.
-	PostbackData string
+	// Custom data that will be sent to you when the user replies to the message.
+	PostbackData *string
 	// Event start time. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
 	StartTime Time
 	// Event end time. Has the following format: `yyyy-MM-dd'T'HH:mm:ss.SSSZ`.
@@ -42,11 +42,10 @@ type _MessageAddCalendarEventButton MessageAddCalendarEventButton
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewMessageAddCalendarEventButton(text string, postbackData string, startTime Time, endTime Time, title string) *MessageAddCalendarEventButton {
+func NewMessageAddCalendarEventButton(text string, startTime Time, endTime Time, title string) *MessageAddCalendarEventButton {
 	this := MessageAddCalendarEventButton{}
 	this.Type = "ADD_CALENDAR_EVENT"
 	this.Text = text
-	this.PostbackData = postbackData
 	this.StartTime = startTime
 	this.EndTime = endTime
 	this.Title = title
@@ -86,28 +85,36 @@ func (o *MessageAddCalendarEventButton) SetText(v string) {
 	o.Text = v
 }
 
-// GetPostbackData returns the PostbackData field value
+// GetPostbackData returns the PostbackData field value if set, zero value otherwise.
 func (o *MessageAddCalendarEventButton) GetPostbackData() string {
-	if o == nil {
+	if o == nil || IsNil(o.PostbackData) {
 		var ret string
 		return ret
 	}
-
-	return o.PostbackData
+	return *o.PostbackData
 }
 
-// GetPostbackDataOk returns a tuple with the PostbackData field value
+// GetPostbackDataOk returns a tuple with the PostbackData field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *MessageAddCalendarEventButton) GetPostbackDataOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.PostbackData) {
 		return nil, false
 	}
-	return &o.PostbackData, true
+	return o.PostbackData, true
 }
 
-// SetPostbackData sets field value
+// HasPostbackData returns a boolean if a field has been set.
+func (o *MessageAddCalendarEventButton) HasPostbackData() bool {
+	if o != nil && !IsNil(o.PostbackData) {
+		return true
+	}
+
+	return false
+}
+
+// SetPostbackData gets a reference to the given string and assigns it to the PostbackData field.
 func (o *MessageAddCalendarEventButton) SetPostbackData(v string) {
-	o.PostbackData = v
+	o.PostbackData = &v
 }
 
 // GetStartTime returns the StartTime field value
@@ -226,7 +233,9 @@ func (o MessageAddCalendarEventButton) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
 	toSerialize["text"] = o.Text
-	toSerialize["postbackData"] = o.PostbackData
+	if !IsNil(o.PostbackData) {
+		toSerialize["postbackData"] = o.PostbackData
+	}
 	toSerialize["startTime"] = o.StartTime
 	toSerialize["endTime"] = o.EndTime
 	toSerialize["title"] = o.Title

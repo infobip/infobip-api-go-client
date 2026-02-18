@@ -20,6 +20,7 @@ type Provider struct {
 	CiscoWebexProvider   *CiscoWebexProvider
 	FreshworksProvider   *FreshworksProvider
 	GenesysCloudProvider *GenesysCloudProvider
+	OpenAiProvider       *OpenAiProvider
 }
 
 // CiscoWebexProviderAsProvider is a convenience function that returns CiscoWebexProvider wrapped in Provider
@@ -40,6 +41,13 @@ func FreshworksProviderAsProvider(v *FreshworksProvider) Provider {
 func GenesysCloudProviderAsProvider(v *GenesysCloudProvider) Provider {
 	return Provider{
 		GenesysCloudProvider: v,
+	}
+}
+
+// OpenAiProviderAsProvider is a convenience function that returns OpenAiProvider wrapped in Provider
+func OpenAiProviderAsProvider(v *OpenAiProvider) Provider {
+	return Provider{
+		OpenAiProvider: v,
 	}
 }
 
@@ -97,6 +105,21 @@ func (dst *Provider) UnmarshalJSON(data []byte) error {
 			dst.GenesysCloudProvider = nil
 		}
 	}
+	// check if the discriminator value is 'OPENAI_REALTIME'
+	if jsonDict["type"] == "OPENAI_REALTIME" {
+		// try to unmarshal JSON data into OpenAiProvider
+		err = json.Unmarshal(data, &dst.OpenAiProvider)
+		if err == nil {
+			jsonOpenAiProvider, _ := json.Marshal(dst.OpenAiProvider)
+			if string(jsonOpenAiProvider) == "{}" { // empty struct
+				dst.OpenAiProvider = nil
+			} else {
+				return nil // data stored in dst.OpenAiProvider, return on the first match
+			}
+		} else {
+			dst.OpenAiProvider = nil
+		}
+	}
 	return fmt.Errorf("Data failed to match schemas in anyOf(Provider)")
 }
 
@@ -110,6 +133,9 @@ func (src Provider) MarshalJSON() ([]byte, error) {
 	}
 	if src.GenesysCloudProvider != nil {
 		return json.Marshal(&src.GenesysCloudProvider)
+	}
+	if src.OpenAiProvider != nil {
+		return json.Marshal(&src.OpenAiProvider)
 	}
 	return nil, nil // no data in anyOf schemas
 }
@@ -127,6 +153,9 @@ func (obj *Provider) GetActualInstance() interface{} {
 	}
 	if obj.GenesysCloudProvider != nil {
 		return obj.GenesysCloudProvider
+	}
+	if obj.OpenAiProvider != nil {
+		return obj.OpenAiProvider
 	}
 	// all schemas are nil
 	return nil

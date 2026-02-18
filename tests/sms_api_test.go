@@ -1507,3 +1507,183 @@ func TestShouldGetReceivedSmsMessages(t *testing.T) {
 	assert.Equal(t, givenPricePerMessage, price.GetPricePerMessage())
 	assert.Equal(t, givenCurrency, price.GetCurrency())
 }
+
+// ==============================================================================
+// Webhook deserialization tests
+// ==============================================================================
+
+func TestReceiveSmsDeliveryReportsWebhook(t *testing.T) {
+	givenBulkId := "bulk-sms-123"
+	givenMessageId := "msg-sms-456"
+	givenTo := "385916242493"
+	givenSender := "InfoSMS"
+	givenSentAt := "2025-02-06T15:35:12.000+0000"
+	givenDoneAt := "2025-02-06T15:35:14.000+0000"
+	givenMessageCount := 1
+	givenMccMnc := "21901"
+	givenCallbackData := "callbackData"
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+	givenCampaignReferenceId := "campaignRef"
+
+	givenPayload := fmt.Sprintf(`
+		{
+			"results": [
+				{
+					"bulkId": "%s",
+					"messageId": "%s",
+					"to": "%s",
+					"sender": "%s",
+					"sentAt": "%s",
+					"doneAt": "%s",
+					"messageCount": %d,
+					"mccMnc": "%s",
+					"callbackData": "%s",
+					"price": {
+						"pricePerMessage": 0.01,
+						"currency": "EUR"
+					},
+					"status": {
+						"groupId": 3,
+						"groupName": "DELIVERED",
+						"id": 5,
+						"name": "DELIVERED_TO_HANDSET",
+						"description": "Message delivered to handset"
+					},
+					"error": {
+						"groupId": 0,
+						"groupName": "OK",
+						"id": 0,
+						"name": "NO_ERROR",
+						"description": "No error",
+						"permanent": false
+					},
+					"platform": {
+						"entityId": "%s",
+						"applicationId": "%s"
+					},
+					"campaignReferenceId": "%s"
+				}
+			]
+		}`,
+		givenBulkId,
+		givenMessageId,
+		givenTo,
+		givenSender,
+		givenSentAt,
+		givenDoneAt,
+		givenMessageCount,
+		givenMccMnc,
+		givenCallbackData,
+		givenEntityId,
+		givenApplicationId,
+		givenCampaignReferenceId,
+	)
+
+	var responseBody sms.DeliveryReports
+	err := json.Unmarshal([]byte(givenPayload), &responseBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+	assert.Equal(t, 1, len(responseBody.GetResults()))
+
+	result := responseBody.GetResults()[0]
+	assert.Equal(t, givenBulkId, result.GetBulkId())
+	assert.Equal(t, givenMessageId, result.GetMessageId())
+	assert.Equal(t, givenTo, result.GetTo())
+	assert.Equal(t, givenSender, result.GetSender())
+	assert.Equal(t, int32(givenMessageCount), result.GetMessageCount())
+	assert.Equal(t, givenMccMnc, result.GetMccMnc())
+	assert.Equal(t, givenCallbackData, result.GetCallbackData())
+	assert.Equal(t, givenCampaignReferenceId, result.GetCampaignReferenceId())
+
+	price := result.GetPrice()
+	assert.Equal(t, float32(0.01), price.GetPricePerMessage())
+	assert.Equal(t, "EUR", price.GetCurrency())
+
+	status := result.GetStatus()
+	assert.Equal(t, int32(3), status.GetGroupId())
+	assert.Equal(t, int32(5), status.GetId())
+	assert.Equal(t, "DELIVERED_TO_HANDSET", status.GetName())
+
+	errorInfo := result.GetError()
+	assert.Equal(t, int32(0), errorInfo.GetGroupId())
+	assert.Equal(t, "NO_ERROR", errorInfo.GetName())
+	assert.Equal(t, false, errorInfo.GetPermanent())
+
+	platform := result.GetPlatform()
+	assert.Equal(t, givenEntityId, platform.GetEntityId())
+	assert.Equal(t, givenApplicationId, platform.GetApplicationId())
+}
+
+func TestReceiveSmsInboundMessagesWebhook(t *testing.T) {
+	givenMessageId := "msg-mo-123"
+	givenFrom := "385916242493"
+	givenTo := "InfoSMS"
+	givenText := "KEYWORD Hello from user"
+	givenCleanText := "Hello from user"
+	givenKeyword := "KEYWORD"
+	givenReceivedAt := "2025-02-06T15:35:12.000+0000"
+	givenSmsCount := 1
+	givenCallbackData := "callbackData"
+	givenEntityId := "my-entity-id"
+	givenApplicationId := "my-application-id"
+
+	givenPayload := fmt.Sprintf(`
+		{
+			"results": [
+				{
+					"messageId": "%s",
+					"from": "%s",
+					"to": "%s",
+					"text": "%s",
+					"cleanText": "%s",
+					"keyword": "%s",
+					"receivedAt": "%s",
+					"smsCount": %d,
+					"callbackData": "%s",
+					"entityId": "%s",
+					"applicationId": "%s",
+					"price": {
+						"pricePerMessage": 0.0,
+						"currency": "EUR"
+					}
+				}
+			],
+			"messageCount": 1,
+			"pendingMessageCount": 0
+		}`,
+		givenMessageId,
+		givenFrom,
+		givenTo,
+		givenText,
+		givenCleanText,
+		givenKeyword,
+		givenReceivedAt,
+		givenSmsCount,
+		givenCallbackData,
+		givenEntityId,
+		givenApplicationId,
+	)
+
+	var responseBody sms.ReportResponse
+	err := json.Unmarshal([]byte(givenPayload), &responseBody)
+
+	assert.Nil(t, err, "Expected nil error")
+	assert.NotNil(t, responseBody, "Expected non-nil response body")
+	assert.Equal(t, int32(1), responseBody.GetMessageCount())
+	assert.Equal(t, int32(0), responseBody.GetPendingMessageCount())
+	assert.Equal(t, 1, len(responseBody.GetResults()))
+
+	result := responseBody.GetResults()[0]
+	assert.Equal(t, givenMessageId, result.GetMessageId())
+	assert.Equal(t, givenFrom, result.GetFrom())
+	assert.Equal(t, givenTo, result.GetTo())
+	assert.Equal(t, givenText, result.GetText())
+	assert.Equal(t, givenCleanText, result.GetCleanText())
+	assert.Equal(t, givenKeyword, result.GetKeyword())
+	assert.Equal(t, int32(givenSmsCount), result.GetSmsCount())
+	assert.Equal(t, givenCallbackData, result.GetCallbackData())
+	assert.Equal(t, givenEntityId, result.GetEntityId())
+	assert.Equal(t, givenApplicationId, result.GetApplicationId())
+}

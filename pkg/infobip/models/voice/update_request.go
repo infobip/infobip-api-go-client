@@ -25,6 +25,8 @@ type UpdateRequest struct {
 	Muted *bool
 	// Indicates whether to deaf or undeaf the end user. This action prevents the user from hearing the call.
 	Deaf *bool
+	// Indicates whether to blind or unblind the end user. This action prevents the user from seeing any remote video in the call. Only applicable for WebRTC endpoints.
+	Blind *bool
 }
 
 // NewUpdateRequest instantiates a new UpdateRequest object
@@ -110,6 +112,38 @@ func (o *UpdateRequest) SetDeaf(v bool) {
 	o.Deaf = &v
 }
 
+// GetBlind returns the Blind field value if set, zero value otherwise.
+func (o *UpdateRequest) GetBlind() bool {
+	if o == nil || IsNil(o.Blind) {
+		var ret bool
+		return ret
+	}
+	return *o.Blind
+}
+
+// GetBlindOk returns a tuple with the Blind field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *UpdateRequest) GetBlindOk() (*bool, bool) {
+	if o == nil || IsNil(o.Blind) {
+		return nil, false
+	}
+	return o.Blind, true
+}
+
+// HasBlind returns a boolean if a field has been set.
+func (o *UpdateRequest) HasBlind() bool {
+	if o != nil && !IsNil(o.Blind) {
+		return true
+	}
+
+	return false
+}
+
+// SetBlind gets a reference to the given bool and assigns it to the Blind field.
+func (o *UpdateRequest) SetBlind(v bool) {
+	o.Blind = &v
+}
+
 func (o UpdateRequest) MarshalJSON() ([]byte, error) {
 	toSerialize, err := o.ToMap()
 	if err != nil {
@@ -125,6 +159,9 @@ func (o UpdateRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Deaf) {
 		toSerialize["deaf"] = o.Deaf
+	}
+	if !IsNil(o.Blind) {
+		toSerialize["blind"] = o.Blind
 	}
 	return toSerialize, nil
 }

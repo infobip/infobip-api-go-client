@@ -123,7 +123,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
 *  **Renamed Field**: `body` ➜ `requestBody` in `ApiSubmitFormDataRequest` (`FormsApi`) struct to improve clarity and naming consistency.
 *  **Fixed Incorrect Field Type**: Updated `Data` field type from `map[string]map[string]interface{}` to `map[string]interface{}` to align with the current state of the API.
 
-## [ [3.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.0)] - 2025-01-15
+## [ [3.1.0](https://github.com/infobip/infobip-api-go-client/releases/tag/3.1.0)] - 2025-01-20
 
 ⚠️ IMPORTANT NOTE: This release contains compile time breaking changes.
 All changes, including breaking changes, are addressed and explained in the list bellow.

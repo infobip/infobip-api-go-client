@@ -424,6 +424,37 @@ func (o SearchResponse) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
+func (o *SearchResponse) UnmarshalJSON(data []byte) error {
+	type alias SearchResponse
+
+	temp := struct {
+		*alias
+		Script json.RawMessage
+	}{
+		alias: (*alias)(o),
+	}
+
+	if err := json.Unmarshal(data, &temp); err != nil {
+		return err
+	}
+
+	if len(temp.Script) != 0 {
+		var asString string
+		if err := json.Unmarshal(temp.Script, &asString); err == nil {
+			o.Script = &asString
+		} else {
+			cleanedJSON, err := json.Marshal(json.RawMessage(temp.Script))
+			if err != nil {
+				return err
+			}
+			asString := string(cleanedJSON)
+			o.Script = &asString
+		}
+	}
+
+	return nil
+}
+
 type NullableSearchResponse struct {
 	value *SearchResponse
 	isSet bool

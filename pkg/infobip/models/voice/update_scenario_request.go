@@ -256,7 +256,12 @@ func (o UpdateScenarioRequest) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Record) {
 		toSerialize["record"] = o.Record
 	}
-	toSerialize["script"] = o.Script
+	var rawValue interface{}
+	err := json.Unmarshal([]byte(o.Script), &rawValue)
+	if err != nil {
+		return nil, err
+	}
+	toSerialize["script"] = rawValue
 	return toSerialize, nil
 }
 

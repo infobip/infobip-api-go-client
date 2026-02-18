@@ -841,13 +841,16 @@ func TestShouldCreateVoiceIvrScenario(t *testing.T) {
 	}
 	givenDial := "dial"
 	givenScript := fmt.Sprintf(`[{"dial": "%s"}]`, givenDial)
-	givenScriptJSON, _ := json.Marshal(givenScript)
 
 	givenRequest := fmt.Sprintf(`{
        "name": "%s",
        "description": "%s",
-       "script": %s
-   }`, givenName, givenDescription, string(givenScriptJSON))
+       "script": [
+           {
+               "dial": "%s"
+           }
+       ]
+   }`, givenName, givenDescription, givenDial)
 
 	givenResponse := fmt.Sprintf(`{
        "id": "%s",
@@ -855,8 +858,12 @@ func TestShouldCreateVoiceIvrScenario(t *testing.T) {
        "description": "%s",
        "createTime": "%s",
        "updateTime": "%s",
-       "script": %s
-   }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, string(givenScriptJSON))
+       "script": [
+			{
+               "dial": "%s"
+           }
+       ]
+   }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, givenDial)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -899,13 +906,13 @@ func TestShouldCreateVoiceIvrScenarios(t *testing.T) {
 		T: givenUpdateTimeDateTime,
 	}
 	givenScript := `[{"dial": "dial", "actionId": 1}]`
-	givenScriptJSON, _ := json.Marshal(givenScript)
+	givenDial := "dial"
 
-	givenRequest := fmt.Sprintf(`{
+	givenRequest := `{
         "name": "Capture speech or digit",
         "description": "Capture speech or digit",
-        "script": %s
-    }`, string(givenScriptJSON))
+        "script": [{"dial": "dial", "actionId": 1}]
+    }`
 
 	givenResponse := fmt.Sprintf(`{
        "id": "%s",
@@ -913,8 +920,12 @@ func TestShouldCreateVoiceIvrScenarios(t *testing.T) {
        "description": "%s",
        "createTime": "%s",
        "updateTime": "%s",
-       "script": %s
-   }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, string(givenScriptJSON))
+       "script": [
+			{
+               "dial": "%s"
+           }
+       ]
+   }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, givenDial)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
@@ -960,14 +971,24 @@ func TestShouldUpdateVoiceIvrScenario(t *testing.T) {
 	ibTimeUpdateTime := infobip.Time{
 		T: givenUpdateTimeDateTime,
 	}
-	givenScript := fmt.Sprintf(`[{"request": "%s", "options": {"method": "%s", "headers": {"%s": "%s"}, "body": "%s"}}]`, givenRequestUrl, givenRequestMethod, givenRequestHeaderKey, givenRequestHeaderValue, givenRequestBodyPayload)
-	givenScriptJSON, _ := json.Marshal(givenScript)
+	givenScript := fmt.Sprintf(`[{"request":"%s","options":{"method":"%s","headers":{"%s":"%s"},"body":"%s"}}]`, givenRequestUrl, givenRequestMethod, givenRequestHeaderKey, givenRequestHeaderValue, givenRequestBodyPayload)
 
 	givenRequest := fmt.Sprintf(`{
        "name": "%s",
        "description": "%s",
-       "script": %s
-   }`, givenName, givenDescription, string(givenScriptJSON))
+       "script": [
+           {
+               "request": "%s",
+               "options": {
+                   "method": "%s",
+                   "headers": {
+                       "%s": "%s"
+                   },
+                   "body": "%s"
+               }
+           }
+       ]
+   }`, givenName, givenDescription, givenRequestUrl, givenRequestMethod, givenRequestHeaderKey, givenRequestHeaderValue, givenRequestBodyPayload)
 
 	givenResponse := fmt.Sprintf(`{
        "id": "%s",
@@ -975,8 +996,19 @@ func TestShouldUpdateVoiceIvrScenario(t *testing.T) {
        "description": "%s",
        "createTime": "%s",
        "updateTime": "%s",
-       "script": %s
-   }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, string(givenScriptJSON))
+       "script": [
+           {
+               "request": "%s",
+               "options": {
+                   "method": "%s",
+                   "headers": {
+                       "%s": "%s"
+                   },
+                   "body": "%s"
+               }
+           }
+       ]
+   }`, givenId, givenName, givenDescription, givenCreateTime, givenUpdateTime, givenRequestUrl, givenRequestMethod, givenRequestHeaderKey, givenRequestHeaderValue, givenRequestBodyPayload)
 
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()

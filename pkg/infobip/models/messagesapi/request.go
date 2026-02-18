@@ -22,7 +22,7 @@ var _ MappedNullable = &Request{}
 // Request struct for Request
 type Request struct {
 	// Array of message objects of a single message or multiple messages sent under one bulk ID.
-	Messages []BaseMessage
+	Messages []RequestMessagesInner
 	Options  *DefaultMessageRequestOptions
 }
 
@@ -33,7 +33,7 @@ type _Request Request
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
 
-func NewRequest(messages []BaseMessage) *Request {
+func NewRequest(messages []RequestMessagesInner) *Request {
 	this := Request{}
 	this.Messages = messages
 	return &this
@@ -49,9 +49,9 @@ func NewRequestWithDefaults() *Request {
 }
 
 // GetMessages returns the Messages field value
-func (o *Request) GetMessages() []BaseMessage {
+func (o *Request) GetMessages() []RequestMessagesInner {
 	if o == nil {
-		var ret []BaseMessage
+		var ret []RequestMessagesInner
 		return ret
 	}
 
@@ -60,7 +60,7 @@ func (o *Request) GetMessages() []BaseMessage {
 
 // GetMessagesOk returns a tuple with the Messages field value
 // and a boolean to check if the value has been set.
-func (o *Request) GetMessagesOk() ([]BaseMessage, bool) {
+func (o *Request) GetMessagesOk() ([]RequestMessagesInner, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -68,7 +68,7 @@ func (o *Request) GetMessagesOk() ([]BaseMessage, bool) {
 }
 
 // SetMessages sets field value
-func (o *Request) SetMessages(v []BaseMessage) {
+func (o *Request) SetMessages(v []RequestMessagesInner) {
 	o.Messages = v
 }
 

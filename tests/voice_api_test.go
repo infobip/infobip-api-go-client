@@ -905,13 +905,99 @@ func TestShouldCreateVoiceIvrScenarios(t *testing.T) {
 	ibTimeUpdateTime := infobip.Time{
 		T: givenUpdateTimeDateTime,
 	}
-	givenScript := `[{"dial": "dial", "actionId": 1}]`
+	givenScript := `[
+            {
+                "say": "Say discount or press 1 to get discount. Say exit or press 0 to exit."
+            },
+            {
+                "capture": "myVar",
+                "timeout": 5,
+                "speechOptions": {
+                    "language": "en-US",
+                    "maxSilence": 2,
+                    "keyPhrases": [
+                        "discount",
+                        "exit"
+                    ]
+                },
+                "dtmfOptions": {
+                    "maxInputLength": 1
+                }
+            },
+            {
+                "if": "${myVar == 'discount' || myVar == '1'}",
+                "then": [
+                    {
+                        "say": "You will get discount"
+                    }
+                ],
+                "else": [
+                    {
+                        "if": "${myVar == 'exit' || myVar == '0'}",
+                        "then": [
+                            {
+                                "say": "Goodbye"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "say": "I did not understand"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "hangup"
+        ]`
 	givenDial := "dial"
 
 	givenRequest := `{
         "name": "Capture speech or digit",
         "description": "Capture speech or digit",
-        "script": [{"dial": "dial", "actionId": 1}]
+        "script": [
+            {
+                "say": "Say discount or press 1 to get discount. Say exit or press 0 to exit."
+            },
+            {
+                "capture": "myVar",
+                "timeout": 5,
+                "speechOptions": {
+                    "language": "en-US",
+                    "maxSilence": 2,
+                    "keyPhrases": [
+                        "discount",
+                        "exit"
+                    ]
+                },
+                "dtmfOptions": {
+                    "maxInputLength": 1
+                }
+            },
+            {
+                "if": "${myVar == 'discount' || myVar == '1'}",
+                "then": [
+                    {
+                        "say": "You will get discount"
+                    }
+                ],
+                "else": [
+                    {
+                        "if": "${myVar == 'exit' || myVar == '0'}",
+                        "then": [
+                            {
+                                "say": "Goodbye"
+                            }
+                        ],
+                        "else": [
+                            {
+                                "say": "I did not understand"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "hangup"
+        ]
     }`
 
 	givenResponse := fmt.Sprintf(`{

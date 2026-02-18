@@ -48,7 +48,6 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
     * Extended `MoEvent` with `MessageCount` and `Metadata`.
     * Extended `MoEventContentType` with `URL`, `FLOW_RESPONSE`, `PAYMENT_RESPONSE`, `FORM_RESPONSE` and `REACTION` types.
     * Extended `OutboundTemplateChannel` with `VIBER_BM` type.
-    * Changed `Messages` array type from `RequestMessagesInner` to `BaseMessage` in `Request`.
 
 * **Email:**
     * Extended `ApiReport` with `AttemptCount` and `TimeToFirstAttempt`.
@@ -88,7 +87,7 @@ and this library adheres to [Semantic Versioning](http://semver.org/) as mention
     * Changed `Files` array type from `RecordingFile` to `PublicRecordingFile` in `Recording`.
     * Extended `RecordingFile` with `ExpirationTime`.
     * Changed `CustomData` to `MultiChannelMappingData` in `RecordingFile`.
-    * Changed `Script` field type in `SearchResponse`, `UpdateScenarioRequest` to `string`.
+    * Changed `Script` field type in `SearchResponse`, `UpdateScenarioRequest`, `UpdateScenarioResponse` to `string`.
     * Extended `SearchResponse`, `UpdateScenarioResponse` with `NotifyUrl`, `NotifyContentType`, `Record` and `LastUsageDate`.
     * Extended `SpeechCaptureRequest` with `TerminateOnKeyPhrase`, `CustomDictionary` and `AdvancedFormatting`.
     * Extended `Transcription` with `CustomDictionary` and `AdvancedFormatting`.

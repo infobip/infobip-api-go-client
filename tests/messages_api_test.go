@@ -151,7 +151,7 @@ func TestSendMessagesApiMessage(t *testing.T) {
 	givenMessage.Options = options
 	givenMessage.Webhooks = webhooks
 
-	request := messagesapi.NewRequest([]messagesapi.BaseMessage{
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{Message: givenMessage},
 	})
 
@@ -927,7 +927,7 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 
 	givenTemplateMessage.Content = &givenMessageContent
 
-	request := messagesapi.NewRequest([]messagesapi.BaseMessage{
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{TemplateMessage: givenTemplateMessage},
 	})
 
@@ -1506,7 +1506,7 @@ func TestValidateMessagesApiMessage_Success(t *testing.T) {
 		},
 	)
 
-	request := messagesapi.NewRequest([]messagesapi.BaseMessage{
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{Message: givenMessage},
 	})
 
@@ -1568,7 +1568,7 @@ func TestValidateMessagesApiMessage_WithSkippableViolations(t *testing.T) {
 		messagesapi.MessageContent{Body: body},
 	)
 
-	request := messagesapi.NewRequest([]messagesapi.BaseMessage{
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{Message: givenMessage},
 	})
 

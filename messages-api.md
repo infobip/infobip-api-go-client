@@ -64,8 +64,8 @@ givenMessage := messagesapi.NewMessage(
 	content,
 )
 
-request := messagesapi.NewRequest([]messagesapi.BaseMessage{
-	messagesapi.MessageAsBaseMessage(givenMessage),
+request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
+	messagesapi.MessageAsRequestMessagesInner(givenMessage),
 })
 ````
 

@@ -32,7 +32,7 @@ func TestSendMessagesApiMessage(t *testing.T) {
 		content,
 	)
 
-	request := messagesapi.NewRequest([]messagesapi.BaseMessage{
+	request := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{Message: givenMessage},
 	})
 
@@ -78,7 +78,7 @@ func TestSendMessagesApiScheduledWithTracking(t *testing.T) {
 		CampaignReferenceId: infobip.PtrString("campaign-spring"),
 	})
 
-	req := messagesapi.NewRequest([]messagesapi.BaseMessage{
+	req := messagesapi.NewRequest([]messagesapi.RequestMessagesInner{
 		{Message: givenMessage},
 	})
 

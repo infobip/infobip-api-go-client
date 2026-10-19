@@ -25,17 +25,17 @@ func TestShouldAddParticipantsToFlow(t *testing.T) {
 	identifier1 := "370329180020364"
 	type1 := moments.FLOWPERSONUNIQUEFIELDTYPE_FACEBOOK
 
-	identifier2 := "test@infobip.com"
+	identifier2 := "test@example.com"
 	type2 := moments.FLOWPERSONUNIQUEFIELDTYPE_EMAIL
 	orderNumber2 := 1167873391
 
-	identifier3 := "test2@infobip.com"
+	identifier3 := "test2@example.com"
 	type3 := moments.FLOWPERSONUNIQUEFIELDTYPE_FACEBOOK
 	orderNumber3 := 1595299041
 	externalId3 := "optional_external_person_id"
 	contractExpiry3 := "2023-04-01"
 	company3 := "Infobip"
-	email3 := "test@infobip.com"
+	email3 := "test@example.com"
 
 	givenRequest := fmt.Sprintf(`{
         "participants": [
@@ -132,8 +132,8 @@ func TestShouldGetParticipantsReport(t *testing.T) {
 	campaignId := int64(200000000000001)
 	givenOperationId := "03f2d474-0508-46bf-9f3d-d8e2c28adaea"
 	givenCallbackData := "Callback Data"
-	givenIdentifier1 := "test@infobip.com"
-	givenIdentifier2 := "test2@infobip.com"
+	givenIdentifier1 := "test@example.com"
+	givenIdentifier2 := "test2@example.com"
 	givenType := moments.FLOWPERSONUNIQUEFIELDTYPE_EMAIL
 	givenStatus1 := moments.FLOWADDFLOWPARTICIPANTSTATUS_ACCEPTED
 	givenStatus2 := moments.FLOWADDFLOWPARTICIPANTSTATUS_REJECTED

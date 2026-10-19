@@ -671,7 +671,7 @@ func TestUpdateTfaEmailMessageTemplate(t *testing.T) {
 func TestSendTfaPinCodeOverSms(t *testing.T) {
 	givenApplicationId := "1234567"
 	givenMessageId := "7654321"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenPinId := "9C817C6F8AF3D48F9FE553282AFA2B67"
 	givenFrom := "Sender 1"
 	givenFirstName := "John"
@@ -739,7 +739,7 @@ func TestSendTfaPinCodeOverSms(t *testing.T) {
 
 func TestResendTfaPinCodeOverSms(t *testing.T) {
 	givenPinId := "9C817C6F8AF3D48F9FE553282AFA2B67"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenFirstName := "John"
 
 	givenResponse := fmt.Sprintf(`
@@ -783,7 +783,7 @@ func TestResendTfaPinCodeOverSms(t *testing.T) {
 func TestSendTfaPinCodeOverVoice(t *testing.T) {
 	givenApplicationId := "1234567"
 	givenMessageId := "7654321"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenPinId := "9C817C6F8AF3D48F9FE553282AFA2B67"
 	givenFrom := "Sender 1"
 	givenFirstName := "John"
@@ -847,7 +847,7 @@ func TestSendTfaPinCodeOverVoice(t *testing.T) {
 
 func TestResendTfaPinCodeOverVoice(t *testing.T) {
 	givenPinId := "9C817C6F8AF3D48F9FE553282AFA2B67"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenFirstName := "John"
 
 	givenResponse := fmt.Sprintf(`
@@ -892,7 +892,7 @@ func TestVerifyTfaPhoneNumber(t *testing.T) {
 	givenResponse := fmt.Sprintf(`
 		{
 			"pinId": "%s",
-			"msisdn": "41793026727",
+			"msisdn": "41xxxxxxx25",
 			"verified": %t,
 			"attemptsRemaining": %d
 		}`,
@@ -941,7 +941,7 @@ func TestVerifyTfaPhoneNumber(t *testing.T) {
 
 func TestGetTfaVerificationStatus(t *testing.T) {
 	givenApplicationId := "16A8B5FE2BCD6CA716A2D780CB3F3390"
-	givenMsisdn := "41793026727"
+	givenMsisdn := "41xxxxxxx25"
 	givenSentAtFirst := int64(1418364246)
 	givenVerifiedAtFirst := int64(1418364366)
 
@@ -955,7 +955,7 @@ func TestGetTfaVerificationStatus(t *testing.T) {
 					"sentAt": %d
 				},
 				{
-					"msisdn": "41793026746",
+					"msisdn": "41xxxxxxx27",
 					"verified": false,
 					"verifiedAt": 1418364226,
 					"sentAt": 1418333246

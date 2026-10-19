@@ -42,8 +42,8 @@ Keep in mind the following restrictions while using a trial account:
     apiResponse, httpResponse, err := infobipClient.
         EmailAPI.
         SendEmail(auth).
-        To([]string{"john.smith@somedomain.com"}).
-        From("Jane Smith <jane.smith@somecompany.com>").
+        To([]string{"john.smith@example.org"}).
+        From("Jane Smith <jane.smith@example.com>").
         Subject("Mail subject text").
         Text("Test message with a file").
         Attachment([]*os.File{attachmentFile}).

@@ -72,7 +72,7 @@ func TestSendRcsMessages_BasicTextMessage(t *testing.T) {
 	// Test data from OpenAPI example: "Basic text message"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenText := "Some text"
 
@@ -88,7 +88,7 @@ func TestSendRcsMessages_BasicTextMessage(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"sender": "DemoSender"
@@ -141,7 +141,7 @@ func TestSendRcsMessages_TextMessageWithReplySuggestion(t *testing.T) {
 	// Test data from OpenAPI example: "Single text message"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenText := "Some text"
 	givenSuggestionText := "Example text"
@@ -166,7 +166,7 @@ func TestSendRcsMessages_TextMessageWithReplySuggestion(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"sender": "DemoSender"
@@ -223,7 +223,7 @@ func TestSendRcsMessages_FileMessage(t *testing.T) {
 	// Test data from OpenAPI example: "File message"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenFileUrl := "https://www.example.com/video.mp4"
 	givenThumbnailUrl := "https://www.example.com/thumbnail.jpg"
@@ -252,7 +252,7 @@ func TestSendRcsMessages_FileMessage(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"sender": "DemoSender"
@@ -307,7 +307,7 @@ func TestSendRcsMessages_CardMessage(t *testing.T) {
 	// Test data from OpenAPI example: "Card message"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenTitle := "Some title"
 	givenDescription := "Some description"
@@ -361,7 +361,7 @@ func TestSendRcsMessages_CardMessage(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"sender": "DemoSender"
@@ -432,7 +432,7 @@ func TestSendRcsMessages_ProviderTemplateMessage(t *testing.T) {
 	// Test data from OpenAPI example: "Provider template message"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenTemplateId := "ExampleTemplateId"
 
@@ -458,7 +458,7 @@ func TestSendRcsMessages_ProviderTemplateMessage(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"sender": "DemoSender"
@@ -509,7 +509,7 @@ func TestSendRcsMessages_TextWithSmsFailover(t *testing.T) {
 	// Test data from OpenAPI example: "Text message with SMS failover"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenText := "Some text"
 	givenFailoverText := "Some failover text"
@@ -533,7 +533,7 @@ func TestSendRcsMessages_TextWithSmsFailover(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"options": {
@@ -645,7 +645,7 @@ func TestSendRcsMessages_CarouselMessage(t *testing.T) {
 	// Test data from OpenAPI example: "Carousel message"
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenDestination := "441134960001"
+	givenDestination := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 
 	givenResponse := buildSendRcsMessagesResponse(givenBulkId, rcsMessageResponse{MessageId: givenMessageId, Destination: givenDestination})
@@ -724,7 +724,7 @@ func TestSendRcsMessages_CarouselMessage(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						}
 					],
 					"sender": "DemoSender"
@@ -816,8 +816,8 @@ func TestSendRcsMessages_MultipleDestinations(t *testing.T) {
 	givenBulkId := "a28dd97c-2222-4fcf-99f1-0b557ed381da"
 	givenMessageId1 := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
 	givenMessageId2 := "b38ee97d-2ffc-5gdf-00g2-1c668ed492eb"
-	givenDestination1 := "441134960001"
-	givenDestination2 := "441134960002"
+	givenDestination1 := "44xxxxxxxx47"
+	givenDestination2 := "44xxxxxxxx48"
 	givenSender := "DemoSender"
 	givenText := "Hello from Infobip!"
 
@@ -837,10 +837,10 @@ func TestSendRcsMessages_MultipleDestinations(t *testing.T) {
 					},
 					"destinations": [
 						{
-							"to": "441134960001"
+							"to": "44xxxxxxxx47"
 						},
 						{
-							"to": "441134960002"
+							"to": "44xxxxxxxx48"
 						}
 					],
 					"sender": "DemoSender"
@@ -892,7 +892,7 @@ func TestSendRcsMessages_MultipleDestinations(t *testing.T) {
 func TestGetOutboundRcsMessageDeliveryReports(t *testing.T) {
 	givenBulkId := "bulk-123-rcs"
 	givenMessageId := "msg-456-rcs"
-	givenTo := "385916242493"
+	givenTo := "44xxxxxxxx41"
 	givenSentAt := "2021-08-25T16:00:00.000+0000"
 	givenDoneAt := "2021-08-25T16:00:00.500+0000"
 	givenPricePerMessage := 0.05
@@ -982,7 +982,7 @@ func TestGetOutboundRcsMessageDeliveryReports(t *testing.T) {
 func TestGetOutboundRcsMessageLogs(t *testing.T) {
 	givenBulkId := "bulk-123-rcs"
 	givenMessageId := "msg-456-rcs"
-	givenDestination := "385916242493"
+	givenDestination := "44xxxxxxxx41"
 	givenSentAt := "2021-08-25T16:00:00.000+0000"
 	givenDoneAt := "2021-08-25T16:00:00.500+0000"
 
@@ -1057,8 +1057,8 @@ func TestCapabilityCheckRcsDestinationsNotify(t *testing.T) {
 	givenBulkId := "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8"
 	givenMessageId1 := "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8"
 	givenMessageId2 := "b5c3bdff-2d44-4f74-8a8e-3792fa57dfc3"
-	givenPhoneNumber1 := "441134960001"
-	givenPhoneNumber2 := "441134960002"
+	givenPhoneNumber1 := "44xxxxxxxx47"
+	givenPhoneNumber2 := "44xxxxxxxx48"
 	givenSender := "DemoSender"
 
 	givenResponse := fmt.Sprintf(`
@@ -1124,7 +1124,7 @@ func TestCapabilityCheckRcsDestinationsNotify_WithPlatformOptions(t *testing.T) 
 	// Test with platform options from OpenAPI example
 	givenBulkId := "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8"
 	givenSender := "DemoSender"
-	givenPhoneNumber := "441134960001"
+	givenPhoneNumber := "44xxxxxxxx47"
 	givenEntityId := "Example entity id"
 	givenApplicationId := "Example application id"
 
@@ -1177,8 +1177,8 @@ func TestCapabilityCheckRcsDestinationsQuery(t *testing.T) {
 	// Test data from OpenAPI example
 	givenMessageId1 := "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8"
 	givenMessageId2 := "b5c3bdff-2d44-4f74-8a8e-3792fa57dfc3"
-	givenPhoneNumber1 := "441134960001"
-	givenPhoneNumber2 := "441134960002"
+	givenPhoneNumber1 := "44xxxxxxxx47"
+	givenPhoneNumber2 := "44xxxxxxxx48"
 	givenSender := "DemoSender"
 
 	givenResponse := fmt.Sprintf(`
@@ -1239,7 +1239,7 @@ func TestCapabilityCheckRcsDestinationsQuery(t *testing.T) {
 func TestCapabilityCheckRcsDestinationsQuery_WithPlatformOptions(t *testing.T) {
 	// Test with platform options from OpenAPI example
 	givenMessageId := "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8"
-	givenPhoneNumber := "441134960001"
+	givenPhoneNumber := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenEntityId := "Example entity id"
 	givenApplicationId := "Example application id"
@@ -1312,7 +1312,7 @@ func TestCapabilityCheckRcsDestinationsQuery_WithPlatformOptions(t *testing.T) {
 func TestReceiveRcsDeliveryReportsWebhook(t *testing.T) {
 	givenBulkId := "bulk-123-rcs"
 	givenMessageId := "msg-456-rcs"
-	givenTo := "441134960001"
+	givenTo := "44xxxxxxxx47"
 	givenSender := "DemoSender"
 	givenSentAt := "2025-02-06T15:35:12.000+0000"
 	givenDoneAt := "2025-02-06T15:35:14.000+0000"
@@ -1471,7 +1471,7 @@ func TestReceiveRcsDeliveryReportsWebhook_WithChannel(t *testing.T) {
 					"bulkId": "bulk-123",
 					"channel": "RCS",
 					"messageId": "msg-456",
-					"to": "441134960001",
+					"to": "44xxxxxxxx47",
 					"sender": "DemoSender",
 					"sentAt": "2025-02-06T15:35:12.000+0000",
 					"doneAt": "2025-02-06T15:35:14.000+0000",
@@ -1496,7 +1496,7 @@ func TestReceiveRcsDeliveryReportsWebhook_WithChannel(t *testing.T) {
 					"bulkId": "bulk-123",
 					"channel": "SMS",
 					"messageId": "msg-789",
-					"to": "441134960001",
+					"to": "44xxxxxxxx47",
 					"sender": "DemoSender",
 					"sentAt": "2025-02-06T15:36:12.000+0000",
 					"doneAt": "2025-02-06T15:36:14.000+0000",
@@ -1554,7 +1554,7 @@ func TestReceiveRcsDeliveryReportsWebhook_WithChannel(t *testing.T) {
 	primary.SetBulkId("bulk-123")
 	primary.SetChannel("RCS")
 	primary.SetMessageId("msg-456")
-	primary.SetTo("441134960001")
+	primary.SetTo("44xxxxxxxx47")
 	primary.SetSender("DemoSender")
 	primary.SetSentAt(ibTime("2025-02-06T15:35:12.000+0000"))
 	primary.SetDoneAt(ibTime("2025-02-06T15:35:14.000+0000"))
@@ -1566,7 +1566,7 @@ func TestReceiveRcsDeliveryReportsWebhook_WithChannel(t *testing.T) {
 	failover.SetBulkId("bulk-123")
 	failover.SetChannel("SMS")
 	failover.SetMessageId("msg-789")
-	failover.SetTo("441134960001")
+	failover.SetTo("44xxxxxxxx47")
 	failover.SetSender("DemoSender")
 	failover.SetSentAt(ibTime("2025-02-06T15:36:12.000+0000"))
 	failover.SetDoneAt(ibTime("2025-02-06T15:36:14.000+0000"))
@@ -1581,7 +1581,7 @@ func TestReceiveRcsDeliveryReportsWebhook_WithChannel(t *testing.T) {
 
 func TestReceiveRcsSeenReportsWebhook(t *testing.T) {
 	givenMessageId := "msg-456-rcs"
-	givenFrom := "441134960001"
+	givenFrom := "44xxxxxxxx47"
 	givenTo := "DemoSender"
 	givenSentAt := "2025-02-06T15:35:12.000+0000"
 	givenSeenAt := "2025-02-06T15:36:00.000+0000"
@@ -1645,7 +1645,7 @@ func TestReceiveRcsSeenReportsWebhook(t *testing.T) {
 }
 
 func TestReceiveRcsTypingIndicatorWebhook(t *testing.T) {
-	givenSender := "441134960001"
+	givenSender := "44xxxxxxxx47"
 	givenTo := "DemoSender"
 	givenReceivedAt := "2025-02-06T15:35:12.123+0000"
 	givenEntityId := "my-entity-id"
@@ -1709,7 +1709,7 @@ func TestReceiveRcsTypingIndicatorWebhook(t *testing.T) {
 func TestReceiveRcsCapabilityCheckResultWebhook(t *testing.T) {
 	givenBulkId := "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8"
 	givenMessageId := "a28dd97c-1ffb-4fcf-99f1-0b557ed381da"
-	givenPhoneNumber := "441134960001"
+	givenPhoneNumber := "44xxxxxxxx47"
 
 	givenPayload := fmt.Sprintf(`
 		{
@@ -1741,7 +1741,7 @@ func TestReceiveRcsCapabilityCheckResultWebhook_Unreachable(t *testing.T) {
 		{
 			"bulkId": "d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8",
 			"messageId": "a28dd97c-1ffb-4fcf-99f1-0b557ed381da",
-			"phoneNumber": "441134960002",
+			"phoneNumber": "44xxxxxxxx48",
 			"code": "UNREACHABLE"
 		}`
 
@@ -1749,15 +1749,15 @@ func TestReceiveRcsCapabilityCheckResultWebhook_Unreachable(t *testing.T) {
 	err := json.Unmarshal([]byte(givenPayload), &result)
 
 	assert.Nil(t, err, "Expected nil error")
-	assert.Equal(t, "441134960002", result.GetPhoneNumber())
+	assert.Equal(t, "44xxxxxxxx48", result.GetPhoneNumber())
 	assert.Equal(t, rcs.CAPABILITYCHECKRESPONSECODE_UNREACHABLE, result.GetCode())
 
-	expected := rcs.NewCapabilityCheckResult("d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8", "a28dd97c-1ffb-4fcf-99f1-0b557ed381da", "441134960002", rcs.CAPABILITYCHECKRESPONSECODE_UNREACHABLE)
+	expected := rcs.NewCapabilityCheckResult("d5c3bdff-2d44-4f74-8a8e-3792fa57dfc8", "a28dd97c-1ffb-4fcf-99f1-0b557ed381da", "44xxxxxxxx48", rcs.CAPABILITYCHECKRESPONSECODE_UNREACHABLE)
 	assert.EqualValues(t, *expected, result)
 }
 
 func TestReceiveRcsInboundMessageWebhook(t *testing.T) {
-	givenSender := "441134960001"
+	givenSender := "44xxxxxxxx47"
 	givenTo := "DemoSender"
 	givenIntegrationType := "RCS"
 	givenReceivedAt := "2025-02-06T15:35:12.000+0000"
@@ -1856,7 +1856,7 @@ func TestReceiveRcsInboundMessageWebhook_FileAndSuggestionContent(t *testing.T) 
 		{
 			"results": [
 				{
-					"sender": "441134960001",
+					"sender": "44xxxxxxxx47",
 					"to": "DemoSender",
 					"integrationType": "RCS",
 					"receivedAt": "2025-02-06T15:35:12.000+0000",
@@ -1874,7 +1874,7 @@ func TestReceiveRcsInboundMessageWebhook_FileAndSuggestionContent(t *testing.T) 
 					}
 				},
 				{
-					"sender": "441134960002",
+					"sender": "44xxxxxxxx48",
 					"to": "DemoSender",
 					"integrationType": "RCS",
 					"receivedAt": "2025-02-06T15:36:12.000+0000",
@@ -1931,7 +1931,7 @@ func TestReceiveRcsInboundMessageWebhook_FileAndSuggestionContent(t *testing.T) 
 
 	fileContentModel := rcs.NewInboundFileContent(fileUrl, fileName, fileContentType, fileSize)
 	fileMessage := rcs.NewInboundMessage(
-		"441134960001",
+		"44xxxxxxxx47",
 		"DemoSender",
 		"RCS",
 		ibTime("2025-02-06T15:35:12.000+0000"),
@@ -1942,7 +1942,7 @@ func TestReceiveRcsInboundMessageWebhook_FileAndSuggestionContent(t *testing.T) 
 
 	suggestionContentModel := rcs.NewInboundSuggestionContent(suggestionText, suggestionPostback)
 	suggestionMessage := rcs.NewInboundMessage(
-		"441134960002",
+		"44xxxxxxxx48",
 		"DemoSender",
 		"RCS",
 		ibTime("2025-02-06T15:36:12.000+0000"),
@@ -1964,7 +1964,7 @@ func TestReceiveRcsInboundEventWebhook(t *testing.T) {
 			{
 				"results": [
 					{
-						"sender": "441134960001",
+						"sender": "44xxxxxxxx47",
 						"to": "DemoSender",
 						"integrationType": "RCS",
 						"receivedAt": "2025-02-06T15:35:12.000+0000",
@@ -1990,7 +1990,7 @@ func TestReceiveRcsInboundEventWebhook(t *testing.T) {
 	assert.NoError(t, err)
 	if assert.Equal(t, 1, len(responseBody.GetResults())) {
 		event := responseBody.GetResults()[0]
-		assert.Equal(t, "441134960001", event.GetSender())
+		assert.Equal(t, "44xxxxxxxx47", event.GetSender())
 		assert.Equal(t, "DemoSender", event.GetTo())
 		assert.Equal(t, "RCS", event.GetIntegrationType())
 		assert.Equal(t, ibTime("2025-02-06T15:35:12.000+0000"), event.GetReceivedAt())

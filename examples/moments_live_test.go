@@ -9,22 +9,23 @@ import (
 )
 
 // Adds multiple participants to a Moments flow with variables and person details.
+// Replace <USER_EMAIL> and <PHONE_NUMBER> with values accepted by your account before execution.
 func TestAddFlowParticipants(t *testing.T) {
 	client, auth := newClientAndAuth()
 
 	participantEmail := moments.NewFlowParticipant(
-		*moments.NewFlowPersonUniqueField("test@infobip.com", moments.FLOWPERSONUNIQUEFIELDTYPE_EMAIL),
+		*moments.NewFlowPersonUniqueField("<USER_EMAIL>", moments.FLOWPERSONUNIQUEFIELDTYPE_EMAIL),
 	)
 	participantEmail.SetVariables(map[string]interface{}{"orderNumber": 1167873391})
 
 	participantPhone := moments.NewFlowParticipant(
-		*moments.NewFlowPersonUniqueField("41793026727", moments.FLOWPERSONUNIQUEFIELDTYPE_PHONE),
+		*moments.NewFlowPersonUniqueField("<PHONE_NUMBER>", moments.FLOWPERSONUNIQUEFIELDTYPE_PHONE),
 	)
 	participantPhone.SetPerson(moments.FlowPerson{
 		ExternalId: infobip.PtrString("external-id-001"),
 		ContactInformation: &moments.FlowPersonContacts{
 			Phone: []moments.FlowPhoneContact{
-				{Number: infobip.PtrString("41793026727")},
+				{Number: infobip.PtrString("<PHONE_NUMBER>")},
 			},
 		},
 	})
@@ -37,7 +38,7 @@ func TestAddFlowParticipants(t *testing.T) {
 	request.SetCallbackData("flow-participants-callback")
 
 	apiResponse, httpResponse, err := client.
-		MomentsAPI.
+		FlowAPI.
 		AddFlowParticipants(auth, 200000000000001).
 		FlowAddFlowParticipantsRequest(*request).
 		Execute()
@@ -66,7 +67,7 @@ func TestAddSingleFlowParticipant(t *testing.T) {
 	request := moments.NewFlowAddFlowParticipantsRequest([]moments.FlowParticipant{*participant})
 
 	apiResponse, httpResponse, err := client.
-		MomentsAPI.
+		FlowAPI.
 		AddFlowParticipants(auth, 200000000000001).
 		FlowAddFlowParticipantsRequest(*request).
 		Execute()

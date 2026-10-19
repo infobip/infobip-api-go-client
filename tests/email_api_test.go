@@ -41,9 +41,9 @@ const (
 )
 
 func TestShouldSendFullyFeaturedEmail(t *testing.T) {
-	givenTo := "john.smith@somedomain.com"
-	givenAnotherTo := `{"to": "alice.grey@somecompany.com","placeholders": {"name": "Alice"}}`
-	anotherToInResponse := "alice.grey@somecompany.com"
+	givenTo := "john.smith@example.com"
+	givenAnotherTo := `{"to": "alice.grey@example.com","placeholders": {"name": "Alice"}}`
+	anotherToInResponse := "alice.grey@example.com"
 	givenBulkId := "snxemd8u52v7v84iiu69"
 	givenGroupId := int32(1)
 	givenGroupName := "PENDING"
@@ -61,8 +61,8 @@ func TestShouldSendFullyFeaturedEmail(t *testing.T) {
 	givenMessageId := "somExternalMessageId0"
 	givenAnotherMessageId := "someExternalMessageId1"
 
-	givenFrom := "Jane Smith <jane.smith@somecompany.com>"
-	givenReplyTo := "all.replies@somedomain.com"
+	givenFrom := "Jane Smith <jane.smith@example.com>"
+	givenReplyTo := "all.replies@example.com"
 	givenSubject := "Mail subject text"
 	givenText := "Mail body text"
 	givenHtml := "<h1>Html body</h1><p>Rich HTML message body.</p>"
@@ -145,14 +145,14 @@ func TestShouldSendFullyFeaturedEmail(t *testing.T) {
 
 func TestShouldGetEmailSuppressions(t *testing.T) {
 	givenDomainName := "example.com"
-	givenEmailAddress := "jane.smith@somecompany.com"
+	givenEmailAddress := "jane.smith@example.com"
 	givenType := email.APISUPPRESSIONTYPE_BOUNCE
 	givenCreatedDate := "2024-08-14T14:02:17.366"
 	givenCreatedDateTime, _ := time.Parse("2006-01-02T15:04:05.000", givenCreatedDate)
 	ibTimeCreatedAt := infobip.Time{
 		T: givenCreatedDateTime,
 	}
-	givenReason := "550 5.1.1 <jane.smith@somecompany.com>: user does not exist"
+	givenReason := "550 5.1.1 <jane.smith@example.com>: user does not exist"
 	givenPage := 0
 	givenSize := 100
 
@@ -202,11 +202,11 @@ func TestShouldGetEmailSuppressions(t *testing.T) {
 
 func TestShouldAddEmailSuppressions(t *testing.T) {
 	givenDomainName1 := "example.com"
-	givenEmailAddresses1 := []string{"jane.smith@somecompany.com", "john.doe@somecompany.com"}
+	givenEmailAddresses1 := []string{"jane.smith@example.com", "john.doe@example.com"}
 	givenType := email.APIADDSUPPRESSIONTYPE_BOUNCE
 
 	givenDomainName2 := "example.com"
-	givenEmailAddresses2 := []string{"john.smith@somecompany.com", "john.perry@gmail.com"}
+	givenEmailAddresses2 := []string{"john.smith@example.com", "john.perry@example.com"}
 
 	givenRequest := fmt.Sprintf(`{
         "suppressions": [
@@ -246,11 +246,11 @@ func TestShouldAddEmailSuppressions(t *testing.T) {
 
 func TestShouldDeleteEmailSuppressions(t *testing.T) {
 	givenDomainName1 := "example.com"
-	givenEmailAddresses1 := []string{"jane.smith@somecompany.com", "john.doe@somecompany.com"}
+	givenEmailAddresses1 := []string{"jane.smith@example.com", "john.doe@example.com"}
 	givenType := email.APISUPPRESSIONTYPE_BOUNCE
 
 	givenDomainName2 := "example.com"
-	givenEmailAddresses2 := []string{"john.smith@somecompany.com", "john.perry@gmail.com"}
+	givenEmailAddresses2 := []string{"john.smith@example.com", "john.perry@example.com"}
 
 	givenRequest := fmt.Sprintf(`{
        "suppressions": [
@@ -715,7 +715,7 @@ func TestShouldVerifyDomain(t *testing.T) {
 }
 
 func TestShouldValidateEmail(t *testing.T) {
-	givenTo := "john.smith@abc.com"
+	givenTo := "john.smith@example.com"
 	givenValidSyntax := true
 	givenDidYouMean := ""
 
@@ -906,7 +906,7 @@ func TestShouldGetEmailDeliveryReports(t *testing.T) {
 	}
 	givenBulkId := "csdstgteet4fath2pclbq"
 	givenMessageId := "45653761-3a88-4060-869e-ae372adc7a51"
-	givenTo := "john.doe@email.com"
+	givenTo := "john.doe@example.com"
 
 	expectedResponse := fmt.Sprintf(`{
         "results": [

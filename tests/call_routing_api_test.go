@@ -19,7 +19,7 @@ const (
 func TestShouldGetCallRoutes(t *testing.T) {
 	givenId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenName := "SIP endpoint route"
-	givenDestinationsValueUsername := "41793026834"
+	givenDestinationsValueUsername := "41xxxxxxx30"
 	givenDestinationsValueSipTrunkId := "string"
 	givenDestinationsValueCustomHeadersString := "string"
 	givenDestinationsValueType := voice.CALLROUTINGENDPOINTTYPE_SIP
@@ -32,7 +32,7 @@ func TestShouldGetCallRoutes(t *testing.T) {
 
 	givenSecondId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenSecondName := "Phone endpoint route"
-	givenSecondDestinationsValuePhoneNumber := "41793026834"
+	givenSecondDestinationsValuePhoneNumber := "41xxxxxxx30"
 	givenSecondDestinationsValueType := voice.CALLROUTINGENDPOINTTYPE_PHONE
 	givenSecondDestinationsConnectTimeout := int32(30)
 	givenSecondDestinationsRecordingRecordingType := voice.CALLROUTINGRECORDINGTYPE_AUDIO
@@ -163,7 +163,7 @@ func TestShouldGetCallRoutes(t *testing.T) {
 func TestShouldPostCallRoute(t *testing.T) {
 	givenId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenName := "SIP endpoint route"
-	givenDestinationsValueUsername := "41793026834"
+	givenDestinationsValueUsername := "41xxxxxxx30"
 	givenDestinationsValueSipTrunkId := "string"
 	givenDestinationsValueCustomHeadersString := "string"
 	givenDestinationsValueType := voice.CALLROUTINGENDPOINTTYPE_SIP
@@ -281,7 +281,7 @@ func TestShouldPostCallRoute(t *testing.T) {
 func TestShouldGetCallRoute(t *testing.T) {
 	givenId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenName := "SIP endpoint route"
-	givenDestinationsValueUsername := "41793026834"
+	givenDestinationsValueUsername := "41xxxxxxx30"
 	givenDestinationsValueSipTrunkId := "string"
 	givenDestinationsValueCustomHeadersString := "string"
 	givenDestinationsValueType := voice.CALLROUTINGENDPOINTTYPE_SIP
@@ -351,7 +351,7 @@ func TestShouldGetCallRoute(t *testing.T) {
 func TestShouldPutCallRoute(t *testing.T) {
 	givenId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenName := "SIP endpoint route"
-	givenDestinationsValueUsername := "41793026834"
+	givenDestinationsValueUsername := "41xxxxxxx30"
 	givenDestinationsValueSipTrunkId := "string"
 	givenDestinationsValueCustomHeadersString := "string"
 	givenDestinationsValueType := voice.CALLROUTINGENDPOINTTYPE_SIP
@@ -468,7 +468,7 @@ func TestShouldPutCallRoute(t *testing.T) {
 func TestShouldDeleteCallRoute(t *testing.T) {
 	givenId := "f8fc8aca-786d-4943-9af2-e7ec01b5e80d"
 	givenName := "SIP endpoint route"
-	givenDestinationsValueUsername := "41793026834"
+	givenDestinationsValueUsername := "41xxxxxxx30"
 	givenDestinationsValueSipTrunkId := "string"
 	givenDestinationsValueCustomHeadersString := "string"
 	givenDestinationsValueType := voice.CALLROUTINGENDPOINTTYPE_SIP

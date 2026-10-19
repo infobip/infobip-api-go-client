@@ -22,7 +22,7 @@ const (
 func TestSendMessagesApiMessage(t *testing.T) {
 	givenBulkId := "1688025180464000013"
 	givenMessageId := "1688025180464000014"
-	givenDestination := "48600700800"
+	givenDestination := "48xxxxxxx36"
 
 	givenResponse := fmt.Sprintf(`
 		{
@@ -52,8 +52,8 @@ func TestSendMessagesApiMessage(t *testing.T) {
 	)
 
 	givenChannel := "WHATSAPP"
-	givenSender := "447491163862"
-	givenTo := "123456789"
+	givenSender := "44xxxxxxxx60"
+	givenTo := "xxxxxxx03"
 	givenText := "Sending you lots of otterly delightful vibes today!"
 	givenType := "TEXT"
 
@@ -195,7 +195,7 @@ func TestSendMessagesApiEvent(t *testing.T) {
 
 	givenBulkId := "1688025180464000013"
 	givenMessageId := "1688025180464000014"
-	givenDestination := "48600700800"
+	givenDestination := "48xxxxxxx36"
 
 	givenResponse := fmt.Sprintf(`
 		{
@@ -226,7 +226,7 @@ func TestSendMessagesApiEvent(t *testing.T) {
 
 	givenChannel := "APPLE_MB"
 	givenSender := "senderNumber"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenEvent := "TYPING_STARTED"
 
 	givenRequest := fmt.Sprintf(`
@@ -310,7 +310,7 @@ func TestReceiveDeliveryReportsWebhook(t *testing.T) {
 	expectedEvent := "DELIVERY"
 	expectedChannel := messagesapi.InboundDlrChannel("WHATSAPP")
 	expectedSender := "senderNumber"
-	expectedDestination := "41793026727"
+	expectedDestination := "41xxxxxxx25"
 	expectedSentAt := "2024-02-06T14:18:29.797+0000"
 	expectedDoneAt := "2024-02-06T17:18:29.797+0000"
 	expectedBulkId := "1688025180464000013"
@@ -435,7 +435,7 @@ func TestReceiveSeenReportsWebhook(t *testing.T) {
 	expectedEvent := "SEEN"
 	expectedChannel := messagesapi.InboundSeenChannel("WHATSAPP")
 	expectedSender := "senderNumber"
-	expectedDestination := "41793026727"
+	expectedDestination := "41xxxxxxx25"
 	expectedSentAt := "2024-02-06T14:18:29.797+0000"
 	expectedSeenAt := "2024-02-06T17:18:29.797+0000"
 	expectedBulkId := "1688025180464000013"
@@ -512,8 +512,8 @@ func TestReceiveSeenReportsWebhook(t *testing.T) {
 
 func TestReceiveIncomingMessagesWebhook(t *testing.T) {
 	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
-	expectedSender := "48123234567"
-	expectedDestination := "41793026727"
+	expectedSender := "48xxxxxxx35"
+	expectedDestination := "41xxxxxxx25"
 	expectedText := "Text message 123"
 	expectedCleanText := "Text message"
 	expectedType := "TEXT"
@@ -585,8 +585,8 @@ func TestReceiveIncomingMessagesWebhook(t *testing.T) {
 
 func TestReceiveIncomingMessagesWebhookWithCallBackDataAsString(t *testing.T) {
 	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
-	expectedSender := "48123234567"
-	expectedDestination := "41793026727"
+	expectedSender := "48xxxxxxx35"
+	expectedDestination := "41xxxxxxx25"
 	expectedText := "Text message 123"
 	expectedCleanText := "Text message"
 	expectedType := "TEXT"
@@ -663,8 +663,8 @@ func TestReceiveIncomingMessagesWebhookWithCallBackDataAsString(t *testing.T) {
 
 func TestReceiveIncomingMessagesWebhookWithCallBackDataAsObject(t *testing.T) {
 	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
-	expectedSender := "48123234567"
-	expectedDestination := "41793026727"
+	expectedSender := "48xxxxxxx35"
+	expectedDestination := "41xxxxxxx25"
 	expectedText := "Text message 123"
 	expectedCleanText := "Text message"
 	expectedType := "TEXT"
@@ -739,8 +739,8 @@ func TestReceiveIncomingMessagesWebhookWithCallBackDataAsObject(t *testing.T) {
 
 func TestReceiveIncomingMessagesWebhookWithCallBackDataAsEmptyObject(t *testing.T) {
 	expectedChannel := messagesapi.InboundMoEventChannel("SMS")
-	expectedSender := "48123234567"
-	expectedDestination := "41793026727"
+	expectedSender := "48xxxxxxx35"
+	expectedDestination := "41xxxxxxx25"
 	expectedText := "Text message 123"
 	expectedCleanText := "Text message"
 	expectedType := "TEXT"
@@ -846,7 +846,7 @@ func TestSendMessagesApiMessage_WhatsAppTemplate(t *testing.T) {
 	)
 
 	givenChannel := "WHATSAPP"
-	givenSender := "447860099299"
+	givenSender := "44xxxxxxxx65"
 	givenTo := "11111111"
 	givenTemplateName := "templateName"
 	givenLanguage := "en"
@@ -970,7 +970,7 @@ func TestGetMessagesApiDeliveryReports(t *testing.T) {
 	givenBulkId := "1688025180464000013"
 	givenMessageId := "ABEGVUGWh3gEAgo-sLTvmQCS5kwjhsy"
 	givenSender := "senderNumber"
-	givenDestination := "41793026727"
+	givenDestination := "41xxxxxxx25"
 	givenSentAt := "2024-02-06T14:18:29.797+0000"
 	givenDoneAt := "2024-02-06T17:18:29.797+0000"
 	givenMessageCount := 1
@@ -1076,7 +1076,7 @@ func TestGetMessagesApiDeliveryReports(t *testing.T) {
 func TestGetMessagesApiDeliveryReportsWithChannel(t *testing.T) {
 	givenBulkId := "bulk-123"
 	givenMessageId := "msg-456"
-	givenDestination := "41793026727"
+	givenDestination := "41xxxxxxx25"
 
 	givenResponse := fmt.Sprintf(`{
 		"results": [
@@ -1136,8 +1136,8 @@ func TestGetMessagesApiDeliveryReportsWithChannel(t *testing.T) {
 
 func TestGetMessagesApiInboundMessages_TextMessage(t *testing.T) {
 	givenChannel := "SMS"
-	givenSender := "48123234567"
-	givenDestination := "48123098765"
+	givenSender := "48xxxxxxx35"
+	givenDestination := "48xxxxxxx34"
 	givenText := "Text message 123"
 	givenCleanText := "Text message"
 	givenReceivedAt := "2020-02-06T14:18:29.797+0000"
@@ -1225,8 +1225,8 @@ func TestGetMessagesApiInboundMessages_TextMessage(t *testing.T) {
 
 func TestGetMessagesApiInboundMessages_TextMessageWithKeyword(t *testing.T) {
 	givenChannel := "SMS"
-	givenSender := "48123234567"
-	givenDestination := "48123098765"
+	givenSender := "48xxxxxxx35"
+	givenDestination := "48xxxxxxx34"
 	givenText := "KWRDText message 123"
 	givenCleanText := "Text message"
 	givenKeyword := "KWRD"
@@ -1300,8 +1300,8 @@ func TestGetMessagesApiInboundMessages_TextMessageWithKeyword(t *testing.T) {
 
 func TestGetMessagesApiInboundMessages_ImageWithCaption(t *testing.T) {
 	givenChannel := "WHATSAPP"
-	givenSender := "48123234567"
-	givenDestination := "48123098765"
+	givenSender := "48xxxxxxx35"
+	givenDestination := "48xxxxxxx34"
 	givenUrl := "http://my.domain/image.jpg"
 	givenText := "Image caption"
 	givenReceivedAt := "2020-02-06T14:18:29.797+0000"
@@ -1372,8 +1372,8 @@ func TestGetMessagesApiInboundMessages_ImageWithCaption(t *testing.T) {
 
 func TestGetMessagesApiInboundMessages_LocationMessage(t *testing.T) {
 	givenChannel := "WHATSAPP"
-	givenSender := "48123234567"
-	givenDestination := "48123098765"
+	givenSender := "48xxxxxxx35"
+	givenDestination := "48xxxxxxx34"
 	givenLatitude := float64(16)
 	givenLongitude := float64(18)
 	givenUrl := "http://my.domain/media/my-location"
@@ -1447,8 +1447,8 @@ func TestGetMessagesApiInboundMessages_LocationMessage(t *testing.T) {
 
 func TestValidateMessagesApiMessage_Success(t *testing.T) {
 	givenChannel := "SMS"
-	givenSender := "447491163862"
-	givenTo := "123456789"
+	givenSender := "44xxxxxxxx60"
+	givenTo := "xxxxxxx03"
 	givenText := "Sending you lots of otterly delightful vibes today!"
 
 	givenRequest := fmt.Sprintf(`{
@@ -1558,12 +1558,12 @@ func TestValidateMessagesApiMessage_WithSkippableViolations(t *testing.T) {
 	}
 
 	destination := messagesapi.MessageDestination{
-		ToDestination: messagesapi.NewToDestination("123456789"),
+		ToDestination: messagesapi.NewToDestination("xxxxxxx03"),
 	}
 
 	givenMessage := messagesapi.NewMessage(
 		messagesapi.OUTBOUNDMESSAGECHANNEL_SMS,
-		"447491163862",
+		"44xxxxxxxx60",
 		[]messagesapi.MessageDestination{destination},
 		messagesapi.MessageContent{Body: body},
 	)

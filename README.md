@@ -110,7 +110,7 @@ Here's a basic example of sending the SMS message.
     ...
 
     destinations := []sms.Destination{
-		{To: "421907372599"},
+		{To: "421xxxxxxx78"},
 	}
 
 	content := sms.MessageContent{
@@ -118,7 +118,7 @@ Here's a basic example of sending the SMS message.
 	}
 
 	givenMessage := sms.NewMessage(destinations, content)
-	givenMessage.SetSender("421902028966")
+	givenMessage.SetSender("421xxxxxxx77")
 
 	request := sms.NewRequestEnvelope([]sms.Message{
 		*givenMessage,

@@ -18,8 +18,8 @@ const (
 func TestSendClickToCallMessage(t *testing.T) {
 	givenBulkId := "bulk-12345"
 	givenMessageId := "msg-12345"
-	givenFrom := "441134960000"
-	givenTo := "441134960001"
+	givenFrom := "44xxxxxxxx46"
+	givenTo := "44xxxxxxxx47"
 	givenAudioUrl := "http://example.com/audio.wav"
 
 	givenResponse := fmt.Sprintf(`

@@ -34,7 +34,7 @@ func TestCreateCallRouteSimple(t *testing.T) {
 	fmt.Printf("Response: %+v\n", apiResponse)
 	fmt.Printf("HTTP Response Details: %+v\n", httpResponse)
 
-	if apiResponse == nil || apiResponse.Id == nil {
+	if apiResponse == nil || apiResponse.Id == "" {
 		t.Fatalf("Invalid response: expected route id, got: %+v", apiResponse)
 	}
 }
@@ -83,7 +83,7 @@ func TestSimulateRouteSelectionAdvanced(t *testing.T) {
 	fmt.Printf("Response: %+v\n", apiResponse)
 	fmt.Printf("HTTP Response Details: %+v\n", httpResponse)
 
-	if apiResponse == nil || apiResponse.Id == nil {
+	if apiResponse == nil || apiResponse.Id == "" {
 		t.Fatalf("Invalid response: expected simulated route id, got: %+v", apiResponse)
 	}
 }

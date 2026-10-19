@@ -173,7 +173,7 @@ func TestShouldApplicationTransferReject(t *testing.T) {
 
 func TestShouldGetCalls(t *testing.T) {
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenEntityId := "entityId"
 	givenApplicationId := "61c060db2675060027d8c7a6"
@@ -181,8 +181,8 @@ func TestShouldGetCalls(t *testing.T) {
 		EntityId:      &givenEntityId,
 		ApplicationId: &givenApplicationId,
 	}
-	givenFrom := "44790123456"
-	givenTo := "44790987654"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -310,9 +310,9 @@ func TestShouldGetCalls(t *testing.T) {
 }
 
 func TestShouldCreateCall(t *testing.T) {
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
-	givenFrom := "44790123456"
+	givenFrom := "44xxxxxxx32"
 	givenConnectTimeout := int32(0)
 	givenRecordingType := voice.RECORDINGTYPE_AUDIO
 	givenMaxDuration := int32(28800)
@@ -345,7 +345,7 @@ func TestShouldCreateCall(t *testing.T) {
     }`, givenCallsConfigurationId, givenPhoneNumber, givenType, givenFrom, givenConnectTimeout, givenRecordingType, givenMaxDuration, givenApplicationId, givenEntityId, givenParentCallId)
 
 	givenCallId := "string"
-	givenTo := "44790987654"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -468,7 +468,7 @@ func TestShouldCreateCall(t *testing.T) {
 
 func TestShouldGetCall(t *testing.T) {
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenApplicationId := "61c060db2675060027d8c7a6"
 	givenEntityId := "entityId"
@@ -476,8 +476,8 @@ func TestShouldGetCall(t *testing.T) {
 		ApplicationId: &givenApplicationId,
 		EntityId:      &givenEntityId,
 	}
-	givenFrom := "44790123456"
-	givenTo := "44790987654"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -582,11 +582,11 @@ func TestShouldGetCall(t *testing.T) {
 
 func TestShouldGetCallsHistory(t *testing.T) {
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenApplicationId := "61c060db2675060027d8c7a6"
-	givenFrom := "44790123456"
-	givenTo := "44790987654"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -731,11 +731,11 @@ func TestShouldGetCallsHistory(t *testing.T) {
 
 func TestShouldGetCallHistory(t *testing.T) {
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenApplicationId := "61c060db2675060027d8c7a6"
-	givenFrom := "44790123456"
-	givenTo := "44790987654"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -868,7 +868,7 @@ func TestShouldConnectCalls(t *testing.T) {
 	givenName := "Example conference"
 	givenCallId1 := "d6d6058c-5077-49f9-a030-2fc40e8ca195"
 	givenCallId2 := "6539fcb4-4b2a-4ac9-a43a-d60807af29b0"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 
@@ -997,7 +997,7 @@ func TestShouldConnectWithNewCall(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 	givenJoinTime := "2021-08-24T15:00:00.000+0000"
@@ -1011,8 +1011,8 @@ func TestShouldConnectWithNewCall(t *testing.T) {
 	givenVideoCamera := true
 	givenVideoScreenShare := true
 	givenApplicationId := "61c060db2675060027d8c7a6"
-	givenFrom := "44790123456"
-	givenTo := "44790987654"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -1280,10 +1280,10 @@ func TestShouldAnswerCall(t *testing.T) {
 func TestShouldHangupCall(t *testing.T) {
 	givenErrorCode := voice.PUBLICERRORCODE_NORMAL_HANGUP
 	givenCallId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "44790123456"
+	givenPhoneNumber := "44xxxxxxx32"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
-	givenFrom := "44790123456"
-	givenTo := "44790123456"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx32"
 	givenDirection := voice.CALLDIRECTION_OUTBOUND
 	givenState := voice.CALLSTATE_CALLING
 	givenAudioMuted := false
@@ -1747,7 +1747,7 @@ func TestShouldGetConferences(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 	givenJoinTime := "2021-08-24T15:00:00.000+0000"
@@ -1841,7 +1841,7 @@ func TestShouldCreateConference(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 	givenJoinTime := "2021-08-24T15:00:00.000+0000"
@@ -1959,7 +1959,7 @@ func TestShouldGetConference(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 	givenJoinTime := "2021-08-24T15:00:00.000+0000"
@@ -2062,7 +2062,7 @@ func TestShouldGetConferencesHistory(t *testing.T) {
 		T: givenLeaveTimeDateTime,
 	}
 	givenCallId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenFileId := "218eceba-c044-430d-9f26-8f1a7f0g2d03"
@@ -2242,7 +2242,7 @@ func TestShouldAddNewConferenceCall(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 	givenTime := "2021-08-24T15:00:00.000+0000"
@@ -2255,8 +2255,8 @@ func TestShouldAddNewConferenceCall(t *testing.T) {
 	givenVideoCamera := true
 	givenVideoScreenShare := true
 	givenApplicationId := "61c060db2675060027d8c7a6"
-	givenFrom := "44790123456"
-	givenTo := "44790987654"
+	givenFrom := "44xxxxxxx32"
+	givenTo := "44xxxxxxx33"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenCallState := voice.CALLSTATE_CALLING
 	givenMuted := true
@@ -2403,7 +2403,7 @@ func TestShouldAddExistingConferenceCall(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 
@@ -2513,7 +2513,7 @@ func TestShouldHangupConference(t *testing.T) {
 	givenId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenName := "Example conference"
 	givenCallId := "string"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenState := voice.PARTICIPANTSTATE_JOINING
 	givenJoinTime := "2021-08-24T15:00:00.000+0000"
@@ -2981,7 +2981,7 @@ func TestShouldDeleteCallsFile(t *testing.T) {
 
 func TestShouldGetCallRecordings(t *testing.T) {
 	givenId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenFileId := "218eceba-c044-430d-9f26-8f1a7f0g2d03"
@@ -3068,7 +3068,7 @@ func TestShouldGetCallRecordings(t *testing.T) {
 
 func TestShouldDeleteCallRecordings(t *testing.T) {
 	givenId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenFileId := "218eceba-c044-430d-9f26-8f1a7f0g2d03"
@@ -3186,7 +3186,7 @@ func TestShouldGetConferencesRecordings(t *testing.T) {
 	}
 	givenLocation := voice.RECORDINGFILELOCATION_SFTP
 	givenId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenStatus := voice.RECORDINGSTATUS_SUCCESSFUL
@@ -3340,7 +3340,7 @@ func TestShouldGetConferenceRecordings(t *testing.T) {
 	}
 	givenLocation := voice.RECORDINGFILELOCATION_SFTP
 	givenId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenStatus := voice.RECORDINGSTATUS_SUCCESSFUL
@@ -3469,7 +3469,7 @@ func TestShouldDeleteConferenceRecordings(t *testing.T) {
 	}
 	givenLocation := voice.RECORDINGFILELOCATION_SFTP
 	givenId := "d8d84155-3831-43fb-91c9-bb897149a79d"
-	givenPhoneNumber := "41792030000"
+	givenPhoneNumber := "41xxxxxxx15"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenStatus := voice.RECORDINGSTATUS_SUCCESSFUL
@@ -3674,8 +3674,8 @@ func TestShouldCreateBulk(t *testing.T) {
 	givenApplicationId1 := "61c060db2675060027d8c7a6"
 	givenCallId1 := "7672f60c-3418-40d9-8d6c-d2bac7e9a2b7"
 	givenExternalId1 := "7672f60c-3418-40d9-8d6c-d2bac7e9a2b7"
-	givenFrom1 := "41793026834"
-	givenPhoneNumber1 := "41792036727"
+	givenFrom1 := "41xxxxxxx30"
+	givenPhoneNumber1 := "41xxxxxxx17"
 	givenType1 := voice.CALLENDPOINTTYPE_PHONE
 	givenStatus1 := voice.ACTIONSTATUS_COMPLETED
 	givenReason1 := "Created"
@@ -4029,7 +4029,7 @@ func TestShouldPostDialogCall(t *testing.T) {
 	}
 	givenSecondId := "d8d84155-3831-43fb-91c9-bb897149a79d"
 	givenType := voice.CALLENDPOINTTYPE_PHONE
-	givenPhoneNumber := "44790123456"
+	givenPhoneNumber := "44xxxxxxx32"
 	givenDirection := voice.CALLDIRECTION_INBOUND
 	givenSecondState := voice.CALLSTATE_ESTABLISHED
 	givenMuted := false
@@ -4057,7 +4057,7 @@ func TestShouldPostDialogCall(t *testing.T) {
 	givenDialogId := "034e622a-cc7e-456d-8a10-0ba43b11aa5e"
 	givenThirdId := "3ad8805e-d401-424e-9b03-e02a2016a5e2"
 	givenSecondType := voice.CALLENDPOINTTYPE_PHONE
-	givenSecondPhoneNumber := "44790987654"
+	givenSecondPhoneNumber := "44xxxxxxx33"
 	givenSecondDirection := voice.CALLDIRECTION_OUTBOUND
 	givenThirdState := voice.CALLSTATE_ESTABLISHED
 	givenSecondMuted := false
@@ -4157,8 +4157,8 @@ func TestShouldPostDialogCall(t *testing.T) {
 
 	givenParentCallId := "d8d84155-3831-43fb-91c9-bb897149a79d"
 	givenRequestType := voice.CALLENDPOINTTYPE_PHONE
-	givenRequestPhoneNumber := "44790987654"
-	givenFrom := "44790123456"
+	givenRequestPhoneNumber := "44xxxxxxx33"
+	givenFrom := "44xxxxxxx32"
 	givenConnectTimeout := int32(60)
 	givenEnabled := true
 	givenKey2 := "value2"

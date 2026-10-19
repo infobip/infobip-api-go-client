@@ -50,7 +50,7 @@ const (
 
 func TestSendSms(t *testing.T) {
 	givenBulkId := "2034072219640523072"
-	givenDestination := "41793026727"
+	givenDestination := "41xxxxxxx25"
 	givenMessageId := "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
 
 	givenSender := "InfoSMS"
@@ -165,7 +165,7 @@ func TestSendSms(t *testing.T) {
 
 func TestShouldSendFlashSms(t *testing.T) {
 	givenBulkId := "2034072219640523072"
-	givenDestination := "41793026727"
+	givenDestination := "41xxxxxxx25"
 	givenMessageId := "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
 
 	givenSender := "InfoSMS"
@@ -294,10 +294,10 @@ func TestSendFullyFeaturedSmsMessage(t *testing.T) {
 	givenStatusId := 26
 	givenStatusName := "PENDING_ACCEPTED"
 	givenStatusDescription := "Message sent to next instance"
-	givenFirstDestination := "385991112222"
+	givenFirstDestination := "44xxxxxxxx45"
 	givenDetailsMessageCount := 1
 	givenSecondDestinationMessageId := "xyz100"
-	givenSecondDestination := "385911231234"
+	givenSecondDestination := "44xxxxxxxx38"
 	givenCallbackData := "transactionId=100"
 	deliveryTimeWindowDayMonday := sms.DELIVERYDAY_MONDAY
 	deliveryTimeWindowDaySunday := sms.DELIVERYDAY_SUNDAY
@@ -595,7 +595,7 @@ func TestSendFullyFeaturedSmsMessage(t *testing.T) {
 func TestSendBinarySmsMessage(t *testing.T) {
 	// Given values
 	givenBulkId := "BULK-ID-123-xyz"
-	givenDestination := "41793026727"
+	givenDestination := "41xxxxxxx25"
 	givenMessageId := "MESSAGE-ID-123-xyz"
 	givenFrom := "InfoSMS"
 	givenHex := "54 65 73 74 20 6d 65 73 73 61 67 65 2e"
@@ -758,7 +758,7 @@ func TestSendBinarySmsMessage(t *testing.T) {
 func TestSendFlashBinarySms(t *testing.T) {
 	// Given values
 	givenBulkId := "2034072219640523072"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenMessageId := "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
 	givenFrom := "InfoSMS"
 	givenHex := "0048 0065 006c 006c 006f 0020 0077 006f 0072 006c 0064 002c 0020 039a 03b1 03bb 03b7 03bc 03ad 03c1 03b1 0020 03ba 03cc 03c3 03bc 03b5 002c 0020 30b3 30f3 30cb 30c1 30cf"
@@ -950,7 +950,7 @@ func TestShouldGetDeliveryReports(t *testing.T) {
 	// Given values
 	givenBulkId := "BULK-ID-123-xyz"
 	givenMessageId := "MESSAGE-ID-123-xyz"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenSentAt := "2019-11-09T16:00:00.000+0000"
 	givenDoneAt := "2019-11-09T16:00:00.000+0000"
 	givenSmsCount := 1
@@ -968,7 +968,7 @@ func TestShouldGetDeliveryReports(t *testing.T) {
 	givenErrorDescription := "No Error"
 	givenErrorPermanent := false
 	givenMessageId2 := "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
-	givenTo2 := "41793026834"
+	givenTo2 := "41xxxxxxx30"
 	givenSender := "InfoSMS"
 	givenEntityId := "promotional-traffic-entity"
 	givenApplicationId := "marketing-automation-application"
@@ -1137,7 +1137,7 @@ func TestShouldGetSmsLogs(t *testing.T) {
 	}
 
 	givenMessageIdMessage1 := "MESSAGE-ID-123-xyz"
-	givenToMessage1 := "41793026727"
+	givenToMessage1 := "41xxxxxxx25"
 	givenSendAtMessage1 := "2019-11-09T16:00:00.000+0000"
 	givenDoneAtMessage1 := "2019-11-09T16:00:00.000+0000"
 	givenSmsCountMessage1 := 1
@@ -1145,7 +1145,7 @@ func TestShouldGetSmsLogs(t *testing.T) {
 	givenCurrencyMessage1 := "EUR"
 
 	givenMessageIdMessage2 := "12db39c3-7822-4e72-a3ec-c87442c0ffc5"
-	givenToMessage2 := "41793026834"
+	givenToMessage2 := "41xxxxxxx30"
 	givenSendAtMessage2 := "2019-11-09T17:00:00.000+0000"
 	givenDoneAtMessage2 := "2019-11-09T17:00:00.000+0000"
 	givenSmsCountMessage2 := 5
@@ -1422,8 +1422,8 @@ func TestShouldGetScheduledSmsMessagesStatus(t *testing.T) {
 func TestShouldGetReceivedSmsMessages(t *testing.T) {
 	// Given values
 	givenMessageId := "817790313235066447"
-	givenFrom := "385916242493"
-	givenTo := "385921004026"
+	givenFrom := "44xxxxxxxx41"
+	givenTo := "44xxxxxxxx43"
 	givenText := "QUIZ Correct answer is Paris"
 	givenCleanText := "Correct answer is Paris"
 	givenKeyword := "QUIZ"
@@ -1515,7 +1515,7 @@ func TestShouldGetReceivedSmsMessages(t *testing.T) {
 func TestReceiveSmsDeliveryReportsWebhook(t *testing.T) {
 	givenBulkId := "bulk-sms-123"
 	givenMessageId := "msg-sms-456"
-	givenTo := "385916242493"
+	givenTo := "44xxxxxxxx41"
 	givenSender := "InfoSMS"
 	givenSentAt := "2025-02-06T15:35:12.000+0000"
 	givenDoneAt := "2025-02-06T15:35:14.000+0000"
@@ -1618,7 +1618,7 @@ func TestReceiveSmsDeliveryReportsWebhook(t *testing.T) {
 
 func TestReceiveSmsInboundMessagesWebhook(t *testing.T) {
 	givenMessageId := "msg-mo-123"
-	givenFrom := "385916242493"
+	givenFrom := "44xxxxxxxx41"
 	givenTo := "InfoSMS"
 	givenText := "KEYWORD Hello from user"
 	givenCleanText := "Hello from user"

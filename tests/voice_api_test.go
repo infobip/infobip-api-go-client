@@ -145,7 +145,7 @@ func TestShouldManageSentBulksStatus(t *testing.T) {
 
 func TestShouldSendSingleVoiceTts(t *testing.T) {
 	givenBulkId := "4fda521a-c680-470d-b134-83d468f7ac80"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenStatusGroupId := int32(1)
 	givenStatusGroupName := "PENDING"
 	givenStatusId := int32(26)
@@ -157,7 +157,7 @@ func TestShouldSendSingleVoiceTts(t *testing.T) {
 	givenLanguage := "en"
 	givenName := "Joanna"
 	givenGender := "female"
-	givenFrom := "442032864231"
+	givenFrom := "44xxxxxxxx58"
 
 	givenResponse := fmt.Sprintf(`{
        "bulkId": "%s",
@@ -227,7 +227,7 @@ func TestShouldSendSingleVoiceTts(t *testing.T) {
 
 func TestShouldSendMultipleVoiceTts(t *testing.T) {
 	givenBulkId := "4fda521a-c680-470d-b134-83d468f7ac80"
-	givenTo := "41793026727"
+	givenTo := "41xxxxxxx25"
 	givenStatusGroupId := int32(1)
 	givenStatusGroupName := "PENDING"
 	givenStatusId := int32(26)
@@ -236,14 +236,14 @@ func TestShouldSendMultipleVoiceTts(t *testing.T) {
 	givenMessageId := "2250be2d4219-3af1-78856-aabe-1362af1edfd2"
 
 	givenAudioFileUrl := "https://www.example.com/media.mp3"
-	givenReqFrom := "41793026700"
-	givenReqTo1 := "41793026727"
-	givenReqTo2 := "41793026731"
+	givenReqFrom := "41xxxxxxx22"
+	givenReqTo1 := "41xxxxxxx25"
+	givenReqTo2 := "41xxxxxxx26"
 	givenText := "Hello world!"
 	givenLanguage := "en"
 	givenName := "Joanna"
 	givenGender := "female"
-	givenTo1 := "41793026785"
+	givenTo1 := "41xxxxxxx28"
 
 	givenResponse := fmt.Sprintf(`{
         "bulkId": "%s",
@@ -388,8 +388,8 @@ func TestShouldGetVoices(t *testing.T) {
 func TestShouldGetVoiceDeliveryReports(t *testing.T) {
 	givenBulkId := "8c20f086-d82b-48cc-b2b3-3ca5f7aca9fb"
 	givenMessageId := "ff4804ef-6ab6-4abd-984d-ab3b1387e852"
-	givenFrom := "385333444"
-	givenTo := "385981178"
+	givenFrom := "44xxxxx04"
+	givenTo := "44xxxxx05"
 	givenSentAt := "2018-06-25T13:38:14.730+0000"
 	givenMccMnc := "21901"
 	givenCallbackData := "DLR callback data"
@@ -517,8 +517,8 @@ func TestShouldGetVoiceDeliveryReports(t *testing.T) {
 func TestShouldGetVoiceLogs(t *testing.T) {
 	givenBulkId := "06479ba3-5977-47f6-9346-fee0369bc76b"
 	givenMessageId := "1f21d8d7-f306-4f53-9f6e-eddfce9849ea"
-	givenTo := "41793026727"
-	givenFrom := "41793026700"
+	givenTo := "41xxxxxxx25"
+	givenFrom := "41xxxxxxx22"
 	givenText := "Test voice message."
 	givenSendAt := "2015-02-22T17:42:05.390+0100"
 	givenSendAtDateTime, _ := time.Parse(infobip.INFOBIP_TIME_FORMAT, givenSendAt)
@@ -624,8 +624,8 @@ func TestShouldGetVoiceLogs(t *testing.T) {
 
 func TestShouldSearchVoiceIvrRecordedFiles(t *testing.T) {
 	givenMessageId1 := "453e161a-fe4f-4f3c-80c0-ab520de9a969"
-	givenFrom1 := "442032864231"
-	givenTo1 := "38712345678"
+	givenFrom1 := "44xxxxxxxx58"
+	givenTo1 := "387xxxxxx12"
 	givenScenarioId1 := "C9CE33CF130511D8E333C1260BABA309"
 	givenGroupId1 := "#/script/1"
 	givenUrl1 := "/voice/ivr/1/files/3C67336FA555A606C85FA9637906A6AB98436B7AFC65D857A416F6521D39F8F0E1D3D2469FF580D8968D3DD89A2DB561"
@@ -642,8 +642,8 @@ func TestShouldSearchVoiceIvrRecordedFiles(t *testing.T) {
 	}
 
 	givenMessageId2 := "05b2859d-85c6-4068-9347-2e563b5c9cf4"
-	givenFrom2 := "442032864231"
-	givenTo2 := "38712345678"
+	givenFrom2 := "44xxxxxxxx58"
+	givenTo2 := "387xxxxxx12"
 	givenScenarioId2 := "4A6177C9B92039306F1F091708851A2E"
 	givenGroupId2 := "#/script/1"
 	givenUrl2 := "/voice/ivr/1/files/305DE72BA11D81D1BAED75BFC46706761580BDEC2218C22628447FD3814E7913D3058E4ECBFD6F55C80E976235EEB111"
@@ -1158,8 +1158,8 @@ func TestShouldDownloadVoiceIvrRecordedFile(t *testing.T) {
 // ==============================================================================
 
 func TestReceiveNumberMaskingCallbackWebhook(t *testing.T) {
-	givenFrom := "441134960001"
-	givenTo := "441134960002"
+	givenFrom := "44xxxxxxxx47"
+	givenTo := "44xxxxxxxx48"
 	givenCorrelationId := "corr-123"
 	givenNmCorrelationId := "nm-corr-456"
 
@@ -1189,8 +1189,8 @@ func TestReceiveNumberMaskingCallbackWebhook(t *testing.T) {
 func TestReceiveNumberMaskingCallbackWebhook_WithDtmf(t *testing.T) {
 	givenPayload := `
 		{
-			"from": "441134960001",
-			"to": "441134960002",
+			"from": "44xxxxxxxx47",
+			"to": "44xxxxxxxx48",
 			"correlationId": "corr-123",
 			"nmCorrelationId": "nm-corr-456",
 			"dtmfCaptured": true
@@ -1200,15 +1200,15 @@ func TestReceiveNumberMaskingCallbackWebhook_WithDtmf(t *testing.T) {
 	err := json.Unmarshal([]byte(givenPayload), &requestBody)
 
 	assert.Nil(t, err, "Expected nil error")
-	assert.Equal(t, "441134960001", requestBody.GetFrom())
+	assert.Equal(t, "44xxxxxxxx47", requestBody.GetFrom())
 	assert.Equal(t, true, requestBody.GetDtmfCaptured())
 }
 
 func TestReceiveMaskedCallReportWebhook(t *testing.T) {
 	givenAction := "dial"
-	givenFrom := "441134960001"
-	givenTo := "441134960002"
-	givenTransferTo := "441134960003"
+	givenFrom := "44xxxxxxxx47"
+	givenTo := "44xxxxxxxx48"
+	givenTransferTo := "44xxxxxxxx49"
 	givenDuration := 45
 	givenStatus := "answered"
 	givenNmCorrelationId := "nm-corr-456"

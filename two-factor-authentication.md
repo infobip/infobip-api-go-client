@@ -40,7 +40,7 @@ After setting up the application and message template, you can start generating 
 
 ```go
     from := "InfoSMS"
-    to := "41793026727"
+    to := "41xxxxxxx25"
     
     request := sms.NewStartAuthenticationRequest(*appId, *msgId, to)
     request.From = &from
